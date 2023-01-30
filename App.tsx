@@ -1,18 +1,29 @@
-import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
-import { NativeBaseProvider, Spinner } from 'native-base'
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import { NativeBaseProvider, Spinner } from 'native-base';
+import React from 'react';
+import { API_URL } from '@env';
+import RootNavigator from './navigation';
+
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client';
 
 export default function App() {
   // commetn
-  //c
+  //cx
+  console.log(process.env.API_URL);
+
+  // Initialize Apollo Client
+  const client = new ApolloClient({
+    uri: 'localhost:4000/graphql',
+    cache: new InMemoryCache(),
+  });
+
   return (
-    <NativeBaseProvider>
-      <View className="bg-green-200 flex flex-column h-full justify-center items-center">
-        <Text className="p-4">PLANT</Text>
-        <Text className="bg-black p-4 ">🪴🪴🪴🪴🪴🪴🪴🪴🪴🪴🪴</Text>
-        <Spinner className="mt-10" color="indigo.500" />
-        <StatusBar style="auto" />
-      </View>
-    </NativeBaseProvider>
-  )
+    <ApolloProvider client={client}>
+      <NativeBaseProvider>
+        <RootNavigator />
+        <StatusBar style='auto' />
+      </NativeBaseProvider>
+    </ApolloProvider>
+  );
 }
