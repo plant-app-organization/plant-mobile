@@ -1,20 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar'
+import { StyleSheet, Text, View } from 'react-native'
+import { NativeBaseProvider, Spinner } from 'native-base'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <NativeBaseProvider>
+      <View className="bg-green-200 flex flex-column h-full justify-center items-center">
+        <Text className="p-4">PLANT</Text>
+        <Text className="bg-black p-4 ">🪴🪴🪴🪴🪴🪴🪴🪴🪴🪴🪴</Text>
+        <Spinner className="mt-10" color="indigo.500" />
+        <StatusBar style="auto" />
+      </View>
+    </NativeBaseProvider>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
