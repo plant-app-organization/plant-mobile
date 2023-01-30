@@ -4,7 +4,7 @@ import { NativeBaseProvider, Spinner } from 'native-base'
 
 export default function App() {
   // commetn
-  //c
+  //cx
   return (
     <NativeBaseProvider>
       <View className="bg-green-200 flex flex-column h-full justify-center items-center">
