@@ -1,18 +1,32 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { SafeAreaView, View, Text } from 'react-native';
-import { Spinner } from 'native-base';
+import { View, Button, StyleSheet, Text } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface FirstScreenLogoProps {}
 
 const FirstScreenLogo: React.FunctionComponent<FirstScreenLogoProps> = (props) => {
   return (
-    <View className='flex flex-column h-full justify-center items-center'>
-      <Text className='p-4'>Logo</Text>
-      <Text className='bg-black p-4 '>🪴🪴🪴🪴🪴🪴🪴🪴🪴🪴🪴</Text>
-      <Spinner className='mt-10' color='indigo.500' />
-    </View>
+    <LinearGradient
+      // Background Linear Gradient
+      colors={['#ccedcf', '#bee6c2', '#8CE795', '#8CE795', '#86E4A1', '#bee6c2']}
+      style={styles.background}
+    >
+      <Text style={styles.text}>Plante.</Text>
+    </LinearGradient>
   );
 };
 
+const styles = StyleSheet.create({
+  background: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontFamily: 'Recoleta',
+    color: 'white',
+    fontSize: 55,
+  },
+});
 export default FirstScreenLogo;
