@@ -7,11 +7,12 @@ interface FirstScreenLogoProps {}
 const FirstScreenLogo: React.FunctionComponent<FirstScreenLogoProps> = (props) => {
   return (
     <LinearGradient
-      // Background Linear Gradient
       colors={['#ccedcf', '#bee6c2', '#8CE795', '#8CE795', '#86E4A1', '#bee6c2']}
       style={styles.background}
     >
-      <Text style={styles.text}>Plante.</Text>
+      <Text style={styles.text1}>Plante.</Text>
+
+      <Text style={styles.text2}>Seconde vie</Text>
     </LinearGradient>
   );
 };
@@ -23,10 +24,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    fontFamily: 'Recoleta',
-    color: 'white',
-    fontSize: 55,
+  text1: {
+    fontFamily: 'Gentle', // Custom font family
+    color: 'white', // White color
+    fontSize: 60, // 60 font size
+  },
+  text2: {
+    color: '#3FA96A', // Green color
+    fontSize: 25, // 20 font size
+    marginTop: -15, // Top margin of -8
+    fontFamily: 'LANENAR', // Custom font family
   },
 });
+
 export default FirstScreenLogo;

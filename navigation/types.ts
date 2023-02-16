@@ -2,8 +2,9 @@ export type HomeStackNavigatorParamList = {
   FirstScreenLogo: undefined;
   FirstPresentationScreen: undefined;
   SecondPresentationScreen: undefined;
-  ThirdPresentationScreen: undefined;
   HomeScreen: undefined;
+  Signupscreen: undefined;
+  Signinscreen: undefined;
 };
 
 export type BottomTabNavigatorParamList = {
