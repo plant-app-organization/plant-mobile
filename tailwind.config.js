@@ -9,7 +9,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        Recoleta: ['Recoleta'],
+        LANENAR: ['LANENAR'],
+        Gentle: ['Gentle'],
+        Roboto: ['Roboto'],
+        antipasto: ['antipasto'],
       },
     },
   },

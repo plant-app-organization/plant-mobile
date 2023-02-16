@@ -20,7 +20,10 @@ export default function App() {
   });
 
   const [fontsLoaded] = useFonts({
-    Recoleta: require('./assets/fonts/Recoleta.otf'),
+    LANENAR: require('./assets/fonts/LANENAR.ttf'),
+    Gentle: require('./assets/fonts/Gentle.otf'),
+    Roboto: require('./assets/fonts/Roboto.ttf'),
+    antipasto: require('./assets/fonts/antipasto.ttf'),
   });
 
   return (
