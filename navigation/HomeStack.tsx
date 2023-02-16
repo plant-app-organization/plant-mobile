@@ -8,7 +8,8 @@ import DevScreen from '../screens/DevScreen/DevScreen';
 import FirstScreenLogo from '../screens/FirstScreenLogo/FirstScreenLogo';
 import FirstPresentationScreen from '../screens/FirstPresentationScreen/FirstPresentationScreen';
 import SecondPresentationScreen from '../screens/SecondPresentationScreen/SecondPresentationScreen';
-import ThirdPresentationScreen from '../screens/ThirdPresentationScreen/ThirdPresentationScreen';
+import SignupScreen from '../screens/SignupScreen/SignupScreen';
+import SigninScreen from '../screens/SigninScreen/SigninScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BottomTabs from './Tabs';
 
@@ -68,8 +69,16 @@ const HomeStackNavigator = () => {
           }}
         />
         <HomeStack.Screen
-          name='ThirdPresentationScreen'
-          component={ThirdPresentationScreen}
+          name='SignupScreen'
+          component={SignupScreen}
+          options={{
+            animationTypeForReplace: 'push',
+            animation: 'slide_from_right',
+          }}
+        />
+        <HomeStack.Screen
+          name='SigninScreen'
+          component={SigninScreen}
           options={{
             animationTypeForReplace: 'push',
             animation: 'slide_from_right',
