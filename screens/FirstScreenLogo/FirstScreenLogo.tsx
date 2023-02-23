@@ -29,7 +29,7 @@ const FirstScreenLogo: React.FunctionComponent<FirstScreenLogoProps> = (props) =
           Plante.
         </Text>
 
-        <Text className='text-green-600 text-3xl -mt-4 font-LANENAR text-1xl'>Seconde vie</Text>
+        <Text className='text-green-600 text-3xl -mt-4 font-LANENAR text-xl'>Seconde vie</Text>
       </View>
     </LinearGradient>
   );
