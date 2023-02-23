@@ -4,7 +4,11 @@ import { SafeAreaView, View, Text, ImageBackground, TouchableOpacity } from 'rea
 import { Spinner } from 'native-base';
 import { HeartIcon } from 'react-native-heroicons/solid';
 
-interface CardProductProps {}
+interface CardProductProps {
+  name: string;
+  prix: number;
+  photo: string;
+}
 
 const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
   return (
@@ -26,7 +30,7 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
         </View>
         <View className='flex flex-row justify-between items-center pr-2'>
           <View className='flex flex-column'>
-            <Text className='pl-2 pt-2 font-semibold'>{props.prix}</Text>
+            <Text className='pl-2 pt-2 font-semibold'>{props.prix}€</Text>
             <Text className='pl-2 pt-0'>{props.name}</Text>
           </View>
           <HeartIcon color={'#d8d8d8'} className='h-6 w-6 pr-2' />
@@ -34,12 +38,6 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
       </TouchableOpacity>
     </View>
   );
-};
-
-CardProduct.propTypes = {
-  name: PropTypes.string,
-  prix: PropTypes.string,
-  photo: PropTypes.string,
 };
 
 export default CardProduct;
