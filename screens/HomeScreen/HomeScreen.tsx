@@ -364,7 +364,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
     </LinearGradient>
   );
 };
-// ok
 const styles = StyleSheet.create({
   background: {
     width: '100%',
