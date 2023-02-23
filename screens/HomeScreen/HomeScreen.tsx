@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native';
 import { Spinner, Switch } from 'native-base';
 import { StatusBar } from 'expo-status-bar';
@@ -235,6 +236,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       />
     );
   });
+  const { width, height } = useWindowDimensions();
 
   return (
     <LinearGradient
@@ -261,7 +263,11 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Mathis 👋</Text>
               </View>
               <View>
-                <FontAwesomeIcon style={{ opacity: 0.7 }} name='shopping-basket' size='45%' />
+                <FontAwesomeIcon
+                  style={{ opacity: 0.7 }}
+                  name='shopping-basket'
+                  size={width * 0.08}
+                />
                 <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Panier 🪴</Text>
               </View>
             </View>

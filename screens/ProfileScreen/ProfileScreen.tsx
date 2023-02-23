@@ -74,34 +74,34 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
                 </View>
               </View>
             </View>
-            <FontAwesomeIcon style={{ marginRight: 22 }} name='angle-right' size='30%' />
+            <FontAwesomeIcon style={{ marginRight: 22 }} name='angle-right' size={18} />
           </View>
         </TouchableOpacity>
         <View style={styles.bottom}>
           <View style={styles.line} />
           <TouchableOpacity style={styles.card} onPress={console.log('favoris')}>
             <View style={styles.cardTitle}>
-              <FontAwesomeIcon style={styles.icon} name='heart' size='20%' />
+              <FontAwesomeIcon style={styles.icon} name='heart' size={18} />
               <Text style={styles.cardTitleText}> Favoris </Text>
             </View>
             <View>
-              <FontAwesomeIcon name='angle-right' size='30%' />
+              <FontAwesomeIcon name='angle-right' size={18} />
             </View>
           </TouchableOpacity>
           <View style={styles.line} />
           <TouchableOpacity style={styles.card} onPress={console.log('ventes')}>
             <View style={styles.cardTitle}>
-              <FontAwesomeIcon style={styles.icon} name='bookmark' size='20%' />
+              <FontAwesomeIcon style={styles.icon} name='bookmark' size={18} />
               <Text style={styles.cardTitleText}> Mes ventes et achats </Text>
             </View>
             <View>
-              <FontAwesomeIcon name='angle-right' size='30%' />
+              <FontAwesomeIcon name='angle-right' size={18} />
             </View>
           </TouchableOpacity>
           <View style={styles.line} />
           <TouchableOpacity style={styles.card} onPress={console.log('parametres')}>
             <View style={styles.cardTitle}>
-              <FontAwesomeIcon style={styles.icon} name='gears' size='20%' />
+              <FontAwesomeIcon style={styles.icon} name='gears' size={18} />
               <Text style={styles.cardTitleText}> Paramètres </Text>
             </View>
             <View>
@@ -111,11 +111,11 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           <View style={styles.line} />
           <TouchableOpacity style={styles.card} onPress={console.log('avis')}>
             <View style={styles.cardTitle}>
-              <FontAwesomeIcon style={styles.icon} name='commenting' size='20%' />
+              <FontAwesomeIcon style={styles.icon} name='commenting' size={18} />
               <Text style={styles.cardTitleText}> Mes avis </Text>
             </View>
             <View>
-              <FontAwesomeIcon name='angle-right' size='30%' />
+              <FontAwesomeIcon name='angle-right' size={18} />
             </View>
           </TouchableOpacity>
         </View>
