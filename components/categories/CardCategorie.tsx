@@ -4,7 +4,10 @@ import { SafeAreaView, View, Text, ImageBackground, TouchableOpacity } from 'rea
 import { Spinner } from 'native-base';
 import { ChevronRightIcon } from 'react-native-heroicons/solid';
 
-interface CardCategorieProps {}
+interface CardCategorieProps {
+  name: string;
+  image: string;
+}
 
 const CardCategorie: React.FunctionComponent<CardCategorieProps> = (props) => {
   return (
@@ -18,10 +21,10 @@ const CardCategorie: React.FunctionComponent<CardCategorieProps> = (props) => {
             style={{
               width: '100%',
               height: '100%',
-              backgroundColor: 'green',
+              backgroundColor: 'black',
               borderRadius: 30 / 2,
             }}
-            imageStyle={{ borderRadius: 30 / 2, opacity: 0.8 }}
+            imageStyle={{ borderRadius: 30 / 2, opacity: 0.67 }}
           >
             <View className='flex-row items-center justify-between h-36	mr-3 ml-3'>
               <Text className='pl-2 font-semibold text-white	font-bold	text-2xl tracking-wider'>
@@ -34,11 +37,6 @@ const CardCategorie: React.FunctionComponent<CardCategorieProps> = (props) => {
       </TouchableOpacity>
     </View>
   );
-};
-
-CardCategorie.propTypes = {
-  name: PropTypes.string,
-  image: PropTypes.string,
 };
 
 export default CardCategorie;

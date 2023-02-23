@@ -4,7 +4,11 @@ import { SafeAreaView, View, Text, ImageBackground, TouchableOpacity } from 'rea
 import { Avatar } from 'native-base';
 import { ChevronRightIcon } from 'react-native-heroicons/solid';
 
-interface CardPlanterProps {}
+interface CardPlanterProps {
+  name: string;
+  deals: number;
+  image: string;
+}
 
 const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
   return (
@@ -22,16 +26,12 @@ const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
           JL
         </Avatar>
         <Text className='pl-0 pt-2 text-center'>{props.name}</Text>
-        <Text className='pl-0 pt-0 text-xs justify-center items-center'>{props.deals}</Text>
+        <Text className='pl-0 pt-0 text-xs justify-center items-center'>
+          {props.deals} plantdeals
+        </Text>
       </TouchableOpacity>
     </View>
   );
-};
-
-CardPlanter.propTypes = {
-  name: PropTypes.string,
-  ventes: PropTypes.string,
-  photo: PropTypes.string,
 };
 
 export default CardPlanter;
