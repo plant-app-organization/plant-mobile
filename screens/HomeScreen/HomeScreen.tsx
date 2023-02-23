@@ -247,7 +247,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           <View className='flex flex-column h-full justify-start items-start mt-4'>
             <View className='flex-row justify-around w-full items-center '>
               <View>
-                {/* ok */}
                 <Avatar
                   style={{}}
                   bg='amber.500'
