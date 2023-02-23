@@ -236,13 +236,13 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   });
 
   return (
-    <ScrollView className='w-screen' showsVerticalScrollIndicator={false}>
-      <LinearGradient
-        // Background Linear Gradient
-        colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
-        style={styles.background}
-      >
-        <SafeAreaView>
+    <LinearGradient
+      // Background Linear Gradient
+      colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
+      style={styles.background}
+    >
+      <SafeAreaView>
+        <ScrollView className='w-screen' showsVerticalScrollIndicator={false}>
           <View className='flex flex-column h-full justify-start items-start mt-4'>
             <View className='flex-row justify-around w-full'>
               <TouchableOpacity
@@ -362,9 +362,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               </View>
             </View>
           </View>
-        </SafeAreaView>
-      </LinearGradient>
-    </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 
