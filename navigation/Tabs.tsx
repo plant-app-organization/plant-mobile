@@ -27,8 +27,8 @@ const Tab = createBottomTabNavigator();
 
 const animate1 = {
   0: { scale: 0.5, translateY: 7 },
-  0.92: { translateY: -34 },
-  1: { scale: 1.2, translateY: -24 },
+  0.92: { translateY: -14 },
+  1: { scale: 1.2, translateY: -14 },
 };
 const animate2 = { 0: { scale: 1.2, translateY: -24 }, 1: { scale: 1, translateY: 7 } };
 
@@ -63,7 +63,7 @@ const TabButton: any = (props: any) => {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={1} style={styles.container}>
       <Animatable.View ref={viewRef} duration={325} style={styles.navbarContainer}>
-        <View style={styles.btn}>
+        <View style={[styles.btn, { borderWidth: focused ? 2 : 0, borderColor: '#ffffff' }]}>
           <Animatable.View ref={circleRef} style={styles.circle} />
           <FontAwesome5 name={item.icon} size={21} color={focused ? '#3FA96A' : '#ffffff'} />
         </View>
@@ -79,7 +79,9 @@ const BottomTabs = () => (
   <Tab.Navigator
     screenOptions={{
       headerShown: false,
-      tabBarStyle: styles.tabBar,
+      tabBarStyle: {
+        height: 75,
+      },
     }}
   >
     {TabArr.map((item, index) => {
@@ -112,21 +114,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  tabBar: {
-    height: 65,
-    borderRadius: 30,
-    position: 'absolute',
-    bottom: 15,
-    right: 16,
-    left: 16,
-  },
   btn: {
     width: 42,
     height: 42,
     borderRadius: 30,
     borderWidth: PixelRatio.roundToNearestPixel(1),
     borderColor: '#3FA96A',
-    backgroundColor: '#3FA96A',
+    backgroundColor: '#ccedcf',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -138,7 +132,7 @@ const styles = StyleSheet.create({
     right: 0,
     borderStyle: 'solid',
     borderWidth: 2,
-    borderColor: '#3FA96A',
+    borderColor: '#ccedcf',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ccedcf',
