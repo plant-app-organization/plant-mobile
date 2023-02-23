@@ -18,12 +18,13 @@ import CardCategorie from '../../components/categories/CardCategorie';
 import CardPlanter from '../../components/planters/CardPlanter';
 import CardSuggestion from '../../components/suggestions/CardSuggestion';
 import CardAntigaspi from '../../components/antigaspi/CardAntigaspi';
-
+import { Avatar } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NoDeprecatedCustomRule } from 'graphql';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 interface HomeScreenProps {}
-
+//
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const [search, setSearch] = useState<string>('');
 
@@ -244,29 +245,25 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       <SafeAreaView>
         <ScrollView className='w-screen' showsVerticalScrollIndicator={false}>
           <View className='flex flex-column h-full justify-start items-start mt-4'>
-            <View className='flex-row justify-around w-full'>
-              <TouchableOpacity
-                style={{
-                  padding: 6,
-                  backgroundColor: '#3FA96A',
-                  borderRadius: 8 / 2,
-                  width: '41%',
-                }}
-              >
-                <Text className='text-white text-center'> Liste des offres</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  padding: 6,
-                  backgroundColor: 'transparent',
-                  borderRadius: 8 / 2,
-                  width: '41%',
-                  borderColor: '#3FA96A',
-                  borderWidth: 1,
-                }}
-              >
-                <Text className='text-black text-center'> Voir sur la carte</Text>
-              </TouchableOpacity>
+            <View className='flex-row justify-around w-full items-center '>
+              <View>
+                <Avatar
+                  style={{}}
+                  bg='amber.500'
+                  source={{
+                    uri: 'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+                  }}
+                  size='lg'
+                >
+                  NB
+                  <Avatar.Badge bg='green.500' size='23%' />
+                </Avatar>
+                <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Mathis 👋</Text>
+              </View>
+              <View>
+                <FontAwesomeIcon style={{ opacity: 0.7 }} name='shopping-basket' size='45%' />
+                <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Panier 🪴</Text>
+              </View>
             </View>
             <TextInput
               className='w-11/12 border-slate-400 border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
@@ -367,7 +364,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
     </LinearGradient>
   );
 };
-
 const styles = StyleSheet.create({
   background: {
     width: '100%',
