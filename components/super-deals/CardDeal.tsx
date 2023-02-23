@@ -4,7 +4,11 @@ import { SafeAreaView, View, Text, ImageBackground, TouchableOpacity } from 'rea
 import { Spinner } from 'native-base';
 import { ChevronRightIcon } from 'react-native-heroicons/solid';
 
-interface CardDealProps {}
+interface CardDealProps {
+  entreprise: string;
+  ville: string;
+  photo: string;
+}
 
 const CardDeal: React.FunctionComponent<CardDealProps> = (props) => {
   return (
@@ -16,7 +20,7 @@ const CardDeal: React.FunctionComponent<CardDealProps> = (props) => {
               uri: props.photo,
             }}
             style={{ width: '100%', height: '100%', backgroundColor: 'red', borderRadius: 30 / 2 }}
-            imageStyle={{ borderRadius: 30 / 2, opacity: 0.6 }}
+            imageStyle={{ borderRadius: 30 / 2, opacity: 0.7 }}
             className='flex-row w-80 items-center justify-between mr-2 h-48'
           >
             <View className='flex-column items-start justify-center h-48 ml-3'>
@@ -35,12 +39,6 @@ const CardDeal: React.FunctionComponent<CardDealProps> = (props) => {
       </TouchableOpacity>
     </View>
   );
-};
-
-CardDeal.propTypes = {
-  entreprise: PropTypes.string,
-  ville: PropTypes.string,
-  photo: PropTypes.string,
 };
 
 export default CardDeal;
