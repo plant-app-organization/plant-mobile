@@ -24,7 +24,7 @@ import { NoDeprecatedCustomRule } from 'graphql';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 interface HomeScreenProps {}
-
+//
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const [search, setSearch] = useState<string>('');
 
