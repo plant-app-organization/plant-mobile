@@ -14,7 +14,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 interface SigninScreenProps {}
 //
-
+//
 const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
   const [email, setEmail] = useState<string>('');
   const [motDePasse, setMotDePasse] = useState<string>('');
