@@ -45,6 +45,51 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
       prix: 18.0,
       photo: 'https://thumbs.dreamstime.com/z/plante-plante-green-flower-sun-summer-154287762.jpg',
     },
+    {
+      name: 'Plante kinthia',
+      prix: 38.0,
+      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+    },
+    {
+      name: 'Plante kinthia',
+      prix: 38.0,
+      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+    },
+    {
+      name: 'Plante kinthia',
+      prix: 38.0,
+      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+    },
+    {
+      name: 'Plante kinthia',
+      prix: 38.0,
+      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+    },
+    {
+      name: 'Plante kinthia',
+      prix: 38.0,
+      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+    },
+    {
+      name: 'Plante kinthia',
+      prix: 38.0,
+      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+    },
+    {
+      name: 'Plante kinthia',
+      prix: 38.0,
+      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+    },
+    {
+      name: 'Plante kinthia',
+      prix: 38.0,
+      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+    },
+    {
+      name: 'Plante kinthia',
+      prix: 38.0,
+      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+    },
   ];
 
   const plantes = plantesData.map((data, i) => {
@@ -59,6 +104,36 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         style={styles.background}
       >
         <SafeAreaView>
+          <View className='flex-row justify-around w-full'>
+            <TouchableOpacity
+              style={{
+                padding: 6,
+                backgroundColor: '#3FA96A',
+                borderRadius: 8 / 2,
+                width: '41%',
+              }}
+            >
+              <Text className='text-white text-center font-antipasto text-lg'>
+                {' '}
+                Liste des offres
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                padding: 6,
+                backgroundColor: 'transparent',
+                borderRadius: 8 / 2,
+                width: '41%',
+                borderColor: '#3FA96A',
+                borderWidth: 1,
+              }}
+            >
+              <Text className='text-black text-center font-antipasto text-lg'>
+                {' '}
+                Voir sur la carte
+              </Text>
+            </TouchableOpacity>
+          </View>
           <TextInput
             className='w-11/12 border-slate-400 border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
             placeholder='Rechercher une plante directement'
@@ -68,9 +143,9 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
           />
           <View className='items-start justify-start pt-4'>
             <View className='w-full'>
-              <Text className='p-4 pl-8'>👀 À la une</Text>
-              <ScrollView className='pl-6' showsHorizontalScrollIndicator={false}>
-                <View className='flex-row flex-wrap mr-12 w-screen'>{plantes}</View>
+              <Text className='p-4 pl-8'>500+ résultats</Text>
+              <ScrollView className='pl-6 w-screen' showsHorizontalScrollIndicator={false}>
+                <View className='flex-row flex-wrap justify-center'>{plantes}</View>
               </ScrollView>
             </View>
           </View>

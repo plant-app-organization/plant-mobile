@@ -11,8 +11,18 @@ interface CardProductProps {
 }
 
 const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
+  const [like, setLike] = useState(false);
+
+  const handleLikeMovie = () => {
+    setLike(!like);
+  };
+  let heartIconStyle = { cursor: 'pointer', color: '#d8d8d8' };
+  if (like) {
+    heartIconStyle = { color: '#e74c3c', cursor: 'pointer' };
+  }
+
   return (
-    <View>
+    <View className='mb-6 mr-4'>
       <TouchableOpacity>
         <View className='flex flex-row w-40 items-start mr-2 h-48'>
           <ImageBackground
@@ -28,14 +38,22 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
             imageStyle={{ borderRadius: 30 / 2, opacity: 0.8 }}
           ></ImageBackground>
         </View>
-        <View className='flex flex-row justify-between items-center pr-2'>
-          <View className='flex flex-column'>
-            <Text className='pl-2 pt-2 font-semibold'>{props.prix}€</Text>
-            <Text className='pl-2 pt-0'>{props.name}</Text>
-          </View>
-          <HeartIcon color={'#d8d8d8'} className='h-6 w-6 pr-2' />
-        </View>
       </TouchableOpacity>
+
+      <View className='flex flex-row justify-between items-center pr-2'>
+        <View className='flex flex-column'>
+          <Text className='pl-2 pt-2 font-semibold'>{props.prix}€</Text>
+          <Text className='pl-2 pt-0'>{props.name}</Text>
+        </View>
+        <TouchableOpacity>
+          <HeartIcon
+            color={'#d8d8d8'}
+            className='h-6 w-6 pr-2'
+            onPress={() => handleLikeMovie()}
+            style={heartIconStyle}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

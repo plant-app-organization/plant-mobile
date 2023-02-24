@@ -59,24 +59,26 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
     {
       entreprise: 'Jardinerie Ricard',
       ville: 'Marseille',
-      photo: 'https://i.ibb.co/Vv0bYNW/18518327-1340407739329394-7479063456192180221-o.jpg',
+      photo:
+        'https://i.ibb.co/km3V7wX/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-79207055-49ff-4af2-94bb-d4589ab29ca.png',
     },
     {
       entreprise: 'Truffaut',
       ville: 'Paris',
-      photo: 'https://thumbs.dreamstime.com/z/flower-shop-colorful-35979320.jpg',
+      photo:
+        'https://i.ibb.co/km3V7wX/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-79207055-49ff-4af2-94bb-d4589ab29ca.png',
     },
     {
       entreprise: 'Jardiland',
       ville: 'Marseille',
       photo:
-        'https://thumbs.dreamstime.com/z/flower-shop-owner-small-business-portrait-friendly-small-standing-front-counter-looking-camera-smiling-53055651.jpg',
+        'https://i.ibb.co/CKgsZ9v/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-0e9fca9d-9962-47db-824e-ec52ca710d5.png',
     },
     {
       entreprise: 'MonJardin.COM',
       ville: 'Marseille',
       photo:
-        'https://thumbs.dreamstime.com/z/flowers-outside-liberty-department-store-central-london-united-kingdom-august-th-109675225.jpg',
+        'https://i.ibb.co/wND4G6c/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-90935e01-c32d-428b-9e32-5d8929c45a5.png',
     },
   ];
 
@@ -87,28 +89,30 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       panier: '5 dès 8.99€',
 
       photo:
-        'https://thumbs.dreamstime.com/z/flowers-outside-liberty-department-store-central-london-united-kingdom-august-th-109675225.jpg',
+        'https://i.ibb.co/wND4G6c/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-90935e01-c32d-428b-9e32-5d8929c45a5.png',
     },
     {
       entreprise: 'Fleurette13',
       ville: 'Marseille',
       panier: '3 dès 4.99€',
       photo:
-        'https://thumbs.dreamstime.com/z/flower-shop-owner-small-business-portrait-friendly-small-standing-front-counter-looking-camera-smiling-53055651.jpg',
+        'https://i.ibb.co/CKgsZ9v/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-0e9fca9d-9962-47db-824e-ec52ca710d5.png',
     },
     {
       entreprise: 'Jardinerie Ricard',
       ville: 'Marseille',
       panier: '2 dès 3.99€',
 
-      photo: 'https://i.ibb.co/Vv0bYNW/18518327-1340407739329394-7479063456192180221-o.jpg',
+      photo:
+        'https://i.ibb.co/km3V7wX/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-79207055-49ff-4af2-94bb-d4589ab29ca.png',
     },
     {
       entreprise: 'Truffaut',
       ville: 'Paris',
       panier: '6 dès 6.99€',
 
-      photo: 'https://thumbs.dreamstime.com/z/flower-shop-colorful-35979320.jpg',
+      photo:
+        'https://i.ibb.co/q1SWKj9/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-5c0360d4-18f0-4798-8de9-1f081e263d5.png',
     },
   ];
 
@@ -253,7 +257,10 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                   width: '41%',
                 }}
               >
-                <Text className='text-white text-center'> Liste des offres</Text>
+                <Text className='text-white text-center font-antipasto text-lg'>
+                  {' '}
+                  Liste des offres
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -265,11 +272,14 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                   borderWidth: 1,
                 }}
               >
-                <Text className='text-black text-center'> Voir sur la carte</Text>
+                <Text className='text-black text-center font-antipasto text-lg'>
+                  {' '}
+                  Voir sur la carte
+                </Text>
               </TouchableOpacity>
             </View>
             <TextInput
-              className='w-11/12 border-slate-400 border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
+              className='w-11/12 border-slate-400 text-left font-antipasto border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
               placeholder='Rechercher une plante directement'
               value={search}
               onChangeText={(value) => setSearch(value)}
@@ -312,7 +322,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 <Text className='pl-8 pb-4 font-antipasto text-lg '>⚡ Publicité</Text>
                 <ImageBackground
                   source={{
-                    uri: 'https://thumbs.dreamstime.com/z/ryazan-russia-june-mcdonalds-france-mcdo-mobile-app-display-tablet-pc-ryazan-russia-june-mcdonalds-france-mcdo-mobile-119891387.jpg',
+                    uri: 'https://i.ibb.co/FWY0jhd/02-01-decouvrir-histoire-de-marseille.jpg',
                   }}
                   style={{
                     width: '100%',
