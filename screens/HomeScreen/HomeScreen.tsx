@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native';
 import { Spinner, Switch } from 'native-base';
 import { StatusBar } from 'expo-status-bar';
@@ -18,12 +19,13 @@ import CardCategorie from '../../components/categories/CardCategorie';
 import CardPlanter from '../../components/planters/CardPlanter';
 import CardSuggestion from '../../components/suggestions/CardSuggestion';
 import CardAntigaspi from '../../components/antigaspi/CardAntigaspi';
-
+import { Avatar } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NoDeprecatedCustomRule } from 'graphql';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 interface HomeScreenProps {}
-
+//
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const [search, setSearch] = useState<string>('');
 
@@ -238,16 +240,18 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       />
     );
   });
+  const { width, height } = useWindowDimensions();
 
   return (
-    <ScrollView className='w-screen' showsVerticalScrollIndicator={false}>
-      <LinearGradient
-        // Background Linear Gradient
-        colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
-        style={styles.background}
-      >
-        <SafeAreaView>
+    <LinearGradient
+      // Background Linear Gradient
+      colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
+      style={styles.background}
+    >
+      <SafeAreaView>
+        <ScrollView className='w-screen' showsVerticalScrollIndicator={false}>
           <View className='flex flex-column h-full justify-start items-start mt-4'>
+<<<<<<< HEAD
             <View className='flex-row justify-around w-full'>
               <TouchableOpacity
                 style={{
@@ -277,6 +281,31 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                   Voir sur la carte
                 </Text>
               </TouchableOpacity>
+=======
+            <View className='flex-row justify-around w-full items-center '>
+              <View>
+                <Avatar
+                  style={{}}
+                  bg='amber.500'
+                  source={{
+                    uri: 'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+                  }}
+                  size='lg'
+                >
+                  NB
+                  <Avatar.Badge bg='green.500' size='23%' />
+                </Avatar>
+                <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Mathis 👋</Text>
+              </View>
+              <View>
+                <FontAwesomeIcon
+                  style={{ opacity: 0.7 }}
+                  name='shopping-basket'
+                  size={width * 0.08}
+                />
+                <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Panier 🪴</Text>
+              </View>
+>>>>>>> 5741b6bc1b236aa8236a99a6d5c1d2b30cc900cc
             </View>
             <TextInput
               className='w-11/12 border-slate-400 text-left font-antipasto border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
@@ -372,12 +401,11 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               </View>
             </View>
           </View>
-        </SafeAreaView>
-      </LinearGradient>
-    </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
-
 const styles = StyleSheet.create({
   background: {
     width: '100%',
