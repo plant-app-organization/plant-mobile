@@ -20,7 +20,18 @@ const FirstPresentationScreen: React.FunctionComponent<FirstPresentationScreenPr
           <Text style={{ color: '#3FA96A' }} className='font-Gentle text-4xl font-bold'>
             Plante.
           </Text>
-          <Text className='font-antipasto text-white text-2xl font-bold'>
+          <Text
+            style={{
+              shadowColor: '#3FA96A',
+              shadowOffset: {
+                width: 2,
+                height: 2,
+              },
+              shadowOpacity: 3.22,
+              shadowRadius: 5.1,
+            }}
+            className='font-antipasto text-white text-2xl font-bold'
+          >
             Découvrez, achetez, vendez
           </Text>
         </View>
