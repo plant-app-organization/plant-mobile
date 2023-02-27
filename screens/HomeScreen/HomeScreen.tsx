@@ -272,12 +272,25 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               </View>
             </View>
             <TextInput
-              className='w-11/12 border-slate-400 border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
-              placeholder='Rechercher une plante directement'
+              style={{ backgroundColor: '#f2fff3' }}
+              className='w-11/12 border-emerald-100 border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
+              placeholder='Rechercher une plante ou un planter...'
               value={search}
               onChangeText={(value) => setSearch(value)}
               placeholderTextColor='#000'
             />
+            <View className='items-start justify-start pt-6 w-scree mb-2'>
+              <View className='flex-column items-start w-screen'>
+                <Text className='pt-4 pl-8 font-antipasto text-lg '>⭐ planters</Text>
+                <ScrollView
+                  className='w-full pl-2 pt-1 pl-6'
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                >
+                  {topplanters}
+                </ScrollView>
+              </View>
+            </View>
             <View className='flex items-start justify-start pt-4 w-screen'>
               <View className='flex-column items-start w-screen'>
                 <Text className='p-4 pl-8 font-antipasto text-lg '>
@@ -304,6 +317,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 </ScrollView>
               </View>
             </View>
+
             <View className='flex items-start justify-start pl-6 pt-4 w-screen'>
               <View className='flex-column items-start w-11/12'>
                 <Text className='p-4 font-antipasto text-lg '>🍃 Catégories</Text>
@@ -338,18 +352,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 </ScrollView>
               </View>
             </View>
-            <View className='items-start justify-start pt-6 w-scree mb-2'>
-              <View className='flex-column items-start w-screen'>
-                <Text className='pt-4 pl-8 font-antipasto text-lg '>⭐ Top planters</Text>
-                <ScrollView
-                  className='w-full pl-2 pt-1 pl-6'
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                >
-                  {topplanters}
-                </ScrollView>
-              </View>
-            </View>
+
             <View className='items-start justify-start pt-6 w-scree mb-9'>
               <View className='flex-column items-start w-screen'>
                 <Text className='pt-4 pb-4 pl-6 font-antipasto text-lg '>
