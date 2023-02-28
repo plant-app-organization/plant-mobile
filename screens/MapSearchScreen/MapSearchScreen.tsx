@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import { Spinner } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,81 +19,108 @@ interface MapSearchScreenProps {}
 
 const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) => {
   const [search, setSearch] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('Toutes les catégories');
 
-  const plantesData: { name: string; prix: number; photo: string }[] = [
+  const products: { name: string; prix: number; photo: string; categorie: string }[] = [
     {
       name: 'Montserrat1',
       prix: 60.0,
       photo: 'https://thumbs.dreamstime.com/z/plante-plante-green-flower-sun-summer-154287762.jpg',
+      categorie: 'plante grasse',
     },
     {
       name: 'Ficus Lyrata',
       prix: 20.0,
       photo: 'https://i.ibb.co/sWBGrQs/un-mur-de-monstera-6107712.webp',
+      categorie: 'plante rare',
     },
     {
       name: 'Plante kinthia',
       prix: 38.0,
       photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+      categorie: 'plante grasse',
     },
     {
       name: 'Montserrat2',
       prix: 98.0,
       photo: 'https://i.ibb.co/zX3qTxG/69570f4534a4212babd87b1b4d7e08088435ab30.jpg',
+      categorie: 'plante rare',
     },
     {
       name: 'Montserrat3',
       prix: 18.0,
       photo: 'https://thumbs.dreamstime.com/z/plante-plante-green-flower-sun-summer-154287762.jpg',
+      categorie: 'plante rare',
     },
     {
       name: 'Plante kinthia',
       prix: 38.0,
       photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+      categorie: 'plante rare',
     },
     {
       name: 'Plante kinthia',
       prix: 38.0,
       photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+      categorie: 'plante rare',
     },
     {
       name: 'Plante kinthia',
       prix: 38.0,
       photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+      categorie: 'plante grasse',
     },
     {
       name: 'Plante kinthia',
       prix: 38.0,
       photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+      categorie: 'plante grasse',
     },
     {
       name: 'Plante kinthia',
       prix: 38.0,
       photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+      categorie: 'plante grasse',
     },
     {
       name: 'Plante kinthia',
       prix: 38.0,
       photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+      categorie: 'plante grasse',
     },
     {
       name: 'Plante kinthia',
       prix: 38.0,
       photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+      categorie: 'plante grasse',
     },
     {
       name: 'Plante kinthia',
       prix: 38.0,
       photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+      categorie: 'plante grasse',
     },
     {
       name: 'Plante kinthia',
       prix: 38.0,
       photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
+      categorie: 'plante grasse',
     },
   ];
 
-  const plantes = plantesData.map((data, i) => {
+  const filterProducts = (product) => {
+    if (selectedCategory === 'Toutes les catégories') {
+      return true;
+    } else {
+      return product.categorie === selectedCategory;
+    }
+  };
+
+  let stylefilter = {};
+
+  const filteredProducts = products.filter(filterProducts);
+
+  const plantes = filteredProducts.map((data, i) => {
     return <CardProduct key={i} name={data.name} prix={data.prix} photo={data.photo} />;
   });
 
@@ -141,9 +169,42 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
             onChangeText={(value) => setSearch(value)}
             placeholderTextColor='#000'
           />
-          <View className='items-start justify-start pt-4'>
+
+          <View className='flex-row justify-around items-center w-full pt-4'>
+            <ScrollView
+              className='w-screen pl-4'
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <TouchableOpacity
+                onPress={() => setSelectedCategory('Toutes les catégories')}
+                className='bg-transparent border-slate-400 border-solid rounded-2xl border p-2 mr-2'
+              >
+                <Text>Toutes les catégories</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setSelectedCategory('plante grasse')}
+                className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
+              >
+                <Text>Plantes grasses</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setSelectedCategory('plante rare')}
+                className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
+              >
+                <Text>Plantes rares</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setSelectedCategory('plante int')}
+                className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
+              >
+                <Text>Plante d'intérieurs</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+          <View className='items-start justify-start pt-0'>
             <View className='w-full'>
-              <Text className='p-4 pl-8'>500+ résultats</Text>
+              <Text className='p-4 pl-6'>{plantes.length}+ résultats</Text>
               <ScrollView className='pl-6 w-screen' showsHorizontalScrollIndicator={false}>
                 <View className='flex-row flex-wrap justify-center'>{plantes}</View>
               </ScrollView>

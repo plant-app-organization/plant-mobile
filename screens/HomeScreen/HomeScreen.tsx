@@ -251,37 +251,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       <SafeAreaView>
         <ScrollView className='w-screen' showsVerticalScrollIndicator={false}>
           <View className='flex flex-column h-full justify-start items-start mt-4'>
-<<<<<<< HEAD
-            <View className='flex-row justify-around w-full'>
-              <TouchableOpacity
-                style={{
-                  padding: 6,
-                  backgroundColor: '#3FA96A',
-                  borderRadius: 8 / 2,
-                  width: '41%',
-                }}
-              >
-                <Text className='text-white text-center font-antipasto text-lg'>
-                  {' '}
-                  Liste des offres
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  padding: 6,
-                  backgroundColor: 'transparent',
-                  borderRadius: 8 / 2,
-                  width: '41%',
-                  borderColor: '#3FA96A',
-                  borderWidth: 1,
-                }}
-              >
-                <Text className='text-black text-center font-antipasto text-lg'>
-                  {' '}
-                  Voir sur la carte
-                </Text>
-              </TouchableOpacity>
-=======
             <View className='flex-row justify-around w-full items-center '>
               <View>
                 <Avatar
@@ -298,14 +267,8 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Mathis 👋</Text>
               </View>
               <View>
-                <FontAwesomeIcon
-                  style={{ opacity: 0.7 }}
-                  name='shopping-basket'
-                  size={width * 0.08}
-                />
-                <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Panier 🪴</Text>
+                <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>infos🪴</Text>
               </View>
->>>>>>> 5741b6bc1b236aa8236a99a6d5c1d2b30cc900cc
             </View>
             <TextInput
               className='w-11/12 border-slate-400 text-left font-antipasto border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
@@ -314,6 +277,18 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               onChangeText={(value) => setSearch(value)}
               placeholderTextColor='#000'
             />
+            <View className='items-start justify-start pt-6 w-scree mb-2'>
+              <View className='flex-column items-start w-screen'>
+                <Text className='pt-4 pl-8 font-antipasto text-lg '>⭐ Top planters</Text>
+                <ScrollView
+                  className='w-full pl-2 pt-1 pl-6'
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                >
+                  {topplanters}
+                </ScrollView>
+              </View>
+            </View>
             <View className='flex items-start justify-start pt-4 w-screen'>
               <View className='flex-column items-start w-screen'>
                 <Text className='p-4 pl-8 font-antipasto text-lg '>
@@ -374,18 +349,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 </ScrollView>
               </View>
             </View>
-            <View className='items-start justify-start pt-6 w-scree mb-2'>
-              <View className='flex-column items-start w-screen'>
-                <Text className='pt-4 pl-8 font-antipasto text-lg '>⭐ Top planters</Text>
-                <ScrollView
-                  className='w-full pl-2 pt-1 pl-6'
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                >
-                  {topplanters}
-                </ScrollView>
-              </View>
-            </View>
+
             <View className='items-start justify-start pt-6 w-scree mb-9'>
               <View className='flex-column items-start w-screen'>
                 <Text className='pt-4 pb-4 pl-6 font-antipasto text-lg '>
