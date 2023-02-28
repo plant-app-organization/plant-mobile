@@ -163,7 +163,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
             </TouchableOpacity>
           </View>
           <TextInput
-            className='w-11/12 border-slate-400 border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
+            className='w-11/12 w-11/12 border-green-50 border-solid bg-green-100 border text-left font-antipasto border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
             placeholder='Rechercher une plante directement'
             value={search}
             onChangeText={(value) => setSearch(value)}
