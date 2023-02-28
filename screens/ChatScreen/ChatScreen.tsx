@@ -62,7 +62,6 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
     </LinearGradient>
   );
 };
-
 const styles = StyleSheet.create({
   chatContainer: {
     flex: 1,
