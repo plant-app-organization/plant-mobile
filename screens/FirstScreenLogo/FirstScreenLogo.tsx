@@ -14,7 +14,7 @@ const FirstScreenLogo: React.FunctionComponent<FirstScreenLogoProps> = (props) =
         <Text
           style={{
             width: '100%',
-            height: '28%',
+            height: '27%',
             shadowColor: '#3FA96A',
             shadowOffset: {
               width: 2,
