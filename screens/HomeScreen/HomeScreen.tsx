@@ -271,13 +271,13 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               </View>
             </View>
             <TextInput
-              className='w-11/12 border-slate-400 text-left font-antipasto border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
+              className='w-11/12 border-green-50 border-solid bg-green-100 border text-left font-antipasto border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
               placeholder='Rechercher une plante directement'
               value={search}
               onChangeText={(value) => setSearch(value)}
               placeholderTextColor='#000'
             />
-            <View className='items-start justify-start pt-6 w-scree mb-2'>
+            <View className='items-start justify-start pt-4 w-scree mb-2'>
               <View className='flex-column items-start w-screen'>
                 <Text className='pt-4 pl-8 font-antipasto text-lg '>⭐ Top planters</Text>
                 <ScrollView
