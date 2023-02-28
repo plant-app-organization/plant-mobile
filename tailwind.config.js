@@ -13,6 +13,7 @@ module.exports = {
         Gentle: ['Gentle'],
         Roboto: ['Roboto'],
         antipasto: ['antipasto'],
+        helvetica: ['helvetica'],
       },
     },
   },
