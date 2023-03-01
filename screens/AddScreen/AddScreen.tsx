@@ -20,7 +20,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
       className='h-screen w-screen flex-1'
     >
-      <View className='w-screen h-screen items-center justify-evenly '>
+      <View className='w-screen h-full items-center justify-evenly '>
         <View className=' items-center mt-20'>
           <Text
             style={{

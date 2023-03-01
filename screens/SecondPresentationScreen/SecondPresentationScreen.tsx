@@ -32,7 +32,7 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
               shadowOpacity: 3.22,
               shadowRadius: 5.1,
             }}
-            className='font-antipasto text-white text-2xl font-bold'
+            className='font-helvetica text-white text-lg font-bold'
           >
             Découvrez, achetez, vendez
           </Text>

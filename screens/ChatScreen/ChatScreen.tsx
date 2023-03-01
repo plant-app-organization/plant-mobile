@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Animated } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+  Image,
+  SafeAreaView,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 interface ChatScreenProps {}
@@ -33,32 +42,51 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
       className='h-screen w-screen flex-1'
     >
-      <View className='h-screen w-screen flex-1 p-8 mt-10 justify-between'>
-        <View style={styles.chatContainer}>
-          {messages.map((item) => (
-            <View
-              key={item.id}
-              style={[
-                styles.messageContainer,
-                item.id % 2 === 0 ? styles.messageContainerRight : styles.messageContainerLeft,
-              ]}
-            >
-              <Animated.Text style={[styles.message]}>{item.message}</Animated.Text>
-            </View>
-          ))}
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder='Tapez votre message ici'
-            value={message}
-            onChangeText={(text) => setMessage(text)}
+      <SafeAreaView className='h-screen w-screen flex-1 justify-start items-center'>
+        <View className='w-screen items-center'>
+          <Image
+            style={{
+              width: '30%',
+              height: '38%',
+
+              shadowColor: '#3FA96A',
+              shadowOffset: {
+                width: 0,
+                height: 3,
+              },
+              shadowOpacity: 3.22,
+              shadowRadius: 5.1,
+            }}
+            source={require('../../assets/logo.png')}
           />
-          <TouchableOpacity style={styles.button} onPress={handleSend}>
-            <Text style={styles.buttonText}>Envoyer</Text>
-          </TouchableOpacity>
         </View>
-      </View>
+        <View className='h-screen w-screen flex-1 p-4 justify-start'>
+          <View style={styles.chatContainer}>
+            {messages.map((item) => (
+              <View
+                key={item.id}
+                style={[
+                  styles.messageContainer,
+                  item.id % 2 === 0 ? styles.messageContainerRight : styles.messageContainerLeft,
+                ]}
+              >
+                <Animated.Text style={[styles.message]}>{item.message}</Animated.Text>
+              </View>
+            ))}
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder='Tapez votre message ici'
+              value={message}
+              onChangeText={(text) => setMessage(text)}
+            />
+            <TouchableOpacity style={styles.button} onPress={handleSend}>
+              <Text style={styles.buttonText}>Envoyer</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </SafeAreaView>
     </LinearGradient>
   );
 };
@@ -127,10 +155,15 @@ const styles = StyleSheet.create({
   messageContainerLeft: {
     alignSelf: 'flex-start',
     marginRight: '50%',
+    textAlign: 'start',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   messageContainerRight: {
     alignSelf: 'flex-end',
     marginLeft: '50%',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
 });
 

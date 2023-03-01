@@ -28,10 +28,13 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
     require('../../assets/avatar4.png'),
   ];
 
+  const name = ['Joliflor', 'Floraroma', 'Beautiflore', 'Melodiflore'];
+
   const [progress, setProgress] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const zoomValue = useRef(new Animated.Value(0)).current;
+  const [nameEvo, setNameIndex] = useState(0);
 
   useEffect(() => {
     Animated.timing(zoomValue, {
@@ -51,18 +54,23 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
     if (progress < 25) {
       setProgress(progress + 5);
       setImageIndex(0);
+      setNameIndex(0);
     } else if (progress < 50) {
       setProgress(progress + 5);
       setImageIndex(1);
+      setNameIndex(1);
     } else if (progress < 75) {
       setProgress(progress + 5);
       setImageIndex(2);
+      setNameIndex(2);
     } else if (progress <= 95) {
       setProgress(progress + 5);
       setImageIndex(3);
+      setNameIndex(3);
     } else {
       setProgress(progress);
       setImageIndex(3);
+      setNameIndex(3);
     }
   };
 
@@ -233,7 +241,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
                     ]}
                   />
                   <Text className='font-antipasto text-black font-bold text-2xl'>
-                    tu passes au niveau suivant voila Chlorophylle
+                    tu passes au niveau suivant voila {name[nameEvo]}
                   </Text>
                   <TouchableOpacity style={styles.modalCloseButton} onPress={handleModalClose}>
                     <Text style={styles.modalCloseButtonText}>Close</Text>
