@@ -1,11 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { SafeAreaView, View, Text, Button, TouchableOpacity, Image } from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Button,
+  TouchableOpacity,
+  Image,
+  Modal,
+  StyleSheet,
+  Animated,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar } from 'native-base';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import ConfettiCannon from 'react-native-confetti-cannon';
 
 interface ProfileScreenProps {}
 
@@ -19,6 +30,22 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
 
   const [progress, setProgress] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const zoomValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(zoomValue, {
+      toValue: 1,
+      duration: 5000,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
+  useEffect(() => {
+    if (imageIndex > 0) {
+      setModalVisible(true);
+    }
+  }, [imageIndex]);
 
   const handleButtonClick = () => {
     if (progress < 25) {
@@ -48,9 +75,13 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
     personalPlants.push(<FontAwesomeIcon name='star' style={style} />);
   }
 
+  const handleModalClose = () => {
+    setModalVisible(false);
+  };
+
   return (
     <LinearGradient
-      colors={['#ccedcf', '#bee6c2', '#8CE795', '#8CE795', '#86E4A1', '#bee6c2']}
+      colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
       className='h-screen w-screen flex-1'
     >
       <View className='h-screen w-screen flex-1 p-10 justify-between'>
@@ -173,6 +204,42 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             </View>
             <View>
               <FontAwesomeIcon name='angle-right' size={18} />
+              <Modal visible={modalVisible}>
+                <View style={styles.modalContainer}>
+                  <ConfettiCannon
+                    count={200}
+                    explosionSpeed={600}
+                    fallSpeed={3000}
+                    origin={{ x: -10, y: 0 }}
+                    autoStart={true}
+                  />
+                  <Text className='font-antipasto text-black font-bold text-4xl'>
+                    Felicitation !!!
+                  </Text>
+                  <Animated.Image
+                    source={images[imageIndex]}
+                    style={[
+                      styles.image,
+                      {
+                        transform: [
+                          {
+                            scale: zoomValue.interpolate({
+                              inputRange: [0, 1],
+                              outputRange: [0, 1],
+                            }),
+                          },
+                        ],
+                      },
+                    ]}
+                  />
+                  <Text className='font-antipasto text-black font-bold text-2xl'>
+                    tu passes au niveau suivant voila Chlorophylle
+                  </Text>
+                  <TouchableOpacity style={styles.modalCloseButton} onPress={handleModalClose}>
+                    <Text style={styles.modalCloseButtonText}>Close</Text>
+                  </TouchableOpacity>
+                </View>
+              </Modal>
             </View>
           </TouchableOpacity>
         </View>
@@ -180,5 +247,40 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
     </LinearGradient>
   );
 };
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: '#8CE795',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    shadowColor: '#000',
+  },
+  modalCloseButton: {
+    backgroundColor: '#3FA96A',
+    borderRadius: 10,
+    marginTop: 20,
+    padding: 10,
+  },
+  modalCloseButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  image: {
+    marginTop: 20,
+    width: '80%',
+    height: '40%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 10,
+      height: 1,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 4.1,
+  },
+});
 
 export default ProfileScreen;

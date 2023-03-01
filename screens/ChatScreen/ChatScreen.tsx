@@ -1,18 +1,137 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { SafeAreaView, View, Text } from 'react-native';
-import { Spinner } from 'native-base';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Animated } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface ChatScreenProps {}
 
 const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([
+    { id: 1, message: 'Bonjour' },
+    { id: 2, message: 'Comment ça va ?' },
+    { id: 3, message: 'Je vais bien, merci !' },
+  ]);
+
+  const fadeIn = new Animated.Value(0);
+
+  const handleSend = () => {
+    if (message.trim() === '') return;
+
+    const newMessage = { id: messages.length + 1, message };
+    setMessages([...messages, newMessage]);
+    setMessage('');
+
+    fadeIn.setValue(0);
+    Animated.timing(fadeIn, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
   return (
-    <View className='flex flex-column h-full justify-center items-center'>
-      <Text className='p-4'>Chat</Text>
-      <Text className='bg-black p-4 '>🪴🪴🪴🪴🪴🪴🪴🪴🪴🪴🪴</Text>
-      <Spinner className='mt-10' color='indigo.500' />
-    </View>
+    <LinearGradient
+      colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
+      className='h-screen w-screen flex-1'
+    >
+      <View className='h-screen w-screen flex-1 p-8 mt-10 justify-between'>
+        <View style={styles.chatContainer}>
+          {messages.map((item) => (
+            <View
+              key={item.id}
+              style={[
+                styles.messageContainer,
+                item.id % 2 === 0 ? styles.messageContainerRight : styles.messageContainerLeft,
+              ]}
+            >
+              <Animated.Text style={[styles.message]}>{item.message}</Animated.Text>
+            </View>
+          ))}
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder='Tapez votre message ici'
+            value={message}
+            onChangeText={(text) => setMessage(text)}
+          />
+          <TouchableOpacity style={styles.button} onPress={handleSend}>
+            <Text style={styles.buttonText}>Envoyer</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </LinearGradient>
   );
 };
+const styles = StyleSheet.create({
+  chatContainer: {
+    flex: 1,
+    paddingHorizontal: 1,
+  },
+  messageContainer: {
+    backgroundColor: '#f2f2f2',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginBottom: 10,
+    height: 40,
+    width: 200,
+    shadowColor: '#3FA96A',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 15.22,
+    shadowRadius: 16.1,
+  },
+  message: {
+    fontSize: 16,
+    color: 'black',
+  },
+  inputContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+  },
+  input: {
+    flex: 1,
+
+    backgroundColor: '#f2f2f2',
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginRight: 10,
+    fontSize: 16,
+    shadowColor: '#3FA96A',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 16.22,
+    shadowRadius: 5.1,
+  },
+  button: {
+    backgroundColor: '#8CE795',
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  messageContainerLeft: {
+    alignSelf: 'flex-start',
+    marginRight: '50%',
+  },
+  messageContainerRight: {
+    alignSelf: 'flex-end',
+    marginLeft: '50%',
+  },
+});
 
 export default ChatScreen;
