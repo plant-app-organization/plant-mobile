@@ -315,6 +315,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 </ScrollView>
               </View>
             </View>
+
             <View className='flex items-start justify-start pl-6 pt-4 w-screen'>
               <View className='flex-column items-start w-11/12'>
                 <Text className='p-4 font-antipasto text-lg '>🍃 Catégories</Text>

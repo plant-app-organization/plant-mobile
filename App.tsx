@@ -25,6 +25,7 @@ export default function App() {
     Gentle: require('./assets/fonts/Gentle.otf'),
     Roboto: require('./assets/fonts/Roboto.ttf'),
     antipasto: require('./assets/fonts/antipasto.ttf'),
+    helvetica: require('./assets/fonts/helvetica.ttf'),
   });
 
   return (

@@ -20,7 +20,18 @@ const FirstPresentationScreen: React.FunctionComponent<FirstPresentationScreenPr
           <Text style={{ color: '#3FA96A' }} className='font-Gentle text-4xl font-bold'>
             Plante.
           </Text>
-          <Text className='font-antipasto text-white text-2xl font-bold'>
+          <Text
+            style={{
+              shadowColor: '#3FA96A',
+              shadowOffset: {
+                width: 2,
+                height: 2,
+              },
+              shadowOpacity: 3.22,
+              shadowRadius: 5.1,
+            }}
+            className='font-helvetica text-white text-lg font-bold'
+          >
             Découvrez, achetez, vendez
           </Text>
         </View>
@@ -40,10 +51,10 @@ const FirstPresentationScreen: React.FunctionComponent<FirstPresentationScreenPr
           source={require('../../assets/logo.png')}
         />
         <View className='w-full'>
-          <Text className='font-antipasto text-black text-2xl font-bold mt-8 leading-8 text-center'>
+          <Text className='font-helvetica text-black text-xl font-bold mt-8 leading-8 text-center'>
             Achetez, vendez ou échangez vos{' '}
-            <Text className='font-antipasto text-white font-bold'>plantes</Text> pour leur offrir
-            une <Text className='font-antipasto text-white font-bold'>nouvelle vie</Text> 🌱
+            <Text className='font-helvetica text-white font-bold'>plantes</Text> pour leur offrir
+            une <Text className='font-helvetica text-white font-bold'>nouvelle vie</Text> 🌱
           </Text>
           <View className='flex items-center mt-10 mb-10'>
             <View
@@ -67,7 +78,7 @@ const FirstPresentationScreen: React.FunctionComponent<FirstPresentationScreenPr
                 className='h-40 w-180 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
                 onPress={() => navigation.navigate('SecondPresentationScreen')}
               >
-                <Text className='font-antipasto text-black text-lg font-bold'>Suivant</Text>
+                <Text className='font-helvetica text-black text-s font-bold'>Suivant</Text>
               </TouchableOpacity>
             </View>
           </View>
