@@ -14,12 +14,13 @@ import {
 import { Spinner } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import CardProduct from '../../components/product/CardProduct';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
 
-interface MapSearchScreenProps {}
+interface FavorisScreenProps {}
 
-const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) => {
-  const [search, setSearch] = useState<string>('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('Toutes les catégories');
+const FavorisScreen: React.FunctionComponent<FavorisScreenProps> = (props) => {
+  const navigation = useNavigation();
 
   const products: { name: string; prix: number; photo: string; categorie: string }[] = [
     {
@@ -108,19 +109,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
     },
   ];
 
-  const filterProducts = (product) => {
-    if (selectedCategory === 'Toutes les catégories') {
-      return true;
-    } else {
-      return product.categorie === selectedCategory;
-    }
-  };
-
-  let stylefilter = {};
-
-  const filteredProducts = products.filter(filterProducts);
-
-  const plantes = filteredProducts.map((data, i) => {
+  const plantes = products.map((data, i) => {
     return <CardProduct key={i} name={data.name} prix={data.prix} photo={data.photo} />;
   });
 
@@ -132,76 +121,16 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         style={styles.background}
       >
         <SafeAreaView>
-          <View className='flex-row justify-around w-full'>
+          <View className='flex-row pl-6 pr-6 pb-2 items-center justify-between w-full'>
             <TouchableOpacity
-              style={{
-                padding: 6,
-                backgroundColor: '#3FA96A',
-                borderRadius: 8 / 2,
-                width: '41%',
-              }}
+              onPress={() => navigation.navigate('BottomTabs', { screen: 'Profile' })}
             >
-              <Text className='text-white text-center font-antipasto text-lg'>
-                {' '}
-                Liste des offres
-              </Text>
+              <FontAwesomeIcon name='angle-left' size={24} />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: 6,
-                backgroundColor: 'transparent',
-                borderRadius: 8 / 2,
-                width: '41%',
-                borderColor: '#3FA96A',
-                borderWidth: 1,
-              }}
-            >
-              <Text className='text-black text-center font-antipasto text-lg'>
-                {' '}
-                Voir sur la carte
-              </Text>
-            </TouchableOpacity>
+            <Text className='text-black text-center font-antipasto text-lg'>Mes Favoris</Text>
+            <FontAwesomeIcon name='heart' size={18} />
           </View>
-          <TextInput
-            className='w-11/12 w-11/12 border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
-            placeholder='Rechercher une plante directement'
-            value={search}
-            onChangeText={(value) => setSearch(value)}
-            placeholderTextColor='#000'
-          />
 
-          <View className='flex-row justify-around items-center w-full pt-4'>
-            <ScrollView
-              className='w-screen pl-4'
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              <TouchableOpacity
-                onPress={() => setSelectedCategory('Toutes les catégories')}
-                className='bg-transparent border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border p-2 mr-2'
-              >
-                <Text>Toutes les catégories</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setSelectedCategory('plante grasse')}
-                className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
-              >
-                <Text>Plantes grasses</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setSelectedCategory('plante rare')}
-                className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
-              >
-                <Text>Plantes rares</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setSelectedCategory('plante int')}
-                className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
-              >
-                <Text>Plante d'intérieurs</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          </View>
           <View className='items-start justify-start pt-0'>
             <View className='w-full'>
               <Text className='p-4 pl-6'>{plantes.length}+ résultats</Text>
@@ -228,4 +157,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MapSearchScreen;
+export default FavorisScreen;

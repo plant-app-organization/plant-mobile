@@ -1,6 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { SafeAreaView, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
 import { Spinner } from 'native-base';
 import { HeartIcon } from 'react-native-heroicons/solid';
 
@@ -12,9 +19,23 @@ interface CardProductProps {
 
 const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
   const [like, setLike] = useState(false);
+  const scaleAnimation = useRef(new Animated.Value(1)).current;
 
-  const handleLikeMovie = () => {
+  const handleLike = () => {
     setLike(!like);
+    // Animate the icon
+    Animated.sequence([
+      Animated.timing(scaleAnimation, {
+        toValue: 1.5,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnimation, {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
   };
   let heartIconStyle = { cursor: 'pointer', color: '#d8d8d8' };
   if (like) {
@@ -46,12 +67,14 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
           <Text className='pl-2 pt-0'>{props.name}</Text>
         </View>
         <TouchableOpacity>
-          <HeartIcon
-            color={'#d8d8d8'}
-            className='h-6 w-6 pr-2'
-            onPress={() => handleLikeMovie()}
-            style={heartIconStyle}
-          />
+          <Animated.View style={[{ transform: [{ scale: scaleAnimation }] }]}>
+            <HeartIcon
+              color={'#d8d8d8'}
+              className='h-6 w-6 pr-2'
+              onPress={() => handleLike()}
+              style={heartIconStyle}
+            />
+          </Animated.View>
         </TouchableOpacity>
       </View>
     </View>

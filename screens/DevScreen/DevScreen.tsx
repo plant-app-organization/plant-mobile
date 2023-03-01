@@ -44,6 +44,11 @@ const DevScreen: React.FunctionComponent<DevScreenProps> = (props) => {
         title='Go to Home Screen'
         onPress={() => navigation.navigate('BottomTabs')}
       />
+      <Button
+        className='p-4'
+        title='Go to Favoris Screen'
+        onPress={() => navigation.navigate('FavorisScreen')}
+      />
     </View>
   );
 };
