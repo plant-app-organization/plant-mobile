@@ -5,6 +5,7 @@ export type HomeStackNavigatorParamList = {
   HomeScreen: undefined;
   Signupscreen: undefined;
   Signinscreen: undefined;
+  FavorisScreen: undefined;
 };
 
 export type BottomTabNavigatorParamList = {
