@@ -15,13 +15,39 @@ import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Box } from 'native-base';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { useSignUp } from '@clerk/clerk-expo';
+import { SignUpWithOAuth } from '../../components/SignUpWithOAuth/SignUpWithOAuth';
 
 interface SignupScreenProps {}
 
 const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
-  const [nom, setNom] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
+  const [emailAddress, setEmailAddress] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const { isLoaded, signUp } = useSignUp();
+
+  const onSignUpPress = async () => {
+    if (!isLoaded) {
+      return;
+    }
+
+    try {
+      await signUp.create({
+        username,
+        emailAddress,
+        password,
+      });
+
+      // https://docs.clerk.dev/popular-guides/passwordless-authentication
+      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+
+      props.navigation.navigate('VerifyCode');
+    } catch (err: any) {
+      console.log('Error:> ' + err?.status || '');
+      console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err);
+    }
+  };
+  const onSignInPress = () => props.navigation.replace('SigninScreen');
 
   return (
     <LinearGradient
@@ -81,8 +107,8 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
-                  value={nom}
-                  onChangeText={setNom}
+                  value={username}
+                  onChangeText={setUsername}
                 />
               </View>
               <View
@@ -109,8 +135,8 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
-                  value={email}
-                  onChangeText={setEmail}
+                  value={emailAddress}
+                  onChangeText={setEmailAddress}
                 />
               </View>
               <View
@@ -154,7 +180,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 shadowOpacity: 15.22,
                 shadowRadius: 12.1,
               }}
-              onPress={() => console.log('hello toi')}
+              onPress={onSignUpPress}
             >
               <Text className='text-black text-lg font-antipasto'> Créer mon compte</Text>
             </TouchableOpacity>
@@ -163,25 +189,8 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
           <View className='w-full h-[40%] flex flex-col justify-evenly items-center'>
             <Text>OU</Text>
             <View className='h-[45%] flex flex-col justify-around'>
-              <TouchableOpacity
-                className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
-                style={{
-                  backgroundColor: '#ccedcf',
-                  shadowColor: '#3FA96A',
-                  shadowOffset: {
-                    width: 0,
-                    height: 3,
-                  },
-                  shadowOpacity: 15.22,
-                  shadowRadius: 12.1,
-                }}
-                onPress={() => console.log('hello google')}
-              >
-                <Text style={{ color: '#d24e41' }} className='text-black text-lg font-antipasto '>
-                  {' '}
-                  Continuer avec google <FontAwesomeIcon name='google-plus' size={15} />
-                </Text>
-              </TouchableOpacity>
+              <SignUpWithOAuth />
+
               <TouchableOpacity
                 className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
                 style={{
@@ -196,9 +205,26 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 }}
                 onPress={() => console.log('hello facebook')}
               >
-                <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
-                  {' '}
-                  Continuer avec Facebook <FontAwesomeIcon name='facebook' size={15} />
+                <Text className='text-black text-lg font-antipasto'>
+                  Continuer avec Facebook <FontAwesomeIcon name='facebook' size={19} />
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
+                style={{
+                  backgroundColor: '#ccedcf',
+                  shadowColor: '#3FA96A',
+                  shadowOffset: {
+                    width: 0,
+                    height: 3,
+                  },
+                  shadowOpacity: 15.22,
+                  shadowRadius: 12.1,
+                }}
+                onPress={onSignInPress}
+              >
+                <Text className='text-black text-lg font-antipasto'>
+                  Déjà inscrit ? Connectez-vous !
                 </Text>
               </TouchableOpacity>
             </View>

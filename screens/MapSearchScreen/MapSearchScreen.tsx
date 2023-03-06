@@ -173,9 +173,9 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
             </ScrollView>
           </View>
           <View className='items-start justify-start pt-0'>
-            <View className='w-screen'>
+            <View className='w-screen '>
               <Text className='p-4 pl-6'>{plantes.length}+ résultats</Text>
-              <ScrollView className='pl-6 w-full' showsHorizontalScrollIndicator={false}>
+              <ScrollView className='pl-6 w-screen' showsHorizontalScrollIndicator={false}>
                 <View className='w-screen flex-row flex-wrap'>{plantes}</View>
               </ScrollView>
             </View>

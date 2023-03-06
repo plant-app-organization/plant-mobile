@@ -23,12 +23,14 @@ import { Avatar } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NoDeprecatedCustomRule } from 'graphql';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
 
 interface HomeScreenProps {}
 //
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const [search, setSearch] = useState<string>('');
-
+  const { isSignedIn, user } = useUser();
+  console.log('user clerk ', user);
   const plantesData: { name: string; prix: number; photo: string }[] = [
     {
       name: 'Montserrat1',
@@ -251,25 +253,27 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       <SafeAreaView>
         <ScrollView className='w-screen' showsVerticalScrollIndicator={false}>
           <View className='flex flex-column h-full justify-start items-start mt-4'>
-            <View className='flex-row justify-around w-full items-center '>
-              <View>
-                <Avatar
-                  style={{}}
-                  bg='amber.500'
-                  source={{
-                    uri: 'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-                  }}
-                  size='lg'
-                >
-                  NB
-                  <Avatar.Badge bg='green.500' size='23%' />
-                </Avatar>
-                <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Mathis 👋</Text>
+            {isSignedIn && (
+              <View className='flex-row justify-around w-full items-center '>
+                <View>
+                  <Avatar
+                    style={{}}
+                    bg='amber.500'
+                    source={{
+                      uri: 'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+                    }}
+                    size='lg'
+                  >
+                    NB
+                    <Avatar.Badge bg='green.500' size='23%' />
+                  </Avatar>
+                  <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>{user?.username} 👋</Text>
+                </View>
+                <View>
+                  <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>infos🪴</Text>
+                </View>
               </View>
-              <View>
-                <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>infos🪴</Text>
-              </View>
-            </View>
+            )}
             <TextInput
               className='w-11/12 border-green-50 border-solid bg-green-100 border text-left font-antipasto border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
               placeholder='Rechercher une plante directement'

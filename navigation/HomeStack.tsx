@@ -11,10 +11,13 @@ import SecondPresentationScreen from '../screens/SecondPresentationScreen/Second
 import SignupScreen from '../screens/SignupScreen/SignupScreen';
 import SigninScreen from '../screens/SigninScreen/SigninScreen';
 import FavorisScreen from '../screens/FavorisScreen/FavorisScreen';
+import VerifyCodeScreen from '../screens/VerifyCodeScreen/VerifyCodeScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import ParamCompteScreen from '../screens/ParamCompteScreen/ParamCompteScreen';
 
 import BottomTabs from './Tabs';
+import LinkingConfiguration from './LinkingConfiguration';
+import { ClerkLoaded, useUser } from '@clerk/clerk-expo';
 import ParamScreen from '../screens/ParamScreen/ParamScreen';
 
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>();
@@ -31,6 +34,9 @@ const config = {
 };
 
 const HomeStackNavigator = () => {
+  const { isSignedIn } = useUser();
+  console.log('isSignedIn', isSignedIn);
+
   return (
     <SafeAreaProvider>
       <StatusBar style='dark' backgroundColor='white' />
@@ -39,79 +45,77 @@ const HomeStackNavigator = () => {
           headerShown: false,
         }}
       >
-        <HomeStack.Screen
-          name='DevScreen'
-          component={DevScreen}
-          options={{
-            animationTypeForReplace: 'push',
-            animation: 'slide_from_right',
-          }}
-        />
-        <HomeStack.Screen name='BottomTabs' component={BottomTabs} />
-        <HomeStack.Screen
-          name='FirstScreenLogo'
-          component={FirstScreenLogo}
-          options={{
-            animationTypeForReplace: 'push',
-            animation: 'slide_from_right',
-          }}
-        />
-        <HomeStack.Screen
-          name='FirstPresentationScreen'
-          component={FirstPresentationScreen}
-          options={{
-            animationTypeForReplace: 'push',
-            animation: 'slide_from_right',
-          }}
-        />
-        <HomeStack.Screen
-          name='SecondPresentationScreen'
-          component={SecondPresentationScreen}
-          options={{
-            animationTypeForReplace: 'push',
-            animation: 'slide_from_right',
-          }}
-        />
-        <HomeStack.Screen
-          name='SignupScreen'
-          component={SignupScreen}
-          options={{
-            animationTypeForReplace: 'push',
-            animation: 'slide_from_right',
-          }}
-        />
-        <HomeStack.Screen
-          name='SigninScreen'
-          component={SigninScreen}
-          options={{
-            animationTypeForReplace: 'push',
-            animation: 'slide_from_right',
-          }}
-        />
-        <HomeStack.Screen
-          name='FavorisScreen'
-          component={FavorisScreen}
-          options={{
-            animationTypeForReplace: 'push',
-            animation: 'slide_from_right',
-          }}
-        />
-        <HomeStack.Screen
-          name='ParamScreen'
-          component={ParamScreen}
-          options={{
-            animationTypeForReplace: 'push',
-            animation: 'slide_from_right',
-          }}
-        />
-        <HomeStack.Screen
-          name='ParamCompteScreen'
-          component={ParamCompteScreen}
-          options={{
-            animationTypeForReplace: 'push',
-            animation: 'slide_from_right',
-          }}
-        />
+        {!isSignedIn ? (
+          <>
+            {/* <HomeStack.Screen
+              name='DevScreen'
+              component={DevScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            /> */}
+            <HomeStack.Screen name='BottomTabs' component={BottomTabs} />
+            <HomeStack.Screen
+              name='FirstScreenLogo'
+              component={FirstScreenLogo}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='FirstPresentationScreen'
+              component={FirstPresentationScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='SecondPresentationScreen'
+              component={SecondPresentationScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='SignupScreen'
+              component={SignupScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='VerifyCode'
+              component={VerifyCodeScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='SigninScreen'
+              component={SigninScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='FavorisScreen'
+              component={FavorisScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+          </>
+        ) : (
+          <HomeStack.Screen name='BottomTabs' component={BottomTabs} />
+        )}
       </HomeStack.Navigator>
     </SafeAreaProvider>
   );

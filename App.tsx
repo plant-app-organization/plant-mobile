@@ -2,6 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, LogBox } from 'react-native';
 import { NativeBaseProvider, Spinner } from 'native-base';
 import React from 'react';
+import { ClerkProvider } from '@clerk/clerk-expo';
+import * as SecureStore from 'expo-secure-store';
+
 // import { API_URL } from '@env';
 import RootNavigator from './navigation';
 import { useFonts } from 'expo-font';
@@ -9,6 +12,22 @@ LogBox.ignoreAllLogs();
 
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client';
 
+const tokenCache = {
+  getToken(key: string) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return null;
+    }
+  },
+};
 export default function App() {
   // commetn
   //cx
@@ -30,10 +49,12 @@ export default function App() {
 
   return (
     <ApolloProvider client={client}>
-      <NativeBaseProvider>
-        <RootNavigator />
-        <StatusBar style='auto' />
-      </NativeBaseProvider>
+      <ClerkProvider publishableKey={process.env.CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
+        <NativeBaseProvider>
+          <RootNavigator />
+          <StatusBar style='auto' />
+        </NativeBaseProvider>
+      </ClerkProvider>
     </ApolloProvider>
   );
 }
