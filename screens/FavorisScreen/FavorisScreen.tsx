@@ -135,7 +135,7 @@ const FavorisScreen: React.FunctionComponent<FavorisScreenProps> = (props) => {
             <View className='w-full'>
               <Text className='p-4 pl-6'>{plantes.length}+ résultats</Text>
               <ScrollView className='pl-6 w-screen' showsHorizontalScrollIndicator={false}>
-                <View className='flex-row flex-wrap justify-center'>{plantes}</View>
+                <View className='w-screen flex-row flex-wrap'>{plantes}</View>
               </ScrollView>
             </View>
           </View>

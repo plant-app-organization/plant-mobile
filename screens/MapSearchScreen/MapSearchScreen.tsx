@@ -132,38 +132,8 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         style={styles.background}
       >
         <SafeAreaView>
-          <View className='flex-row justify-around w-full'>
-            <TouchableOpacity
-              style={{
-                padding: 6,
-                backgroundColor: '#3FA96A',
-                borderRadius: 8 / 2,
-                width: '41%',
-              }}
-            >
-              <Text className='text-white text-center font-antipasto text-lg'>
-                {' '}
-                Liste des offres
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: 6,
-                backgroundColor: 'transparent',
-                borderRadius: 8 / 2,
-                width: '41%',
-                borderColor: '#3FA96A',
-                borderWidth: 1,
-              }}
-            >
-              <Text className='text-black text-center font-antipasto text-lg'>
-                {' '}
-                Voir sur la carte
-              </Text>
-            </TouchableOpacity>
-          </View>
           <TextInput
-            className='w-11/12 w-11/12 border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
+            className='w-11/12 border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
             placeholder='Rechercher une plante directement'
             value={search}
             onChangeText={(value) => setSearch(value)}
@@ -203,10 +173,10 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
             </ScrollView>
           </View>
           <View className='items-start justify-start pt-0'>
-            <View className='w-full'>
+            <View className='w-screen'>
               <Text className='p-4 pl-6'>{plantes.length}+ résultats</Text>
-              <ScrollView className='pl-6 w-screen' showsHorizontalScrollIndicator={false}>
-                <View className='flex-row flex-wrap justify-center'>{plantes}</View>
+              <ScrollView className='pl-6 w-full' showsHorizontalScrollIndicator={false}>
+                <View className='w-screen flex-row flex-wrap'>{plantes}</View>
               </ScrollView>
             </View>
           </View>

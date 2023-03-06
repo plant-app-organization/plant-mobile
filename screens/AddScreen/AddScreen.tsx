@@ -176,11 +176,11 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 mt={1}
                 onValueChange={(itemValue) => setCategorie(itemValue)}
               >
-                <Select.Item label='Tropicales' value='plantes' />
-                <Select.Item label='Rares' value='plantes' />
-                <Select.Item label='Potager' value='plantes' />
-                <Select.Item label='Aromatiques' value='plantes' />
-                <Select.Item label='Cactus' value='plantes' />
+                <Select.Item label='Tropicales' value='Tropicales' />
+                <Select.Item label='Rares' value='Rares' />
+                <Select.Item label='Potager' value='Potager' />
+                <Select.Item label='Aromatiques' value='Aromatiques' />
+                <Select.Item label='Cactus' value='Cactus' />
               </Select>
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
                 veuillez faire une sélection!
@@ -192,8 +192,8 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               <Select
                 selectedValue={etat}
                 minWidth='200'
-                accessibilityLabel='Etat'
-                placeholder='Etat'
+                accessibilityLabel='Santé'
+                placeholder='Santé'
                 _selectedItem={{
                   bg: 'teal.600',
                   endIcon: <CheckIcon size={5} />,
@@ -201,9 +201,9 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 mt={1}
                 onValueChange={(itemValue) => setEtat(itemValue)}
               >
-                <Select.Item label='excellent' value='plantes' />
-                <Select.Item label='correcte' value='plantes' />
-                <Select.Item label='mauvais état' value='plantes' />
+                <Select.Item label='excellent' value='excellent' />
+                <Select.Item label='correcte' value='correcte' />
+                <Select.Item label='mauvais état' value='mauvais état' />
               </Select>
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
                 veuillez faire une sélection!
