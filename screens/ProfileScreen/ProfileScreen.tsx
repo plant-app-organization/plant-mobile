@@ -92,8 +92,42 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
       className='h-screen w-screen flex-1'
     >
-      <View className='h-screen w-screen flex-1 p-10 justify-between'>
-        <View className='flex-1 items-center '>
+      <Modal visible={modalVisible}>
+        <View style={styles.modalContainer}>
+          <ConfettiCannon
+            count={200}
+            explosionSpeed={600}
+            fallSpeed={3000}
+            origin={{ x: -10, y: 0 }}
+            autoStart={true}
+          />
+          <Text className='font-antipasto text-black font-bold text-4xl'>Felicitation !!!</Text>
+          <Animated.Image
+            source={images[imageIndex]}
+            style={[
+              styles.image,
+              {
+                transform: [
+                  {
+                    scale: zoomValue.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, 1],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          />
+          <Text className='font-antipasto text-black font-bold text-2xl'>
+            Bravo, tu passes au niveau suivant, évolution en {name[nameEvo]}
+          </Text>
+          <TouchableOpacity style={styles.modalCloseButton} onPress={handleModalClose}>
+            <Text style={styles.modalCloseButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+      <View className='h-screen w-screen flex-1 justify-between'>
+        <View className='flex-1 items-center pr-10 pl-10 '>
           <Image
             source={images[imageIndex]}
             style={{
@@ -114,57 +148,64 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             <Button title='Progress' onPress={handleButtonClick} />
           </View>
         </View>
-        <TouchableOpacity className=' flex-1' onPress={console.log('profil')}>
-          <View className='flex-1 flex-row items-center w-screen justify-between'>
-            <View className='justify-start'>
-              <View className='flex-1 flex-row items-center w-screen'>
-                <Avatar
-                  style={{
-                    shadowColor: '#000',
-                    shadowOffset: {
-                      width: 9,
-                      height: 0,
-                    },
-                    shadowOpacity: 0.22,
-                    shadowRadius: 4.1,
-                  }}
-                  bg='amber.500'
-                  source={{
-                    uri: 'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-                  }}
-                  size='lg'
-                >
-                  NB
-                  <Avatar.Badge
-                    style={{
-                      shadowColor: '#000',
-                      shadowOffset: {
-                        width: 5,
-                        height: 0,
-                      },
-                      shadowOpacity: 0.22,
-                      shadowRadius: 4.1,
-                    }}
-                    bg='green.500'
-                    size='23%'
-                  />
-                </Avatar>
-                <View className='ml-2'>
-                  <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Mathis</Text>
-                  <Text style={{ marginTop: 6, marginBottom: 6 }}>{personalPlants}</Text>
+        <View className=' flex-1 flex-column w-screen justify-start'>
+          <View className='flex-row w-screen items-start justify-between mt-4 ml-2'>
+            <Avatar
+              style={{
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 9,
+                  height: 0,
+                },
+                shadowOpacity: 0.22,
+                shadowRadius: 4.1,
+              }}
+              bg='amber.500'
+              source={{
+                uri: 'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+              }}
+              size='lg'
+            >
+              NB
+              <Avatar.Badge
+                style={{
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 5,
+                    height: 0,
+                  },
+                  shadowOpacity: 0.22,
+                  shadowRadius: 4.1,
+                }}
+                bg='green.500'
+                size='23%'
+              />
+            </Avatar>
+            <View className='ml-6'>
+              <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Mathis</Text>
+              <Text style={{ marginTop: 8, marginBottom: 8 }}>{personalPlants}</Text>
 
-                  <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Voir mon profil</Text>
-                </View>
-              </View>
+              <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Voir mon profil</Text>
             </View>
-            <FontAwesomeIcon style={{ marginRight: 19 }} name='angle-right' size={20} />
+            <View className='flex-1 items-center justify-center'></View>
+            <FontAwesomeIcon
+              style={{ marginRight: 19, marginTop: 12 }}
+              name='angle-right'
+              size={20}
+            />
           </View>
-        </TouchableOpacity>
+          <View className='items-center mt-6 w-screen'>
+            <Text>Mon impact</Text>
+            <TouchableOpacity className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'>
+              <Text>CO2</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
         <View className='items-center p-30 justify-between flex-1'>
           <View className='h-px w-screen bg-black opacity-30' />
           <TouchableOpacity
-            className='w-screen items-center flex-row flex-1 justify-start'
+            className='w-screen items-center flex-row flex-1 justify-start pr-6'
             onPress={console.log('favoris')}
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
@@ -177,7 +218,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           </TouchableOpacity>
           <View className='h-px w-screen bg-black opacity-30' />
           <TouchableOpacity
-            className='w-screen items-center flex-row flex-1 justify-start'
+            className='w-screen items-center flex-row flex-1 justify-start pr-6'
             onPress={console.log('ventes')}
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
@@ -190,7 +231,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           </TouchableOpacity>
           <View className='h-px w-screen bg-black opacity-30' />
           <TouchableOpacity
-            className='w-screen items-center flex-row flex-1 justify-start'
+            className='w-screen items-center flex-row flex-1 justify-start pr-6'
             onPress={console.log('parametres')}
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
@@ -203,7 +244,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           </TouchableOpacity>
           <View className='h-px w-screen bg-black opacity-30' />
           <TouchableOpacity
-            className='flex-1 flex-row items-center h-10 w-screen justify-between'
+            className='flex-1 flex-row items-center h-10 w-screen justify-between pr-6'
             onPress={console.log('avis')}
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
@@ -212,42 +253,6 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             </View>
             <View>
               <FontAwesomeIcon name='angle-right' size={18} />
-              <Modal visible={modalVisible}>
-                <View style={styles.modalContainer}>
-                  <ConfettiCannon
-                    count={200}
-                    explosionSpeed={600}
-                    fallSpeed={3000}
-                    origin={{ x: -10, y: 0 }}
-                    autoStart={true}
-                  />
-                  <Text className='font-antipasto text-black font-bold text-4xl'>
-                    Felicitation !!!
-                  </Text>
-                  <Animated.Image
-                    source={images[imageIndex]}
-                    style={[
-                      styles.image,
-                      {
-                        transform: [
-                          {
-                            scale: zoomValue.interpolate({
-                              inputRange: [0, 1],
-                              outputRange: [0, 1],
-                            }),
-                          },
-                        ],
-                      },
-                    ]}
-                  />
-                  <Text className='font-antipasto text-black font-bold text-2xl'>
-                    tu passes au niveau suivant voila {name[nameEvo]}
-                  </Text>
-                  <TouchableOpacity style={styles.modalCloseButton} onPress={handleModalClose}>
-                    <Text style={styles.modalCloseButtonText}>Close</Text>
-                  </TouchableOpacity>
-                </View>
-              </Modal>
             </View>
           </TouchableOpacity>
         </View>
