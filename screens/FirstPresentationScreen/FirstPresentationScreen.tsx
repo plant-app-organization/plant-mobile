@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { SafeAreaView, View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';

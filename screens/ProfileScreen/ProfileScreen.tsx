@@ -62,7 +62,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
   useEffect(() => {
     Animated.timing(zoomValue, {
       toValue: 1,
-      duration: 5000,
+      duration: 6000,
       useNativeDriver: true,
     }).start();
   }, []);
@@ -121,8 +121,8 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             source={images[imageIndex]}
             style={{
               marginTop: 20,
-              width: '50%',
-              height: '65%',
+              width: 130,
+              height: 135,
               shadowColor: '#000',
               shadowOffset: {
                 width: 10,
@@ -169,6 +169,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
                       shadowRadius: 4.1,
                     }}
                     bg='green.500'
+                    size={4}
                   />
                 </Avatar>
                 <View className='ml-2'>
@@ -247,7 +248,10 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             <View>
               <FontAwesomeIcon name='angle-right' size={18} />
               <Modal visible={modalVisible}>
-                <View style={styles.modalContainer}>
+                <View
+                  style={{ backgroundColor: '#8CE795' }}
+                  className='h-screen w-screen items-center justify-center rounded-sm shadow-black	'
+                >
                   <ConfettiCannon
                     count={200}
                     explosionSpeed={600}
@@ -256,29 +260,38 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
                     autoStart={true}
                   />
                   <Text className='font-antipasto text-black font-bold text-4xl'>
-                    Felicitation !!!
+                    Felicitations !!!
                   </Text>
                   <Animated.Image
                     source={images[imageIndex]}
-                    style={[
-                      styles.image,
-                      {
-                        transform: [
-                          {
-                            scale: zoomValue.interpolate({
-                              inputRange: [0, 1],
-                              outputRange: [0, 1],
-                            }),
-                          },
-                        ],
+                    className='mt-xl w-60 h-60 mt-10'
+                    style={{
+                      shadowColor: '#000',
+                      shadowOffset: {
+                        width: 10,
+                        height: 1,
                       },
-                    ]}
+                      shadowOpacity: 0.32,
+                      shadowRadius: 4.1,
+                      transform: [
+                        {
+                          scale: zoomValue.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 1],
+                          }),
+                        },
+                      ],
+                    }}
                   />
                   <Text className='font-antipasto text-black font-bold text-2xl'>
                     tu passes au niveau suivant voila {name[nameEvo]}
                   </Text>
-                  <TouchableOpacity style={styles.modalCloseButton} onPress={handleModalClose}>
-                    <Text style={styles.modalCloseButtonText}>Close</Text>
+                  <TouchableOpacity
+                    className='h-9 w-40 rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl mt-10'
+                    style={{ backgroundColor: '#3FA96A' }}
+                    onPress={handleModalClose}
+                  >
+                    <Text className='font-antipasto text-black text-xl'>Close</Text>
                   </TouchableOpacity>
                 </View>
               </Modal>
@@ -290,40 +303,5 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
     </LinearGradient>
   );
 };
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    height: '100%',
-    width: '100%',
-    backgroundColor: '#8CE795',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    shadowColor: '#000',
-  },
-  modalCloseButton: {
-    backgroundColor: '#3FA96A',
-    borderRadius: 10,
-    marginTop: 20,
-    padding: 10,
-  },
-  modalCloseButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  image: {
-    marginTop: 20,
-    width: '80%',
-    height: '40%',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 10,
-      height: 1,
-    },
-    shadowOpacity: 0.32,
-    shadowRadius: 4.1,
-  },
-});
 
 export default ProfileScreen;

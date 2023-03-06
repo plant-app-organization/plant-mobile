@@ -13,9 +13,12 @@ import SigninScreen from '../screens/SigninScreen/SigninScreen';
 import FavorisScreen from '../screens/FavorisScreen/FavorisScreen';
 import VerifyCodeScreen from '../screens/VerifyCodeScreen/VerifyCodeScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import ParamCompteScreen from '../screens/ParamCompteScreen/ParamCompteScreen';
+
 import BottomTabs from './Tabs';
 import LinkingConfiguration from './LinkingConfiguration';
 import { ClerkLoaded, useUser } from '@clerk/clerk-expo';
+import ParamScreen from '../screens/ParamScreen/ParamScreen';
 
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>();
 const config = {

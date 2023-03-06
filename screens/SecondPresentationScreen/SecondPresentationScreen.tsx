@@ -53,11 +53,11 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
           source={require('../../assets/logo2.png')}
         />
         <View className='w-full'>
-          <Text className='font-antipasto text-black text-2xl font-bold mt-8 leading-8 text-center'>
+          <Text className='font-helvetica   text-black text-xl font-bold mt-8 leading-8 text-center'>
             faites un geste pour la{' '}
-            <Text className='font-antipasto text-white font-bold'>planète</Text>: achetez une{' '}
-            <Text className='font-antipasto text-white font-bold'>local</Text> et luttez contre le{' '}
-            <Text className='font-antipasto text-white font-bold'>gaspillage</Text>
+            <Text className='font-helvetica  text-white font-bold'>planète</Text>: achetez une{' '}
+            <Text className='font-helvetica text-white font-bold'>local</Text> et luttez contre le{' '}
+            <Text className='font-helvetica  text-white font-bold'>gaspillage</Text>
           </Text>
           <View className='flex justify-center items-center mt-10 mb-10'>
             <View
@@ -81,7 +81,7 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
                 className='h-40 w-180 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
                 onPress={() => navigation.navigate('BottomTabs')}
               >
-                <Text className='font-antipasto text-black text-lg font-bold'>Suivant</Text>
+                <Text className='font-helvetica  text-black text-s font-bold'>Suivant</Text>
               </TouchableOpacity>
             </View>
           </View>
