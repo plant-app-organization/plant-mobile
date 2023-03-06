@@ -17,6 +17,7 @@ import { Avatar } from 'native-base';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
 
 interface ProfileScreenProps {}
 
@@ -27,14 +28,36 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
     require('../../assets/avatar3.png'),
     require('../../assets/avatar4.png'),
   ];
-
+  const { isSignedIn, user } = useUser();
+  if (!isSignedIn) {
+    props.navigation.replace('SigninScreen');
+  }
   const name = ['Joliflor', 'Floraroma', 'Beautiflore', 'Melodiflore'];
+  const { getToken, signOut } = useAuth();
+  const [sessionToken, setSessionToken] = React.useState('');
 
   const [progress, setProgress] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const zoomValue = useRef(new Animated.Value(0)).current;
   const [nameEvo, setNameIndex] = useState(0);
+
+  const onSignOutPress = async () => {
+    try {
+      await signOut();
+    } catch (err: any) {
+      console.log('Error:> ' + err?.status || '');
+      console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err);
+    }
+  };
+  useEffect(() => {
+    const scheduler = setInterval(async () => {
+      const token = await getToken();
+      setSessionToken(token as string);
+    }, 1000);
+
+    return () => clearInterval(scheduler);
+  }, []);
 
   useEffect(() => {
     Animated.timing(zoomValue, {
@@ -110,11 +133,11 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             }}
           />
           <View className='w-screen rounded-lg p-4'>
-            <ProgressBar progress={progress} height={15} color='#3FA96A' />
+            {/* <ProgressBar progress={progress} height={15} color='#3FA96A' /> */}
             <Button title='Progress' onPress={handleButtonClick} />
           </View>
         </View>
-        <TouchableOpacity className=' flex-1' onPress={console.log('profil')}>
+        <TouchableOpacity className=' flex-1' onPress={() => console.log('profil')}>
           <View className='flex-1 flex-row items-center w-screen justify-between'>
             <View className='justify-start'>
               <View className='flex-1 flex-row items-center w-screen'>
@@ -146,11 +169,10 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
                       shadowRadius: 4.1,
                     }}
                     bg='green.500'
-                    size='23%'
                   />
                 </Avatar>
                 <View className='ml-2'>
-                  <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Mathis</Text>
+                  <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>{user?.username}</Text>
                   <Text style={{ marginTop: 6, marginBottom: 6 }}>{personalPlants}</Text>
 
                   <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Voir mon profil</Text>
@@ -165,7 +187,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           <View className='h-px w-screen bg-black opacity-30' />
           <TouchableOpacity
             className='w-screen items-center flex-row flex-1 justify-start'
-            onPress={console.log('favoris')}
+            onPress={() => console.log('favoris')}
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='heart' size={18} />
@@ -178,7 +200,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           <View className='h-px w-screen bg-black opacity-30' />
           <TouchableOpacity
             className='w-screen items-center flex-row flex-1 justify-start'
-            onPress={console.log('ventes')}
+            onPress={() => console.log('ventes')}
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='bookmark' size={18} />
@@ -191,7 +213,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           <View className='h-px w-screen bg-black opacity-30' />
           <TouchableOpacity
             className='w-screen items-center flex-row flex-1 justify-start'
-            onPress={console.log('parametres')}
+            onPress={() => console.log('parametres')}
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='gears' size={20} />
@@ -201,10 +223,22 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
               <FontAwesomeIcon name='angle-right' size={20} />
             </View>
           </TouchableOpacity>
+          <TouchableOpacity
+            className='w-screen items-center flex-row flex-1 justify-start'
+            onPress={onSignOutPress}
+          >
+            <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
+              <FontAwesomeIcon className='opacity-30' name='gears' size={20} />
+              <Text className='text-lg font-antipasto ml-3'>Déconnexion</Text>
+            </View>
+            <View>
+              <FontAwesomeIcon name='angle-right' size={20} />
+            </View>
+          </TouchableOpacity>
           <View className='h-px w-screen bg-black opacity-30' />
           <TouchableOpacity
             className='flex-1 flex-row items-center h-10 w-screen justify-between'
-            onPress={console.log('avis')}
+            onPress={() => console.log('avis')}
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='commenting' size={18} />
@@ -252,6 +286,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           </TouchableOpacity>
         </View>
       </View>
+      {/* <Text style={styles.token}>{sessionToken}</Text> */}
     </LinearGradient>
   );
 };

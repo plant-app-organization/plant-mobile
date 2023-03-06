@@ -10,15 +10,43 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
+import { useToast } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { useSignIn } from '@clerk/clerk-expo';
+import { SignInWithOAuth } from '../../components/SignInWithOAuth/SignInWithOAuth';
 
 interface SigninScreenProps {}
 //
 //
 const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
-  const [email, setEmail] = useState<string>('');
-  const [motDePasse, setMotDePasse] = useState<string>('');
+  const [emailAddress, setEmailAddress] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const { signIn, setSession, isLoaded } = useSignIn();
+  const toast = useToast();
+  const onSignInPress = async () => {
+    if (!isLoaded) {
+      return;
+    }
+
+    try {
+      const completeSignIn = await signIn.create({
+        identifier: emailAddress,
+        password,
+      });
+
+      await setSession(completeSignIn.createdSessionId);
+    } catch (err) {
+      if (err) {
+        toast.show({
+          title: 'Email ou mot de passe incorrect',
+        });
+      }
+      console.log('Error:> ' + (err.errors ? err.errors[0].message : err));
+    }
+  };
+
+  const onSignUpPress = () => props.navigation.replace('SignupScreen');
 
   return (
     <LinearGradient
@@ -79,8 +107,8 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
-                  value={email}
-                  onChangeText={setEmail}
+                  value={emailAddress}
+                  onChangeText={setEmailAddress}
                 />
               </View>
               <View
@@ -107,8 +135,8 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
-                  value={motDePasse}
-                  onChangeText={setMotDePasse}
+                  value={password}
+                  onChangeText={setPassword}
                 />
               </View>
             </View>
@@ -124,7 +152,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 shadowOpacity: 15.22,
                 shadowRadius: 12.1,
               }}
-              onPress={() => console.log('hello toi')}
+              onPress={onSignInPress}
             >
               <Text className='text-black text-lg font-antipasto'> Connexion</Text>
             </TouchableOpacity>
@@ -145,11 +173,10 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                   shadowOpacity: 15.22,
                   shadowRadius: 12.1,
                 }}
-                onPress={() => console.log('hello google')}
+                onPress={() => console.log('hello facebook')}
               >
                 <Text className='text-black text-lg font-antipasto'>
-                  {' '}
-                  Continuer avec google <FontAwesomeIcon name='google-plus' size='15%' />
+                  Continuer avec Facebook <FontAwesomeIcon name='facebook' size={19} />
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -164,11 +191,10 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                   shadowOpacity: 15.22,
                   shadowRadius: 12.1,
                 }}
-                onPress={() => console.log('hello facebook')}
+                onPress={onSignUpPress}
               >
                 <Text className='text-black text-lg font-antipasto'>
-                  {' '}
-                  Continuer avec Facebook <FontAwesomeIcon name='facebook' size='15%' />
+                  Pas encore incrit ? Créer un compte !
                 </Text>
               </TouchableOpacity>
             </View>
