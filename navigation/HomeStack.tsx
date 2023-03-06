@@ -12,7 +12,10 @@ import SignupScreen from '../screens/SignupScreen/SignupScreen';
 import SigninScreen from '../screens/SigninScreen/SigninScreen';
 import FavorisScreen from '../screens/FavorisScreen/FavorisScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import ParamCompteScreen from '../screens/ParamCompteScreen/ParamCompteScreen';
+
 import BottomTabs from './Tabs';
+import ParamScreen from '../screens/ParamScreen/ParamScreen';
 
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>();
 const config = {
@@ -88,6 +91,22 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen
           name='FavorisScreen'
           component={FavorisScreen}
+          options={{
+            animationTypeForReplace: 'push',
+            animation: 'slide_from_right',
+          }}
+        />
+        <HomeStack.Screen
+          name='ParamScreen'
+          component={ParamScreen}
+          options={{
+            animationTypeForReplace: 'push',
+            animation: 'slide_from_right',
+          }}
+        />
+        <HomeStack.Screen
+          name='ParamCompteScreen'
+          component={ParamCompteScreen}
           options={{
             animationTypeForReplace: 'push',
             animation: 'slide_from_right',

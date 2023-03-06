@@ -49,6 +49,16 @@ const DevScreen: React.FunctionComponent<DevScreenProps> = (props) => {
         title='Go to Favoris Screen'
         onPress={() => navigation.navigate('FavorisScreen')}
       />
+      <Button
+        className='p-4'
+        title='Go to Param Screen'
+        onPress={() => navigation.navigate('ParamScreen')}
+      />
+      <Button
+        className='p-4'
+        title='Go to Param Compte Screen'
+        onPress={() => navigation.navigate('ParamCompteScreen')}
+      />
     </View>
   );
 };

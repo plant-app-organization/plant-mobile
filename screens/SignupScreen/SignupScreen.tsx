@@ -21,7 +21,7 @@ interface SignupScreenProps {}
 const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
   const [nom, setNom] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [motDePasse, setMotDePasse] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   return (
     <LinearGradient
@@ -137,8 +137,8 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
-                  value={motDePasse}
-                  onChangeText={setMotDePasse}
+                  value={password}
+                  onChangeText={setPassword}
                 />
               </View>
             </View>
@@ -177,9 +177,9 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 }}
                 onPress={() => console.log('hello google')}
               >
-                <Text className='text-black text-lg font-antipasto'>
+                <Text style={{ color: '#d24e41' }} className='text-black text-lg font-antipasto '>
                   {' '}
-                  Continuer avec google <FontAwesomeIcon name='google-plus' size='15%' />
+                  Continuer avec google <FontAwesomeIcon name='google-plus' size={15} />
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -196,9 +196,9 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 }}
                 onPress={() => console.log('hello facebook')}
               >
-                <Text className='text-black text-lg font-antipasto'>
+                <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
                   {' '}
-                  Continuer avec Facebook <FontAwesomeIcon name='facebook' size='15%' />
+                  Continuer avec Facebook <FontAwesomeIcon name='facebook' size={15} />
                 </Text>
               </TouchableOpacity>
             </View>

@@ -28,21 +28,16 @@ const ProgressBar: React.FC<Props> = ({ progress, height, color }) => {
   return (
     <View style={{ height }} className='rounded-xl'>
       <View
+        className='w-full h-full relative rounded-xl '
         style={{
-          width: '100%',
-          height: '100%',
           borderRadius: height / 2,
           backgroundColor: '#ccedcf',
-          position: 'relative',
         }}
       >
         <Animated.View
+          className='absolute h-full absolute '
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
             width,
-            height: '100%',
             borderRadius: height / 2,
             backgroundColor: color,
             zIndex: 1,
