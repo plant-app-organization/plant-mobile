@@ -11,6 +11,8 @@ import { useFonts } from 'expo-font';
 LogBox.ignoreAllLogs();
 
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
 
 const tokenCache = {
   getToken(key: string) {
@@ -29,13 +31,27 @@ const tokenCache = {
   },
 };
 export default function App() {
-  // commetn
-  //cx
   console.log(process.env.API_URL);
 
+  const httpLink = createHttpLink({
+    uri: process.env.API_URL,
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+    // const token = SecureStore.getItemAsync('token');
+
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    };
+  });
   // Initialize Apollo Client
   const client = new ApolloClient({
-    uri: 'localhost:4000/graphql',
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 
