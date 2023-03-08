@@ -16,6 +16,8 @@
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-native-fontawesome": "^0.3.0",
+    "@graphql-codegen/typescript-operations": "^3.0.1",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@heroicons/react": "^2.0.15",
     "@klarna/react-native-vector-drawable": "^0.4.0",
     "@react-navigation/bottom-tabs": "6",
@@ -51,6 +53,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@graphql-codegen/cli": "^3.2.1",
     "@types/react": "~18.0.27",
     "@types/react-native": "~0.70.6",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
