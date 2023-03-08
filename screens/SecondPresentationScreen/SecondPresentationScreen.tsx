@@ -79,7 +79,7 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
             >
               <TouchableOpacity
                 className='h-40 w-180 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
-                onPress={() => navigation.navigate('BottomTabs')}
+                onPress={() => navigation.navigate('HomeScreen')}
               >
                 <Text className='font-helvetica  text-black text-s font-bold'>Suivant</Text>
               </TouchableOpacity>

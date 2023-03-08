@@ -1,20 +1,33 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { SafeAreaView, View, Text, TouchableOpacity, TextInput } from 'react-native';
-import { Select, FormControl, WarningOutlineIcon, CheckIcon } from 'native-base';
+import { Select, FormControl, WarningOutlineIcon, CheckIcon, Modal } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
 
 interface AddScreenProps {}
 
 const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
+  const { isSignedIn, user } = useUser();
+  const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [titre, setTitre] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [prix, setPrix] = useState<string>('');
   const [categorie, setCategorie] = useState<string>('');
   const [etat, setEtat] = useState<string>('');
+  const [isOpen, setIsOpen] = useState<boolean | void | undefined>(false);
+  useEffect(() => {
+    !isSignedIn && setIsOpen(true);
+  }, [isSignedIn, isFocused]);
+
+  const handleNavigation = () => {
+    navigation.navigate('BottomTabs', { screen: 'Home' });
+    setIsOpen(false);
+  };
+
   return (
     <LinearGradient
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
@@ -56,7 +69,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             >
               <TouchableOpacity
                 className='h-40 w-200 rounded-10 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
-                onPress={console.log('photo')}
+                onPress={() => console.log('photo')}
               >
                 <Text className='font-antipasto text-black text-lg font-bold'>
                   + AJOUTER DES PHOTOS
@@ -120,7 +133,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               }}
             >
               <Text className='font-antipasto text-sm text-left text-xl font-antipasto'>
-                Décris ta pante :
+                Décris ta plante :
               </Text>
             </View>
             <TextInput
@@ -238,6 +251,31 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           </View>
         </View>
       </View>
+      <Modal isOpen={isOpen} safeAreaTop={true}>
+        <Modal.Content style={{ backgroundColor: '#f2fff3' }} maxWidth='350'>
+          <Modal.Header style={{ backgroundColor: '#f2fff3' }}>
+            <Text className='text-xl   ml-3 text-center'>
+              Connectez-vous pour découvrir toutes les fonctionnalités
+            </Text>
+          </Modal.Header>
+          <Modal.Body>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('BottomTabs', { screen: 'Profile' });
+              }}
+            >
+              <Text style={{ backgroundColor: '#f2fff3' }} className='text-md text-center  ml-3 '>
+                Se connecter ou s'inscrire
+              </Text>
+            </TouchableOpacity>
+          </Modal.Body>
+          <Modal.Footer style={{ backgroundColor: '#f2fff3' }}>
+            <TouchableOpacity onPress={handleNavigation}>
+              <Text className='text-xs   ml-3 text-center  '>Non merci</Text>
+            </TouchableOpacity>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
     </LinearGradient>
   );
 };

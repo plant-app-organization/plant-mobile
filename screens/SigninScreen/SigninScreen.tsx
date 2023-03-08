@@ -10,15 +10,48 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
+import { useToast } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { useSignIn } from '@clerk/clerk-expo';
+import { SignInWithOAuth } from '../../components/SignInWithOAuth/SignInWithOAuth';
 
 interface SigninScreenProps {}
 //
 //
 const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
-  const [email, setEmail] = useState<string>('');
+  const [emailAddress, setEmailAddress] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const { signIn, setSession, isLoaded } = useSignIn();
+  const toast = useToast();
+
+  const handleTextChange = (inputText) => {
+    setEmailAddress(inputText.toLowerCase());
+  };
+
+  const onSignInPress = async () => {
+    if (!isLoaded) {
+      return;
+    }
+
+    try {
+      const completeSignIn = await signIn.create({
+        identifier: emailAddress,
+        password,
+      });
+
+      await setSession(completeSignIn.createdSessionId);
+    } catch (err) {
+      if (err) {
+        toast.show({
+          title: 'Email ou mot de passe incorrect',
+        });
+      }
+      console.log('Error:> ' + (err.errors ? err.errors[0].message : err));
+    }
+  };
+
+  const onSignUpPress = () => props.navigation.replace('SignupScreen');
 
   return (
     <LinearGradient
@@ -79,8 +112,8 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
-                  value={email}
-                  onChangeText={setEmail}
+                  value={emailAddress}
+                  onChangeText={handleTextChange}
                 />
               </View>
               <View
@@ -109,11 +142,12 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                   style={{ height: 40, width: 240, fontSize: 20 }}
                   value={password}
                   onChangeText={setPassword}
+                  secureTextEntry={true}
                 />
               </View>
             </View>
             <TouchableOpacity
-              className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
+              className='h-[45px] w-[200px] rounded-3xl flex items-center justify-center'
               style={{
                 backgroundColor: '#ccedcf',
                 shadowColor: '#3FA96A',
@@ -124,7 +158,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 shadowOpacity: 15.22,
                 shadowRadius: 12.1,
               }}
-              onPress={() => console.log('hello toi')}
+              onPress={onSignInPress}
             >
               <Text className='text-black text-lg font-antipasto'> Connexion</Text>
             </TouchableOpacity>
@@ -134,26 +168,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
             <Text>OU</Text>
             <View className='h-[45%] flex flex-col justify-around'>
               <TouchableOpacity
-                className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
-                style={{
-                  backgroundColor: '#ccedcf',
-                  shadowColor: '#3FA96A',
-                  shadowOffset: {
-                    width: 0,
-                    height: 3,
-                  },
-                  shadowOpacity: 15.22,
-                  shadowRadius: 12.1,
-                }}
-                onPress={() => console.log('hello google')}
-              >
-                <Text style={{ color: '#d24e41' }} className='text-black text-lg font-antipasto'>
-                  {' '}
-                  Continuer avec google <FontAwesomeIcon name='google-plus' size={15} />
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
+                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
                 style={{
                   backgroundColor: '#ccedcf',
                   shadowColor: '#3FA96A',
@@ -166,9 +181,45 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 }}
                 onPress={() => console.log('hello facebook')}
               >
+                <Text style={{ color: '#d24e41' }} className='text-black text-lg font-antipasto'>
+                  Continuer avec google <FontAwesomeIcon name='google' size={15} />
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center mb-8 mt-8'
+                style={{
+                  backgroundColor: '#ccedcf',
+                  shadowColor: '#3FA96A',
+                  shadowOffset: {
+                    width: 0,
+                    height: 3,
+                  },
+                  shadowOpacity: 15.22,
+                  shadowRadius: 12.1,
+                }}
+                onPress={() => console.log('fb')}
+              >
                 <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
-                  {' '}
                   Continuer avec Facebook <FontAwesomeIcon name='facebook' size={15} />
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
+                style={{
+                  backgroundColor: '#ccedcf',
+                  shadowColor: '#3FA96A',
+                  shadowOffset: {
+                    width: 0,
+                    height: 3,
+                  },
+                  shadowOpacity: 15.22,
+                  shadowRadius: 12.1,
+                }}
+                onPress={onSignUpPress}
+              >
+                <Text className='text-black text-lg font-antipasto'>
+                  Pas encore inscrit ? Créer un commpte !
                 </Text>
               </TouchableOpacity>
             </View>
