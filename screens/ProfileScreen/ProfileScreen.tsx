@@ -304,6 +304,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
+
   },
   modalCloseButton: {
     backgroundColor: '#3FA96A',

@@ -254,6 +254,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
       <Modal isOpen={isOpen} safeAreaTop={true}>
         <Modal.Content style={{ backgroundColor: '#f2fff3' }} maxWidth='350'>
           <Modal.Header style={{ backgroundColor: '#f2fff3' }}>
+
             <Text className='text-xl   ml-3 text-center'>
               Connectez-vous pour découvrir toutes les fonctionnalités
             </Text>
@@ -272,6 +273,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           <Modal.Footer style={{ backgroundColor: '#f2fff3' }}>
             <TouchableOpacity onPress={handleNavigation}>
               <Text className='text-xs   ml-3 text-center  '>Non merci</Text>
+
             </TouchableOpacity>
           </Modal.Footer>
         </Modal.Content>

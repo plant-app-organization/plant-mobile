@@ -30,6 +30,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
     setEmailAddress(inputText.toLowerCase());
   };
 
+
   const onSignUpPress = async () => {
     if (!isLoaded) {
       return;
@@ -211,6 +212,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 onPress={() => console.log('hello facebook')}
               >
                 <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
+
                   Continuer avec Facebook <FontAwesomeIcon name='facebook' size={19} />
                 </Text>
               </TouchableOpacity>
