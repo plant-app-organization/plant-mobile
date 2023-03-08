@@ -26,6 +26,11 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
   const [password, setPassword] = useState<string>('');
   const { isLoaded, signUp } = useSignUp();
 
+  const handleTextChange = (inputText) => {
+    setEmailAddress(inputText.toLowerCase());
+  };
+
+
   const onSignUpPress = async () => {
     if (!isLoaded) {
       return;
@@ -136,7 +141,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
                   value={emailAddress}
-                  onChangeText={setEmailAddress}
+                  onChangeText={handleTextChange}
                 />
               </View>
               <View
@@ -165,11 +170,12 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                   style={{ height: 40, width: 240, fontSize: 20 }}
                   value={password}
                   onChangeText={setPassword}
+                  secureTextEntry={true}
                 />
               </View>
             </View>
             <TouchableOpacity
-              className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
+              className='h-[45px] w-[200px] rounded-3xl flex items-center justify-center'
               style={{
                 backgroundColor: '#ccedcf',
                 shadowColor: '#3FA96A',
@@ -192,7 +198,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
               <SignUpWithOAuth />
 
               <TouchableOpacity
-                className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
+                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center  mb-8 mt-8'
                 style={{
                   backgroundColor: '#ccedcf',
                   shadowColor: '#3FA96A',
@@ -205,12 +211,13 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 }}
                 onPress={() => console.log('hello facebook')}
               >
-                <Text className='text-black text-lg font-antipasto'>
+                <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
+
                   Continuer avec Facebook <FontAwesomeIcon name='facebook' size={19} />
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
+                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
                 style={{
                   backgroundColor: '#ccedcf',
                   shadowColor: '#3FA96A',

@@ -73,7 +73,7 @@ export function SignUpWithOAuth() {
 
   return (
     <TouchableOpacity
-      className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
+      className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
       style={{
         backgroundColor: '#ccedcf',
         shadowColor: '#3FA96A',
@@ -86,8 +86,8 @@ export function SignUpWithOAuth() {
       }}
       onPress={onPress}
     >
-      <Text className='text-black  font-antipasto'>
-        Sinscrire avec Google <FontAwesomeIcon name='google-plus' size={18} />
+      <Text style={{ color: '#d24e41' }} className=' font-antipasto'>
+        Continuer avec avec Google <FontAwesomeIcon name='google' size={18} />
       </Text>
     </TouchableOpacity>
   );

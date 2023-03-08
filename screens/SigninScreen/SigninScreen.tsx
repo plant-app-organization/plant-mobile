@@ -24,6 +24,12 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
   const [password, setPassword] = useState<string>('');
   const { signIn, setSession, isLoaded } = useSignIn();
   const toast = useToast();
+
+  const handleTextChange = (inputText) => {
+    setEmailAddress(inputText.toLowerCase());
+  };
+
+
   const onSignInPress = async () => {
     if (!isLoaded) {
       return;
@@ -108,7 +114,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
                   value={emailAddress}
-                  onChangeText={setEmailAddress}
+                  onChangeText={handleTextChange}
                 />
               </View>
               <View
@@ -137,11 +143,12 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                   style={{ height: 40, width: 240, fontSize: 20 }}
                   value={password}
                   onChangeText={setPassword}
+                  secureTextEntry={true}
                 />
               </View>
             </View>
             <TouchableOpacity
-              className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
+              className='h-[45px] w-[200px] rounded-3xl flex items-center justify-center'
               style={{
                 backgroundColor: '#ccedcf',
                 shadowColor: '#3FA96A',
@@ -162,7 +169,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
             <Text>OU</Text>
             <View className='h-[45%] flex flex-col justify-around'>
               <TouchableOpacity
-                className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
+                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
                 style={{
                   backgroundColor: '#ccedcf',
                   shadowColor: '#3FA96A',
@@ -176,11 +183,12 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 onPress={() => console.log('hello facebook')}
               >
                 <Text style={{ color: '#d24e41' }} className='text-black text-lg font-antipasto'>
-                  Continuer avec google <FontAwesomeIcon name='google-plus' size={15} />
+                  Continuer avec google <FontAwesomeIcon name='google' size={15} />
                 </Text>
               </TouchableOpacity>
+
               <TouchableOpacity
-                className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
+                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center mb-8 mt-8'
                 style={{
                   backgroundColor: '#ccedcf',
                   shadowColor: '#3FA96A',
@@ -191,6 +199,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                   shadowOpacity: 15.22,
                   shadowRadius: 12.1,
                 }}
+
                 onPress={onSignUpPress}
               >
                
@@ -215,6 +224,24 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                
                 <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
                   Continuer avec Facebook <FontAwesomeIcon name='facebook' size={15} />
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
+                style={{
+                  backgroundColor: '#ccedcf',
+                  shadowColor: '#3FA96A',
+                  shadowOffset: {
+                    width: 0,
+                    height: 3,
+                  },
+                  shadowOpacity: 15.22,
+                  shadowRadius: 12.1,
+                }}
+                onPress={onSignUpPress}
+              >
+                <Text className='text-black text-lg font-antipasto'>
+                  Pas encore inscrit ? Créer un commpte !
                 </Text>
               </TouchableOpacity>
             </View>

@@ -113,52 +113,54 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
       className='h-screen w-screen flex-1'
     >
-      <Modal visible={modalVisible}>
-        <View style={styles.modalContainer}>
-          <ConfettiCannon
-            count={200}
-            explosionSpeed={600}
-            fallSpeed={3000}
-            origin={{ x: -10, y: 0 }}
-            autoStart={true}
-          />
-          <Text className='font-antipasto text-black font-bold text-4xl'>Felicitation !!!</Text>
-          <Animated.Image
-            source={images[imageIndex]}
-            style={[
-              styles.image,
-              {
-                transform: [
-                  {
-                    scale: zoomValue.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, 1],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          />
-          <Text className='font-antipasto text-black font-bold text-2xl'>
-            Bravo, tu passes au niveau suivant, évolution en {name[nameEvo]}
-          </Text>
-          <TouchableOpacity style={styles.modalCloseButton} onPress={handleModalClose}>
-            <Text style={styles.modalCloseButtonText}>Close</Text>
-          </TouchableOpacity>
+      <Modal visible={modalVisible} safeAreaTop={true}>
+        <View className='justify-center item-center	bg-transparent'>
+          <View style={styles.modalContainer}>
+            <ConfettiCannon
+              count={200}
+              explosionSpeed={600}
+              fallSpeed={3000}
+              origin={{ x: -10, y: 0 }}
+              autoStart={true}
+            />
+            <Text className='font-antipasto text-black font-bold text-4xl'>Felicitation !!!</Text>
+            <Animated.Image
+              source={images[imageIndex]}
+              style={[
+                styles.image,
+                {
+                  transform: [
+                    {
+                      scale: zoomValue.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, 1],
+                      }),
+                    },
+                  ],
+                },
+              ]}
+            />
+            <Text className='font-antipasto text-black font-bold text-2xl'>
+              Bravo, tu passes au niveau suivant, évolution en {name[nameEvo]}
+            </Text>
+            <TouchableOpacity style={styles.modalCloseButton} onPress={handleModalClose}>
+              <Text style={styles.modalCloseButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
-      <View className='h-screen w-screen flex-1 justify-between'>
-        <View className='flex-1 items-center pr-10 pl-10 '>
+      <SafeAreaView className='h-screen w-screen flex-1 justify-between'>
+        <View className='flex-1 items-center pr-10 pl-10'>
           <Image
             source={images[imageIndex]}
             style={{
               marginTop: 20,
-              width: '50%',
-              height: '65%',
+              width: 130,
+              height: 120,
               shadowColor: '#000',
               shadowOffset: {
-                width: 10,
-                height: 1,
+                width: 2,
+                height: 2,
               },
               shadowOpacity: 0.32,
               shadowRadius: 4.1,
@@ -289,7 +291,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             </View>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     </LinearGradient>
   );
 };
@@ -302,7 +304,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    shadowColor: '#000',
+
   },
   modalCloseButton: {
     backgroundColor: '#3FA96A',
@@ -317,11 +319,11 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 20,
-    width: '80%',
-    height: '40%',
+    width: 200,
+    height: 200,
     shadowColor: '#000',
     shadowOffset: {
-      width: 10,
+      width: 5,
       height: 1,
     },
     shadowOpacity: 0.32,

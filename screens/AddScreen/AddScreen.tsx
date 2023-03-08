@@ -23,6 +23,11 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
     !isSignedIn && setIsOpen(true);
   }, [isSignedIn, isFocused]);
 
+  const handleNavigation = () => {
+    navigation.navigate('BottomTabs', { screen: 'Home' });
+    setIsOpen(false);
+  };
+
   return (
     <LinearGradient
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
@@ -247,8 +252,9 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
         </View>
       </View>
       <Modal isOpen={isOpen} safeAreaTop={true}>
-        <Modal.Content maxWidth='350'>
-          <Modal.Header>
+        <Modal.Content style={{ backgroundColor: '#f2fff3' }} maxWidth='350'>
+          <Modal.Header style={{ backgroundColor: '#f2fff3' }}>
+
             <Text className='text-xl   ml-3 text-center'>
               Connectez-vous pour découvrir toutes les fonctionnalités
             </Text>
@@ -259,16 +265,15 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 navigation.navigate('BottomTabs', { screen: 'Profile' });
               }}
             >
-              <Text className='text-md   ml-3 text-center'>Se connecter ou s'inscrire</Text>
+              <Text style={{ backgroundColor: '#f2fff3' }} className='text-md text-center  ml-3 '>
+                Se connecter ou s'inscrire
+              </Text>
             </TouchableOpacity>
           </Modal.Body>
-          <Modal.Footer onPress={() => navigation.navigate('Home')}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('BottomTabs', { screen: 'Home' });
-              }}
-            >
-              <Text className='text-xs   ml-3 text-center'>Non merci</Text>
+          <Modal.Footer style={{ backgroundColor: '#f2fff3' }}>
+            <TouchableOpacity onPress={handleNavigation}>
+              <Text className='text-xs   ml-3 text-center  '>Non merci</Text>
+
             </TouchableOpacity>
           </Modal.Footer>
         </Modal.Content>

@@ -121,11 +121,11 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             source={images[imageIndex]}
             style={{
               marginTop: 20,
-              width: 130,
-              height: 135,
+              width: 140,
+              height: 130,
               shadowColor: '#000',
               shadowOffset: {
-                width: 10,
+                width: 7,
                 height: 1,
               },
               shadowOpacity: 0.32,
