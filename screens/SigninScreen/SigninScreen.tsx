@@ -29,7 +29,6 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
     setEmailAddress(inputText.toLowerCase());
   };
 
-
   const onSignInPress = async () => {
     if (!isLoaded) {
       return;
@@ -187,7 +186,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center mb-8 mt-8'
                 style={{
                   backgroundColor: '#ccedcf',
@@ -206,7 +205,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
                 Pas encore inscrit ? Créer un commpte !
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
                 style={{
@@ -219,9 +218,8 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                   shadowOpacity: 15.22,
                   shadowRadius: 12.1,
                 }}
-                onPress={()=>console.log('fb')}
+                onPress={() => console.log('fb')}
               >
-               
                 <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
                   Continuer avec Facebook <FontAwesomeIcon name='facebook' size={15} />
                 </Text>
@@ -241,7 +239,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 onPress={onSignUpPress}
               >
                 <Text className='text-black text-lg font-antipasto'>
-                  Pas encore inscrit ? Créer un commpte !
+                  Pas encore inscrit ? Créer un compte !
                 </Text>
               </TouchableOpacity>
             </View>
