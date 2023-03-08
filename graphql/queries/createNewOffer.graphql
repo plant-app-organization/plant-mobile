@@ -1,0 +1,3 @@
+mutation createNewOffer($newOfferInput: OfferInput!) {
+  createNewOffer(newOfferInput: $newOfferInput)
+}

@@ -6,10 +6,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
+import { useCreateNewOfferMutation } from '../../graphql/graphql';
 
 interface AddScreenProps {}
 
 const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
+  const [createNewOffer] = useCreateNewOfferMutation();
+
+  const { getToken } = useAuth();
+  const [sessionToken, setSessionToken] = React.useState('');
+
   const { isSignedIn, user } = useUser();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
@@ -23,6 +29,27 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
     !isSignedIn && setIsOpen(true);
   }, [isSignedIn, isFocused]);
 
+  useEffect(() => {
+    const scheduler = setInterval(async () => {
+      const token = await getToken();
+      setSessionToken(token as string);
+    }, 1000);
+
+    return () => clearInterval(scheduler);
+  }, []);
+  const onCreateNewOfferPress = async () => {
+    const response = await createNewOffer({
+      variables: {
+        newOfferInput: {
+          plantName: titre,
+          pictureUrl:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Pescia%2C_museo_del_bonsai%2C_punica_granatum%2C_stile_moyogi_%28eretto_informale%29%2C_con_frutti.jpg/440px-Pescia%2C_museo_del_bonsai%2C_punica_granatum%2C_stile_moyogi_%28eretto_informale%29%2C_con_frutti.jpg',
+          price: 99,
+        },
+      },
+    });
+  };
+  console.log('sessionToken', sessionToken);
   return (
     <LinearGradient
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
@@ -237,7 +264,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               >
                 <TouchableOpacity
                   className='h-40 w-200 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
-                  onPress={console.log('ajouter')}
+                  onPress={onCreateNewOfferPress}
                 >
                   <Text className='font-antipasto text-black text-lg font-bold'>AJOUTER</Text>
                 </TouchableOpacity>
