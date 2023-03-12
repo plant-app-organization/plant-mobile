@@ -46,7 +46,7 @@ export default function App() {
     uri: process.env.API_URL,
   });
 
-  // Initialize Apollo Client
+  // Initialize Apollo Client.
   const authLink = setContext((_, { headers }) => {
     // get the authentication token from local storage if it exists
     // const token = SecureStore.getItemAsync('__clerk_client_jwt');
