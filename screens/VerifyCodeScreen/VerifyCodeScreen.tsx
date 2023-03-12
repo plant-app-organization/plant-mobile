@@ -4,7 +4,6 @@ import { useClerk, useSignUp } from '@clerk/clerk-expo';
 import { styles } from '../../components/SignInWithOAuth/Styles';
 import { LinearGradient } from 'expo-linear-gradient';
 
-
 export default function VerifyCodeScreen(props) {
   const { isLoaded, signUp, setSession } = useSignUp();
 
@@ -19,7 +18,6 @@ export default function VerifyCodeScreen(props) {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
-
       await setSession(completeSignUp.createdSessionId);
     } catch (err: any) {
       console.log('Error:> ' + err?.status || '');
@@ -100,6 +98,5 @@ export default function VerifyCodeScreen(props) {
         </View>
       </SafeAreaView>
     </LinearGradient>
-
   );
 }

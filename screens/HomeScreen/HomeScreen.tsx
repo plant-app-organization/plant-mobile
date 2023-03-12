@@ -23,14 +23,16 @@ import { Avatar } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NoDeprecatedCustomRule } from 'graphql';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
+import { useUser } from '@clerk/clerk-expo';
 
 interface HomeScreenProps {}
 //
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const [search, setSearch] = useState<string>('');
   const { isSignedIn, user } = useUser();
-  console.log('user clerk ', user);
+  // const { getToken } = useAuth();
+
+  // console.log('user clerk ', user);
   const plantesData: { name: string; prix: number; photo: string }[] = [
     {
       name: 'Montserrat1',

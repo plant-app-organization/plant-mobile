@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, LogBox } from 'react-native';
 import { NativeBaseProvider, Spinner } from 'native-base';
-import React from 'react';
+import React, { useState } from 'react';
 import { ClerkProvider } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
+import { setContext } from '@apollo/client/link/context';
 
 // import { API_URL } from '@env';
 import RootNavigator from './navigation';
@@ -11,9 +12,7 @@ import { useFonts } from 'expo-font';
 LogBox.ignoreAllLogs();
 
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
-
 const tokenCache = {
   getToken(key: string) {
     try {
@@ -31,25 +30,36 @@ const tokenCache = {
   },
 };
 export default function App() {
+  //
+  const [userToken, setUserToken] = useState<string | null>(null);
+
+  const retrieveToken = async () => {
+    const token = await SecureStore.getItemAsync('__clerk_client_jwt');
+    console.log('🔐userToken in SecureStore', token);
+    setUserToken(token);
+  };
+  retrieveToken();
   console.log(process.env.API_URL);
 
+  // const token = await getToken();
   const httpLink = createHttpLink({
     uri: process.env.API_URL,
   });
 
+  // Initialize Apollo Client
   const authLink = setContext((_, { headers }) => {
     // get the authentication token from local storage if it exists
-    // const token = SecureStore.getItemAsync('token');
-
+    // const token = SecureStore.getItemAsync('__clerk_client_jwt');
+    // console.log('token sent in headers', token);
     // return the headers to the context so httpLink can read them
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : '',
+        authorization: userToken ? `Bearer ${userToken}` : '',
       },
     };
   });
-  // Initialize Apollo Client
+
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),

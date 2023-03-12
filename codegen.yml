@@ -12,3 +12,5 @@ generates:
       withComponent: false
       withHooks: true
       apolloReactHooksImportFrom: '@apollo/client'
+      headers:
+        Authorization: 'Bearer ${TOKEN}' # replace `TOKEN` with the actual name of your token variable
