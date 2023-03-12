@@ -1,13 +1,17 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native';
-import { useClerk, useSignUp } from '@clerk/clerk-expo';
+import { useClerk, useSignUp, useSession } from '@clerk/clerk-expo';
 import { styles } from '../../components/SignInWithOAuth/Styles';
 import { LinearGradient } from 'expo-linear-gradient';
+import { sessionIdVar } from '../../variables/session';
+import { useRegisterMutation } from '../../graphql/graphql';
 
 export default function VerifyCodeScreen(props) {
   const { isLoaded, signUp, setSession } = useSignUp();
+  const { session } = useSession();
+  const [register] = useRegisterMutation();
 
-  const [code, setCode] = React.useState('');
+  const [code, setCode] = useState<string>('');
 
   const onPress = async () => {
     if (!isLoaded) {
@@ -18,7 +22,22 @@ export default function VerifyCodeScreen(props) {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
+      console.log('🧡completeSignUp', completeSignUp);
+      await register({
+        variables: {
+          newUserInput: {
+            email: completeSignUp.emailAddress,
+            userName: completeSignUp.username,
+            clerkId: completeSignUp.createdUserId,
+          },
+        },
+      });
       await setSession(completeSignUp.createdSessionId);
+
+      // sessionIdVar(completeSignUp.createdSessionId);
+
+      const userToken = session;
+      console.log('✨user', userToken);
     } catch (err: any) {
       console.log('Error:> ' + err?.status || '');
       console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err);
@@ -64,6 +83,7 @@ export default function VerifyCodeScreen(props) {
               placeholder='Code...'
               placeholderTextColor='#000'
               secureTextEntry={true}
+              keyboardType='numeric'
             />
           </View>
 

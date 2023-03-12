@@ -29,12 +29,16 @@ export type MutationCreateNewOfferArgs = {
 
 
 export type MutationRegisterArgs = {
-  registerInput: RegisterInput;
+  newUserInput: RegisterInput;
 };
 
 export type OfferInput = {
-  pictureUrl: Scalars['String'];
+  category: Scalars['String'];
+  description: Scalars['String'];
+  health: Scalars['String'];
+  pictures: Array<Scalars['String']>;
   plantName: Scalars['String'];
+  pot: Scalars['Boolean'];
   price: Scalars['Float'];
 };
 
@@ -44,11 +48,9 @@ export type Query = {
 };
 
 export type RegisterInput = {
-  birthYear: Scalars['Float'];
+  clerkId: Scalars['String'];
   email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  password: Scalars['String'];
+  userName: Scalars['String'];
 };
 
 export type CreateNewOfferMutationVariables = Exact<{
@@ -57,6 +59,13 @@ export type CreateNewOfferMutationVariables = Exact<{
 
 
 export type CreateNewOfferMutation = { __typename?: 'Mutation', createNewOffer: string };
+
+export type RegisterMutationVariables = Exact<{
+  newUserInput: RegisterInput;
+}>;
+
+
+export type RegisterMutation = { __typename?: 'Mutation', register: string };
 
 
 export const CreateNewOfferDocument = gql`
@@ -90,3 +99,34 @@ export function useCreateNewOfferMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type CreateNewOfferMutationHookResult = ReturnType<typeof useCreateNewOfferMutation>;
 export type CreateNewOfferMutationResult = Apollo.MutationResult<CreateNewOfferMutation>;
 export type CreateNewOfferMutationOptions = Apollo.BaseMutationOptions<CreateNewOfferMutation, CreateNewOfferMutationVariables>;
+export const RegisterDocument = gql`
+    mutation register($newUserInput: RegisterInput!) {
+  register(newUserInput: $newUserInput)
+}
+    `;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+
+/**
+ * __useRegisterMutation__
+ *
+ * To run a mutation, you first call `useRegisterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerMutation, { data, loading, error }] = useRegisterMutation({
+ *   variables: {
+ *      newUserInput: // value for 'newUserInput'
+ *   },
+ * });
+ */
+export function useRegisterMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
+export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
+export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;

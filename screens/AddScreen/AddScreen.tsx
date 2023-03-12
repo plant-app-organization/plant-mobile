@@ -19,11 +19,12 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   const { isSignedIn, user } = useUser();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
-  const [titre, setTitre] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [prix, setPrix] = useState<string>('');
-  const [categorie, setCategorie] = useState<string>('');
-  const [etat, setEtat] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
+  const [pot, setPot] = useState<boolean>(true);
+  const [health, setHealth] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean | void | undefined>(false);
   useEffect(() => {
     !isSignedIn && setIsOpen(true);
@@ -43,18 +44,28 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
     return () => clearInterval(scheduler);
   }, []);
   const onCreateNewOfferPress = async () => {
-    const response = await createNewOffer({
-      variables: {
-        newOfferInput: {
-          plantName: titre,
-          pictureUrl:
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Pescia%2C_museo_del_bonsai%2C_punica_granatum%2C_stile_moyogi_%28eretto_informale%29%2C_con_frutti.jpg/440px-Pescia%2C_museo_del_bonsai%2C_punica_granatum%2C_stile_moyogi_%28eretto_informale%29%2C_con_frutti.jpg',
-          price: 99,
+    if (title != '' && price != '' && description.length > 20) {
+      const response = await createNewOffer({
+        variables: {
+          newOfferInput: {
+            plantName: title,
+            description: description,
+            pictures: [
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Pescia%2C_museo_del_bonsai%2C_punica_granatum%2C_stile_moyogi_%28eretto_informale%29%2C_con_frutti.jpg/440px-Pescia%2C_museo_del_bonsai%2C_punica_granatum%2C_stile_moyogi_%28eretto_informale%29%2C_con_frutti.jpg',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Pescia%2C_museo_del_bonsai%2C_punica_granatum%2C_stile_moyogi_%28eretto_informale%29%2C_con_frutti.jpg/440px-Pescia%2C_museo_del_bonsai%2C_punica_granatum%2C_stile_moyogi_%28eretto_informale%29%2C_con_frutti.jpg',
+            ],
+            price: Number(price),
+            category,
+            health,
+            pot,
+          },
         },
-      },
-    });
+      });
+    } else {
+      alert('Erreur', 'Veuillez remplir tous les champs');
+    }
   };
-  console.log('sessionToken', sessionToken);
+
   return (
     <LinearGradient
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
@@ -134,8 +145,8 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             </View>
             <TextInput
               style={{ height: 40, width: 240, fontSize: 15 }}
-              value={titre}
-              onChangeText={setTitre}
+              value={title}
+              onChangeText={setTitle}
               placeholder='ex: Monstera avec pot...'
             />
           </View>
@@ -196,8 +207,8 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             </View>
             <TextInput
               style={{ height: 40, width: 240, fontSize: 15 }}
-              value={prix}
-              onChangeText={setPrix}
+              value={price}
+              onChangeText={setPrice}
               placeholder='ex: 18 euros...'
             />
           </View>
@@ -205,7 +216,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             <FormControl w='3/4' maxW='300' isRequired isInvalid>
               <Select
                 className='rounded-sm'
-                selectedValue={categorie}
+                selectedValue={category}
                 minWidth='200'
                 accessibilityLabel='Catégorie'
                 placeholder=' Catégorie'
@@ -214,7 +225,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   endIcon: <CheckIcon size={3} />,
                 }}
                 mt={1}
-                onValueChange={(itemValue) => setCategorie(itemValue)}
+                onValueChange={(itemValue) => setCategory(itemValue)}
               >
                 <Select.Item label='Tropicales' value='Tropicales' />
                 <Select.Item label='Rares' value='Rares' />
@@ -230,7 +241,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           <View>
             <FormControl w='3/4' maxW='300' isRequired isInvalid>
               <Select
-                selectedValue={etat}
+                selectedValue={health}
                 minWidth='200'
                 accessibilityLabel='Santé'
                 placeholder='Santé'
@@ -239,7 +250,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   endIcon: <CheckIcon size={5} />,
                 }}
                 mt={1}
-                onValueChange={(itemValue) => setEtat(itemValue)}
+                onValueChange={(itemValue) => setHealth(itemValue)}
               >
                 <Select.Item label='excellent' value='excellent' />
                 <Select.Item label='correcte' value='correcte' />

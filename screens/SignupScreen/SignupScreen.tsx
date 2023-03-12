@@ -10,6 +10,8 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
+import { sessionIdVar } from '../../variables/session';
+
 import { Spinner } from 'native-base';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -36,11 +38,22 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
     }
 
     try {
-      await signUp.create({
-        username,
-        emailAddress,
-        password,
-      });
+      await signUp
+        .create({
+          username,
+          emailAddress,
+          password,
+        })
+        .then((result) => {
+          console.log('result from signup create', result);
+          if (result.status === 'complete') {
+            console.log(result);
+            sessionIdVar(result.createdSessionId);
+          } else {
+            // console.log(result);
+          }
+        })
+        .catch((err) => console.error('error', err.errors[0].longMessage));
 
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
 

@@ -18,6 +18,7 @@ import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
+import * as SecureStore from 'expo-secure-store';
 
 interface ProfileScreenProps {}
 
@@ -44,6 +45,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
   const onSignOutPress = async () => {
     try {
       await signOut();
+      await SecureStore.deleteItemAsync('__clerk_client_jwt');
     } catch (err: any) {
       console.log('Error:> ' + err?.status || '');
       console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err);
@@ -205,7 +207,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
               />
             </Avatar>
             <View className='ml-6'>
-              <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Mathis</Text>
+              <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>{user?.username}</Text>
               <Text style={{ marginTop: 8, marginBottom: 8 }}>{personalPlants}</Text>
 
               <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Voir mon profil</Text>
@@ -255,7 +257,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           <View className='h-px w-screen bg-black opacity-30' />
           <TouchableOpacity
             className='w-screen items-center flex-row flex-1 justify-start pr-6'
-            onPress={console.log('parametres')}
+            onPress={() => console.log('parametres')}
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='gears' size={20} />
@@ -304,7 +306,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-
   },
   modalCloseButton: {
     backgroundColor: '#3FA96A',
