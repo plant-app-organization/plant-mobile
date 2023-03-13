@@ -87,9 +87,9 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           name: 'newPic',
         };
         data.append('file', source);
-        data.append('upload_preset', 'xoqungiv');
-        data.append('cloud_name', 'matthieudev');
-        fetch('https://api.cloudinary.com/v1_1/matthieudev/image/upload', {
+        data.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET);
+        data.append('cloud_name', process.env.CLOUDINARY_CLOUD_NAME);
+        fetch(`https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`, {
           method: 'post',
           body: data,
         })
