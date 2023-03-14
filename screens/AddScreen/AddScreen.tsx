@@ -68,42 +68,51 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   }, []);
 
   const addImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 0.2,
-    }).then((image) => {
-      // console.log('image', image);
-      if (image.canceled) {
-        return;
-      }
-      if (!image.canceled) {
-        console.log('image.assets', image.assets);
-        setIsLoaderOpen(true);
-        const data = new FormData();
-        const source = {
-          uri: image.assets[0].uri,
-          type: 'image/jpeg',
-          name: 'newPic',
-        };
-        data.append('file', source);
-        data.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET);
-        data.append('cloud_name', process.env.CLOUDINARY_CLOUD_NAME);
-        fetch(`https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`, {
-          method: 'post',
-          body: data,
-        })
-          .then((res) => res.json())
-          .then(async (data) => {
-            console.log('📸data.secure_url', data.secure_url);
-            setImagesUrls([...imagesUrls, data.secure_url]);
-            setIsLoaderOpen(false);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    });
+    if (imagesUrls.length < 3) {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 0.2,
+      }).then((image) => {
+        // console.log('image', image);
+        if (image.canceled) {
+          return;
+        }
+        if (!image.canceled) {
+          console.log('image.assets', image.assets);
+          setIsLoaderOpen(true);
+          const data = new FormData();
+          const source = {
+            uri: image.assets[0].uri,
+            type: 'image/jpeg',
+            name: 'newPic',
+          };
+          data.append('file', source);
+          data.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET);
+          data.append('cloud_name', process.env.CLOUDINARY_CLOUD_NAME);
+          fetch(
+            `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
+            {
+              method: 'post',
+              body: data,
+            },
+          )
+            .then((res) => res.json())
+            .then(async (data) => {
+              console.log('📸data.secure_url', data.secure_url);
+              setImagesUrls([...imagesUrls, data.secure_url]);
+              setIsLoaderOpen(false);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      });
+    } else {
+      toast.show({
+        title: '3 images maximum',
+      });
+    }
   };
   const onCreateNewOfferPress = async () => {
     if (title != '' && price != '' && description.length > 20 && imagesUrls.length) {

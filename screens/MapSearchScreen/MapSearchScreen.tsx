@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   SafeAreaView,
@@ -7,106 +7,21 @@ import {
   TextInput,
   ScrollView,
   StyleSheet,
-  ImageBackground,
   TouchableOpacity,
-  Button,
+  RefreshControl,
 } from 'react-native';
 import { Spinner } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import CardProduct from '../../components/product/CardProduct';
+import { useGetOffersQuery } from '../../graphql/graphql';
 
 interface MapSearchScreenProps {}
 
 const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) => {
+  const { data: offersData, refetch: refetchOffersData } = useGetOffersQuery();
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   const [search, setSearch] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('Toutes les catégories');
-
-  const products: { name: string; prix: number; photo: string; categorie: string }[] = [
-    {
-      name: 'Montserrat1',
-      prix: 60.0,
-      photo: 'https://thumbs.dreamstime.com/z/plante-plante-green-flower-sun-summer-154287762.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Ficus Lyrata',
-      prix: 20.0,
-      photo: 'https://i.ibb.co/sWBGrQs/un-mur-de-monstera-6107712.webp',
-      categorie: 'plante rare',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Montserrat2',
-      prix: 98.0,
-      photo: 'https://i.ibb.co/zX3qTxG/69570f4534a4212babd87b1b4d7e08088435ab30.jpg',
-      categorie: 'plante rare',
-    },
-    {
-      name: 'Montserrat3',
-      prix: 18.0,
-      photo: 'https://thumbs.dreamstime.com/z/plante-plante-green-flower-sun-summer-154287762.jpg',
-      categorie: 'plante rare',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante rare',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante rare',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-  ];
 
   const filterProducts = (product) => {
     if (selectedCategory === 'Toutes les catégories') {
@@ -115,14 +30,20 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
       return product.categorie === selectedCategory;
     }
   };
+  const wait = (timeout: number) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    wait(2000).then(() => {
+      refetchOffersData(), setRefreshing(false);
+    });
+  }, []);
 
   let stylefilter = {};
 
-  const filteredProducts = products.filter(filterProducts);
-
-  const plantes = filteredProducts.map((data, i) => {
-    return <CardProduct key={i} name={data.name} prix={data.prix} photo={data.photo} />;
-  });
+  // const filteredProducts = products.filter(filterProducts);
 
   return (
     <View className='w-screen'>
@@ -132,54 +53,77 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         style={styles.background}
       >
         <SafeAreaView>
-          <TextInput
-            className='w-11/12 border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
-            placeholder='Rechercher une plante directement'
-            value={search}
-            onChangeText={(value) => setSearch(value)}
-            placeholderTextColor='#000'
-          />
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                tintColor='#87BC23'
+                colors={['#87BC23', '#139DB8']}
+              />
+            }
+          >
+            <TextInput
+              className='w-11/12 border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
+              placeholder='Rechercher une plante directement'
+              value={search}
+              onChangeText={(value) => setSearch(value)}
+              placeholderTextColor='#000'
+            />
 
-          <View className='flex-row justify-around items-center w-full pt-4'>
-            <ScrollView
-              className='w-screen pl-4'
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              <TouchableOpacity
-                onPress={() => setSelectedCategory('Toutes les catégories')}
-                className='bg-transparent border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border p-2 mr-2'
+            <View className='flex-row justify-around items-center w-full pt-4'>
+              <ScrollView
+                className='w-screen pl-4'
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
               >
-                <Text>Toutes les catégories</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setSelectedCategory('plante grasse')}
-                className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
-              >
-                <Text>Plantes grasses</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setSelectedCategory('plante rare')}
-                className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
-              >
-                <Text>Plantes rares</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setSelectedCategory('plante int')}
-                className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
-              >
-                <Text>Plante d'intérieurs</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          </View>
-          <View className='items-start justify-start pt-0'>
-            <View className='w-screen '>
-              <Text className='p-4 pl-6'>{plantes.length}+ résultats</Text>
-              <ScrollView className='pl-6 w-screen' showsHorizontalScrollIndicator={false}>
-                <View className='w-screen flex-row flex-wrap'>{plantes}</View>
+                <TouchableOpacity
+                  onPress={() => setSelectedCategory('Toutes les catégories')}
+                  className='bg-transparent border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border p-2 mr-2'
+                >
+                  <Text>Toutes les catégories</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setSelectedCategory('plante grasse')}
+                  className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
+                >
+                  <Text>Plantes grasses</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setSelectedCategory('plante rare')}
+                  className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
+                >
+                  <Text>Plantes rares</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setSelectedCategory('plante int')}
+                  className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
+                >
+                  <Text>Plante d'intérieurs</Text>
+                </TouchableOpacity>
               </ScrollView>
             </View>
-          </View>
+            <View className='items-start justify-start pt-0'>
+              <View className='w-screen '>
+                <Text className='p-4 pl-6'>{offersData?.OffersList.length} résultats</Text>
+                <View className='pl-6 w-screen'>
+                  <View className='w-screen flex-row flex-wrap'>
+                    {offersData?.OffersList.map((offer, i) => {
+                      return (
+                        <CardProduct
+                          key={i}
+                          name={offer.plantName}
+                          prix={offer.price}
+                          photo={offer.pictures[0]}
+                        />
+                      );
+                    })}
+                  </View>
+                </View>
+              </View>
+            </View>
+          </ScrollView>
         </SafeAreaView>
       </LinearGradient>
     </View>

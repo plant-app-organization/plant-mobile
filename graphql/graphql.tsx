@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
 };
 
 export type Mutation = {
@@ -32,6 +33,22 @@ export type MutationRegisterArgs = {
   newUserInput: RegisterInput;
 };
 
+export type Offer = {
+  __typename?: 'Offer';
+  authorId: Scalars['String'];
+  category: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  description: Scalars['String'];
+  health: Scalars['String'];
+  id: Scalars['ID'];
+  isActive: Scalars['Boolean'];
+  pictures: Array<Scalars['String']>;
+  plantName: Scalars['String'];
+  pot: Scalars['Boolean'];
+  price: Scalars['Int'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type OfferInput = {
   category: Scalars['String'];
   description: Scalars['String'];
@@ -44,6 +61,8 @@ export type OfferInput = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Get List of Offers */
+  OffersList: Array<Offer>;
   hello: Scalars['String'];
 };
 
@@ -59,6 +78,11 @@ export type CreateNewOfferMutationVariables = Exact<{
 
 
 export type CreateNewOfferMutation = { __typename?: 'Mutation', createNewOffer: string };
+
+export type GetOffersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string> }> };
 
 export type RegisterMutationVariables = Exact<{
   newUserInput: RegisterInput;
@@ -99,6 +123,44 @@ export function useCreateNewOfferMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type CreateNewOfferMutationHookResult = ReturnType<typeof useCreateNewOfferMutation>;
 export type CreateNewOfferMutationResult = Apollo.MutationResult<CreateNewOfferMutation>;
 export type CreateNewOfferMutationOptions = Apollo.BaseMutationOptions<CreateNewOfferMutation, CreateNewOfferMutationVariables>;
+export const GetOffersDocument = gql`
+    query getOffers {
+  OffersList {
+    id
+    authorId
+    plantName
+    price
+    pictures
+  }
+}
+    `;
+
+/**
+ * __useGetOffersQuery__
+ *
+ * To run a query within a React component, call `useGetOffersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOffersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOffersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetOffersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetOffersQuery, GetOffersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetOffersQuery, GetOffersQueryVariables>(GetOffersDocument, options);
+      }
+export function useGetOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetOffersQuery, GetOffersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetOffersQuery, GetOffersQueryVariables>(GetOffersDocument, options);
+        }
+export type GetOffersQueryHookResult = ReturnType<typeof useGetOffersQuery>;
+export type GetOffersLazyQueryHookResult = ReturnType<typeof useGetOffersLazyQuery>;
+export type GetOffersQueryResult = Apollo.QueryResult<GetOffersQuery, GetOffersQueryVariables>;
 export const RegisterDocument = gql`
     mutation register($newUserInput: RegisterInput!) {
   register(newUserInput: $newUserInput)
