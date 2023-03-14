@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import {
+  Platform,
+  StatusBar,
   View,
   Text,
   TextInput,
@@ -44,7 +46,10 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
       className='h-screen w-screen flex-1'
     >
-      <SafeAreaView className='h-screen w-screen flex-1 justify-start items-center'>
+      <SafeAreaView
+        style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
+        className='h-screen w-screen flex-1 justify-start items-center'
+      >
         <View className='w-screen items-center'>
           <Image
             style={{
@@ -112,6 +117,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 15.22,
     shadowRadius: 16.1,
+    elevation: 10, // pour Android seulement
   },
   message: {
     fontSize: 16,
@@ -142,6 +148,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 16.22,
     shadowRadius: 5.1,
+    elevation: 10, // pour Android seulement
   },
   button: {
     backgroundColor: '#8CE795',

@@ -23,6 +23,7 @@ const FirstScreenLogo: React.FunctionComponent<FirstScreenLogoProps> = (props) =
             shadowOpacity: 3.22,
             shadowRadius: 5.1,
             fontSize: 58,
+            elevation: 3, // pour Android seulement
           }}
           className='font-Gentle text-white text-6xl'
         >

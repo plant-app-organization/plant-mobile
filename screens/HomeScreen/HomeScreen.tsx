@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
+  StatusBar,
+  Platform,
   SafeAreaView,
   View,
   Text,
@@ -12,7 +14,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { Spinner, Switch } from 'native-base';
-import { StatusBar } from 'expo-status-bar';
+
 import CardProduct from '../../components/product/CardProduct';
 import CardDeal from '../../components/super-deals/CardDeal';
 import CardCategorie from '../../components/categories/CardCategorie';
@@ -252,7 +254,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
       style={styles.background}
     >
-      <SafeAreaView>
+      <SafeAreaView
+        style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
+      >
         <ScrollView className='w-screen' showsVerticalScrollIndicator={false}>
           <View className='flex flex-column h-full justify-start items-start mt-4'>
             {isSignedIn && (

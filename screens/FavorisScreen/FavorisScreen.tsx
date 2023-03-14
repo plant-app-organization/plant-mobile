@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
+  Platform,
+  StatusBar,
   SafeAreaView,
   View,
   Text,
@@ -120,7 +122,9 @@ const FavorisScreen: React.FunctionComponent<FavorisScreenProps> = (props) => {
         colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
         style={styles.background}
       >
-        <SafeAreaView>
+        <SafeAreaView
+          style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
+        >
           <View className='flex-row pl-6 pr-6 pb-2 items-center justify-between w-full'>
             <TouchableOpacity
               onPress={() => navigation.navigate('BottomTabs', { screen: 'Profile' })}
