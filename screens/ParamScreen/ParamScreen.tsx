@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
+  Platform,
+  StatusBar,
   SafeAreaView,
   View,
   Text,
@@ -26,7 +28,10 @@ const ParamScreen: React.FunctionComponent<ParamScreenProps> = (props) => {
       colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
       className='h-screen w-screen '
     >
-      <SafeAreaView className='h-screen w-screen flex-1 justify-start items-center'>
+      <SafeAreaView
+        style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
+        className='h-screen w-screen flex-1 justify-start items-center'
+      >
         <View className='w-screen items-center'>
           <Image
             style={{

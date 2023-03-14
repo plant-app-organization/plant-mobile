@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
+  StatusBar,
+  Platform,
   SafeAreaView,
   View,
   Text,
@@ -9,6 +11,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   RefreshControl,
+  Platform,
 } from 'react-native';
 import { Spinner } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -52,7 +55,9 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
         style={styles.background}
       >
-        <SafeAreaView>
+        <SafeAreaView
+          style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
+        >
           <ScrollView
             showsVerticalScrollIndicator={false}
             refreshControl={
