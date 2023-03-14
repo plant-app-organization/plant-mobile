@@ -103,6 +103,7 @@ export default function VerifyCodeScreen(props) {
                 },
                 shadowOpacity: 15.22,
                 shadowRadius: 16.1,
+                elevation: 3, // pour Android seulement
               }}
             >
               <TouchableOpacity

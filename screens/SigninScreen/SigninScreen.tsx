@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
+  Platform,
+  StatusBar,
   SafeAreaView,
   View,
   StyleSheet,
@@ -58,7 +60,9 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
       colors={['#ccedcf', '#bee6c2', '#8CE795', '#8CE795', '#86E4A1', '#bee6c2']}
       className=' w-screen h-screen px-22'
     >
-      <SafeAreaView>
+      <SafeAreaView
+        style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
+      >
         <View className='w-full h-full px-22'>
           <View className='flex items-center justify-end h-[15%]'>
             <Text style={{ color: '#3FA96A' }} className='font-Gentle text-3xl'>
@@ -76,6 +80,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 },
                 shadowOpacity: 3.22,
                 shadowRadius: 5.1,
+                elevation: 10, // pour Android seulement
               }}
             >
               Découvrez, achetez, vendez
@@ -114,6 +119,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                   style={{ height: 40, width: 240, fontSize: 20 }}
                   value={emailAddress}
                   onChangeText={handleTextChange}
+                  autoCapitalize='none'
                 />
               </View>
               <View
@@ -157,6 +163,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 },
                 shadowOpacity: 15.22,
                 shadowRadius: 12.1,
+                elevation: 10, // pour Android seulement
               }}
               onPress={onSignInPress}
             >
@@ -178,6 +185,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                   },
                   shadowOpacity: 15.22,
                   shadowRadius: 12.1,
+                  elevation: 10, // pour Android seulement
                 }}
                 onPress={() => console.log('hello facebook')}
               >
@@ -197,6 +205,8 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                   },
                   shadowOpacity: 15.22,
                   shadowRadius: 12.1,
+                      elevation: 10, // pour Android seulement
+
                 }}
 
                 onPress={onSignUpPress}
@@ -235,6 +245,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                   },
                   shadowOpacity: 15.22,
                   shadowRadius: 12.1,
+                  elevation: 10, // pour Android seulement
                 }}
                 onPress={onSignUpPress}
               >

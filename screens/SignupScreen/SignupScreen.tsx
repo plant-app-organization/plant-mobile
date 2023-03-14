@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
+  Platform,
+  StatusBar,
   SafeAreaView,
   View,
   StyleSheet,
@@ -13,7 +15,6 @@ import {
 import { sessionIdVar } from '../../variables/session';
 
 import { Spinner } from 'native-base';
-import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Box } from 'native-base';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -70,7 +71,9 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
       colors={['#ccedcf', '#bee6c2', '#8CE795', '#8CE795', '#86E4A1', '#bee6c2']}
       className=' w-screen h-screen px-22'
     >
-      <SafeAreaView>
+      <SafeAreaView
+        style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
+      >
         <View className='w-full h-full px-22'>
           <View className='flex items-center justify-end h-[15%]'>
             <Text style={{ color: '#3FA96A' }} className='font-Gentle text-3xl'>
@@ -87,6 +90,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 },
                 shadowOpacity: 3.22,
                 shadowRadius: 5.1,
+                elevation: 10, // pour Android seulement
               }}
               className='text-white text-center text-xl font-antipasto'
             >
@@ -125,6 +129,8 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                   style={{ height: 40, width: 240, fontSize: 20 }}
                   value={username}
                   onChangeText={setUsername}
+                  autoCapitalize='none'
+                  autoCorrect={false}
                 />
               </View>
               <View
@@ -153,6 +159,8 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                   style={{ height: 40, width: 240, fontSize: 20 }}
                   value={emailAddress}
                   onChangeText={handleTextChange}
+                  autoCapitalize='none'
+                  autoCorrect={false}
                 />
               </View>
               <View
@@ -196,6 +204,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 },
                 shadowOpacity: 15.22,
                 shadowRadius: 12.1,
+                elevation: 10, // pour Android seulement
               }}
               onPress={onSignUpPress}
             >
@@ -219,6 +228,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                   },
                   shadowOpacity: 15.22,
                   shadowRadius: 12.1,
+                  elevation: 10, // pour Android seulement
                 }}
                 onPress={() => console.log('hello facebook')}
               >
@@ -237,6 +247,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                   },
                   shadowOpacity: 15.22,
                   shadowRadius: 12.1,
+                  elevation: 10, // pour Android seulement
                 }}
                 onPress={onSignInPress}
               >

@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
+  StatusBar,
+  Platform,
   SafeAreaView,
   View,
   Text,
@@ -131,7 +133,9 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
         style={styles.background}
       >
-        <SafeAreaView>
+        <SafeAreaView
+          style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
+        >
           <TextInput
             className='w-11/12 border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
             placeholder='Rechercher une plante directement'
