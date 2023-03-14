@@ -1,0 +1,9 @@
+query getOffers {
+  OffersList {
+    id
+    authorId
+    plantName
+    price
+    pictures
+  }
+}
