@@ -48,10 +48,12 @@ export default function App() {
 
   // Initialize Apollo Client.
   const authLink = setContext((_, { headers }) => {
-    // get the authentication token from local storage if it exists
-    // const token = SecureStore.getItemAsync('__clerk_client_jwt');
-    // console.log('token sent in headers', token);
-    // return the headers to the context so httpLink can read them
+    const retrieveToken = async () => {
+      const token = await SecureStore.getItemAsync('__clerk_client_jwt');
+      console.log('🔐userToken in SecureStore', token);
+      setUserToken(token);
+    };
+    retrieveToken();
     return {
       headers: {
         ...headers,
