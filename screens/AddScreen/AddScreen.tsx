@@ -120,6 +120,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   };
   const onCreateNewOfferPress = async () => {
     if (title != '' && price != '' && description.length > 20 && imagesUrls.length) {
+      console.log('🧡requete!');
       const response = await createNewOffer({
         variables: {
           newOfferInput: {
@@ -129,7 +130,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             price: Number(price),
             category,
             health,
-            pot: pot,
+            pot,
           },
         },
       });
@@ -304,11 +305,11 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   placeholder='ex: 18 euros...'
                 />
               </View>
-              <Checkbox.Group colorScheme='green' onChange={setPot}>
+              {/* <Checkbox.Group colorScheme='green' onChange={() => setPot(!pot)}>
                 <Checkbox defaultIsChecked={pot} value='pot' my='1'>
                   Avec le pot
                 </Checkbox>
-              </Checkbox.Group>
+              </Checkbox.Group> */}
               <View className='mt-5'>
                 <FormControl w='3/4' maxW='300' isRequired isInvalid>
                   <Select

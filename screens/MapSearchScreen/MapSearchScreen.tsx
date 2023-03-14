@@ -11,7 +11,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   RefreshControl,
-  Platform,
 } from 'react-native';
 import { Spinner } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
