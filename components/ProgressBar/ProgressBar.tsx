@@ -20,7 +20,7 @@ const ProgressBar: React.FC<Props> = ({ progress, height, color }) => {
 
   const width = animatedValue.interpolate({
     inputRange: [0, 100],
-    outputRange: ['0%', '100%'],
+    outputRange: [0, 355],
   });
 
   const label = `${Math.round(progress)}%`;
@@ -30,7 +30,7 @@ const ProgressBar: React.FC<Props> = ({ progress, height, color }) => {
       <View
         className='w-full h-full relative rounded-xl '
         style={{
-          borderRadius: height / 2,
+          borderRadius: 10,
           backgroundColor: '#ccedcf',
         }}
       >
@@ -38,7 +38,7 @@ const ProgressBar: React.FC<Props> = ({ progress, height, color }) => {
           className='absolute h-full absolute '
           style={{
             width,
-            borderRadius: height / 2,
+            borderRadius: 10,
             backgroundColor: color,
             zIndex: 1,
           }}
@@ -51,11 +51,10 @@ const ProgressBar: React.FC<Props> = ({ progress, height, color }) => {
             bottom: 0,
             left: 0,
             textAlign: 'center',
-            lineHeight: `${height}px`,
-            fontSize: height * 0.7,
+            lineHeight: 0,
+            fontSize: 10,
             fontWeight: 'bold',
             color: 'black',
-            zIndex: 2,
           }}
         >
           {label}

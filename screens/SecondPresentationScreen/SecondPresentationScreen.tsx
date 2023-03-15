@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Image } from 'expo-image';
+
 import {
   Platform,
   StatusBar,
@@ -7,7 +9,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import { Button } from 'native-base';

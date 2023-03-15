@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Image } from 'expo-image';
+
 import {
   Platform,
   StatusBar,
@@ -8,7 +10,6 @@ import {
   Text,
   Button,
   TouchableOpacity,
-  Image,
   StyleSheet,
   Animated,
 } from 'react-native';
@@ -178,8 +179,11 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             }}
           />
           <View className='w-screen rounded-lg p-4'>
-            {/* <ProgressBar progress={progress} height={15} color='#3FA96A' /> */}
-            <Button title='Progress' onPress={handleButtonClick} />
+            <ProgressBar progress={progress} height={15} color='#3FA96A' />
+
+            <TouchableOpacity onPress={handleButtonClick}>
+              <Text>Progress</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View className=' flex-1 flex-column w-screen justify-start'>

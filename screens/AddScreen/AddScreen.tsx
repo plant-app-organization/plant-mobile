@@ -11,6 +11,7 @@ import {
   ScrollView,
   TextInput,
   useWindowDimensions,
+  Dimensions,
 } from 'react-native';
 import {
   Select,
@@ -22,6 +23,7 @@ import {
   Spinner,
   useToast,
   Checkbox,
+  Button,
 } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -29,6 +31,8 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
 import { useCreateNewOfferMutation } from '../../graphql/graphql';
 import * as ImagePicker from 'expo-image-picker';
+
+import ModalPreview from '../../components/modals/ModalPreview';
 
 interface AddScreenProps {}
 
@@ -51,6 +55,23 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   const [health, setHealth] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean | void | undefined>(false);
   const [isLoaderOpen, setIsLoaderOpen] = useState<boolean | void | undefined>(false);
+  const [fullScreenImage, setFullScreenImage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const openModalHandler = () => {
+    console.log('CLICKED');
+    setShowModal(true);
+  };
+
+  function handleDeleteImage(index) {
+    const newImagesUrls = [...imagesUrls];
+    newImagesUrls.splice(index, 1);
+    setImagesUrls(newImagesUrls);
+  }
+
+  const handleToggle = () => {
+    setPot(!pot);
+  };
 
   const [imagesUrls, setImagesUrls] = useState([]);
   useEffect(() => {
@@ -190,20 +211,63 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   </Text>
                 </TouchableOpacity>
 
-                <View className='flex-row'>
+                <View className='flex-row mt-5 mr-5 ml-5'>
                   {imagesUrls.map((imageUrl, index) => {
                     return (
-                      <Image
-                        key={index}
-                        alt='image'
-                        className='rounded-md mr-2'
-                        width={width * 0.3}
-                        height={width * 0.2}
-                        resizeMode='cover'
-                        source={{
-                          uri: imageUrl,
-                        }}
-                      />
+                      <View key={index} className='relative '>
+                        <TouchableOpacity onPress={() => openModalHandler()}>
+                          <Image
+                            key={index}
+                            alt='image'
+                            className='rounded-md mr-2'
+                            width={width * 0.3}
+                            height={width * 0.2}
+                            resizeMode='cover'
+                            source={{
+                              uri: imageUrl,
+                            }}
+                          />
+                          {showModal && (
+                            <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+                              <Modal.Content
+                                maxWidth='500px'
+                                style={{ backgroundColor: '#f2fff3' }}
+                              >
+                                <Modal.CloseButton />
+
+                                <Modal.Body>
+                                  <Image
+                                    key={index}
+                                    alt='image'
+                                    className='rounded-md mr-2'
+                                    width={400}
+                                    height={400}
+                                    resizeMode='cover'
+                                    source={{
+                                      uri: imageUrl,
+                                    }}
+                                  />
+                                  <Button
+                                    variant='ghost'
+                                    colorScheme='blueGray'
+                                    onPress={() => {
+                                      setShowModal(false);
+                                    }}
+                                  >
+                                    fermer
+                                  </Button>
+                                </Modal.Body>
+                              </Modal.Content>
+                            </Modal>
+                          )}
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={{ position: 'absolute', top: 0, right: 10 }}
+                          onPress={() => handleDeleteImage(index)}
+                        >
+                          <FontAwesomeIcon name={'times-circle'} size={20} color={'white'} />
+                        </TouchableOpacity>
+                      </View>
                     );
                   })}
                 </View>
@@ -305,11 +369,18 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   placeholder='ex: 18 euros...'
                 />
               </View>
-              {/* <Checkbox.Group colorScheme='green' onChange={() => setPot(!pot)}>
-                <Checkbox defaultIsChecked={pot} value='pot' my='1'>
-                  Avec le pot
-                </Checkbox>
-              </Checkbox.Group> */}
+
+              <TouchableOpacity onPress={handleToggle}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <FontAwesomeIcon
+                    name={!pot ? 'check-square' : 'square-o'}
+                    size={24}
+                    color={!pot ? '#008000' : '#808080'}
+                  />
+                  <Text style={{ marginLeft: 8 }}>Avec cache-pot</Text>
+                </View>
+              </TouchableOpacity>
+
               <View className='mt-5'>
                 <FormControl w='3/4' maxW='300' isRequired isInvalid>
                   <Select
@@ -415,10 +486,10 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           </Modal.Content>
         </Modal>
         <Modal isOpen={isLoaderOpen} safeAreaTop={true}>
-          <Modal.Content maxWidth='350'>
+          <Modal.Content maxWidth='350' style={{ backgroundColor: '#f2fff3' }}>
             <Modal.Body>
-              <Spinner accessibilityLabel='Loading image' />
-              <Text className='text-sm  color-deepBlue font-ralewayBold mt-2  my-2 text-center'>
+              <Spinner size='lg' color='emerald.500' accessibilityLabel='Loading image' />
+              <Text className='text-sm  color-deepBlue font-ralewayBold mt-2  my-2 text-center '>
                 Envoi de l'image en cours ...
               </Text>
             </Modal.Body>
