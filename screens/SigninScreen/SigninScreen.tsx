@@ -9,7 +9,6 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  Image,
   ScrollView,
 } from 'react-native';
 import { useToast } from 'native-base';
