@@ -1,15 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  Animated,
-} from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, Animated } from 'react-native';
 import { Spinner } from 'native-base';
 import { HeartIcon } from 'react-native-heroicons/solid';
+import { Image } from 'expo-image';
 
 interface CardProductProps {
   name: string;
@@ -42,22 +36,20 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
     heartIconStyle = { color: '#e74c3c', cursor: 'pointer' };
   }
 
+  const blurhash =
+    '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+
   return (
     <View className='mb-6 mr-4'>
       <TouchableOpacity>
-        <View className='flex flex-row w-40 items-start mr-2 h-48'>
-          <ImageBackground
-            source={{
-              uri: props.photo,
-            }}
-            style={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'green',
-              borderRadius: 30 / 2,
-            }}
-            imageStyle={{ borderRadius: 30 / 2, opacity: 0.8 }}
-          ></ImageBackground>
+        <View className='bg-blue flex flex-row w-40 items-start mr-2 h-48'>
+          <Image
+            className='h-48 w-full rounded-lg bg-green-300'
+            source={props.photo}
+            // placeholder={blurHash}
+            contentFit='cover'
+            transition={1000}
+          />
         </View>
       </TouchableOpacity>
 
