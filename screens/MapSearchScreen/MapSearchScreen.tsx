@@ -16,6 +16,7 @@ import { Spinner } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import CardProduct from '../../components/product/CardProduct';
 import { useGetOffersQuery } from '../../graphql/graphql';
+import LoadingView from '../../components/LoadingView/LoadingView';
 
 interface MapSearchScreenProps {}
 
@@ -109,23 +110,29 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
               </ScrollView>
             </View>
             <View className='items-start justify-start pt-0'>
-              <View className='w-screen '>
-                <Text className='p-4 pl-6'>{offersData?.OffersList.length} résultats</Text>
-                <View className='pl-6 w-screen'>
-                  <View className='w-screen flex-row flex-wrap'>
-                    {offersData?.OffersList.map((offer, i) => {
-                      return (
-                        <CardProduct
-                          key={i}
-                          name={offer.plantName}
-                          prix={offer.price}
-                          photo={offer.pictures[0]}
-                        />
-                      );
-                    })}
+              {offersData ? (
+                <View className='w-screen '>
+                  <Text className='p-4 pl-6'>{offersData?.OffersList.length} résultats</Text>
+                  <View className='pl-6 w-screen'>
+                    <View className='w-screen flex-row flex-wrap'>
+                      {offersData?.OffersList.map((offer, i) => {
+                        return (
+                          <CardProduct
+                            key={i}
+                            name={offer.plantName}
+                            prix={offer.price}
+                            photo={offer.pictures[0]}
+                          />
+                        );
+                      })}
+                    </View>
                   </View>
                 </View>
-              </View>
+              ) : (
+                <View className='flex-1 w-screen '>
+                  <LoadingView />
+                </View>
+              )}
             </View>
           </ScrollView>
         </SafeAreaView>
