@@ -50,7 +50,7 @@ export default function App() {
   const authLink = setContext((_, { headers }) => {
     const retrieveToken = async () => {
       const token = await SecureStore.getItemAsync('__clerk_client_jwt');
-      console.log('🔐userToken in SecureStore', token);
+      // console.log('🔐userToken in SecureStore', token);
       setUserToken(token);
     };
     retrieveToken();

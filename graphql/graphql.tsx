@@ -66,6 +66,11 @@ export type Query = {
   hello: Scalars['String'];
 };
 
+
+export type QueryOffersListArgs = {
+  filters: Array<Scalars['String']>;
+};
+
 export type RegisterInput = {
   clerkId: Scalars['String'];
   email: Scalars['String'];
@@ -79,7 +84,9 @@ export type CreateNewOfferMutationVariables = Exact<{
 
 export type CreateNewOfferMutation = { __typename?: 'Mutation', createNewOffer: string };
 
-export type GetOffersQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetOffersQueryVariables = Exact<{
+  filters: Array<Scalars['String']> | Scalars['String'];
+}>;
 
 
 export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string> }> };
@@ -124,8 +131,8 @@ export type CreateNewOfferMutationHookResult = ReturnType<typeof useCreateNewOff
 export type CreateNewOfferMutationResult = Apollo.MutationResult<CreateNewOfferMutation>;
 export type CreateNewOfferMutationOptions = Apollo.BaseMutationOptions<CreateNewOfferMutation, CreateNewOfferMutationVariables>;
 export const GetOffersDocument = gql`
-    query getOffers {
-  OffersList {
+    query getOffers($filters: [String!]!) {
+  OffersList(filters: $filters) {
     id
     authorId
     plantName
@@ -147,10 +154,11 @@ export const GetOffersDocument = gql`
  * @example
  * const { data, loading, error } = useGetOffersQuery({
  *   variables: {
+ *      filters: // value for 'filters'
  *   },
  * });
  */
-export function useGetOffersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetOffersQuery, GetOffersQueryVariables>) {
+export function useGetOffersQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetOffersQuery, GetOffersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<GetOffersQuery, GetOffersQueryVariables>(GetOffersDocument, options);
       }

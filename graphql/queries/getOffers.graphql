@@ -1,5 +1,5 @@
-query getOffers {
-  OffersList {
+query getOffers($filters: [String!]!) {
+  OffersList(filters: $filters) {
     id
     authorId
     plantName

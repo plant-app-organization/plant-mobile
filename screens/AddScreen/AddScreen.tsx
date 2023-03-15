@@ -396,11 +396,10 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     mt={1}
                     onValueChange={(itemValue) => setCategory(itemValue)}
                   >
-                    <Select.Item label='Tropicales' value='Tropicales' />
-                    <Select.Item label='Rares' value='Rares' />
-                    <Select.Item label='Potager' value='Potager' />
-                    <Select.Item label='Aromatiques' value='Aromatiques' />
-                    <Select.Item label='Cactus' value='Cactus' />
+                    <Select.Item label='Tropicales' value='tropical' />
+                    <Select.Item label='Rares' value='rare' />
+                    <Select.Item label='Aromatiques' value='aromatic' />
+                    <Select.Item label='Plantes grasses' value='succulent' />
                   </Select>
                   <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
                     veuillez faire une sélection!

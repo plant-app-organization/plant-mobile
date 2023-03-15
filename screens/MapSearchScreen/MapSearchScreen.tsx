@@ -12,7 +12,6 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
-import { Spinner } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import CardProduct from '../../components/product/CardProduct';
 import { useGetOffersQuery } from '../../graphql/graphql';
@@ -21,18 +20,36 @@ import LoadingView from '../../components/LoadingView/LoadingView';
 interface MapSearchScreenProps {}
 
 const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) => {
-  const { data: offersData, refetch: refetchOffersData } = useGetOffersQuery();
+  const [filters, setFilters] = useState<string[]>([]);
+
+  const { data: offersData, refetch: refetchOffersData } = useGetOffersQuery({
+    variables: { filters },
+  });
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [search, setSearch] = useState<string>('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('Toutes les catégories');
-
-  const filterProducts = (product) => {
-    if (selectedCategory === 'Toutes les catégories') {
-      return true;
+  // const [selectedCategory, setSelectedCategory] = useState<string>('Toutes les catégories');
+  console.log('🙂filters', filters);
+  const handleFilterPress = (filterValue: string) => {
+    if (filterValue == 'all') {
+      setFilters([]);
+      refetchOffersData({ filters: [] });
     } else {
-      return product.categorie === selectedCategory;
+      if (filters.some((e) => e === filterValue)) {
+        setFilters(filters.filter((e) => e !== filterValue));
+        refetchOffersData({ filters: filters.filter((e) => e !== filterValue) });
+      } else {
+        setFilters([...filters, filterValue]);
+        refetchOffersData({ filters: [...filters, filterValue] });
+      }
     }
   };
+  // const filterProducts = (product) => {
+  //   if (selectedCategory === 'Toutes les catégories') {
+  //     return true;
+  //   } else {
+  //     return product.categorie === selectedCategory;
+  //   }
+  // };
   const wait = (timeout: number) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -84,28 +101,39 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                 showsHorizontalScrollIndicator={false}
               >
                 <TouchableOpacity
-                  onPress={() => setSelectedCategory('Toutes les catégories')}
-                  className='bg-transparent border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border p-2 mr-2'
+                  onPress={() => setFilters([])}
+                  className={`${!filters.length && 'bg-green-100'}
+                  text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
                   <Text>Toutes les catégories</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => setSelectedCategory('plante grasse')}
-                  className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
+                  onPress={() => handleFilterPress('succulent')}
+                  className={`${filters.some((e) => e === 'succulent') && 'bg-green-100'}
+                  text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
                   <Text>Plantes grasses</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => setSelectedCategory('plante rare')}
-                  className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
+                  onPress={() => handleFilterPress('rare')}
+                  className={`${filters.some((e) => e === 'rare') && 'bg-green-100'}
+                  text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
-                  <Text>Plantes rares</Text>
+                  <Text>Rares</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => setSelectedCategory('plante int')}
-                  className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'
+                  onPress={() => handleFilterPress('interior')}
+                  className={`${filters.some((e) => e === 'interior') && 'bg-green-100'}
+                  text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
                   <Text>Plante d'intérieurs</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handleFilterPress('tropical')}
+                  className={`${filters.some((e) => e === 'tropical') && 'bg-green-100'}
+                  text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
+                >
+                  <Text>Tropicales</Text>
                 </TouchableOpacity>
               </ScrollView>
             </View>
