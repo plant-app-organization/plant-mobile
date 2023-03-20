@@ -154,7 +154,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                         );
                       })}
                     </View>
-                  </View>
+                  </View>:
                 </View>
               ) : (
                 <View className='flex-1 w-screen '>
