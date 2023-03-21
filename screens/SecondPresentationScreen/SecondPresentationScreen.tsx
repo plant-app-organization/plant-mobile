@@ -46,7 +46,7 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
                 shadowRadius: 5.1,
                 elevation: 3, // pour Android seulement
               }}
-              className='font-helvetica text-white text-lg font-bold'
+              className='font-Roboto  text-white text-lg font-bold'
             >
               Découvrez, achetez, vendez
             </Text>
@@ -67,11 +67,11 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
             source={require('../../assets/logo2.png')}
           />
           <View className='w-full'>
-            <Text className='font-helvetica   text-black text-xl font-bold mt-8 leading-8 text-center'>
+            <Text className='font-Roboto   text-black text-xl font-bold mt-8 leading-8 text-center'>
               faites un geste pour la{' '}
-              <Text className='font-helvetica  text-white font-bold'>planète</Text>: achetez une
-              plante <Text className='font-helvetica text-white font-bold'>local</Text> et luttez
-              contre le <Text className='font-helvetica  text-white font-bold'>gaspillage</Text>
+              <Text className='font-Roboto   text-white font-bold'>planète</Text>: achetez une
+              plante <Text className='font-Roboto  text-white font-bold'>local</Text> et luttez
+              contre le <Text className='font-Roboto  text-white font-bold'>gaspillage</Text>
             </Text>
             <View className='flex justify-center items-center mt-10 mb-10'>
               <View
@@ -96,7 +96,7 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
                   className='h-40 w-180 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
                   onPress={() => navigation.navigate('HomeScreen')}
                 >
-                  <Text className='font-helvetica  text-black text-s font-bold'>Suivant</Text>
+                  <Text className='font-Roboto  text-black text-s font-bold'>Suivant</Text>
                 </TouchableOpacity>
               </View>
             </View>

@@ -14,7 +14,7 @@ import {
   Animated,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient, LinearGradientPoint } from 'expo-linear-gradient';
 import { Avatar, Modal } from 'native-base';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -114,7 +114,16 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
 
   return (
     <LinearGradient
-      colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
+      colors={[
+        '#f2fff3',
+        '#e2f7f6',
+        '#f0fafb',
+        '#fdf5fb',
+        '#f2fff3',
+        '#e2f7f6',
+        '#f0fafb',
+        '#fdf5fb',
+      ]}
       className='h-screen w-screen flex-1'
     >
       <Modal isOpen={isOpen} safeAreaTop={true}>
@@ -125,13 +134,13 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
         >
           <Modal.Body>
             <View className='items-center rounded'>
-              <Text className='font-antipasto text-black text-4xl'>Felicitation !!!</Text>
+              <Text className='font-antipasto text-black text-4xl'>Felicitations !!!</Text>
               <Animated.Image
                 source={images[imageIndex]}
                 style={{
                   marginTop: 20,
-                  width: 200,
-                  height: 200,
+                  width: imageIndex === 1 ? 170 : 200,
+                  height: imageIndex === 1 ? 190 : 200,
                   shadowColor: '#000',
                   shadowOffset: {
                     width: 5,
@@ -141,7 +150,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
                   shadowRadius: 4.1,
                 }}
               />
-              <Text className='font-antipasto text-black text-2xl'>
+              <Text className='font-Roboto  text-black text-2xl'>
                 Bravo, tu passes au niveau suivant, évolution en {name[nameEvo]}
               </Text>
               <TouchableOpacity
@@ -151,7 +160,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
                 }}
                 onPress={handleModalClose}
               >
-                <Text className='text-white align-center'>Close</Text>
+                <Text className='text-white font-Roboto  align-center'>Close</Text>
               </TouchableOpacity>
             </View>
           </Modal.Body>
@@ -167,8 +176,8 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             source={images[imageIndex]}
             style={{
               marginTop: 20,
-              width: 130,
-              height: 120,
+              width: imageIndex === 1 ? 110 : 130,
+              height: imageIndex === 1 ? 125 : 130,
               shadowColor: '#000',
               shadowOffset: {
                 width: 2,
@@ -178,6 +187,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
               shadowRadius: 4.1,
             }}
           />
+
           <View className='w-screen rounded-lg p-4'>
             <ProgressBar progress={progress} height={15} color='#3FA96A' />
 
@@ -220,10 +230,12 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
               />
             </Avatar>
             <View className='ml-6'>
-              <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>{user?.username}</Text>
-              <Text style={{ marginTop: 8, marginBottom: 8 }}>{personalPlants}</Text>
+              <Text style={{ fontFamily: 'Roboto', fontSize: 18 }}>{user?.username}</Text>
+              <Text style={{ fontFamily: 'Roboto', marginTop: 8, marginBottom: 8 }}>
+                {personalPlants}
+              </Text>
 
-              <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>Voir mon profil</Text>
+              <Text style={{ fontFamily: 'Roboto', fontSize: 18 }}>Voir mon profil</Text>
             </View>
             <View className='flex-1 items-center justify-center'></View>
             <FontAwesomeIcon
@@ -248,7 +260,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='heart' size={18} />
-              <Text className='text-lg font-antipasto ml-3'> Favoris </Text>
+              <Text className='text-lg font-Roboto  ml-3'> Favoris </Text>
             </View>
             <View>
               <FontAwesomeIcon name='angle-right' size={18} />
@@ -261,7 +273,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='bookmark' size={18} />
-              <Text className='text-lg font-antipasto ml-3'> Mes ventes et achats </Text>
+              <Text className='text-lg font-Roboto  ml-3'> Mes ventes et achats </Text>
             </View>
             <View>
               <FontAwesomeIcon name='angle-right' size={20} />
@@ -274,7 +286,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='gears' size={20} />
-              <Text className='text-lg font-antipasto ml-3'> Paramètres </Text>
+              <Text className='text-lg font-Roboto  ml-3'> Paramètres </Text>
             </View>
             <View>
               <FontAwesomeIcon name='angle-right' size={20} />
@@ -287,7 +299,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='commenting' size={18} />
-              <Text className='text-lg font-antipasto ml-3'> Mes avis </Text>
+              <Text className='text-lg font-Roboto  ml-3'> Mes avis </Text>
             </View>
             <View>
               <FontAwesomeIcon name='angle-right' size={18} />
@@ -299,7 +311,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='gears' size={20} />
-              <Text className='text-lg font-antipasto ml-3'>Déconnexion</Text>
+              <Text className='text-lg font-Roboto  ml-3'>Déconnexion</Text>
             </View>
             <View>
               <FontAwesomeIcon name='angle-right' size={20} />

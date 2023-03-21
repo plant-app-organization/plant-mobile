@@ -92,7 +92,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 shadowRadius: 5.1,
                 elevation: 10, // pour Android seulement
               }}
-              className='text-white text-center text-xl font-antipasto'
+              className='text-white text-center text-xl font-Roboto '
             >
               Découvrez, achetez, vendez
             </Text>
@@ -101,7 +101,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
           <View className='m-15 flex flex-col justify-around items-center h-[45%]'>
             <View className='h-[80%] flex flex-col justify-center'>
               <View className='h-[25%]'>
-                <Text className='font-antipasto text-black text-left text-2xl'>S'inscrire :</Text>
+                <Text className='font-Roboto  text-black text-left text-2xl'>S'inscrire :</Text>
               </View>
               <View
                 style={{
@@ -123,7 +123,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                     paddingHorizontal: 5,
                   }}
                 >
-                  <Text className='font-antipasto text-sm text-left'>Nom</Text>
+                  <Text className='font-Roboto  text-sm text-left'>Nom</Text>
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
@@ -153,7 +153,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                     paddingHorizontal: 5,
                   }}
                 >
-                  <Text className='font-antipasto text-sm text-left'>Email</Text>
+                  <Text className='font-Roboto  text-sm text-left'>Email</Text>
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
@@ -183,7 +183,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                     paddingHorizontal: 5,
                   }}
                 >
-                  <Text className='font-antipasto text-sm text-left'>Mot de passe</Text>
+                  <Text className='font-Roboto text-sm text-left'>Mot de passe</Text>
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
@@ -213,7 +213,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
           </View>
 
           <View className='w-full h-[40%] flex flex-col justify-evenly items-center'>
-            <Text>OU</Text>
+            <Text className='font-Roboto '>OU</Text>
             <View className='h-[45%] flex flex-col justify-around'>
               <SignUpWithOAuth />
 
@@ -232,7 +232,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 }}
                 onPress={() => console.log('hello facebook')}
               >
-                <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
+                <Text style={{ color: '#395590' }} className='text-black text-lg font-Roboto '>
                   Continuer avec Facebook <FontAwesomeIcon name='facebook' size={19} />
                 </Text>
               </TouchableOpacity>
@@ -251,7 +251,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 }}
                 onPress={onSignInPress}
               >
-                <Text className='text-black text-lg font-antipasto'>
+                <Text className='text-black text-lg font-Roboto '>
                   Déjà inscrit ? Connectez-vous !
                 </Text>
               </TouchableOpacity>

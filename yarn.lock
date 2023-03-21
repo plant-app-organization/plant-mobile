@@ -3215,6 +3215,11 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
+"@react-native-community/slider@4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-4.4.2.tgz#1fea0eb3ae31841fe87bd6c4fc67569066e9cf4b"
+  integrity sha512-D9bv+3Vd2gairAhnRPAghwccgEmoM7g562pm8i4qB3Esrms5mggF81G3UvCyc0w3jjtFHh8dpQkfEoKiP0NW/Q==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -10032,6 +10037,11 @@ react-native-dotenv@^3.4.7:
   integrity sha512-GqUDdmrtKw7qYS9jjQLipEPctMd0YuSBNVZBNlaHtaHMJ63iaB4FABO4uX0iSUJpgMwozZki4fRv4dDHmVUoLg==
   dependencies:
     dotenv "^16.0.3"
+
+react-native-draglist@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-draglist/-/react-native-draglist-3.0.5.tgz#d664e11625ce0f0f9ef2cef92b1a4540194dcc4f"
+  integrity sha512-cY2FPOpmPw13PNWyVIJDuUFBLD6l2Gf9a0PHVsnY9u6ZfcYmmJih9NGGpvNBQzGl/FMdCICLPzWbvI4/yAcxrQ==
 
 react-native-fs@^2.20.0:
   version "2.20.0"

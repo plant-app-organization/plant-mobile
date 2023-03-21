@@ -43,7 +43,16 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   };
   return (
     <LinearGradient
-      colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
+      colors={[
+        '#f2fff3',
+        '#e2f7f6',
+        '#f0fafb',
+        '#fdf5fb',
+        '#f2fff3',
+        '#e2f7f6',
+        '#f0fafb',
+        '#fdf5fb',
+      ]}
       className='h-screen w-screen flex-1'
     >
       <SafeAreaView

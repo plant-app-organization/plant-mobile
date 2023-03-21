@@ -55,7 +55,7 @@ const ParamScreen: React.FunctionComponent<ParamScreenProps> = (props) => {
           onPress={() => navigation.navigate('ParamCompteScreen')}
         >
           <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
-            <Text className='text-lg font-antipasto ml-3'>Paramétres du compte </Text>
+            <Text className='text-lg font-Roboto  ml-3'>Paramétres du compte </Text>
           </View>
           <View></View>
         </TouchableOpacity>
@@ -65,7 +65,7 @@ const ParamScreen: React.FunctionComponent<ParamScreenProps> = (props) => {
           onPress={console.log('parametres')}
         >
           <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
-            <Text className='text-lg font-antipasto ml-3'> Paiments </Text>
+            <Text className='text-lg font-Roboto  ml-3'> Paiments </Text>
           </View>
           <View></View>
         </TouchableOpacity>
@@ -104,7 +104,7 @@ const ParamScreen: React.FunctionComponent<ParamScreenProps> = (props) => {
               className='h-40 w-200 rounded-10 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
               onPress={() => navigation.navigate('ProfileScreen')}
             >
-              <Text className='font-antipasto text-black text-lg font-bold'>Enregistrer</Text>
+              <Text className='font-Roboto  text-black text-lg font-bold'>Enregistrer</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -129,13 +129,13 @@ const ParamScreen: React.FunctionComponent<ParamScreenProps> = (props) => {
               className='h-40 w-200 rounded-10 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
               onPress={console.log('photo')}
             >
-              <Text className='font-antipasto text-black text-lg font-bold'>Deconnexion</Text>
+              <Text className='font-Roboto  text-black text-lg font-bold'>Deconnexion</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         <TouchableOpacity className=' items-center' onPress={console.log('ventes')}>
-          <Text className='text-s text-red-500 font-antipasto ml-3'>Supprimer mon compte </Text>
+          <Text className='text-s text-red-500 font-Roboto  ml-3'>Supprimer mon compte </Text>
         </TouchableOpacity>
       </SafeAreaView>
     </LinearGradient>
