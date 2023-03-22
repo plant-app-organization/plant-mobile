@@ -252,7 +252,16 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   return (
     <LinearGradient
       // Background Linear Gradient
-      colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
+      colors={[
+        '#f2fff3',
+        '#e2f7f6',
+        '#f0fafb',
+        '#fdf5fb',
+        '#f2fff3',
+        '#e2f7f6',
+        '#f0fafb',
+        '#fdf5fb',
+      ]}
       style={styles.background}
     >
       <SafeAreaView
@@ -274,15 +283,15 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                     NB
                     <Avatar.Badge bg='green.500' size='23%' />
                   </Avatar>
-                  <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>{user?.username} 👋</Text>
+                  <Text style={{ fontFamily: 'Roboto', fontSize: 18 }}>{user?.username} 👋</Text>
                 </View>
                 <View>
-                  <Text style={{ fontFamily: 'antipasto', fontSize: 18 }}>infos🪴</Text>
+                  <Text style={{ fontFamily: 'Roboto', fontSize: 18 }}>infos🪴</Text>
                 </View>
               </View>
             )}
             <TextInput
-              className='w-11/12 border-green-50 border-solid bg-green-100 border text-left font-antipasto border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
+              className='w-11/12 border-green-50 border-solid bg-green-100 border text-left font-Roboto border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
               placeholder='Rechercher une plante directement'
               value={search}
               onChangeText={(value) => setSearch(value)}
@@ -290,7 +299,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             />
             <View className='items-start justify-start pt-4 w-scree mb-2'>
               <View className='flex-column items-start w-screen'>
-                <Text className='pt-4 pl-8 font-antipasto text-lg '>⭐ Top planters</Text>
+                <Text className='pt-4 pl-8 font-Roboto text-lg '>⭐ Top planters</Text>
                 <ScrollView
                   className='w-full pl-2 pt-1 pl-6'
                   horizontal={true}
@@ -302,7 +311,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             </View>
             <View className='flex items-start justify-start pt-4 w-screen'>
               <View className='flex-column items-start w-screen'>
-                <Text className='p-4 pl-8 font-antipasto text-lg '>
+                <Text className='p-4 pl-8 font-Roboto text-lg '>
                   🎉 Super deals / ventes privées !
                 </Text>
                 <ScrollView
@@ -316,7 +325,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             </View>
             <View className='flex items-start justify-start pt-4 w-screen'>
               <View className='flex-column items-start w-screen'>
-                <Text className='p-4 pl-8 font-antipasto text-lg '>🌎 Planète antigaspi</Text>
+                <Text className='p-4 pl-8 font-Roboto text-lg '>🌎 Planète antigaspi</Text>
                 <ScrollView
                   className='w-screen pl-6'
                   horizontal={true}
@@ -329,13 +338,13 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
 
             <View className='flex items-start justify-start pl-6 pt-4 w-screen'>
               <View className='flex-column items-start w-11/12'>
-                <Text className='p-4 font-antipasto text-lg '>🍃 Catégories</Text>
+                <Text className='p-4 font-Roboto text-lg '>🍃 Catégories</Text>
                 {categories}
               </View>
             </View>
             <View className='flex items-start justify-start pl-0 pt-4 w-full h-40 mb-6'>
               <View className='flex-column items-start w-full'>
-                <Text className='pl-8 pb-4 font-antipasto text-lg '>⚡ Publicité</Text>
+                <Text className='pl-8 pb-4 font-Roboto text-lg '>⚡ Publicité</Text>
                 <ImageBackground
                   source={{
                     uri: 'https://i.ibb.co/FWY0jhd/02-01-decouvrir-histoire-de-marseille.jpg',
@@ -351,7 +360,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             </View>
             <View className='items-start justify-start pt-16 w-full'>
               <View className='flex-column items-start w-full'>
-                <Text className='p-4 pl-8 font-antipasto text-lg '>👀 À la une</Text>
+                <Text className='p-4 pl-8 font-Roboto text-lg '>👀 À la une</Text>
                 <ScrollView
                   className='w-full pl-6'
                   horizontal={true}
@@ -364,7 +373,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
 
             <View className='items-start justify-start pt-6 w-scree mb-9'>
               <View className='flex-column items-start w-screen'>
-                <Text className='pt-4 pb-4 pl-6 font-antipasto text-lg '>
+                <Text className='pt-4 pb-4 pl-6 font-Roboto text-lg '>
                   👉 Suggestions de recherche
                 </Text>
                 <ScrollView

@@ -44,7 +44,7 @@ const FirstPresentationScreen: React.FunctionComponent<FirstPresentationScreenPr
                 shadowRadius: 5.1,
                 elevation: 10, // pour Android seulement
               }}
-              className='font-helvetica text-white text-lg font-bold'
+              className='font-Roboto  text-white text-lg font-bold'
             >
               Découvrez, achetez, vendez
             </Text>
@@ -65,10 +65,10 @@ const FirstPresentationScreen: React.FunctionComponent<FirstPresentationScreenPr
             source={require('../../assets/logo.png')}
           />
           <View className='w-full'>
-            <Text className='font-helvetica text-black text-xl font-bold mt-8 leading-8 text-center'>
+            <Text className='font-Roboto  text-black text-xl font-bold mt-8 leading-8 text-center'>
               Achetez, vendez ou échangez vos{' '}
-              <Text className='font-helvetica text-white font-bold'>plantes</Text> pour leur offrir
-              une <Text className='font-helvetica text-white font-bold'>nouvelle vie</Text> 🌱
+              <Text className='font-Roboto  text-white font-bold'>plantes</Text> pour leur offrir
+              une <Text className='font-Roboto  text-white font-bold'>nouvelle vie</Text> 🌱
             </Text>
             <View className='flex items-center mt-10 mb-10'>
               <View
@@ -93,7 +93,7 @@ const FirstPresentationScreen: React.FunctionComponent<FirstPresentationScreenPr
                   className='h-40 w-180 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
                   onPress={() => navigation.navigate('SecondPresentationScreen')}
                 >
-                  <Text className='font-helvetica text-black text-s font-bold'>Suivant</Text>
+                  <Text className='font-Roboto  text-black text-s font-bold'>Suivant</Text>
                 </TouchableOpacity>
               </View>
             </View>

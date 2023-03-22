@@ -72,9 +72,7 @@ export default function VerifyCodeScreen(props) {
                 paddingHorizontal: 5,
               }}
             >
-              <Text className='font-antipasto text-sm text-left text-xl  font-antipasto opacity-100'>
-                Titre :
-              </Text>
+              <Text className=' text-sm text-left text-xl font-Roboto  opacity-100'>Code :</Text>
             </View>
             <TextInput
               style={{ height: 40, width: 240, fontSize: 15 }}
@@ -110,9 +108,7 @@ export default function VerifyCodeScreen(props) {
                 className='h-40 w-180 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
                 onPress={onPress}
               >
-                <Text className='font-antipasto  text-black text-xl font-bold'>
-                  Vérifier l'e-mail
-                </Text>
+                <Text className='font-Roboto  text-black text-xl font-bold'>Vérifier l'e-mail</Text>
               </TouchableOpacity>
             </View>
           </View>

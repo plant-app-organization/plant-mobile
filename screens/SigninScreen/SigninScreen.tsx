@@ -68,7 +68,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
               Plante.
             </Text>
             <Text
-              className='text-white text-center text-xl font-antipasto'
+              className='text-white text-center text-xl font-Roboto '
               style={{
                 width: '100%',
                 height: '28%',
@@ -89,7 +89,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
           <View className='m-15 flex flex-col justify-around items-center h-[45%]'>
             <View className='h-[80%] flex flex-col justify-center'>
               <View className='h-[25%] mb-5'>
-                <Text className='font-antipasto text-black text-left text-2xl'>Se connecter :</Text>
+                <Text className='font-Roboto  text-black text-left text-2xl'>Se connecter :</Text>
               </View>
 
               <View
@@ -112,7 +112,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                     paddingHorizontal: 5,
                   }}
                 >
-                  <Text className='font-antipasto text-sm text-left'>Email</Text>
+                  <Text className='font-Roboto text-sm text-left'>Email</Text>
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
@@ -141,7 +141,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                     paddingHorizontal: 5,
                   }}
                 >
-                  <Text className='font-antipasto text-sm text-left'>Mot de passe</Text>
+                  <Text className='font-Roboto text-sm text-left'>Mot de passe</Text>
                 </View>
                 <TextInput
                   style={{ height: 40, width: 240, fontSize: 20 }}
@@ -166,12 +166,12 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
               }}
               onPress={onSignInPress}
             >
-              <Text className='text-black text-lg font-antipasto'> Connexion</Text>
+              <Text className='text-black text-lg font-Roboto '> Connexion</Text>
             </TouchableOpacity>
           </View>
 
           <View className='w-full h-[40%] flex flex-col justify-evenly items-center'>
-            <Text>OU</Text>
+            <Text className='font-Roboto '>OU</Text>
             <View className='h-[45%] flex flex-col justify-around'>
               <TouchableOpacity
                 className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
@@ -188,7 +188,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 }}
                 onPress={() => console.log('hello facebook')}
               >
-                <Text style={{ color: '#d24e41' }} className='text-black text-lg font-antipasto'>
+                <Text style={{ color: '#d24e41' }} className='text-black text-lg font-Roboto '>
                   Continuer avec google <FontAwesomeIcon name='google' size={15} />
                 </Text>
               </TouchableOpacity>
@@ -211,7 +211,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 onPress={onSignUpPress}
               >
                
-                <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
+                <Text style={{ color: '#395590' }} className='text-black text-lg font-Roboto '>
                 Pas encore inscrit ? Créer un commpte !
                 </Text>
               </TouchableOpacity> */}
@@ -229,7 +229,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 }}
                 onPress={() => console.log('fb')}
               >
-                <Text style={{ color: '#395590' }} className='text-black text-lg font-antipasto'>
+                <Text style={{ color: '#395590' }} className='text-black text-lg font-Roboto '>
                   Continuer avec Facebook <FontAwesomeIcon name='facebook' size={15} />
                 </Text>
               </TouchableOpacity>
@@ -248,7 +248,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 }}
                 onPress={onSignUpPress}
               >
-                <Text className='text-black text-lg font-antipasto'>
+                <Text className='text-black text-lg font-Roboto '>
                   Pas encore inscrit ? Créer un compte !
                 </Text>
               </TouchableOpacity>
