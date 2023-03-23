@@ -21,8 +21,11 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
+import PokemonModal from '../../components/modal/PokemonModal';
 
-interface ProfileScreenProps {}
+interface ProfileScreenProps {
+  progress: number;
+}
 
 const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
   const images = [
@@ -103,7 +106,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
   for (let i = 0; i < 5; i++) {
     let style = { color: 'black' };
     if (i < 3) {
-      style = { color: 'yellow' };
+      style = { color: 'orange' };
     }
     personalPlants.push(<FontAwesomeIcon name='star' style={style} />);
   }
@@ -113,19 +116,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
   };
 
   return (
-    <LinearGradient
-      colors={[
-        '#f2fff3',
-        '#e2f7f6',
-        '#f0fafb',
-        '#fdf5fb',
-        '#f2fff3',
-        '#e2f7f6',
-        '#f0fafb',
-        '#fdf5fb',
-      ]}
-      className='h-screen w-screen flex-1'
-    >
+    <>
       <Modal isOpen={isOpen} safeAreaTop={true}>
         <Modal.Content
           style={{ backgroundColor: '#f2fff3' }}
@@ -168,16 +159,20 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
       </Modal>
 
       <SafeAreaView
-        style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
-        className='h-screen w-screen flex-1 justify-between'
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'white',
+          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        }}
       >
-        <View className='flex-1 items-center pr-10 pl-10'>
+        <View className='w-full h-[35%] justify-evenly items-center'>
           <Image
             source={images[imageIndex]}
+            className='w-[100px] h-[100px]'
             style={{
-              marginTop: 20,
-              width: imageIndex === 1 ? 110 : 130,
-              height: imageIndex === 1 ? 125 : 130,
+              // width: imageIndex === 1 ? 110 : 130,
+              // height: imageIndex === 1 ? 125 : 130,
               shadowColor: '#000',
               shadowOffset: {
                 width: 2,
@@ -187,139 +182,77 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
               shadowRadius: 4.1,
             }}
           />
-
-          <View className='w-screen rounded-lg p-4'>
+          <View className='w-10/12 h-[50px] justify-between rounded-lg'>
             <ProgressBar progress={progress} height={15} color='#3FA96A' />
 
-            <TouchableOpacity onPress={handleButtonClick}>
+            <TouchableOpacity className='items-center' onPress={handleButtonClick}>
               <Text>Progress</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View className=' flex-1 flex-column w-screen justify-start'>
-          <View className='flex-row w-screen items-start justify-between mt-4 ml-2'>
-            <Avatar
-              style={{
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 9,
-                  height: 0,
-                },
-                shadowOpacity: 0.22,
-                shadowRadius: 4.1,
-              }}
-              bg='amber.500'
-              source={{
-                uri: user?.profileImageUrl,
-              }}
-              size='lg'
-            >
-              NB
-              <Avatar.Badge
-                style={{
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 5,
-                    height: 0,
-                  },
-                  shadowOpacity: 0.22,
-                  shadowRadius: 4.1,
-                }}
-                bg='green.500'
-                size='23%'
-              />
-            </Avatar>
-            <View className='ml-6'>
-              <Text style={{ fontFamily: 'Roboto', fontSize: 18 }}>{user?.username}</Text>
-              <Text style={{ fontFamily: 'Roboto', marginTop: 8, marginBottom: 8 }}>
-                {personalPlants}
-              </Text>
 
-              <Text style={{ fontFamily: 'Roboto', fontSize: 18 }}>Voir mon profil</Text>
+        <View className='w-full h-full px-4'>
+          <View className='w-full h-[20%] flex-row border-b border-gray-200'>
+            <View className='w-6/12 h-full flex-row items-center'>
+              <Avatar
+                bg='amber.500'
+                source={{
+                  uri: user?.profileImageUrl,
+                }}
+                size='lg'
+              >
+                NB
+                <Avatar.Badge bg='green.500' size='23%' />
+              </Avatar>
+
+              <View className='ml-4'>
+                <Text className='text-xl font-Roboto mb-2'>
+                  {user?.username?.charAt().toUpperCase() + user?.username?.slice(1)}
+                </Text>
+                <Text>{personalPlants}</Text>
+              </View>
             </View>
-            <View className='flex-1 items-center justify-center'></View>
-            <FontAwesomeIcon
-              style={{ marginRight: 19, marginTop: 12 }}
-              name='angle-right'
-              size={20}
-            />
-          </View>
-          <View className='items-center mt-6 w-screen'>
-            <Text>Mon impact</Text>
-            <TouchableOpacity className='bg-transparent text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2'>
-              <Text>CO2</Text>
+
+            <TouchableOpacity className='w-6/12 h-full flex-row items-center justify-end'>
+              <Text className='font-Roboto text-sm mr-4'>Modifier mon profil</Text>
+              <FontAwesomeIcon name='angle-right' size={20} />
             </TouchableOpacity>
           </View>
-        </View>
 
-        <View className='items-center p-30 justify-between flex-1'>
-          <View className='h-px w-screen bg-black opacity-30' />
-          <TouchableOpacity
-            className='w-screen items-center flex-row flex-1 justify-start pr-6'
-            onPress={() => console.log('favoris')}
-          >
-            <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
-              <FontAwesomeIcon className='opacity-30' name='heart' size={18} />
-              <Text className='text-lg font-Roboto  ml-3'> Favoris </Text>
+          <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
+            <FontAwesomeIcon className='opacity-30' name='heart' size={18} />
+            <View className='w-10/12'>
+              <Text>Mes favoris</Text>
             </View>
-            <View>
-              <FontAwesomeIcon name='angle-right' size={18} />
-            </View>
+            <FontAwesomeIcon name='angle-right' size={18} />
           </TouchableOpacity>
-          <View className='h-px w-screen bg-black opacity-30' />
-          <TouchableOpacity
-            className='w-screen items-center flex-row flex-1 justify-start pr-6'
-            onPress={() => console.log('ventes')}
-          >
-            <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
-              <FontAwesomeIcon className='opacity-30' name='bookmark' size={18} />
-              <Text className='text-lg font-Roboto  ml-3'> Mes ventes et achats </Text>
+
+          <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
+            <FontAwesomeIcon className='opacity-30' name='bookmark' size={18} />
+            <View className='w-10/12'>
+              <Text>Mes ventes & achats</Text>
             </View>
-            <View>
-              <FontAwesomeIcon name='angle-right' size={20} />
-            </View>
+            <FontAwesomeIcon name='angle-right' size={18} />
           </TouchableOpacity>
-          <View className='h-px w-screen bg-black opacity-30' />
-          <TouchableOpacity
-            className='w-screen items-center flex-row flex-1 justify-start pr-6'
-            onPress={() => console.log('parametres')}
-          >
-            <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
-              <FontAwesomeIcon className='opacity-30' name='gears' size={20} />
-              <Text className='text-lg font-Roboto  ml-3'> Paramètres </Text>
+
+          <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
+            <FontAwesomeIcon className='opacity-30' name='commenting' size={18} />
+            <View className='w-10/12'>
+              <Text>Mes avis</Text>
             </View>
-            <View>
-              <FontAwesomeIcon name='angle-right' size={20} />
-            </View>
+            <FontAwesomeIcon name='angle-right' size={18} />
           </TouchableOpacity>
-          <View className='h-px w-screen bg-black opacity-30' />
-          <TouchableOpacity
-            className='flex-1 flex-row items-center h-10 w-screen justify-between pr-6'
-            onPress={() => console.log('avis')}
-          >
-            <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
-              <FontAwesomeIcon className='opacity-30' name='commenting' size={18} />
-              <Text className='text-lg font-Roboto  ml-3'> Mes avis </Text>
+
+          <TouchableOpacity className='w-full flex-row items-center justify-between py-5'>
+            <FontAwesomeIcon className='opacity-30' name='user' size={18} />
+            <View className='w-10/12'>
+              <Text>Me déconnecter</Text>
             </View>
-            <View>
-              <FontAwesomeIcon name='angle-right' size={18} />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            className='w-screen items-center flex-row flex-1 justify-start'
-            onPress={onSignOutPress}
-          >
-            <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
-              <FontAwesomeIcon className='opacity-30' name='gears' size={20} />
-              <Text className='text-lg font-Roboto  ml-3'>Déconnexion</Text>
-            </View>
-            <View>
-              <FontAwesomeIcon name='angle-right' size={20} />
-            </View>
+            <FontAwesomeIcon name='angle-right' size={18} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    </LinearGradient>
+    </>
   );
 };
 
