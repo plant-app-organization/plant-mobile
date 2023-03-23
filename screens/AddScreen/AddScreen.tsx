@@ -24,6 +24,8 @@ import {
   useToast,
   Checkbox,
   Button,
+  Stack,
+  Input,
 } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -31,6 +33,7 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
 import { useCreateNewOfferMutation } from '../../graphql/graphql';
 import * as ImagePicker from 'expo-image-picker';
+import Slider from '@react-native-community/slider';
 
 import ModalPreview from '../../components/modals/ModalPreview';
 
@@ -57,6 +60,9 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   const [isLoaderOpen, setIsLoaderOpen] = useState<boolean | void | undefined>(false);
   const [fullScreenImage, setFullScreenImage] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const [slideStartingValue, setSlideStartingValue] = useState(0);
+  const [slideStartingCount, setSlideStartingCount] = useState(0);
 
   const openModalHandler = () => {
     console.log('CLICKED');
@@ -167,7 +173,16 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
 
   return (
     <LinearGradient
-      colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
+      colors={[
+        '#f2fff3',
+        '#e2f7f6',
+        '#f0fafb',
+        '#fdf5fb',
+        '#f2fff3',
+        '#e2f7f6',
+        '#f0fafb',
+        '#fdf5fb',
+      ]}
       className='min-h-screen w-screen flex-1'
     >
       <SafeAreaView
@@ -187,7 +202,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   shadowRadius: 1.1,
                   elevation: 3, // pour Android seulement
                 }}
-                className='text-2xl font-antipasto text-black'
+                className='text-2xl font-Roboto text-black'
               >
                 Vends une plante
               </Text>
@@ -203,183 +218,163 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     shadowRadius: 1.1,
                     elevation: 10, // pour Android seulement
                   }}
-                  className='px-10 py-2 rounded-3xl bg-[#ccedcf] flex items-center justify-center shadow-lg hover:shadow-xl'
+                  className='px-5 py-2 rounded-3xl bg-[#ccedcf] flex items-center justify-center shadow-lg hover:shadow-xl'
                   onPress={addImage}
                 >
-                  <Text style={{ fontFamily: 'antipasto' }} className='-black text-lg font-bold'>
+                  <Text style={{ fontFamily: 'Roboto' }} className='-black text-m font-bold'>
                     + AJOUTER DES PHOTOS
                   </Text>
                 </TouchableOpacity>
-
-                <View className='flex-row mt-5 mr-5 ml-5'>
-                  {imagesUrls.map((imageUrl, index) => {
-                    return (
-                      <View key={index} className='relative '>
-                        <TouchableOpacity onPress={() => openModalHandler()}>
-                          <Image
-                            key={index}
-                            alt='image'
-                            className='rounded-md mr-2'
-                            width={width * 0.3}
-                            height={width * 0.2}
-                            resizeMode='cover'
-                            source={{
-                              uri: imageUrl,
-                            }}
-                          />
-                          {showModal && (
-                            <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-                              <Modal.Content
-                                maxWidth='500px'
-                                style={{ backgroundColor: '#f2fff3' }}
-                              >
-                                <Modal.CloseButton />
-
-                                <Modal.Body>
-                                  <Image
-                                    key={index}
-                                    alt='image'
-                                    className='rounded-md mr-2'
-                                    width={400}
-                                    height={400}
-                                    resizeMode='cover'
-                                    source={{
-                                      uri: imageUrl,
-                                    }}
-                                  />
-                                  <Button
-                                    variant='ghost'
-                                    colorScheme='blueGray'
-                                    onPress={() => {
-                                      setShowModal(false);
-                                    }}
-                                  >
-                                    fermer
-                                  </Button>
-                                </Modal.Body>
-                              </Modal.Content>
-                            </Modal>
-                          )}
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={{ position: 'absolute', top: 0, right: 10 }}
-                          onPress={() => handleDeleteImage(index)}
-                        >
-                          <FontAwesomeIcon name={'times-circle'} size={20} color={'white'} />
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  })}
-                </View>
               </View>
             </View>
 
-            <View className='w-full min-h-[100vh] flex flex-col justify-evenly items-center pt-10 pb-20'>
+            <View className='flex-row mt-5 mr-5 ml-5'>
+              {imagesUrls.map((imageUrl, index) => {
+                return (
+                  <View key={index} className='relative '>
+                    <TouchableOpacity onPress={() => openModalHandler()}>
+                      <Image
+                        key={index}
+                        alt='image'
+                        className='rounded-md mr-2'
+                        width={width * 0.3}
+                        height={width * 0.2}
+                        resizeMode='cover'
+                        source={{
+                          uri: imageUrl,
+                        }}
+                      />
+                      {showModal && (
+                        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+                          <Modal.Content maxWidth='500px' style={{ backgroundColor: '#f2fff3' }}>
+                            <Modal.CloseButton />
+
+                            <Modal.Body>
+                              <Image
+                                key={index}
+                                alt='image'
+                                className='rounded-md mr-2'
+                                width={400}
+                                height={400}
+                                resizeMode='cover'
+                                source={{
+                                  uri: imageUrl,
+                                }}
+                              />
+                              <Button
+                                variant='ghost'
+                                colorScheme='blueGray'
+                                onPress={() => {
+                                  setShowModal(false);
+                                }}
+                              >
+                                fermer
+                              </Button>
+                            </Modal.Body>
+                          </Modal.Content>
+                        </Modal>
+                      )}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{ position: 'absolute', top: 0, right: 10 }}
+                      onPress={() => handleDeleteImage(index)}
+                    >
+                      <FontAwesomeIcon name={'times-circle'} size={20} color={'white'} />
+                    </TouchableOpacity>
+                  </View>
+                );
+              })}
+            </View>
+
+            <View className='w-full min-h-[100vh] flex flex-col justify-evenly items-center pt-10 '>
               <View
                 style={{
-                  position: 'relative',
-                  borderWidth: 0.5,
-                  borderColor: 'gray',
-                  borderRadius: 25,
+                  flexDirection: 'row',
+                  alignItems: 'center',
 
-                  paddingLeft: 20,
-                  marginBottom: 30,
                   width: 300,
                 }}
               >
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: -30,
-                    left: 10,
-                    backgroundColor: 'transparent',
-                    paddingHorizontal: 5,
-                  }}
-                >
-                  <Text className='font-antipasto text-sm text-left text-xl  font-antipasto opacity-100'>
-                    Titre :
-                  </Text>
-                </View>
-                <TextInput
-                  style={{ height: 40, width: 240, fontSize: 15 }}
+                <Input
+                  variant='outline'
                   value={title}
                   onChangeText={setTitle}
-                  placeholder='ex: Monstera...'
+                  placeholder='Titre'
                 />
               </View>
               <View
                 style={{
-                  position: 'relative',
-                  borderWidth: 0.5,
-                  borderColor: 'gray',
-                  borderRadius: 25,
-                  paddingLeft: 20,
-                  marginBottom: 30,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+
                   width: 300,
                 }}
               >
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: -30,
-                    left: 10,
-                    backgroundColor: 'transparent',
-                    paddingHorizontal: 5,
-                  }}
-                >
-                  <Text className='font-antipasto text-sm text-left text-xl font-antipasto'>
-                    Décris ta plante :
-                  </Text>
-                </View>
-                <TextInput
-                  style={{ height: 80, width: 240, fontSize: 15 }}
+                <Input
+                  variant='outline'
                   value={description}
                   onChangeText={setDescription}
-                  placeholder='ex: Hauteur de 1m60, plante d interieur, pas besoins de beaucoup de soleil...'
+                  placeholder='Description'
                 />
               </View>
+
               <View
                 style={{
-                  position: 'relative',
-                  borderWidth: 0.5,
-                  borderColor: 'gray',
-                  borderRadius: 25,
-                  paddingLeft: 20,
-
-                  width: 300,
+                  flexDirection: 'row',
+                  alignItems: 'center',
                 }}
               >
                 <View
                   style={{
-                    position: 'absolute',
-                    top: -30,
-                    left: 10,
-                    backgroundColor: 'transparent',
-                    paddingHorizontal: 5,
+                    flexDirection: 'row',
+                    alignItems: 'center',
                   }}
                 >
-                  <Text className='font-antipasto text-sm text-left text-xl font-antipasto'>
-                    Prix :
-                  </Text>
+                  <Text className=' text-l font-Roboto'>Prix :</Text>
+
+                  <TextInput
+                    style={{
+                      height: 40,
+                      fontSize: 15,
+                      borderWidth: 0.5,
+                      borderColor: 'gray',
+                      borderRadius: 10,
+                      padding: 10,
+                      width: 70,
+                    }}
+                    value={price}
+                    onChangeText={setPrice}
+                    keyboardType='numeric'
+                    placeholder='ex: 18..'
+                  />
+                  <Text className=' text-l font-Roboto ml-1 mr-10'>€</Text>
                 </View>
-                <TextInput
-                  style={{ height: 40, width: 240, fontSize: 15 }}
-                  value={price}
-                  onChangeText={setPrice}
-                  placeholder='ex: 18 euros...'
-                />
+                <TouchableOpacity onPress={handleToggle}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <FontAwesomeIcon
+                      name={!pot ? 'check-square' : 'square-o'}
+                      size={24}
+                      color={!pot ? '#008000' : '#808080'}
+                    />
+                    <Text style={{ marginLeft: 8 }}>Avec cache-pot</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
 
-              <TouchableOpacity onPress={handleToggle}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <FontAwesomeIcon
-                    name={!pot ? 'check-square' : 'square-o'}
-                    size={24}
-                    color={!pot ? '#008000' : '#808080'}
-                  />
-                  <Text style={{ marginLeft: 8 }}>Avec cache-pot</Text>
-                </View>
-              </TouchableOpacity>
+              <View className='justify-evenly items-center '>
+                <Text>Hauteur: {slideStartingValue} cm</Text>
+                <Slider
+                  style={{ width: 300, height: 40 }}
+                  minimumValue={0}
+                  maximumValue={300}
+                  minimumTrackTintColor='#3FA96A'
+                  maximumTrackTintColor='#000000'
+                  onSlidingComplete={(value) => {
+                    setSlideStartingValue(value);
+                    setSlideStartingCount((prev) => prev + 1);
+                  }}
+                />
+              </View>
 
               <View className='mt-5'>
                 <FormControl w='3/4' maxW='300' isRequired isInvalid>
@@ -400,10 +395,8 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     <Select.Item label='Rares' value='rare' />
                     <Select.Item label='Aromatiques' value='aromatic' />
                     <Select.Item label='Plantes grasses' value='succulent' />
+                    <Select.Item label='Autre' value='autre' />
                   </Select>
-                  <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
-                    veuillez faire une sélection!
-                  </FormControl.ErrorMessage>
                 </FormControl>
               </View>
               <View>
@@ -424,9 +417,24 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     <Select.Item label='correcte' value='correcte' />
                     <Select.Item label='mauvais état' value='mauvais état' />
                   </Select>
-                  <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
-                    veuillez faire une sélection!
-                  </FormControl.ErrorMessage>
+                </FormControl>
+
+                <FormControl w='3/4' maxW='300' isRequired isInvalid>
+                  <Select
+                    selectedValue={health}
+                    minWidth='200'
+                    accessibilityLabel='Entretien'
+                    placeholder='Entretien'
+                    _selectedItem={{
+                      bg: 'teal.600',
+                      endIcon: <CheckIcon size={5} />,
+                    }}
+                    mt={1}
+                    onValueChange={(itemValue) => setHealth(itemValue)}
+                  >
+                    <Select.Item label='facile' value='facile' />
+                    <Select.Item label='difficile' value='difficile' />
+                  </Select>
                 </FormControl>
                 <View className='flex items-center mt-10 mb-10'>
                   <View
@@ -451,7 +459,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                       className='h-40 w-200 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
                       onPress={onCreateNewOfferPress}
                     >
-                      <Text className='font-antipasto text-black text-lg font-bold'>AJOUTER</Text>
+                      <Text className='font-Roboto text-black text-lg'>AJOUTER</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -462,7 +470,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
         <Modal isOpen={isOpen} safeAreaTop={true}>
           <Modal.Content style={{ backgroundColor: '#f2fff3' }} maxWidth='350'>
             <Modal.Header style={{ backgroundColor: '#f2fff3' }}>
-              <Text className='text-xl   ml-3 text-center'>
+              <Text className='text-xl font-Roboto   ml-3 text-center'>
                 Connectez-vous pour découvrir toutes les fonctionnalités
               </Text>
             </Modal.Header>
@@ -472,14 +480,17 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   navigation.navigate('BottomTabs', { screen: 'Profile' });
                 }}
               >
-                <Text style={{ backgroundColor: '#f2fff3' }} className='text-md text-center  ml-3 '>
+                <Text
+                  style={{ backgroundColor: '#f2fff3' }}
+                  className='text-md font-Roboto text-center  ml-3 '
+                >
                   Se connecter ou s'inscrire
                 </Text>
               </TouchableOpacity>
             </Modal.Body>
             <Modal.Footer style={{ backgroundColor: '#f2fff3' }}>
               <TouchableOpacity onPress={handleNavigation}>
-                <Text className='text-xs   ml-3 text-center  '>Non merci</Text>
+                <Text className='text-xs   ml-3 text-center font-Roboto   '>Non merci</Text>
               </TouchableOpacity>
             </Modal.Footer>
           </Modal.Content>
@@ -488,7 +499,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           <Modal.Content maxWidth='350' style={{ backgroundColor: '#f2fff3' }}>
             <Modal.Body>
               <Spinner size='lg' color='emerald.500' accessibilityLabel='Loading image' />
-              <Text className='text-sm  color-deepBlue font-ralewayBold mt-2  my-2 text-center '>
+              <Text className='text-sm font-Roboto  color-deepBlue font-ralewayBold mt-2  my-2 text-center '>
                 Envoi de l'image en cours ...
               </Text>
             </Modal.Body>

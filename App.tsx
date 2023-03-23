@@ -40,7 +40,7 @@ export default function App() {
   };
   retrieveToken();
   console.log('🪴 API_URL', process.env.API_URL);
-
+  //
   // const token = await getToken();
   const httpLink = createHttpLink({
     uri: process.env.API_URL,

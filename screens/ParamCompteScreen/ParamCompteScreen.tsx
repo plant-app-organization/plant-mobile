@@ -44,7 +44,7 @@ const ParamCompteScreen: React.FunctionComponent<ParamCompteScreenProps> = (prop
                 shadowOpacity: 3.22,
                 shadowRadius: 1.1,
               }}
-              className='flex items-center text-2xl font-antipasto text-black  '
+              className='flex items-center text-2xl font-Roboto  text-black  '
             >
               Paramétre du compte
             </Text>
@@ -54,7 +54,7 @@ const ParamCompteScreen: React.FunctionComponent<ParamCompteScreenProps> = (prop
           <View className='h-[80%] flex flex-col justify-center m-3'>
             <View className=' flex-row mb-20'>
               <FontAwesomeIcon className='opacity-30' name='user-circle' size={50} />
-              <Text className='text-lg font-antipasto ml-3 mt-3'> changer le photo de profil </Text>
+              <Text className='text-lg font-Roboto  ml-3 mt-3'> changer le photo de profil </Text>
             </View>
             <View
               style={{
@@ -76,11 +76,10 @@ const ParamCompteScreen: React.FunctionComponent<ParamCompteScreenProps> = (prop
                   paddingHorizontal: 5,
                 }}
               >
-                <Text className='font-antipasto text-sm text-left text-xl font-antipasto'>
-                  bio:
-                </Text>
+                <Text className='font-Roboto  text-sm text-left text-xl '>bio:</Text>
               </View>
               <TextInput
+                className='font-Roboto '
                 style={{ height: 80, width: 240, fontSize: 15 }}
                 value={bio}
                 onChangeText={setBio}
@@ -113,6 +112,7 @@ const ParamCompteScreen: React.FunctionComponent<ParamCompteScreenProps> = (prop
                 </Text>
               </View>
               <TextInput
+                className='font-Roboto '
                 style={{ height: 40, width: 240, fontSize: 15 }}
                 value={password}
                 onChangeText={setPassword}
@@ -139,11 +139,12 @@ const ParamCompteScreen: React.FunctionComponent<ParamCompteScreenProps> = (prop
                   paddingHorizontal: 5,
                 }}
               >
-                <Text className='font-antipasto text-sm text-left text-xl font-antipasto'>
+                <Text className='font-Roboto  text-sm text-left text-xl '>
                   Nouveau de mots de passe :
                 </Text>
               </View>
               <TextInput
+                className='font-Roboto '
                 style={{ height: 40, width: 240, fontSize: 15 }}
                 value={newPassword}
                 onChangeText={setNewPassword}
@@ -171,11 +172,10 @@ const ParamCompteScreen: React.FunctionComponent<ParamCompteScreenProps> = (prop
                   paddingHorizontal: 5,
                 }}
               >
-                <Text className='font-antipasto text-sm text-left text-xl font-antipasto'>
-                  email :
-                </Text>
+                <Text className=' text-sm text-left text-xl font-Roboto '>email :</Text>
               </View>
               <TextInput
+                className='font-Roboto '
                 style={{ height: 40, width: 240, fontSize: 15 }}
                 value={email}
                 onChangeText={setEmail}
@@ -202,11 +202,10 @@ const ParamCompteScreen: React.FunctionComponent<ParamCompteScreenProps> = (prop
                   paddingHorizontal: 5,
                 }}
               >
-                <Text className='font-antipasto text-sm text-left text-xl font-antipasto'>
-                  Nom :
-                </Text>
+                <Text className=' text-sm text-left text-xl font-Roboto '>Nom :</Text>
               </View>
               <TextInput
+                className='font-Roboto '
                 style={{ height: 40, width: 240, fontSize: 15 }}
                 value={name}
                 onChangeText={setName}

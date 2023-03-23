@@ -69,7 +69,16 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
     <View className='w-screen'>
       <LinearGradient
         // Background Linear Gradient
-        colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
+        colors={[
+          '#f2fff3',
+          '#e2f7f6',
+          '#f0fafb',
+          '#fdf5fb',
+          '#f2fff3',
+          '#e2f7f6',
+          '#f0fafb',
+          '#fdf5fb',
+        ]}
         style={styles.background}
       >
         <SafeAreaView
@@ -87,7 +96,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
             }
           >
             <TextInput
-              className='w-11/12 border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
+              className='font-Roboto w-11/12 border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
               placeholder='Rechercher une plante directement'
               value={search}
               onChangeText={(value) => setSearch(value)}
@@ -105,42 +114,44 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                   className={`${!filters.length && 'bg-green-100'}
                   text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
-                  <Text>Toutes les catégories</Text>
+                  <Text className='font-Roboto '>Toutes les catégories</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('succulent')}
                   className={`${filters.some((e) => e === 'succulent') && 'bg-green-100'}
                   text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
-                  <Text>Plantes grasses</Text>
+                  <Text className='font-Roboto '>Plantes grasses</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('rare')}
                   className={`${filters.some((e) => e === 'rare') && 'bg-green-100'}
                   text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
-                  <Text>Rares</Text>
+                  <Text className='font-Roboto '>Rares</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('interior')}
                   className={`${filters.some((e) => e === 'interior') && 'bg-green-100'}
                   text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
-                  <Text>Plante d'intérieurs</Text>
+                  <Text className='font-Roboto '>Plante d'intérieurs</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('tropical')}
                   className={`${filters.some((e) => e === 'tropical') && 'bg-green-100'}
                   text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
-                  <Text>Tropicales</Text>
+                  <Text className='font-Roboto '>Tropicales</Text>
                 </TouchableOpacity>
               </ScrollView>
             </View>
             <View className='items-start justify-start pt-0'>
               {offersData ? (
                 <View className='w-screen '>
-                  <Text className='p-4 pl-6'>{offersData?.OffersList.length} résultats</Text>
+                  <Text className='p-4 pl-6 font-Roboto '>
+                    {offersData?.OffersList.length} résultats
+                  </Text>
                   <View className='pl-6 w-screen'>
                     <View className='w-screen flex-row flex-wrap'>
                       {offersData?.OffersList.map((offer, i) => {
