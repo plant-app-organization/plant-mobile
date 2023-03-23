@@ -250,20 +250,15 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const { width, height } = useWindowDimensions();
 
   return (
-    <LinearGradient
+    <View
+      className='h-screen w-screen bg-white relative'
       // Background Linear Gradient
-      colors={[
-        '#f2fff3',
-        '#e2f7f6',
-        '#f0fafb',
-        '#fdf5fb',
-        '#f2fff3',
-        '#e2f7f6',
-        '#f0fafb',
-        '#fdf5fb',
-      ]}
-      style={styles.background}
+
+      // colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
+      // style={styles.background}
+
     >
+      <View className='shadow-2xl shadow-[#00FF00] absolute top-0 left-0' />
       <SafeAreaView
         style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
       >
@@ -283,10 +278,11 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                     NB
                     <Avatar.Badge bg='green.500' size='23%' />
                   </Avatar>
-                  <Text style={{ fontFamily: 'Roboto', fontSize: 18 }}>{user?.username} 👋</Text>
+                  <Text style={{ fontSize: 18 }}>{user?.username} 👋</Text>
                 </View>
                 <View>
-                  <Text style={{ fontFamily: 'Roboto', fontSize: 18 }}>infos🪴</Text>
+                  <Text style={{ fontSize: 18 }}>infos🪴</Text>
+
                 </View>
               </View>
             )}
@@ -388,13 +384,13 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </LinearGradient>
+    </View>
   );
 };
 const styles = StyleSheet.create({
-  background: {
-    width: '100%',
-    height: '100%',
-  },
+  // background: {
+  //   width: '100%',
+  //   height: '100%',
+  // },
 });
 export default HomeScreen;

@@ -7,6 +7,8 @@ import MapSearchScreen from '../screens/MapSearchScreen/MapSearchScreen';
 import ChatScreen from '../screens/ChatScreen/ChatScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import AddScreen from '../screens/AddScreen/AddScreen';
+import PlantProfileScreen from '../screens/PlantProfileScreen/PlantProfileScreen';
+
 import * as Animatable from 'react-native-animatable';
 import { shouldInclude } from '@apollo/client/utilities';
 
@@ -21,6 +23,12 @@ const TabArr = [
   { route: 'Add', label: 'Vendre', icon: 'plus', component: AddScreen },
   { route: 'Chat', label: 'Chat', icon: 'comment', component: ChatScreen },
   { route: 'Profile', label: 'Profil', icon: 'user-alt', component: ProfileScreen },
+  // {
+  //   route: 'PlantProfile',
+  //   label: 'Détails',
+  //   icon: 'user-alt',
+  //   component: PlantProfileScreen,
+  // },
 ];
 
 const Tab = createBottomTabNavigator();
@@ -97,6 +105,11 @@ const BottomTabs = () => (
         />
       );
     })}
+    <Tab.Screen
+      name='PlantProfileScreen'
+      component={PlantProfileScreen}
+      options={{ tabBarButton: () => null }}
+    />
   </Tab.Navigator>
 );
 
