@@ -230,52 +230,50 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         />
       </LinearGradient>
 
-      <ScrollView className='w-screen' showsVerticalScrollIndicator={false}>
-        <View className='flex flex-column h-full justify-start items-start mb-20'>
-          <View className='items-start justify-start pt-4 w-scree mb-2'>
-            <View className='flex-column items-start w-screen'>
-              <Text className='pt-4 pl-5 text-lg '>⭐ Top planters</Text>
-              <FlatList
-                data={plantersData}
-                renderItem={({ item }) => (
-                  <CardPlanter name={item.name} image={item.image} deals={item.deals} />
-                )}
-                keyExtractor={(item) => item.key}
-                horizontal={true}
-                contentContainerStyle={{ padding: 20 }}
-              />
-            </View>
-          </View>
+      <ScrollView className='w-screen mb-20' showsVerticalScrollIndicator={false}>
+        <View className='w-screen h-[20px]' />
+        <View className='w-full'>
+          <Text className='pl-5 text-lg '>⭐ Top planters</Text>
+          <FlatList
+            data={plantersData}
+            renderItem={({ item }) => (
+              <CardPlanter name={item.name} image={item.image} deals={item.deals} />
+            )}
+            keyExtractor={(item) => item.key}
+            horizontal={true}
+            contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+          />
+        </View>
 
-          <View className='h-[50px] w-full' />
+        <View className='h-[50px] w-full' />
 
-          <View className='w-full'>
-            <Text className='pl-5 text-lg '>🎉 Super deals / ventes privées !</Text>
-            <FlatList
-              data={dealData}
-              renderItem={({ item }) => (
-                <CardDeal entreprise={item.entreprise} ville={item.ville} photo={item.photo} />
-              )}
-              keyExtractor={(item) => item.key}
-              horizontal={true}
-              contentContainerStyle={{ padding: 20 }}
-            />
-          </View>
+        <View className='w-full'>
+          <Text className='pl-5 text-lg '>🎉 Super deals / ventes privées !</Text>
+          <FlatList
+            data={dealData}
+            renderItem={({ item }) => (
+              <CardDeal entreprise={item.entreprise} ville={item.ville} photo={item.photo} />
+            )}
+            keyExtractor={(item) => item.key}
+            horizontal={true}
+            contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+          />
+        </View>
 
-          <View className='h-[50px] w-full' />
+        <View className='h-[50px] w-full' />
 
-          <View className='w-full'>
-            <Text className='pl-5 text-lg w-full'>🍃 Catégories</Text>
-            <FlatList
-              data={categorieData}
-              renderItem={({ item }) => <CardCategorie name={item.name} image={item.image} />}
-              keyExtractor={(item) => item.key}
-              horizontal={false}
-              contentContainerStyle={{ padding: 20 }}
-            />
-          </View>
+        <View className='w-full'>
+          <Text className='pl-5 text-lg w-full'>🍃 Catégories</Text>
+          <FlatList
+            data={categorieData}
+            renderItem={({ item }) => <CardCategorie name={item.name} image={item.image} />}
+            keyExtractor={(item) => item.key}
+            horizontal={false}
+            contentContainerStyle={{ padding: 20 }}
+          />
+        </View>
 
-          {/* <View className='flex items-start justify-start pl-0 pt-4 w-full h-40 mb-6'>
+        {/* <View className='flex items-start justify-start pl-0 pt-4 w-full h-40 mb-6'>
             <View className='flex-column items-start w-full'>
               <Text className='pl-8 pb-4 text-lg '>⚡ Publicité</Text>
               <ImageBackground
@@ -291,45 +289,39 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               ></ImageBackground>
             </View>
           </View> */}
-          <View className='h-[50px] w-full' />
+        <View className='h-[50px] w-full' />
 
-          <View className='w-full'>
-            <Text className='pl-5 text-lg '>👀 À la une</Text>
-            <FlatList
-              data={plantesData}
-              renderItem={({ item }) => (
-                <CardProduct name={item.name} prix={item.prix} photo={item.photo} />
-              )}
-              keyExtractor={(item) => item.key}
-              horizontal={true}
-              contentContainerStyle={{ padding: 20 }}
-            />
-          </View>
-
-          <View className='h-[50px] w-full' />
-
-          <View className='w-full'>
-            <Text className='pl-5 text-lg'>👉 Suggestions de recherche</Text>
-            <FlatList
-              data={suggestionData}
-              renderItem={({ item }) => <CardSuggestion search={item.search} views={item.views} />}
-              keyExtractor={(item) => item.key}
-              horizontal={true}
-              contentContainerStyle={{ padding: 20 }}
-            />
-          </View>
-
-          <View className='h-[100px] w-full' />
+        <View className='w-full'>
+          <Text className='pl-5 text-lg '>👀 À la une</Text>
+          <FlatList
+            data={plantesData}
+            renderItem={({ item }) => (
+              <CardProduct name={item.name} prix={item.prix} photo={item.photo} />
+            )}
+            keyExtractor={(item) => item.key}
+            horizontal={true}
+            contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+          />
         </View>
+
+        <View className='h-[50px] w-full' />
+
+        <View className='w-full'>
+          <Text className='pl-5 text-lg'>👉 Suggestions de recherche</Text>
+          <FlatList
+            data={suggestionData}
+            renderItem={({ item }) => <CardSuggestion search={item.search} views={item.views} />}
+            keyExtractor={(item) => item.key}
+            horizontal={true}
+            contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+          />
+        </View>
+
+        <View className='h-[100px] w-full' />
       </ScrollView>
     </SafeAreaView>
     // </LinearGradient>
   );
 };
-const styles = StyleSheet.create({
-  // background: {
-  //   width: '100%',
-  //   height: '100%',
-  // },
-});
+
 export default HomeScreen;
