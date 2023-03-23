@@ -40,35 +40,32 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
     '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
   return (
-    <View className='mb-6 mr-4'>
+    <View className='w-[150px] h-[240px] mr-5 rounded-lg bg-white'>
       <TouchableOpacity>
-        <View className='bg-blue flex flex-row w-40 items-start mr-2 h-48'>
-          <Image
-            className='h-48 w-full rounded-lg bg-green-300'
-            source={props.photo}
-            // placeholder={blurHash}
-            contentFit='cover'
-            transition={1000}
-          />
+        <Image
+          source={props.photo}
+          contentFit='cover'
+          transition={1000}
+          className='w-full h-[80%] rounded-lg'
+        />
+
+        <View className='h-[20%] w-full flex-row justify-between items-center'>
+          <View className='h-full justify-evenly'>
+            <Text className='font-semibold'>{props.prix}€</Text>
+            <Text>{props.name}</Text>
+          </View>
+          <TouchableOpacity>
+            <Animated.View style={[{ transform: [{ scale: scaleAnimation }] }]}>
+              <HeartIcon
+                color={'#d8d8d8'}
+                className='h-6 w-6 pr-2'
+                onPress={() => handleLike()}
+                style={heartIconStyle}
+              />
+            </Animated.View>
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
-
-      <View className='flex flex-row justify-between items-center pr-2'>
-        <View className='flex flex-column'>
-          <Text className='pl-2 pt-2 font-semibold'>{props.prix}€</Text>
-          <Text className='pl-2 pt-0'>{props.name}</Text>
-        </View>
-        <TouchableOpacity>
-          <Animated.View style={[{ transform: [{ scale: scaleAnimation }] }]}>
-            <HeartIcon
-              color={'#d8d8d8'}
-              className='h-6 w-6 pr-2'
-              onPress={() => handleLike()}
-              style={heartIconStyle}
-            />
-          </Animated.View>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
