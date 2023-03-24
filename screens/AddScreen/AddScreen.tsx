@@ -56,13 +56,15 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   const [category, setCategory] = useState<string>('');
   const [pot, setPot] = useState<boolean>(false);
   const [health, setHealth] = useState<string>('');
+  const [maintenanceDifficultyLevel, setMaintenanceDifficultyLevel] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean | void | undefined>(false);
   const [isLoaderOpen, setIsLoaderOpen] = useState<boolean | void | undefined>(false);
   const [fullScreenImage, setFullScreenImage] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const [slideStartingValue, setSlideStartingValue] = useState(0);
-  const [slideStartingCount, setSlideStartingCount] = useState(0);
+  // const [slideStartingValue, setSlideStartingValue] = useState(0);
+  // const [slideStartingCount, setSlideStartingCount] = useState(0);
+  const [plantHeight, setPlantHeight] = useState<number>(0);
 
   const openModalHandler = () => {
     console.log('CLICKED');
@@ -158,6 +160,8 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             category,
             health,
             pot,
+            plantHeight: Math.floor(plantHeight),
+            maintenanceDifficultyLevel,
           },
         },
       });
@@ -345,7 +349,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     value={price}
                     onChangeText={setPrice}
                     keyboardType='numeric'
-                    placeholder='ex: 18..'
+                    placeholder='0,00'
                   />
                   <Text className=' text-l font-Roboto ml-1 mr-10'>€</Text>
                 </View>
@@ -362,16 +366,19 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               </View>
 
               <View className='justify-evenly items-center '>
-                <Text>Hauteur: {slideStartingValue} cm</Text>
+                <Text>Hauteur: {Math.floor(plantHeight).toString()} cm</Text>
                 <Slider
                   style={{ width: 300, height: 40 }}
                   minimumValue={0}
                   maximumValue={300}
                   minimumTrackTintColor='#3FA96A'
                   maximumTrackTintColor='#000000'
+                  // onValueChange={(value) => {
+                  //   console.log('value', value);
+                  //   setPlantHeight(Math.floor(value));
+                  // }}
                   onSlidingComplete={(value) => {
-                    setSlideStartingValue(value);
-                    setSlideStartingCount((prev) => prev + 1);
+                    setPlantHeight(value);
                   }}
                 />
               </View>
@@ -405,7 +412,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     selectedValue={health}
                     minWidth='200'
                     accessibilityLabel='Santé'
-                    placeholder='Santé'
+                    placeholder='État de santé'
                     _selectedItem={{
                       bg: 'teal.600',
                       endIcon: <CheckIcon size={5} />,
@@ -414,14 +421,15 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     onValueChange={(itemValue) => setHealth(itemValue)}
                   >
                     <Select.Item label='excellent' value='excellent' />
-                    <Select.Item label='correcte' value='correcte' />
-                    <Select.Item label='mauvais état' value='mauvais état' />
+                    <Select.Item label='bon' value='good' />
+                    <Select.Item label='correct' value='correct' />
+                    <Select.Item label='mauvais état' value='bad' />
                   </Select>
                 </FormControl>
 
                 <FormControl w='3/4' maxW='300' isRequired isInvalid>
                   <Select
-                    selectedValue={health}
+                    selectedValue={maintenanceDifficultyLevel}
                     minWidth='200'
                     accessibilityLabel='Entretien'
                     placeholder='Entretien'
@@ -430,10 +438,11 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                       endIcon: <CheckIcon size={5} />,
                     }}
                     mt={1}
-                    onValueChange={(itemValue) => setHealth(itemValue)}
+                    onValueChange={(itemValue) => setMaintenanceDifficultyLevel(itemValue)}
                   >
-                    <Select.Item label='facile' value='facile' />
-                    <Select.Item label='difficile' value='difficile' />
+                    <Select.Item label='facile' value='easy' />
+                    <Select.Item label='intermédiaire' value='intermediary' />
+                    <Select.Item label='difficile' value='difficult' />
                   </Select>
                 </FormControl>
                 <View className='flex items-center mt-10 mb-10'>

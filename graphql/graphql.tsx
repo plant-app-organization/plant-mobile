@@ -42,7 +42,9 @@ export type Offer = {
   health: Scalars['String'];
   id: Scalars['ID'];
   isActive: Scalars['Boolean'];
+  maintenanceDifficultyLevel: Scalars['String'];
   pictures: Array<Scalars['String']>;
+  plantHeight: Scalars['Int'];
   plantName: Scalars['String'];
   pot: Scalars['Boolean'];
   price: Scalars['Int'];
@@ -53,7 +55,9 @@ export type OfferInput = {
   category: Scalars['String'];
   description: Scalars['String'];
   health: Scalars['String'];
+  maintenanceDifficultyLevel: Scalars['String'];
   pictures: Array<Scalars['String']>;
+  plantHeight: Scalars['Float'];
   plantName: Scalars['String'];
   pot: Scalars['Boolean'];
   price: Scalars['Float'];
@@ -64,6 +68,7 @@ export type Query = {
   /** Get List of Offers */
   OffersList: Array<Offer>;
   hello: Scalars['String'];
+  userDataById: UserModel;
 };
 
 
@@ -71,9 +76,33 @@ export type QueryOffersListArgs = {
   filters: Array<Scalars['String']>;
 };
 
+
+export type QueryUserDataByIdArgs = {
+  userId: Scalars['String'];
+};
+
 export type RegisterInput = {
   clerkId: Scalars['String'];
   email: Scalars['String'];
+  userName: Scalars['String'];
+};
+
+export type UserModel = {
+  __typename?: 'UserModel';
+  avatar: Scalars['String'];
+  clerkId: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  id: Scalars['ID'];
+  isActive: Scalars['Boolean'];
+  isPro: Scalars['Boolean'];
+  lastName: Scalars['String'];
+  offerIds: Array<Scalars['String']>;
+  password: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  userBio: Scalars['String'];
   userName: Scalars['String'];
 };
 
@@ -89,7 +118,14 @@ export type GetOffersQueryVariables = Exact<{
 }>;
 
 
-export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string> }> };
+export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string }> };
+
+export type GetUserDataByIdQueryVariables = Exact<{
+  userId: Scalars['String'];
+}>;
+
+
+export type GetUserDataByIdQuery = { __typename?: 'Query', userDataById: { __typename?: 'UserModel', id: string, userName: string, userBio: string, avatar: string, isPro: boolean, createdAt: any, updatedAt: any } };
 
 export type RegisterMutationVariables = Exact<{
   newUserInput: RegisterInput;
@@ -138,6 +174,16 @@ export const GetOffersDocument = gql`
     plantName
     price
     pictures
+    description
+    price
+    health
+    category
+    pot
+    isActive
+    createdAt
+    updatedAt
+    plantHeight
+    maintenanceDifficultyLevel
   }
 }
     `;
@@ -169,6 +215,47 @@ export function useGetOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHo
 export type GetOffersQueryHookResult = ReturnType<typeof useGetOffersQuery>;
 export type GetOffersLazyQueryHookResult = ReturnType<typeof useGetOffersLazyQuery>;
 export type GetOffersQueryResult = Apollo.QueryResult<GetOffersQuery, GetOffersQueryVariables>;
+export const GetUserDataByIdDocument = gql`
+    query getUserDataById($userId: String!) {
+  userDataById(userId: $userId) {
+    id
+    userName
+    userBio
+    avatar
+    isPro
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetUserDataByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserDataByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserDataByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserDataByIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetUserDataByIdQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>(GetUserDataByIdDocument, options);
+      }
+export function useGetUserDataByIdLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>(GetUserDataByIdDocument, options);
+        }
+export type GetUserDataByIdQueryHookResult = ReturnType<typeof useGetUserDataByIdQuery>;
+export type GetUserDataByIdLazyQueryHookResult = ReturnType<typeof useGetUserDataByIdLazyQuery>;
+export type GetUserDataByIdQueryResult = Apollo.QueryResult<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>;
 export const RegisterDocument = gql`
     mutation register($newUserInput: RegisterInput!) {
   register(newUserInput: $newUserInput)

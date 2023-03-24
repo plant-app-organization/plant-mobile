@@ -12,7 +12,7 @@ const CardSuggestion: React.FunctionComponent<CardSuggestionProps> = (props) => 
   const navigation = useNavigation();
   return (
     <View>
-      <TouchableOpacity className='pr-2' onPress={() => navigation.navigate('PlantProfileScreen')}>
+      <TouchableOpacity className='pr-2' onPress={() => navigation.navigate('ListingScreen')}>
         <View className='flex flex-column w-full items-center p-4 border-green-50 border-solid rounded-2xl bg-green-100	 border'>
           <Text className='pl-0 pt-0 text-center'>{props.recherche}</Text>
           <Text className='pl-0 pt-0 text-xs justify-center items-center'>{props.vues} vues</Text>

@@ -256,7 +256,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
 
       // colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
       // style={styles.background}
-
     >
       <View className='shadow-2xl shadow-[#00FF00] absolute top-0 left-0' />
       <SafeAreaView
@@ -282,7 +281,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 </View>
                 <View>
                   <Text style={{ fontSize: 18 }}>infos🪴</Text>
-
                 </View>
               </View>
             )}
@@ -379,6 +377,23 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 >
                   {suggestion}
                 </ScrollView>
+                <TouchableOpacity
+                  className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
+                  style={{
+                    backgroundColor: '#ccedcf',
+                    shadowColor: '#3FA96A',
+                    shadowOffset: {
+                      width: 0,
+                      height: 3,
+                    },
+                    shadowOpacity: 15.22,
+                    shadowRadius: 12.1,
+                    elevation: 10, // pour Android seulement
+                  }}
+                  onPress={() => props.navigation.navigate('Listing')}
+                >
+                  <Text className='text-black text-lg font-Roboto '>go lsiting</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

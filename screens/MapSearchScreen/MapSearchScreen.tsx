@@ -96,7 +96,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
             }
           >
             <TextInput
-              className='font-Roboto w-11/12 border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
+              className='font-Roboto w-11/12 border-green-50 border-solid bg-green-100  text-left  rounded-2xl border ml-4 p-3 mr-4 mt-4'
               placeholder='Rechercher une plante directement'
               value={search}
               onChangeText={(value) => setSearch(value)}
@@ -135,7 +135,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                   className={`${filters.some((e) => e === 'interior') && 'bg-green-100'}
                   text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
-                  <Text className='font-Roboto '>Plante d'intérieurs</Text>
+                  <Text className='font-Roboto '>Plante dintérieurs</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('tropical')}
@@ -155,17 +155,11 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                   <View className='pl-6 w-screen'>
                     <View className='w-screen flex-row flex-wrap'>
                       {offersData?.OffersList.map((offer, i) => {
-                        return (
-                          <CardProduct
-                            key={i}
-                            name={offer.plantName}
-                            prix={offer.price}
-                            photo={offer.pictures[0]}
-                          />
-                        );
+                        console.log('dans le map', offer.pictures);
+                        return <CardProduct key={i} {...offer} />;
                       })}
                     </View>
-                  </View>:
+                  </View>
                 </View>
               ) : (
                 <View className='flex-1 w-screen '>

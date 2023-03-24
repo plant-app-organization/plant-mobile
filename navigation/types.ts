@@ -8,6 +8,8 @@ export type HomeStackNavigatorParamList = {
   FavorisScreen: undefined;
   ParamScreen: undefined;
   ParamCompteScreen: undefined;
+  ListingScreen: undefined;
+  UserProfileScreen: undefined;
 };
 
 export type BottomTabNavigatorParamList = {
