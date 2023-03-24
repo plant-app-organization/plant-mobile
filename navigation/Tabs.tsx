@@ -76,7 +76,7 @@ const BottomTabs = () => (
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: '#C3E2D3',
+              backgroundColor: focused ? '#C3E2D3' : 'white',
               width: 70,
               height: 70,
               borderRadius: '100%',
@@ -89,8 +89,8 @@ const BottomTabs = () => (
                 alignItems: 'center',
                 justifyContent: 'center',
                 backgroundColor: '#344E41',
-                width: focused ? '100%' : '90%',
-                height: focused ? '100%' : '90%',
+                width: '90%',
+                height: '90%',
                 borderRadius: '100%',
               }}
             >
