@@ -1,0 +1,19 @@
+query searchOffers($searchInput: String!, $filters: [String!]!) {
+  OffersListSearch(searchInput: $searchInput, filters: $filters) {
+    id
+    authorId
+    plantName
+    price
+    pictures
+    description
+    price
+    health
+    category
+    pot
+    isActive
+    createdAt
+    updatedAt
+    plantHeight
+    maintenanceDifficultyLevel
+  }
+}

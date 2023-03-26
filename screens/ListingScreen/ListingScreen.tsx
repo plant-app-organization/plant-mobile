@@ -51,7 +51,6 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
                   source={imgUrl}
                   placeholder={blurhash}
                   contentFit='cover'
-                  transition={1000}
                 />
               </View>
             );

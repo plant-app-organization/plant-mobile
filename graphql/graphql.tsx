@@ -67,6 +67,8 @@ export type Query = {
   __typename?: 'Query';
   /** Get List of Offers */
   OffersList: Array<Offer>;
+  /** Get List of Offers Searched */
+  OffersListSearch: Array<Offer>;
   hello: Scalars['String'];
   userDataById: UserModel;
 };
@@ -77,13 +79,22 @@ export type QueryOffersListArgs = {
 };
 
 
+export type QueryOffersListSearchArgs = {
+  filters: Array<Scalars['String']>;
+  searchInput: Scalars['String'];
+};
+
+
 export type QueryUserDataByIdArgs = {
   userId: Scalars['String'];
 };
 
 export type RegisterInput = {
+  avatar: Scalars['String'];
   clerkId: Scalars['String'];
   email: Scalars['String'];
+  isPro: Scalars['Boolean'];
+  userBio: Scalars['String'];
   userName: Scalars['String'];
 };
 
@@ -133,6 +144,14 @@ export type RegisterMutationVariables = Exact<{
 
 
 export type RegisterMutation = { __typename?: 'Mutation', register: string };
+
+export type SearchOffersQueryVariables = Exact<{
+  searchInput: Scalars['String'];
+  filters: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string }> };
 
 
 export const CreateNewOfferDocument = gql`
@@ -287,3 +306,53 @@ export function useRegisterMutation(baseOptions?: ApolloReactHooks.MutationHookO
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const SearchOffersDocument = gql`
+    query searchOffers($searchInput: String!, $filters: [String!]!) {
+  OffersListSearch(searchInput: $searchInput, filters: $filters) {
+    id
+    authorId
+    plantName
+    price
+    pictures
+    description
+    price
+    health
+    category
+    pot
+    isActive
+    createdAt
+    updatedAt
+    plantHeight
+    maintenanceDifficultyLevel
+  }
+}
+    `;
+
+/**
+ * __useSearchOffersQuery__
+ *
+ * To run a query within a React component, call `useSearchOffersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchOffersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchOffersQuery({
+ *   variables: {
+ *      searchInput: // value for 'searchInput'
+ *      filters: // value for 'filters'
+ *   },
+ * });
+ */
+export function useSearchOffersQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchOffersQuery, SearchOffersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchOffersQuery, SearchOffersQueryVariables>(SearchOffersDocument, options);
+      }
+export function useSearchOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchOffersQuery, SearchOffersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchOffersQuery, SearchOffersQueryVariables>(SearchOffersDocument, options);
+        }
+export type SearchOffersQueryHookResult = ReturnType<typeof useSearchOffersQuery>;
+export type SearchOffersLazyQueryHookResult = ReturnType<typeof useSearchOffersLazyQuery>;
+export type SearchOffersQueryResult = Apollo.QueryResult<SearchOffersQuery, SearchOffersQueryVariables>;
