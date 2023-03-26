@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import { Avatar, ScrollView } from 'native-base';
 import AuthorDisplay from '../../components/AuthorDisplay/AuthorDisplay';
 
 import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid';
-
+import Swiper from 'react-native-swiper';
 interface ListingScreenProps {}
 
 const blurhash =
@@ -29,19 +29,43 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
     plantName,
     pot,
     price,
-    upadatedAt,
+    updatedAt,
   } = props.route.params.listingData;
   const navigation = useNavigation();
+  console.log('pictures');
   return (
     <View className='h-screen w-screen bg-white'>
       <View className='w-full h-[40%] relative'>
-        <Image
-          className='w-full h-full'
-          source={pictures[0]}
-          placeholder={blurhash}
-          contentFit='cover'
-          transition={1000}
-        />
+        <Swiper
+          className='bg-green-100'
+          style={styles.wrapper}
+          showsButtons={false}
+          dotColor={'white'}
+          activeDotColor={'green'}
+        >
+          {pictures.map((imgUrl: string, index: number) => {
+            return (
+              <View style={styles.slide1} key={index}>
+                <Image
+                  className='w-full h-full'
+                  source={imgUrl}
+                  placeholder={blurhash}
+                  contentFit='cover'
+                  transition={1000}
+                />
+              </View>
+            );
+          })}
+
+          {/* <View style={styles.slide1}>
+            <Image
+              className='w-full h-full'
+              source={pictures[0]}
+              contentFit='cover'
+              transition={1000}
+            />
+          </View> */}
+        </Swiper>
 
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -115,3 +139,24 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
 };
 
 export default ListingScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wrapper: {},
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    //   backgroundColor: 'green',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+});
