@@ -1,7 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, Animated } from 'react-native';
-import { Spinner } from 'native-base';
 import { HeartIcon } from 'react-native-heroicons/solid';
 import { Image } from 'expo-image';
 
@@ -43,24 +41,23 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
     '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
   return (
-    <View className='mb-6 mr-4'>
-      <TouchableOpacity onPress={() => navigation.navigate('Listing', { listingData: props })}>
-        <View className='bg-blue flex flex-row w-40 items-start mr-2 h-48'>
-          {props.pictures && (
-            <Image
-              className='h-48 w-full rounded-lg bg-green-300'
-              source={props.pictures[0]}
-              // placeholder={blurHash}
-              contentFit='cover'
-              transition={1000}
-            />
-          )}
-        </View>
-      </TouchableOpacity>
+    <TouchableOpacity
+      className='w-1/2 px-2'
+      onPress={() => navigation.navigate('Listing', { listingData: props })}
+    >
+      {props.pictures && (
+        <Image
+          className='rounded-lg bg-green-200 h-64'
+          source={props.pictures[0]}
+          // placeholder={blurHash}
+          contentFit='cover'
+          // transition={1000}
+        />
+      )}
 
       <View className='flex flex-row justify-between items-center pr-2'>
         <View className='flex flex-column'>
-          <Text className='pl-2 pt-2 font-semibold'>{props.price}€</Text>
+          <Text className='pl-2 pt-2 font-semibold'>{props.price},00 €</Text>
           <Text className='pl-2 pt-0'>{props.plantName}</Text>
         </View>
         <TouchableOpacity>
@@ -74,7 +71,7 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
           </Animated.View>
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
