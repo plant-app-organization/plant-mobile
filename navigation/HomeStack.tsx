@@ -15,11 +15,12 @@ import FavorisScreen from '../screens/FavorisScreen/FavorisScreen';
 import VerifyCodeScreen from '../screens/VerifyCodeScreen/VerifyCodeScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import ParamCompteScreen from '../screens/ParamCompteScreen/ParamCompteScreen';
-
+import ListingScreen from '../screens/ListingScreen/ListingScreen';
 import BottomTabs from './Tabs';
 import LinkingConfiguration from './LinkingConfiguration';
 import { ClerkLoaded, useUser } from '@clerk/clerk-expo';
 import ParamScreen from '../screens/ParamScreen/ParamScreen';
+import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen';
 
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>();
 const config = {
@@ -57,6 +58,7 @@ const HomeStackNavigator = () => {
               }}
             /> */}
             <HomeStack.Screen name='BottomTabs' component={BottomTabs} />
+
             <HomeStack.Screen
               name='FirstScreenLogo'
               component={FirstScreenLogo}
@@ -73,6 +75,7 @@ const HomeStackNavigator = () => {
                 animation: 'slide_from_right',
               }}
             />
+
             <HomeStack.Screen
               name='SecondPresentationScreen'
               component={SecondPresentationScreen}
@@ -106,6 +109,22 @@ const HomeStackNavigator = () => {
               }}
             />
             <HomeStack.Screen
+              name='Listing'
+              component={ListingScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='UserProfile'
+              component={UserProfileScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
               name='FavorisScreen'
               component={FavorisScreen}
               options={{
@@ -115,7 +134,25 @@ const HomeStackNavigator = () => {
             />
           </>
         ) : (
-          <HomeStack.Screen name='BottomTabs' component={BottomTabs} />
+          <>
+            <HomeStack.Screen name='BottomTabs' component={BottomTabs} />
+            <HomeStack.Screen
+              name='Listing'
+              component={ListingScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='UserProfile'
+              component={UserProfileScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+          </>
         )}
       </HomeStack.Navigator>
     </SafeAreaProvider>

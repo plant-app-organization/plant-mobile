@@ -1,5 +1,9 @@
 overwrite: true
+<<<<<<< HEAD
 schema: 'http://192.168.1.55:8080/graphql'
+=======
+schema: 'http://192.168.1.53:8080/graphql'
+>>>>>>> d3d9fccc80bc1801d38b3e50715a2a8241b82020
 documents: 'graphql/queries/*.graphql'
 generates:
   graphql/graphql.tsx:

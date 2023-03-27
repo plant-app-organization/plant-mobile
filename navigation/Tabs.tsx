@@ -7,7 +7,6 @@ import MapSearchScreen from '../screens/MapSearchScreen/MapSearchScreen';
 import ChatScreen from '../screens/ChatScreen/ChatScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import AddScreen from '../screens/AddScreen/AddScreen';
-import PlantProfileScreen from '../screens/PlantProfileScreen/PlantProfileScreen';
 
 import * as Animatable from 'react-native-animatable';
 import { shouldInclude } from '@apollo/client/utilities';
@@ -105,11 +104,6 @@ const BottomTabs = () => (
         />
       );
     })}
-    <Tab.Screen
-      name='PlantProfileScreen'
-      component={PlantProfileScreen}
-      options={{ tabBarButton: () => null }}
-    />
   </Tab.Navigator>
 );
 

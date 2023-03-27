@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, useCallback } from 'react';
 import {
   StatusBar,
   Platform,
@@ -11,45 +10,40 @@ import {
   StyleSheet,
   TouchableOpacity,
   RefreshControl,
+  FlatList,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import CardProduct from '../../components/product/CardProduct';
-import { useGetOffersQuery } from '../../graphql/graphql';
+import { useSearchOffersQuery } from '../../graphql/graphql';
 import LoadingView from '../../components/LoadingView/LoadingView';
-
 interface MapSearchScreenProps {}
 
 const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) => {
   const [filters, setFilters] = useState<string[]>([]);
-
-  const { data: offersData, refetch: refetchOffersData } = useGetOffersQuery({
-    variables: { filters },
-  });
+  const [searchInput, setSearchInput] = useState<string>('');
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const [search, setSearch] = useState<string>('');
-  // const [selectedCategory, setSelectedCategory] = useState<string>('Toutes les catégories');
+
+  const { data: searchOffersData, refetch: refetchSearchOffersData } = useSearchOffersQuery({
+    variables: { searchInput, filters },
+  });
   console.log('🙂filters', filters);
+  // console.log('searchOffersData', searchOffersData);
+  const renderItem = useCallback(({ item }) => <CardProduct {...item} />, []);
   const handleFilterPress = (filterValue: string) => {
     if (filterValue == 'all') {
       setFilters([]);
-      refetchOffersData({ filters: [] });
+      refetchSearchOffersData({ filters: [] });
     } else {
       if (filters.some((e) => e === filterValue)) {
         setFilters(filters.filter((e) => e !== filterValue));
-        refetchOffersData({ filters: filters.filter((e) => e !== filterValue) });
+        refetchSearchOffersData({ filters: filters.filter((e) => e !== filterValue) });
       } else {
         setFilters([...filters, filterValue]);
-        refetchOffersData({ filters: [...filters, filterValue] });
+        refetchSearchOffersData({ filters: [...filters, filterValue] });
       }
     }
   };
-  // const filterProducts = (product) => {
-  //   if (selectedCategory === 'Toutes les catégories') {
-  //     return true;
-  //   } else {
-  //     return product.categorie === selectedCategory;
-  //   }
-  // };
+
   const wait = (timeout: number) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -57,11 +51,18 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
     setRefreshing(true);
 
     wait(2000).then(() => {
-      refetchOffersData(), setRefreshing(false);
+      refetchSearchOffersData(), setRefreshing(false);
     });
   }, []);
 
   let stylefilter = {};
+
+  const onChangeText = (text: string) => {
+    if (text.length > 2) {
+      console.log('go', text);
+    }
+    setSearchInput(text);
+  };
 
   // const filteredProducts = products.filter(filterProducts);
 
@@ -96,10 +97,10 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
             }
           >
             <TextInput
-              className='font-Roboto w-11/12 border-green-50 border-solid bg-green-100 border text-left border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
-              placeholder='Rechercher une plante directement'
-              value={search}
-              onChangeText={(value) => setSearch(value)}
+              className='font-Roboto w-11/12 border-green-50 border-solid bg-green-100  text-left  rounded-2xl border ml-4 p-3 mr-4 mt-4'
+              placeholder='Rechercher une plante'
+              value={searchInput}
+              onChangeText={onChangeText}
               placeholderTextColor='#000'
             />
 
@@ -135,7 +136,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                   className={`${filters.some((e) => e === 'interior') && 'bg-green-100'}
                   text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
-                  <Text className='font-Roboto '>Plante d'intérieurs</Text>
+                  <Text className='font-Roboto '>Plante dintérieurs</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('tropical')}
@@ -147,25 +148,27 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
               </ScrollView>
             </View>
             <View className='items-start justify-start pt-0'>
-              {offersData ? (
-                <View className='w-screen '>
+              {searchOffersData ? (
+                <View className='w-screen'>
                   <Text className='p-4 pl-6 font-Roboto '>
-                    {offersData?.OffersList.length} résultats
+                    {searchOffersData?.OffersListSearch.length} résultats
                   </Text>
-                  <View className='pl-6 w-screen'>
-                    <View className='w-screen flex-row flex-wrap'>
-                      {offersData?.OffersList.map((offer, i) => {
-                        return (
-                          <CardProduct
-                            key={i}
-                            name={offer.plantName}
-                            prix={offer.price}
-                            photo={offer.pictures[0]}
-                          />
-                        );
-                      })}
-                    </View>
-                  </View>:
+                  <View className='w-screen'>
+                    <FlatList
+                      numColumns={2}
+                      horizontal={false}
+                      initialNumToRender={4}
+                      maxToRenderPerBatch={6}
+                      ItemSeparatorComponent={() => <View className='h-4' />}
+                      columnWrapperStyle={{
+                        flex: 1,
+                        justifyContent: 'space-evenly',
+                      }}
+                      data={searchOffersData?.OffersListSearch}
+                      renderItem={renderItem}
+                      keyExtractor={(item) => item.id}
+                    />
+                  </View>
                 </View>
               ) : (
                 <View className='flex-1 w-screen '>

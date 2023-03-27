@@ -29,6 +29,10 @@ export default function VerifyCodeScreen(props) {
             email: completeSignUp.emailAddress,
             userName: completeSignUp.username,
             clerkId: completeSignUp.createdUserId,
+            userBio: 'Je suis un plant-addict',
+            isPro: false,
+            avatar:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Kyzyl_Shaman.jpg/340px-Kyzyl_Shaman.jpg',
           },
         },
       });
