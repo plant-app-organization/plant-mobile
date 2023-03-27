@@ -40,33 +40,31 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
     '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
   return (
-    <View className='w-[150px] h-[240px] mr-5 rounded-lg bg-white'>
-      <TouchableOpacity>
-        <Image
-          source={props.photo}
-          contentFit='cover'
-          transition={1000}
-          className='w-full h-[80%] rounded-lg'
-        />
+    <TouchableOpacity className='w-[150px] h-[240px] mr-5 rounded-lg bg-white'>
+      <Image
+        source={props.photo}
+        contentFit='cover'
+        transition={1000}
+        className='w-full h-[80%] rounded-t-lg'
+      />
 
-        <View className='h-[20%] w-full flex-row justify-between items-center'>
-          <View className='h-full justify-evenly'>
-            <Text className='font-semibold'>{props.prix}€</Text>
-            <Text>{props.name}</Text>
-          </View>
-          <TouchableOpacity>
-            <Animated.View style={[{ transform: [{ scale: scaleAnimation }] }]}>
-              <HeartIcon
-                color={'#d8d8d8'}
-                className='h-6 w-6 pr-2'
-                onPress={() => handleLike()}
-                style={heartIconStyle}
-              />
-            </Animated.View>
-          </TouchableOpacity>
+      <View className='h-[20%] w-full flex-row justify-between items-center'>
+        <View className='h-full justify-evenly'>
+          <Text className='font-semibold'>{props.prix}€</Text>
+          <Text>{props.name}</Text>
         </View>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity>
+          <Animated.View style={[{ transform: [{ scale: scaleAnimation }] }]}>
+            <HeartIcon
+              color={'#d8d8d8'}
+              className='h-6 w-6 pr-2'
+              onPress={() => handleLike()}
+              style={heartIconStyle}
+            />
+          </Animated.View>
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
   );
 };
 

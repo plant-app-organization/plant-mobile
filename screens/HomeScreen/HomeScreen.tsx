@@ -15,6 +15,9 @@ import {
   useWindowDimensions,
   FlatList,
 } from 'react-native';
+
+import { Image } from 'expo-image';
+
 import { Spinner, Switch } from 'native-base';
 
 import CardProduct from '../../components/product/CardProduct';
@@ -273,26 +276,22 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View>
 
-        {/* <View className='flex items-start justify-start pl-0 pt-4 w-full h-40 mb-6'>
-            <View className='flex-column items-start w-full'>
-              <Text className='pl-8 pb-4 text-lg '>⚡ Publicité</Text>
-              <ImageBackground
-                source={{
-                  uri: 'https://i.ibb.co/FWY0jhd/02-01-decouvrir-histoire-de-marseille.jpg',
-                }}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: 'green',
-                }}
-                imageStyle={{ borderRadius: 30 / 2, opacity: 0.8 }}
-              ></ImageBackground>
-            </View>
-          </View> */}
         <View className='h-[50px] w-full' />
 
+        <View className='w-full h-40'>
+          <Text className='pl-5 text-lg mb-4'>⚡ Publicité</Text>
+          <Image
+            source='https://i.ibb.co/FWY0jhd/02-01-decouvrir-histoire-de-marseille.jpg'
+            contentFit='cover'
+            transition={1000}
+            className='w-full h-full'
+          />
+        </View>
+
+        <View className='h-[100px] w-full' />
+
         <View className='w-full'>
-          <Text className='pl-5 text-lg '>👀 À la une</Text>
+          <Text className='pl-5 text-lg'>👀 À la une</Text>
           <FlatList
             data={plantesData}
             renderItem={({ item }) => (
