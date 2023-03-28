@@ -41,6 +41,7 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
     '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
   return (
+
     <TouchableOpacity
       className='w-1/2 px-2'
       onPress={() => navigation.navigate('Listing', { listingData: props })}

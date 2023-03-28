@@ -54,7 +54,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
       refetchSearchOffersData(), setRefreshing(false);
     });
   }, []);
-
+  //
   let stylefilter = {};
 
   const onChangeText = (text: string) => {

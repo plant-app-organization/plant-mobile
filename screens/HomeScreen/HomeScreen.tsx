@@ -13,7 +13,11 @@ import {
   ImageBackground,
   TouchableOpacity,
   useWindowDimensions,
+  FlatList,
 } from 'react-native';
+
+import { Image } from 'expo-image';
+
 import { Spinner, Switch } from 'native-base';
 
 import CardProduct from '../../components/product/CardProduct';
@@ -21,7 +25,7 @@ import CardDeal from '../../components/super-deals/CardDeal';
 import CardCategorie from '../../components/categories/CardCategorie';
 import CardPlanter from '../../components/planters/CardPlanter';
 import CardSuggestion from '../../components/suggestions/CardSuggestion';
-import CardAntigaspi from '../../components/antigaspi/CardAntigaspi';
+// import CardAntigaspi from '../../components/antigaspi/CardAntigaspi';
 import { Avatar } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NoDeprecatedCustomRule } from 'graphql';
@@ -88,40 +92,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       ville: 'Marseille',
       photo:
         'https://i.ibb.co/wND4G6c/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-90935e01-c32d-428b-9e32-5d8929c45a5.png',
-    },
-  ];
-
-  const antigaspiData: { entreprise: string; ville: string; panier: string; photo: string }[] = [
-    {
-      entreprise: 'Petit Fleuriste Vauban',
-      ville: 'Marseille',
-      panier: '5 dès 8.99€',
-
-      photo:
-        'https://i.ibb.co/wND4G6c/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-90935e01-c32d-428b-9e32-5d8929c45a5.png',
-    },
-    {
-      entreprise: 'Fleurette13',
-      ville: 'Marseille',
-      panier: '3 dès 4.99€',
-      photo:
-        'https://i.ibb.co/CKgsZ9v/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-0e9fca9d-9962-47db-824e-ec52ca710d5.png',
-    },
-    {
-      entreprise: 'Jardinerie Ricard',
-      ville: 'Marseille',
-      panier: '2 dès 3.99€',
-
-      photo:
-        'https://i.ibb.co/km3V7wX/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-79207055-49ff-4af2-94bb-d4589ab29ca.png',
-    },
-    {
-      entreprise: 'Truffaut',
-      ville: 'Paris',
-      panier: '6 dès 6.99€',
-
-      photo:
-        'https://i.ibb.co/q1SWKj9/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-5c0360d4-18f0-4798-8de9-1f081e263d5.png',
     },
   ];
 
@@ -193,219 +163,165 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
     },
   ];
 
-  const suggestionData: { recherche: string; vues: number }[] = [
+  const suggestionData: { search: string; views: number }[] = [
     {
-      recherche: 'Montserrat',
-      vues: 171,
+      search: 'Montserrat',
+      views: 171,
     },
     {
-      recherche: 'Cactus',
-      vues: 121,
+      search: 'Cactus',
+      views: 121,
     },
     {
-      recherche: 'Lyrata',
-      vues: 101,
+      search: 'Lyrata',
+      views: 101,
     },
     {
-      recherche: 'Plantes grasses',
-      vues: 99,
+      search: 'Plantes grasses',
+      views: 99,
     },
     {
-      recherche: 'Olivier',
-      vues: 69,
+      search: 'Olivier',
+      views: 69,
     },
   ];
 
-  const plantes = plantesData.map((data, i) => {
-    return <CardProduct key={i} name={data.name} prix={data.prix} photo={data.photo} />;
-  });
-
-  const deals = dealData.map((data, i) => {
-    return <CardDeal key={i} entreprise={data.entreprise} ville={data.ville} photo={data.photo} />;
-  });
-
-  const categories = categorieData.map((data, i) => {
-    return <CardCategorie key={i} name={data.name} image={data.image} />;
-  });
-
-  const topplanters = plantersData.map((data, i) => {
-    return <CardPlanter key={i} name={data.name} deals={data.deals} image={data.image} />;
-  });
-
   const suggestion = suggestionData.map((data, i) => {
-    return <CardSuggestion key={i} recherche={data.recherche} vues={data.vues} />;
+    return <CardSuggestion key={i} search={data.search} views={data.views} />;
   });
-
-  const antigaspi = antigaspiData.map((data, i) => {
-    return (
-      <CardAntigaspi
-        key={i}
-        entreprise={data.entreprise}
-        ville={data.ville}
-        panier={data.panier}
-        photo={data.photo}
-      />
-    );
-  });
-  const { width, height } = useWindowDimensions();
 
   return (
-    <View
-      className='h-screen w-screen bg-white relative'
-      // Background Linear Gradient
-
-      // colors={['#f2fff3', '#bee6c2', '#f2fff3', '#f2fff3', '#f2fff3', '#bee6c2']}
-      // style={styles.background}
+    <SafeAreaView
+      style={{
+        backgroundColor: 'white',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+      }}
     >
-      <View className='shadow-2xl shadow-[#00FF00] absolute top-0 left-0' />
-      <SafeAreaView
-        style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
+      <LinearGradient
+        // start={{ x: 0.5, y: 0.8 }}
+        // end={{ x: 0.8, y: 0 }}
+        colors={['#DFF5E6', '#EFFFFD', '#FEFFFF']}
+        className='w-screen flex-col items-center py-5'
       >
-        <ScrollView className='w-screen' showsVerticalScrollIndicator={false}>
-          <View className='flex flex-column h-full justify-start items-start mt-4'>
-            {isSignedIn && (
-              <View className='flex-row justify-around w-full items-center '>
-                <View>
-                  <Avatar
-                    style={{}}
-                    bg='amber.500'
-                    source={{
-                      uri: user?.profileImageUrl,
-                    }}
-                    size='lg'
-                  >
-                    NB
-                    <Avatar.Badge bg='green.500' size='23%' />
-                  </Avatar>
-                  <Text style={{ fontSize: 18 }}>{user?.username} 👋</Text>
-                </View>
-                <View>
-                  <Text style={{ fontSize: 18 }}>infos🪴</Text>
-                </View>
-              </View>
-            )}
-            <TextInput
-              className='w-11/12 border-green-50 border-solid bg-green-100 border text-left font-Roboto border-solid rounded-2xl border ml-4 p-3 mr-4 mt-4'
-              placeholder='Rechercher une plante directement'
-              value={search}
-              onChangeText={(value) => setSearch(value)}
-              placeholderTextColor='#000'
-            />
-            <View className='items-start justify-start pt-4 w-scree mb-2'>
-              <View className='flex-column items-start w-screen'>
-                <Text className='pt-4 pl-8 font-Roboto text-lg '>⭐ Top planters</Text>
-                <ScrollView
-                  className='w-full pl-2 pt-1 pl-6'
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                >
-                  {topplanters}
-                </ScrollView>
-              </View>
-            </View>
-            <View className='flex items-start justify-start pt-4 w-screen'>
-              <View className='flex-column items-start w-screen'>
-                <Text className='p-4 pl-8 font-Roboto text-lg '>
-                  🎉 Super deals / ventes privées !
-                </Text>
-                <ScrollView
-                  className='w-screen pl-6'
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                >
-                  {deals}
-                </ScrollView>
-              </View>
-            </View>
-            <View className='flex items-start justify-start pt-4 w-screen'>
-              <View className='flex-column items-start w-screen'>
-                <Text className='p-4 pl-8 font-Roboto text-lg '>🌎 Planète antigaspi</Text>
-                <ScrollView
-                  className='w-screen pl-6'
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                >
-                  {antigaspi}
-                </ScrollView>
-              </View>
-            </View>
-
-            <View className='flex items-start justify-start pl-6 pt-4 w-screen'>
-              <View className='flex-column items-start w-11/12'>
-                <Text className='p-4 font-Roboto text-lg '>🍃 Catégories</Text>
-                {categories}
-              </View>
-            </View>
-            <View className='flex items-start justify-start pl-0 pt-4 w-full h-40 mb-6'>
-              <View className='flex-column items-start w-full'>
-                <Text className='pl-8 pb-4 font-Roboto text-lg '>⚡ Publicité</Text>
-                <ImageBackground
-                  source={{
-                    uri: 'https://i.ibb.co/FWY0jhd/02-01-decouvrir-histoire-de-marseille.jpg',
-                  }}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'green',
-                  }}
-                  imageStyle={{ borderRadius: 30 / 2, opacity: 0.8 }}
-                ></ImageBackground>
-              </View>
-            </View>
-            <View className='items-start justify-start pt-16 w-full'>
-              <View className='flex-column items-start w-full'>
-                <Text className='p-4 pl-8 font-Roboto text-lg '>👀 À la une</Text>
-                <ScrollView
-                  className='w-full pl-6'
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                >
-                  {plantes}
-                </ScrollView>
-              </View>
-            </View>
-
-            <View className='items-start justify-start pt-6 w-scree mb-9'>
-              <View className='flex-column items-start w-screen'>
-                <Text className='pt-4 pb-4 pl-6 font-Roboto text-lg '>
-                  👉 Suggestions de recherche
-                </Text>
-                <ScrollView
-                  className='w-full pl-6 pt-1 '
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                >
-                  {suggestion}
-                </ScrollView>
-                <TouchableOpacity
-                  className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
-                  style={{
-                    backgroundColor: '#ccedcf',
-                    shadowColor: '#3FA96A',
-                    shadowOffset: {
-                      width: 0,
-                      height: 3,
-                    },
-                    shadowOpacity: 15.22,
-                    shadowRadius: 12.1,
-                    elevation: 10, // pour Android seulement
-                  }}
-                  onPress={() => props.navigation.navigate('Listing')}
-                >
-                  <Text className='text-black text-lg font-Roboto '>go lsiting</Text>
-                </TouchableOpacity>
-              </View>
+        {isSignedIn && (
+          <View className='w-full flex-row items-center justify-start px-4'>
+            <Avatar
+              style={{}}
+              bg='amber.500'
+              source={{
+                uri: user?.profileImageUrl,
+              }}
+              size='md'
+            >
+              NB
+              <Avatar.Badge bg='green.500' size='23%' />
+            </Avatar>
+            <View>
+              <Text className='ml-4 text-xl font-semibold text-slate-800'>
+                Bonjour {user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1)}
+              </Text>
+              <Text className='ml-4 text-xs text-slate-700'>Découvre les nouvelles offres !</Text>
             </View>
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    </View>
+        )}
+        <TextInput
+          className='w-10/12 bg-white rounded-full shadow-sm px-4 py-3 mt-6'
+          placeholder='Rechercher une plante'
+          value={search}
+          onChangeText={(value) => setSearch(value)}
+          placeholderTextColor='#AFAFAF'
+        />
+      </LinearGradient>
+
+      <ScrollView className='w-screen mb-20' showsVerticalScrollIndicator={false}>
+        <View className='w-screen h-[20px]' />
+        <View className='w-full'>
+          <Text className='pl-5 text-lg '>⭐ Top planters</Text>
+          <FlatList
+            data={plantersData}
+            renderItem={({ item }) => (
+              <CardPlanter name={item.name} image={item.image} deals={item.deals} />
+            )}
+            keyExtractor={(item) => item.key}
+            horizontal={true}
+            contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+          />
+        </View>
+
+        <View className='h-[50px] w-full' />
+
+        <View className='w-full'>
+          <Text className='pl-5 text-lg '>🎉 Super deals / ventes privées !</Text>
+          <FlatList
+            data={dealData}
+            renderItem={({ item }) => (
+              <CardDeal entreprise={item.entreprise} ville={item.ville} photo={item.photo} />
+            )}
+            keyExtractor={(item) => item.key}
+            horizontal={true}
+            contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+          />
+        </View>
+
+        <View className='h-[50px] w-full' />
+
+        <View className='w-full'>
+          <Text className='pl-5 text-lg w-full'>🍃 Catégories</Text>
+          <FlatList
+            data={categorieData}
+            renderItem={({ item }) => <CardCategorie name={item.name} image={item.image} />}
+            keyExtractor={(item) => item.key}
+            horizontal={false}
+            contentContainerStyle={{ padding: 20 }}
+          />
+        </View>
+
+        <View className='h-[50px] w-full' />
+
+        <View className='w-full h-40'>
+          <Text className='pl-5 text-lg mb-4'>⚡ Publicité</Text>
+          <Image
+            source='https://i.ibb.co/FWY0jhd/02-01-decouvrir-histoire-de-marseille.jpg'
+            contentFit='cover'
+            transition={1000}
+            className='w-full h-full'
+          />
+        </View>
+
+        <View className='h-[100px] w-full' />
+
+        <View className='w-full'>
+          <Text className='pl-5 text-lg'>👀 À la une</Text>
+          <FlatList
+            data={plantesData}
+            renderItem={({ item }) => (
+              <CardProduct name={item.name} prix={item.prix} photo={item.photo} />
+            )}
+            keyExtractor={(item) => item.key}
+            horizontal={true}
+            contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+          />
+        </View>
+
+        <View className='h-[50px] w-full' />
+
+        <View className='w-full'>
+          <Text className='pl-5 text-lg'>👉 Suggestions de recherche</Text>
+          <FlatList
+            data={suggestionData}
+            renderItem={({ item }) => <CardSuggestion search={item.search} views={item.views} />}
+            keyExtractor={(item) => item.key}
+            horizontal={true}
+            contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+          />
+        </View>
+
+        <View className='h-[100px] w-full' />
+      </ScrollView>
+    </SafeAreaView>
+    // </LinearGradient>
   );
 };
-const styles = StyleSheet.create({
-  // background: {
-  //   width: '100%',
-  //   height: '100%',
-  // },
-});
+
+
 export default HomeScreen;

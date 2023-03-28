@@ -1,5 +1,6 @@
 overwrite: true
-schema: 'http://192.168.1.53:8080/graphql'
+schema: 'http://192.168.1.55:8080/graphql'
+
 documents: 'graphql/queries/*.graphql'
 generates:
   graphql/graphql.tsx:
