@@ -15,5 +15,7 @@ query searchOffers($searchInput: String!, $filters: [String!]!) {
     updatedAt
     plantHeight
     maintenanceDifficultyLevel
+    bookmarkedBy
+    isBookmarked
   }
 }

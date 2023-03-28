@@ -22,7 +22,6 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
   const [filters, setFilters] = useState<string[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
   const [refreshing, setRefreshing] = useState<boolean>(false);
-
   const { data: searchOffersData, refetch: refetchSearchOffersData } = useSearchOffersQuery({
     variables: { searchInput, filters },
   });
@@ -136,7 +135,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                   className={`${filters.some((e) => e === 'interior') && 'bg-green-100'}
                   text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
-                  <Text className='font-Roboto '>Plante dintérieurs</Text>
+                  <Text className='font-Roboto '>Plante d'intérieur</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('tropical')}

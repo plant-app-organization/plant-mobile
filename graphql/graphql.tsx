@@ -49,6 +49,7 @@ export type Offer = {
   health: Scalars['String'];
   id: Scalars['ID'];
   isActive: Scalars['Boolean'];
+  isBookmarked?: Maybe<Scalars['Boolean']>;
   maintenanceDifficultyLevel: Scalars['String'];
   pictures: Array<Scalars['String']>;
   plantHeight: Scalars['Int'];
@@ -166,7 +167,7 @@ export type SearchOffersQueryVariables = Exact<{
 }>;
 
 
-export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string }> };
+export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, bookmarkedBy: Array<string>, isBookmarked?: boolean | null }> };
 
 
 export const BookmarkOfferDocument = gql`
@@ -370,6 +371,8 @@ export const SearchOffersDocument = gql`
     updatedAt
     plantHeight
     maintenanceDifficultyLevel
+    bookmarkedBy
+    isBookmarked
   }
 }
     `;

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, Animated } from 'react-native';
 import { Image } from 'expo-image';
 import { Avatar, ScrollView } from 'native-base';
 import AuthorDisplay from '../../components/AuthorDisplay/AuthorDisplay';
@@ -13,8 +13,10 @@ const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
 const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
+  const [like, setLike] = useState(props.route.params.like);
+  const [likesCounter, setLikesCounter] = useState<number | null>(props.route.params.likesCounter);
   console.log('props.route.params', props.route.params);
-
+  console.log('like', like);
   const {
     authorId,
     category,
@@ -32,7 +34,35 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
     updatedAt,
   } = props.route.params.listingData;
   const navigation = useNavigation();
-  console.log('pictures');
+  const handleLike = async () => {
+    Animated.sequence([
+      Animated.timing(scaleAnimation, {
+        toValue: 1.5,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnimation, {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+    like && likesCounter ? setLikesCounter(likesCounter - 1) : setLikesCounter(likesCounter + 1);
+    !like && likesCounter && setLikesCounter(likesCounter + 1);
+
+    setLike(!like);
+
+    console.log('ajout du like');
+    !like &&
+      toast.show({
+        title: "L'annonce a été ajoutée à vos favoris !",
+      });
+    const response = await bookmarkOffer({
+      variables: {
+        offerId: props.id,
+      },
+    });
+  };
   return (
     <View className='h-screen w-screen bg-white'>
       <View className='w-full h-[40%] relative'>
@@ -106,8 +136,13 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
             </View>
             <View className='w-4/12 flex-col justify-around items-end'>
               <View className='flex-row items-center'>
-                <Text className='mr-1'>13</Text>
-                <HeartIcon color={'red'} size={20} />
+                {likesCounter != null && likesCounter > 0 && (
+                  <Text className='mr-1'>{likesCounter}</Text>
+                )}
+                <HeartIcon
+                  color={likesCounter && likesCounter > 0 ? '#e74c3c' : '#d8d8d8'}
+                  size={20}
+                />
               </View>
               <Text className='text-2xl text-green-900'>{price} €</Text>
             </View>

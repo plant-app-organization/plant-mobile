@@ -11,7 +11,7 @@ import FirstPresentationScreen from '../screens/FirstPresentationScreen/FirstPre
 import SecondPresentationScreen from '../screens/SecondPresentationScreen/SecondPresentationScreen';
 import SignupScreen from '../screens/SignupScreen/SignupScreen';
 import SigninScreen from '../screens/SigninScreen/SigninScreen';
-import FavorisScreen from '../screens/FavorisScreen/FavorisScreen';
+import BookmarksScreen from '../screens/BookmarksScreen/BookmarksScreen';
 import VerifyCodeScreen from '../screens/VerifyCodeScreen/VerifyCodeScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import ParamCompteScreen from '../screens/ParamCompteScreen/ParamCompteScreen';
@@ -125,8 +125,8 @@ const HomeStackNavigator = () => {
               }}
             />
             <HomeStack.Screen
-              name='FavorisScreen'
-              component={FavorisScreen}
+              name='Bookmarks'
+              component={BookmarksScreen}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
@@ -147,6 +147,14 @@ const HomeStackNavigator = () => {
             <HomeStack.Screen
               name='UserProfile'
               component={UserProfileScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='Bookmarks'
+              component={BookmarksScreen}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
