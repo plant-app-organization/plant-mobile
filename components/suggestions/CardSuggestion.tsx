@@ -13,11 +13,12 @@ const CardSuggestion: React.FunctionComponent<CardSuggestionProps> = (props) => 
   return (
     <TouchableOpacity
       className='w-[150px] rounded-2xl bg-white items-center py-5 mr-5 shadow-sm'
-      onPress={() => navigation.navigate('PlantProfileScreen')}
+      onPress={() => navigation.navigate('ListingScreen')}
     >
       <Text className='font-semibold'>{props.search}</Text>
       <Text>{props.views} vues</Text>
     </TouchableOpacity>
+
   );
 };
 
