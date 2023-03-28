@@ -4,34 +4,49 @@ import { HeartIcon } from 'react-native-heroicons/solid';
 import { Image } from 'expo-image';
 
 import { useNavigation } from '@react-navigation/native';
+import { useBookmarkOfferMutation } from '../../graphql/graphql';
 
 interface CardProductProps {
   plantName: string;
   price: number;
   pictures: string[];
+  id: string;
 }
 
 const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
+  const [bookmarkOffer] = useBookmarkOfferMutation({
+    variables: { offerId: props.id },
+  });
+
+  const handleLike = async () => {
+    setLike(!like);
+    const response = await bookmarkOffer({
+      variables: {
+        offerId: props.id,
+      },
+    });
+  };
   console.log('props dans carproduct', props);
   const [like, setLike] = useState(false);
   const scaleAnimation = useRef(new Animated.Value(1)).current;
   const navigation = useNavigation();
-  const handleLike = () => {
-    setLike(!like);
-    // Animate the icon
-    Animated.sequence([
-      Animated.timing(scaleAnimation, {
-        toValue: 1.5,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(scaleAnimation, {
-        toValue: 1,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
+  // const handleLike = () => {
+  //   console.log('ajout du like');
+  //   setLike(!like);
+  //   // Animate the icon
+  //   Animated.sequence([
+  //     Animated.timing(scaleAnimation, {
+  //       toValue: 1.5,
+  //       duration: 100,
+  //       useNativeDriver: true,
+  //     }),
+  //     Animated.timing(scaleAnimation, {
+  //       toValue: 1,
+  //       duration: 100,
+  //       useNativeDriver: true,
+  //     }),
+  //   ]).start();
+  // };
   let heartIconStyle = { cursor: 'pointer', color: '#d8d8d8' };
   if (like) {
     heartIconStyle = { color: '#e74c3c', cursor: 'pointer' };

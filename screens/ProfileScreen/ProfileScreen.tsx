@@ -256,7 +256,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           <View className='h-px w-screen bg-black opacity-30' />
           <TouchableOpacity
             className='w-screen items-center flex-row flex-1 justify-start pr-6'
-            onPress={() => console.log('favoris')}
+            onPress={() => props.navigation.navigate('Bookmarks')}
           >
             <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
               <FontAwesomeIcon className='opacity-30' name='heart' size={18} />
