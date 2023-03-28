@@ -334,7 +334,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     alignItems: 'center',
                   }}
                 >
-                  <Text className=' text-l font-Roboto'>Prix :</Text>
+                  <Text className=' text-l font-Roboto mr-1'>Prix :</Text>
 
                   <TextInput
                     style={{
@@ -383,7 +383,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 />
               </View>
 
-              <View className='mt-5'>
+              <View>
                 <FormControl w='3/4' maxW='300' isRequired isInvalid>
                   <Select
                     className='rounded-sm'
@@ -405,9 +405,8 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     <Select.Item label='Autre' value='autre' />
                   </Select>
                 </FormControl>
-              </View>
-              <View>
-                <FormControl w='3/4' maxW='300' isRequired isInvalid>
+
+                <FormControl w='3/4' maxW='300' isRequired isInvalid className='mt-10 mb-10'>
                   <Select
                     selectedValue={health}
                     minWidth='200'
@@ -445,7 +444,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     <Select.Item label='difficile' value='difficult' />
                   </Select>
                 </FormControl>
-                <View className='flex items-center mt-10 mb-10'>
+                <View className='flex items-center mt-10 mb-20'>
                   <View
                     style={{
                       height: 40,
@@ -465,10 +464,10 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     }}
                   >
                     <TouchableOpacity
-                      className='h-40 w-200 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
+                      className='h-40 w-200 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl '
                       onPress={onCreateNewOfferPress}
                     >
-                      <Text className='font-Roboto text-black text-lg'>AJOUTER</Text>
+                      <Text className='font-Roboto text-black text-ml '>AJOUTER</Text>
                     </TouchableOpacity>
                   </View>
                 </View>

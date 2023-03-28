@@ -16,7 +16,7 @@ import { sessionIdVar } from '../../variables/session';
 
 import { Spinner } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Box } from 'native-base';
+import { Button, Box, Input } from 'native-base';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useSignUp } from '@clerk/clerk-expo';
 import { SignUpWithOAuth } from '../../components/SignUpWithOAuth/SignUpWithOAuth';
@@ -101,92 +101,61 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
           <View className='m-15 flex flex-col justify-around items-center h-[45%]'>
             <View className='h-[80%] flex flex-col justify-center'>
               <View className='h-[25%]'>
-                <Text className='font-Roboto  text-black text-left text-2xl'>S'inscrire :</Text>
+                <Text className='font-Roboto  text-black text-left text-xl'>S'inscrire :</Text>
               </View>
               <View
                 style={{
                   position: 'relative',
-                  borderWidth: 1,
-                  borderColor: 'black',
-                  borderRadius: 25,
+
                   paddingLeft: 20,
                   marginBottom: 20,
                   width: 300,
                 }}
               >
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: -10,
-                    left: 10,
-                    backgroundColor: '#a6e6ad',
-                    paddingHorizontal: 5,
-                  }}
-                >
-                  <Text className='font-Roboto  text-sm text-left'>Nom</Text>
-                </View>
-                <TextInput
-                  style={{ height: 40, width: 240, fontSize: 20 }}
+                <Input
+                  variant='rounded'
+                  size='md'
+                  placeholder='Nom'
                   value={username}
                   onChangeText={setUsername}
                   autoCapitalize='none'
                   autoCorrect={false}
                 />
               </View>
+
               <View
                 style={{
                   position: 'relative',
-                  borderWidth: 1,
-                  borderColor: 'black',
-                  borderRadius: 25,
+
                   paddingLeft: 20,
                   marginBottom: 20,
                   width: 300,
                 }}
               >
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: -10,
-                    left: 10,
-                    backgroundColor: '#95e79c',
-                    paddingHorizontal: 5,
-                  }}
-                >
-                  <Text className='font-Roboto  text-sm text-left'>Email</Text>
-                </View>
-                <TextInput
-                  style={{ height: 40, width: 240, fontSize: 20 }}
+                <Input
+                  variant='rounded'
+                  size='md'
+                  placeholder='Email'
                   value={emailAddress}
                   onChangeText={handleTextChange}
                   autoCapitalize='none'
                   autoCorrect={false}
                 />
               </View>
+
               <View
                 style={{
                   position: 'relative',
-                  borderWidth: 1,
-                  borderColor: 'black',
-                  borderRadius: 25,
+
                   paddingLeft: 20,
-                  // marginBottom: 20,
+                  marginBottom: 20,
                   width: 300,
                 }}
               >
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: -10,
-                    left: 10,
-                    backgroundColor: '#8CE795',
-                    paddingHorizontal: 5,
-                  }}
-                >
-                  <Text className='font-Roboto text-sm text-left'>Mot de passe</Text>
-                </View>
-                <TextInput
-                  style={{ height: 40, width: 240, fontSize: 20 }}
+                <Input
+                  variant='rounded'
+                  size='md'
+                  placeholder='Mot de passe'
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry={true}
@@ -208,7 +177,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
               }}
               onPress={onSignUpPress}
             >
-              <Text className='text-black text-lg font-antipasto'> Créer mon compte</Text>
+              <Text className='text-black text-ml font-Roboto'> Créer mon compte</Text>
             </TouchableOpacity>
           </View>
 
@@ -232,7 +201,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 }}
                 onPress={() => console.log('hello facebook')}
               >
-                <Text style={{ color: '#395590' }} className='text-black text-lg font-Roboto '>
+                <Text style={{ color: '#395590' }} className='text-black text-ml font-Roboto '>
                   Continuer avec Facebook <FontAwesomeIcon name='facebook' size={19} />
                 </Text>
               </TouchableOpacity>
@@ -251,7 +220,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 }}
                 onPress={onSignInPress}
               >
-                <Text className='text-black text-lg font-Roboto '>
+                <Text className='text-black text-ml font-Roboto '>
                   Déjà inscrit ? Connectez-vous !
                 </Text>
               </TouchableOpacity>

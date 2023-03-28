@@ -68,17 +68,19 @@ const TabButton: any = (props: any) => {
   }, [focused]);
 
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={1} style={styles.container}>
-      <Animatable.View ref={viewRef} duration={325} style={styles.navbarContainer}>
-        <View style={[styles.btn, { borderWidth: focused ? 2 : 0, borderColor: '#ffffff' }]}>
-          <Animatable.View ref={circleRef} style={styles.circle} />
-          <FontAwesome5 name={item.icon} size={21} color={focused ? '#3FA96A' : '#ffffff'} />
-        </View>
-        <Animatable.Text ref={textRef} style={styles.text}>
-          {item.label}
-        </Animatable.Text>
-      </Animatable.View>
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={onPress} activeOpacity={1}>
+        <Animatable.View ref={viewRef} duration={325} style={styles.navbarContainer}>
+          <View style={[styles.btn, { borderWidth: focused ? 2 : 0, borderColor: '#ffffff' }]}>
+            <Animatable.View ref={circleRef} style={styles.circle} />
+            <FontAwesome5 name={item.icon} size={21} color={focused ? '#3FA96A' : '#ffffff'} />
+          </View>
+          <Animatable.Text ref={textRef} style={styles.text}>
+            {item.label}
+          </Animatable.Text>
+        </Animatable.View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -146,11 +148,11 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   text: {
-    fontSize: 13,
+    fontSize: 10,
     textAlign: 'center',
     color: '#3FA96A',
     paddingTop: 5,
-    fontFamily: 'antipasto',
+    fontFamily: 'Roboto',
     paddingBottom: 8,
   },
 });
