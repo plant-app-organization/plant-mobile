@@ -12,25 +12,20 @@ interface CardPlanterProps {
 
 const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
   return (
-    <View>
-      <TouchableOpacity className='mr-6'>
-        <View className='flex w-full justify-center items-center mr-0 mb-3 '></View>
-        <Avatar
-          alignSelf='center'
-          bg='amber.500'
-          size='lg'
-          source={{
-            uri: props.image,
-          }}
-        >
-          JL
-        </Avatar>
-        <Text className='pl-0 pt-2 text-center'>{props.name}</Text>
-        <Text className='pl-0 pt-0 text-xs justify-center items-center'>
-          {props.deals} plantdeals
-        </Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity className='mr-5 bg-white p-5 shadow-sm rounded-lg'>
+      <Avatar
+        alignSelf='center'
+        bg='amber.500'
+        size='lg'
+        source={{
+          uri: props.image,
+        }}
+      >
+        JL
+      </Avatar>
+      <Text className='pt-2 font-semibold text-center'>{props.name}</Text>
+      <Text className='text-xs text-green-900'>{props.deals} plantdeals</Text>
+    </TouchableOpacity>
   );
 };
 
