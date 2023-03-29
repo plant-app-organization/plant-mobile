@@ -34,35 +34,17 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
     updatedAt,
   } = props.route.params.listingData;
   const navigation = useNavigation();
-  const handleLike = async () => {
-    Animated.sequence([
-      Animated.timing(scaleAnimation, {
-        toValue: 1.5,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(scaleAnimation, {
-        toValue: 1,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-    ]).start();
-    like && likesCounter ? setLikesCounter(likesCounter - 1) : setLikesCounter(likesCounter + 1);
-    !like && likesCounter && setLikesCounter(likesCounter + 1);
 
-    setLike(!like);
-
-    console.log('ajout du like');
-    !like &&
-      toast.show({
-        title: "L'annonce a été ajoutée à vos favoris !",
-      });
-    const response = await bookmarkOffer({
-      variables: {
-        offerId: props.id,
-      },
-    });
+  const addLike = () => {
+    setLikesCounter(likesCounter + 1);
+    setLike(true);
   };
+
+  const dislike = () => {
+    setLike(false);
+    setLikesCounter(likesCounter - 1);
+  };
+
   return (
     <View className='h-screen w-screen bg-white'>
       <View className='w-full h-[40%] relative'>
@@ -135,15 +117,22 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
               </Text>
             </View>
             <View className='w-4/12 flex-col justify-around items-end'>
-              <View className='flex-row items-center'>
+              <TouchableOpacity
+                className='flex-row items-center'
+                onPress={() => {
+                  like && likesCounter ? dislike() : addLike();
+                  !like && likesCounter && setLikesCounter(likesCounter + 1);
+                  props.route.params.handleLike();
+                }}
+              >
                 {likesCounter != null && likesCounter > 0 && (
                   <Text className='mr-1'>{likesCounter}</Text>
                 )}
                 <HeartIcon
-                  color={likesCounter && likesCounter > 0 ? '#e74c3c' : '#d8d8d8'}
+                  color={like && likesCounter && likesCounter > 0 ? '#e74c3c' : '#d8d8d8'}
                   size={20}
                 />
-              </View>
+              </TouchableOpacity>
               <Text className='text-2xl text-green-900'>{price} €</Text>
             </View>
           </View>

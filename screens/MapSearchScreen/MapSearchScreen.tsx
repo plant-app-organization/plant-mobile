@@ -15,6 +15,8 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import CardProduct from '../../components/product/CardProduct';
 import { useSearchOffersQuery } from '../../graphql/graphql';
+import { useReactiveVar } from '@apollo/client';
+import { bookmarksVar } from '../../variables/bookmarks';
 import LoadingView from '../../components/LoadingView/LoadingView';
 interface MapSearchScreenProps {}
 

@@ -26,6 +26,7 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
   const [bookmarkOffer] = useBookmarkOfferMutation({
     variables: { offerId: props.id },
   });
+
   const toast = useToast();
   /* const handleLike = async () => {
     !like &&
@@ -78,7 +79,9 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
   return (
     <TouchableOpacity
       className='w-1/2 px-2'
-      onPress={() => navigation.navigate('Listing', { listingData: props, likesCounter, like })}
+      onPress={() =>
+        navigation.navigate('Listing', { listingData: props, likesCounter, like, handleLike })
+      }
     >
       {props.pictures && (
         <Image
