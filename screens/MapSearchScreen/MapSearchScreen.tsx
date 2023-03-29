@@ -15,6 +15,8 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import CardProduct from '../../components/product/CardProduct';
 import { useSearchOffersQuery } from '../../graphql/graphql';
+import { useReactiveVar } from '@apollo/client';
+import { bookmarksVar } from '../../variables/bookmarks';
 import LoadingView from '../../components/LoadingView/LoadingView';
 interface MapSearchScreenProps {}
 
@@ -22,7 +24,6 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
   const [filters, setFilters] = useState<string[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
   const [refreshing, setRefreshing] = useState<boolean>(false);
-
   const { data: searchOffersData, refetch: refetchSearchOffersData } = useSearchOffersQuery({
     variables: { searchInput, filters },
   });
@@ -54,7 +55,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
       refetchSearchOffersData(), setRefreshing(false);
     });
   }, []);
-
+  //
   let stylefilter = {};
 
   const onChangeText = (text: string) => {
@@ -136,7 +137,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                   className={`${filters.some((e) => e === 'interior') && 'bg-green-100'}
                   text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
                 >
-                  <Text className='font-Roboto '>Plante dintérieurs</Text>
+                  <Text className='font-Roboto '>Plante d'intérieur</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('tropical')}

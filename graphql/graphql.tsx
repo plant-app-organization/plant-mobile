@@ -19,8 +19,14 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  bookmarkOffer: Scalars['String'];
   createNewOffer: Scalars['String'];
   register: Scalars['String'];
+};
+
+
+export type MutationBookmarkOfferArgs = {
+  offerId: Scalars['String'];
 };
 
 
@@ -36,12 +42,14 @@ export type MutationRegisterArgs = {
 export type Offer = {
   __typename?: 'Offer';
   authorId: Scalars['String'];
+  bookmarkedBy: Array<Scalars['String']>;
   category: Scalars['String'];
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   health: Scalars['String'];
   id: Scalars['ID'];
   isActive: Scalars['Boolean'];
+  isBookmarked?: Maybe<Scalars['Boolean']>;
   maintenanceDifficultyLevel: Scalars['String'];
   pictures: Array<Scalars['String']>;
   plantHeight: Scalars['Int'];
@@ -101,6 +109,7 @@ export type RegisterInput = {
 export type UserModel = {
   __typename?: 'UserModel';
   avatar: Scalars['String'];
+  bookmarks: Array<Scalars['String']>;
   clerkId: Scalars['String'];
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
@@ -116,6 +125,13 @@ export type UserModel = {
   userBio: Scalars['String'];
   userName: Scalars['String'];
 };
+
+export type BookmarkOfferMutationVariables = Exact<{
+  offerId: Scalars['String'];
+}>;
+
+
+export type BookmarkOfferMutation = { __typename?: 'Mutation', bookmarkOffer: string };
 
 export type CreateNewOfferMutationVariables = Exact<{
   newOfferInput: OfferInput;
@@ -151,9 +167,40 @@ export type SearchOffersQueryVariables = Exact<{
 }>;
 
 
-export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string }> };
+export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, bookmarkedBy: Array<string>, isBookmarked?: boolean | null }> };
 
 
+export const BookmarkOfferDocument = gql`
+    mutation bookmarkOffer($offerId: String!) {
+  bookmarkOffer(offerId: $offerId)
+}
+    `;
+export type BookmarkOfferMutationFn = Apollo.MutationFunction<BookmarkOfferMutation, BookmarkOfferMutationVariables>;
+
+/**
+ * __useBookmarkOfferMutation__
+ *
+ * To run a mutation, you first call `useBookmarkOfferMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBookmarkOfferMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [bookmarkOfferMutation, { data, loading, error }] = useBookmarkOfferMutation({
+ *   variables: {
+ *      offerId: // value for 'offerId'
+ *   },
+ * });
+ */
+export function useBookmarkOfferMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<BookmarkOfferMutation, BookmarkOfferMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<BookmarkOfferMutation, BookmarkOfferMutationVariables>(BookmarkOfferDocument, options);
+      }
+export type BookmarkOfferMutationHookResult = ReturnType<typeof useBookmarkOfferMutation>;
+export type BookmarkOfferMutationResult = Apollo.MutationResult<BookmarkOfferMutation>;
+export type BookmarkOfferMutationOptions = Apollo.BaseMutationOptions<BookmarkOfferMutation, BookmarkOfferMutationVariables>;
 export const CreateNewOfferDocument = gql`
     mutation createNewOffer($newOfferInput: OfferInput!) {
   createNewOffer(newOfferInput: $newOfferInput)
@@ -324,6 +371,8 @@ export const SearchOffersDocument = gql`
     updatedAt
     plantHeight
     maintenanceDifficultyLevel
+    bookmarkedBy
+    isBookmarked
   }
 }
     `;

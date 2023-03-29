@@ -112,7 +112,7 @@ export default function VerifyCodeScreen(props) {
                 className='h-40 w-180 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
                 onPress={onPress}
               >
-                <Text className='font-Roboto  text-black text-xl font-bold'>Vérifier l'e-mail</Text>
+                <Text className='font-Roboto  text-black text-ml'>Vérifier l'e-mail</Text>
               </TouchableOpacity>
             </View>
           </View>

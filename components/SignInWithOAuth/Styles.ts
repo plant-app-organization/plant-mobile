@@ -47,6 +47,7 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
+    fontFamily: 'Roboto',
   },
 
   footer: {

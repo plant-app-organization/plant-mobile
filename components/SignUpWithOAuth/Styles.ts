@@ -44,9 +44,9 @@ export const styles = StyleSheet.create({
 
   titleText: {
     color: '#000',
-    fontSize: 20,
-    fontWeight: 'bold',
+
     marginBottom: 20,
+    fontFamily: 'Roboto',
   },
 
   footer: {
