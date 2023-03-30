@@ -65,7 +65,7 @@ const ParamScreen: React.FunctionComponent<ParamScreenProps> = (props) => {
           onPress={console.log('parametres')}
         >
           <View className='w-screen items-center flex-row flex-1 justify-start p-2'>
-            <Text className='text-lg font-Roboto  ml-3'> Paiments </Text>
+            <Text className='text-lg font-Roboto  ml-3'> Paiements </Text>
           </View>
           <View></View>
         </TouchableOpacity>
@@ -73,7 +73,7 @@ const ParamScreen: React.FunctionComponent<ParamScreenProps> = (props) => {
         <View className='h-px w-screen bg-black opacity-30' />
         <View>
           <Checkbox colorScheme='green' value='one' my={2}>
-            Notifier le vendeur lorsque je mets son artile en favoris
+            Notifier le vendeur lorsque je mets son article en favoris
           </Checkbox>
           <Checkbox colorScheme='green' value='one' my={2}>
             Autoriser les notifications push

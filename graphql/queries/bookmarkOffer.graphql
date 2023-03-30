@@ -1,0 +1,3 @@
+mutation bookmarkOffer($offerId: String!) {
+  bookmarkOffer(offerId: $offerId)
+}

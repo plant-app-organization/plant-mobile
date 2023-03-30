@@ -1,0 +1,11 @@
+query getUserDataById($userId: String!) {
+  userDataById(userId: $userId) {
+    id
+    userName
+    userBio
+    avatar
+    isPro
+    createdAt
+    updatedAt
+  }
+}

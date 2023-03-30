@@ -1,5 +1,5 @@
-query getOffers($filters: [String!]!) {
-  OffersList(filters: $filters) {
+query searchOffers($searchInput: String!, $filters: [String!]!) {
+  OffersListSearch(searchInput: $searchInput, filters: $filters) {
     id
     authorId
     plantName
@@ -15,5 +15,7 @@ query getOffers($filters: [String!]!) {
     updatedAt
     plantHeight
     maintenanceDifficultyLevel
+    bookmarkedBy
+    isBookmarked
   }
 }

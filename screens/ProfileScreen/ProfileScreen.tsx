@@ -49,8 +49,8 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
   const [nameEvo, setNameIndex] = useState(0);
   const onSignOutPress = async () => {
     try {
-      await signOut();
       await SecureStore.deleteItemAsync('__clerk_client_jwt');
+      await signOut();
     } catch (err: any) {
       console.log('Error:> ' + err?.status || '');
       console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err);
@@ -223,6 +223,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             <FontAwesomeIcon className='opacity-30 w-1/12' name='heart' size={18} />
             <View className='w-10/12'>
               <Text>Mes favoris</Text>
+
             </View>
             <FontAwesomeIcon name='angle-right' size={18} />
           </TouchableOpacity>
