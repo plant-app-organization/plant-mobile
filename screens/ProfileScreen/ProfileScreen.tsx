@@ -223,7 +223,6 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             <FontAwesomeIcon className='opacity-30 w-1/12' name='heart' size={18} />
             <View className='w-10/12'>
               <Text>Mes favoris</Text>
-
             </View>
             <FontAwesomeIcon name='angle-right' size={18} />
           </TouchableOpacity>
