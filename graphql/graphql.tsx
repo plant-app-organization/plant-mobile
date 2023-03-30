@@ -19,8 +19,14 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  bookmarkOffer: Scalars['String'];
   createNewOffer: Scalars['String'];
   register: Scalars['String'];
+};
+
+
+export type MutationBookmarkOfferArgs = {
+  offerId: Scalars['String'];
 };
 
 
@@ -36,13 +42,17 @@ export type MutationRegisterArgs = {
 export type Offer = {
   __typename?: 'Offer';
   authorId: Scalars['String'];
+  bookmarkedBy: Array<Scalars['String']>;
   category: Scalars['String'];
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   health: Scalars['String'];
   id: Scalars['ID'];
   isActive: Scalars['Boolean'];
+  isBookmarked?: Maybe<Scalars['Boolean']>;
+  maintenanceDifficultyLevel: Scalars['String'];
   pictures: Array<Scalars['String']>;
+  plantHeight: Scalars['Int'];
   plantName: Scalars['String'];
   pot: Scalars['Boolean'];
   price: Scalars['Int'];
@@ -53,7 +63,9 @@ export type OfferInput = {
   category: Scalars['String'];
   description: Scalars['String'];
   health: Scalars['String'];
+  maintenanceDifficultyLevel: Scalars['String'];
   pictures: Array<Scalars['String']>;
+  plantHeight: Scalars['Float'];
   plantName: Scalars['String'];
   pot: Scalars['Boolean'];
   price: Scalars['Float'];
@@ -63,7 +75,10 @@ export type Query = {
   __typename?: 'Query';
   /** Get List of Offers */
   OffersList: Array<Offer>;
+  /** Get List of Offers Searched */
+  OffersListSearch: Array<Offer>;
   hello: Scalars['String'];
+  userDataById: UserModel;
 };
 
 
@@ -71,11 +86,52 @@ export type QueryOffersListArgs = {
   filters: Array<Scalars['String']>;
 };
 
+
+export type QueryOffersListSearchArgs = {
+  filters: Array<Scalars['String']>;
+  searchInput: Scalars['String'];
+};
+
+
+export type QueryUserDataByIdArgs = {
+  userId: Scalars['String'];
+};
+
 export type RegisterInput = {
+  avatar: Scalars['String'];
   clerkId: Scalars['String'];
   email: Scalars['String'];
+  isPro: Scalars['Boolean'];
+  userBio: Scalars['String'];
   userName: Scalars['String'];
 };
+
+export type UserModel = {
+  __typename?: 'UserModel';
+  avatar: Scalars['String'];
+  bookmarks: Array<Scalars['String']>;
+  clerkId: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  id: Scalars['ID'];
+  isActive: Scalars['Boolean'];
+  isPro: Scalars['Boolean'];
+  lastName: Scalars['String'];
+  offerIds: Array<Scalars['String']>;
+  password: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  userBio: Scalars['String'];
+  userName: Scalars['String'];
+};
+
+export type BookmarkOfferMutationVariables = Exact<{
+  offerId: Scalars['String'];
+}>;
+
+
+export type BookmarkOfferMutation = { __typename?: 'Mutation', bookmarkOffer: string };
 
 export type CreateNewOfferMutationVariables = Exact<{
   newOfferInput: OfferInput;
@@ -89,7 +145,14 @@ export type GetOffersQueryVariables = Exact<{
 }>;
 
 
-export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string> }> };
+export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string }> };
+
+export type GetUserDataByIdQueryVariables = Exact<{
+  userId: Scalars['String'];
+}>;
+
+
+export type GetUserDataByIdQuery = { __typename?: 'Query', userDataById: { __typename?: 'UserModel', id: string, userName: string, userBio: string, avatar: string, isPro: boolean, createdAt: any, updatedAt: any } };
 
 export type RegisterMutationVariables = Exact<{
   newUserInput: RegisterInput;
@@ -98,7 +161,46 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: string };
 
+export type SearchOffersQueryVariables = Exact<{
+  searchInput: Scalars['String'];
+  filters: Array<Scalars['String']> | Scalars['String'];
+}>;
 
+
+export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, bookmarkedBy: Array<string>, isBookmarked?: boolean | null }> };
+
+
+export const BookmarkOfferDocument = gql`
+    mutation bookmarkOffer($offerId: String!) {
+  bookmarkOffer(offerId: $offerId)
+}
+    `;
+export type BookmarkOfferMutationFn = Apollo.MutationFunction<BookmarkOfferMutation, BookmarkOfferMutationVariables>;
+
+/**
+ * __useBookmarkOfferMutation__
+ *
+ * To run a mutation, you first call `useBookmarkOfferMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBookmarkOfferMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [bookmarkOfferMutation, { data, loading, error }] = useBookmarkOfferMutation({
+ *   variables: {
+ *      offerId: // value for 'offerId'
+ *   },
+ * });
+ */
+export function useBookmarkOfferMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<BookmarkOfferMutation, BookmarkOfferMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<BookmarkOfferMutation, BookmarkOfferMutationVariables>(BookmarkOfferDocument, options);
+      }
+export type BookmarkOfferMutationHookResult = ReturnType<typeof useBookmarkOfferMutation>;
+export type BookmarkOfferMutationResult = Apollo.MutationResult<BookmarkOfferMutation>;
+export type BookmarkOfferMutationOptions = Apollo.BaseMutationOptions<BookmarkOfferMutation, BookmarkOfferMutationVariables>;
 export const CreateNewOfferDocument = gql`
     mutation createNewOffer($newOfferInput: OfferInput!) {
   createNewOffer(newOfferInput: $newOfferInput)
@@ -138,6 +240,16 @@ export const GetOffersDocument = gql`
     plantName
     price
     pictures
+    description
+    price
+    health
+    category
+    pot
+    isActive
+    createdAt
+    updatedAt
+    plantHeight
+    maintenanceDifficultyLevel
   }
 }
     `;
@@ -169,6 +281,47 @@ export function useGetOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHo
 export type GetOffersQueryHookResult = ReturnType<typeof useGetOffersQuery>;
 export type GetOffersLazyQueryHookResult = ReturnType<typeof useGetOffersLazyQuery>;
 export type GetOffersQueryResult = Apollo.QueryResult<GetOffersQuery, GetOffersQueryVariables>;
+export const GetUserDataByIdDocument = gql`
+    query getUserDataById($userId: String!) {
+  userDataById(userId: $userId) {
+    id
+    userName
+    userBio
+    avatar
+    isPro
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetUserDataByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserDataByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserDataByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserDataByIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetUserDataByIdQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>(GetUserDataByIdDocument, options);
+      }
+export function useGetUserDataByIdLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>(GetUserDataByIdDocument, options);
+        }
+export type GetUserDataByIdQueryHookResult = ReturnType<typeof useGetUserDataByIdQuery>;
+export type GetUserDataByIdLazyQueryHookResult = ReturnType<typeof useGetUserDataByIdLazyQuery>;
+export type GetUserDataByIdQueryResult = Apollo.QueryResult<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>;
 export const RegisterDocument = gql`
     mutation register($newUserInput: RegisterInput!) {
   register(newUserInput: $newUserInput)
@@ -200,3 +353,55 @@ export function useRegisterMutation(baseOptions?: ApolloReactHooks.MutationHookO
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const SearchOffersDocument = gql`
+    query searchOffers($searchInput: String!, $filters: [String!]!) {
+  OffersListSearch(searchInput: $searchInput, filters: $filters) {
+    id
+    authorId
+    plantName
+    price
+    pictures
+    description
+    price
+    health
+    category
+    pot
+    isActive
+    createdAt
+    updatedAt
+    plantHeight
+    maintenanceDifficultyLevel
+    bookmarkedBy
+    isBookmarked
+  }
+}
+    `;
+
+/**
+ * __useSearchOffersQuery__
+ *
+ * To run a query within a React component, call `useSearchOffersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchOffersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchOffersQuery({
+ *   variables: {
+ *      searchInput: // value for 'searchInput'
+ *      filters: // value for 'filters'
+ *   },
+ * });
+ */
+export function useSearchOffersQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchOffersQuery, SearchOffersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchOffersQuery, SearchOffersQueryVariables>(SearchOffersDocument, options);
+      }
+export function useSearchOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchOffersQuery, SearchOffersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchOffersQuery, SearchOffersQueryVariables>(SearchOffersDocument, options);
+        }
+export type SearchOffersQueryHookResult = ReturnType<typeof useSearchOffersQuery>;
+export type SearchOffersLazyQueryHookResult = ReturnType<typeof useSearchOffersLazyQuery>;
+export type SearchOffersQueryResult = Apollo.QueryResult<SearchOffersQuery, SearchOffersQueryVariables>;

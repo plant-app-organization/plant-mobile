@@ -4,6 +4,8 @@ import { SafeAreaView, View, Text, ImageBackground, TouchableOpacity } from 'rea
 import { Spinner } from 'native-base';
 import { ChevronRightIcon } from 'react-native-heroicons/solid';
 
+import { Image } from 'expo-image';
+
 interface CardDealProps {
   entreprise: string;
   ville: string;
@@ -12,29 +14,21 @@ interface CardDealProps {
 
 const CardDeal: React.FunctionComponent<CardDealProps> = (props) => {
   return (
-    <View>
-      <TouchableOpacity>
-        <View className='flex flex-row w-80 items-center justify-between mr-2 h-48'>
-          <ImageBackground
-            source={{
-              uri: props.photo,
-            }}
-            style={{ width: '100%', height: '100%', backgroundColor: 'red', borderRadius: 30 / 2 }}
-            imageStyle={{ borderRadius: 30 / 2, opacity: 0.7 }}
-            className='flex-row w-80 items-center justify-between mr-2 h-48'
-          >
-            <View className='flex-column items-start justify-center h-48 ml-3'>
-              <Text className='pl-2 font-semibold text-white	font-bold	text-2xl tracking-wider'>
-                {props.entreprise}
-              </Text>
-              <Text className='pl-2 text-white font-normal text-sm tracking-wider'>
-                {props.ville}
-              </Text>
-            </View>
-            <View className='mr-4'>
-              <ChevronRightIcon color={'white'} className='h-6 w-6 pr-2 ' />
-            </View>
-          </ImageBackground>
+    <View className='bg-white'>
+      <TouchableOpacity className='h-48 w-80 bg-red-600 rounded-lg relative mr-5'>
+        <Image
+          source={{ uri: props.photo }}
+          className='w-full h-full rounded-lg opacity-70'
+          contentFit='cover'
+        />
+        <View className='flex flex-col h-full w-8/12 items-center justify-center absolute left-0 z-10'>
+          <Text className='pl-2 font-semibold text-white font-bold text-2xl'>
+            {props.entreprise}
+          </Text>
+          <Text className='pl-2 text-white font-normal text-sm tracking-wider'>{props.ville}</Text>
+        </View>
+        <View className='w-4/12 h-full flex justify-center items-center absolute right-0 z-10'>
+          <ChevronRightIcon color={'white'} className='h-6 w-6' />
         </View>
       </TouchableOpacity>
     </View>
