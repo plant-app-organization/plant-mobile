@@ -166,7 +166,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         }}
       >
-        <View className='w-full h-[35%] justify-evenly items-center'>
+        <View className='w-full h-[30%] justify-evenly items-center'>
           <Image
             source={images[imageIndex]}
             className='w-[100px] h-[100px]'
@@ -220,7 +220,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           </View>
 
           <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
-            <FontAwesomeIcon className='opacity-30' name='heart' size={18} />
+            <FontAwesomeIcon className='opacity-30 w-1/12' name='heart' size={18} />
             <View className='w-10/12'>
               <Text>Mes favoris</Text>
             </View>
@@ -228,15 +228,23 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           </TouchableOpacity>
 
           <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
-            <FontAwesomeIcon className='opacity-30' name='bookmark' size={18} />
+            <FontAwesomeIcon className='opacity-30 w-1/12' name='euro' size={18} />
             <View className='w-10/12'>
-              <Text>Mes ventes & achats</Text>
+              <Text>Mes ventes</Text>
             </View>
             <FontAwesomeIcon name='angle-right' size={18} />
           </TouchableOpacity>
 
           <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
-            <FontAwesomeIcon className='opacity-30' name='commenting' size={18} />
+            <FontAwesomeIcon className='opacity-30 w-1/12' name='shopping-cart' size={18} />
+            <View className='w-10/12'>
+              <Text>Mes achats</Text>
+            </View>
+            <FontAwesomeIcon name='angle-right' size={18} />
+          </TouchableOpacity>
+
+          <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
+            <FontAwesomeIcon className='opacity-30 w-1/12' name='commenting' size={18} />
             <View className='w-10/12'>
               <Text>Mes avis</Text>
             </View>
@@ -244,7 +252,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           </TouchableOpacity>
 
           <TouchableOpacity className='w-full flex-row items-center justify-between py-5'>
-            <FontAwesomeIcon className='opacity-30' name='user' size={18} />
+            <FontAwesomeIcon className='opacity-30 w-1/12' name='user' size={18} />
             <View className='w-10/12'>
               <Text>Me déconnecter</Text>
             </View>
