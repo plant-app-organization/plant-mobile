@@ -94,7 +94,7 @@ const BottomTabs = () => (
                 borderRadius: '100%',
               }}
             >
-              <FontAwesome5 name='plus' size={21} color='white' />
+              <FontAwesome5 name='leaf' size={21} color='white' />
               <Text style={{ color: 'white', fontSize: 10 }}>Vendre</Text>
             </View>
           </View>
