@@ -29,7 +29,7 @@ import CardSuggestion from '../../components/suggestions/CardSuggestion';
 import { Avatar } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NoDeprecatedCustomRule } from 'graphql';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useUser } from '@clerk/clerk-expo';
 
 interface HomeScreenProps {}
@@ -193,7 +193,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: 'white',
+        backgroundColor: '#DFF5E6',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
@@ -205,17 +205,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       >
         {isSignedIn && (
           <View className='w-full flex-row items-center justify-start px-4'>
-            <Avatar
-              style={{}}
-              bg='amber.500'
-              source={{
-                uri: user?.profileImageUrl,
-              }}
-              size='md'
-            >
-              NB
-              <Avatar.Badge bg='green.500' size='23%' />
-            </Avatar>
             <View>
               <Text className='ml-4 text-xl font-semibold text-slate-800'>
                 Bonjour {user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1)}
@@ -233,10 +222,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         />
       </LinearGradient>
 
-      <ScrollView className='w-screen mb-20' showsVerticalScrollIndicator={false}>
+      <ScrollView className='w-screen mb-20 bg-white' showsVerticalScrollIndicator={false}>
         <View className='w-screen h-[20px]' />
         <View className='w-full'>
-          <Text className='pl-5 text-lg '>⭐ Top planters</Text>
           <FlatList
             data={plantersData}
             renderItem={({ item }) => (
@@ -248,9 +236,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View>
 
-        <View className='h-[50px] w-full' />
-
-        <View className='w-full'>
+        {/* <View className='w-full'>
           <Text className='pl-5 text-lg '>🎉 Super deals / ventes privées !</Text>
           <FlatList
             data={dealData}
@@ -261,7 +247,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             horizontal={true}
             contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
           />
-        </View>
+        </View> */}
 
         <View className='h-[50px] w-full' />
 

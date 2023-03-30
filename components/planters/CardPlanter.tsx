@@ -12,11 +12,11 @@ interface CardPlanterProps {
 
 const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
   return (
-    <TouchableOpacity className='mr-5 bg-white p-5 shadow-sm rounded-lg'>
+    <TouchableOpacity className='mr-5 bg-white py-3 px-2 shadow-sm rounded-lg'>
       <Avatar
         alignSelf='center'
         bg='amber.500'
-        size='lg'
+        size='md'
         source={{
           uri: props.image,
         }}

@@ -13,11 +13,27 @@ interface CardCategorieProps {
 }
 
 const CardCategorie: React.FunctionComponent<CardCategorieProps> = (props) => {
+  let backgroundColorCard;
+
+  if (props.name === 'Tropicales') {
+    backgroundColorCard = 'bg-red-200';
+  } else if (props.name === 'Rares') {
+    backgroundColorCard = 'bg-yellow-200';
+  } else if (props.name === 'du Potager') {
+    backgroundColorCard = 'bg-blue-200';
+  } else if (props.name === 'Aromatiques') {
+    backgroundColorCard = 'bg-green-200';
+  } else if (props.name === 'Cactus') {
+    backgroundColorCard = 'bg-purple-200';
+  }
+
   return (
-    <TouchableOpacity className='w-[100%] h-[120px] bg-gray-700 justify-center rounded-lg mb-3 relative'>
+    <TouchableOpacity
+      className={`w-[100%] h-[120px] ${backgroundColorCard} justify-center rounded-lg mb-3 relative`}
+    >
       <Image
         source={{ uri: props.image }}
-        className='w-full h-full rounded-lg opacity-70'
+        className='w-full h-full rounded-lg opacity-30'
         contentFit='cover'
       />
       <View className='w-full h-full flex-row items-center justify-around absolute'>
