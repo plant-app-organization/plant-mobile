@@ -29,7 +29,7 @@ import CardSuggestion from '../../components/suggestions/CardSuggestion';
 import { Avatar } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NoDeprecatedCustomRule } from 'graphql';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useUser } from '@clerk/clerk-expo';
 
 interface HomeScreenProps {}
@@ -98,24 +98,23 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const categorieData: { name: string; image: string }[] = [
     {
       name: 'Tropicales',
-      image: 'https://i.ibb.co/1Mk58wt/Capture-d-e-cran-2023-01-31-a-15-10-06.png',
+      image: require('/assets/01-removebg.png'),
     },
     {
       name: 'Rares',
-      image: 'https://i.ibb.co/6ZZDhNy/Capture-d-e-cran-2023-01-31-a-15-09-44.png',
+      image: require('/assets/02-removebg.png'),
     },
     {
       name: 'du Potager',
-      image: 'https://i.ibb.co/gDbcht3/Capture-d-e-cran-2023-01-31-a-15-09-58.png',
+      image: require('/assets/03-removebg.png'),
     },
     {
       name: 'Aromatiques',
-      image: 'https://i.ibb.co/KjMfWz9/Capture-d-e-cran-2023-01-31-a-15-10-10.png',
+      image: require('/assets/04-removebg.png'),
     },
     {
       name: 'Cactus',
-      image:
-        'https://i.ibb.co/3NgC17d/Hedmo-create-me-a-montserrat-plant-hyper-realistic-with-white-b-ae53c179-487b-4e18-84a6-395a98bbdf5b.png',
+      image: require('/assets/05-removebg.png'),
     },
   ];
 
@@ -193,29 +192,18 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: 'white',
+        backgroundColor: '#BFE6CB',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
       <LinearGradient
         // start={{ x: 0.5, y: 0.8 }}
         // end={{ x: 0.8, y: 0 }}
-        colors={['#DFF5E6', '#EFFFFD', '#FEFFFF']}
+        colors={['#BFE6CB', '#EFFFFD', '#FEFFFF']}
         className='w-screen flex-col items-center py-5'
       >
         {isSignedIn && (
           <View className='w-full flex-row items-center justify-start px-4'>
-            <Avatar
-              style={{}}
-              bg='amber.500'
-              source={{
-                uri: user?.profileImageUrl,
-              }}
-              size='md'
-            >
-              NB
-              <Avatar.Badge bg='green.500' size='23%' />
-            </Avatar>
             <View>
               <Text className='ml-4 text-xl font-semibold text-slate-800'>
                 Bonjour {user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1)}
@@ -233,10 +221,10 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         />
       </LinearGradient>
 
-      <ScrollView className='w-screen mb-20' showsVerticalScrollIndicator={false}>
+      <ScrollView className='w-screen mb-20 bg-white' showsVerticalScrollIndicator={false}>
         <View className='w-screen h-[20px]' />
+        <Text className='pl-5 text-lg w-full'>⭐️ Planters</Text>
         <View className='w-full'>
-          <Text className='pl-5 text-lg '>⭐ Top planters</Text>
           <FlatList
             data={plantersData}
             renderItem={({ item }) => (
@@ -248,9 +236,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View>
 
-        <View className='h-[50px] w-full' />
-
-        <View className='w-full'>
+        {/* <View className='w-full'>
           <Text className='pl-5 text-lg '>🎉 Super deals / ventes privées !</Text>
           <FlatList
             data={dealData}
@@ -261,7 +247,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             horizontal={true}
             contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
           />
-        </View>
+        </View> */}
 
         <View className='h-[50px] w-full' />
 
@@ -290,7 +276,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
 
         <View className='h-[100px] w-full' />
 
-        <View className='w-full'>
+        {/* <View className='w-full'>
           <Text className='pl-5 text-lg'>👀 À la une</Text>
           <FlatList
             data={plantesData}
@@ -301,7 +287,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             horizontal={true}
             contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
           />
-        </View>
+        </View> */}
 
         <View className='h-[50px] w-full' />
 

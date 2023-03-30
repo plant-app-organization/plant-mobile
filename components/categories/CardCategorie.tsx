@@ -13,18 +13,34 @@ interface CardCategorieProps {
 }
 
 const CardCategorie: React.FunctionComponent<CardCategorieProps> = (props) => {
+  let backgroundColorCard;
+
+  if (props.name === 'Tropicales') {
+    backgroundColorCard = 'bg-orange-100';
+  } else if (props.name === 'Rares') {
+    backgroundColorCard = 'bg-blue-100';
+  } else if (props.name === 'du Potager') {
+    backgroundColorCard = 'bg-yellow-100';
+  } else if (props.name === 'Aromatiques') {
+    backgroundColorCard = 'bg-purple-100';
+  } else if (props.name === 'Cactus') {
+    backgroundColorCard = 'bg-green-100';
+  }
+
   return (
-    <TouchableOpacity className='w-[100%] h-[120px] bg-gray-700 justify-center rounded-lg mb-3 relative'>
-      <Image
-        source={{ uri: props.image }}
-        className='w-full h-full rounded-lg opacity-70'
-        contentFit='cover'
-      />
-      <View className='w-full h-full flex-row items-center justify-around absolute'>
-        <Text className='font-semibold text-white	font-bold	text-2xl'>
-          Plantes {'\n'} {props.name}
+    <TouchableOpacity
+      className={`w-[100%] h-[120px] flex flex-row items-center ${backgroundColorCard} rounded-lg mb-3 relative`}
+    >
+      <View className='w-6/12 h-full flex-row items-center'>
+        <Text className='font-semibold text-slate-800	font-bold	text-xl ml-4'>
+          Plantes {'\n'}
+          {props.name}
         </Text>
-        <ChevronRightIcon color={'white'} className='h-6 w-6' />
+      </View>
+
+      <Image source={props.image} className='w-6/12 h-full rounded-lg' contentFit='cover' />
+      <View className='w-[40px] h-[40px] justify-center items-center rounded-full blur-lg bg-white opacity-70 absolute right-5'>
+        <ChevronRightIcon color={'black'} className='h-6 w-6 bg-orange-800' />
       </View>
     </TouchableOpacity>
   );
