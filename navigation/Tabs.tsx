@@ -45,8 +45,8 @@ const BottomTabs = () => (
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <FontAwesome5 name='home' size={21} color={focused ? '#344E41' : '#9DB2CE'} />
-            <Text style={{ color: focused ? '#344E41' : '#9DB2CE', fontSize: 12 }}>Accueil</Text>
+            <FontAwesome5 name='home' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
+            <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Accueil</Text>
           </View>
         ),
       }}
@@ -59,8 +59,8 @@ const BottomTabs = () => (
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <FontAwesome5 name='search' size={21} color={focused ? '#344E41' : '#9DB2CE'} />
-            <Text style={{ color: focused ? '#344E41' : '#9DB2CE', fontSize: 12 }}>Rechercher</Text>
+            <FontAwesome5 name='search' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
+            <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Rechercher</Text>
           </View>
         ),
       }}
@@ -76,7 +76,7 @@ const BottomTabs = () => (
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: focused ? '#C3E2D3' : 'white',
+              backgroundColor: focused ? '#A0C7AC' : 'white',
               width: 70,
               height: 70,
               borderRadius: '100%',
@@ -88,7 +88,7 @@ const BottomTabs = () => (
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#344E41',
+                backgroundColor: '#BFE6CB',
                 width: '90%',
                 height: '90%',
                 borderRadius: '100%',
@@ -109,8 +109,8 @@ const BottomTabs = () => (
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <FontAwesome5 name='comment' size={21} color={focused ? '#344E41' : '#9DB2CE'} />
-            <Text style={{ color: focused ? '#344E41' : '#9DB2CE', fontSize: 12 }}>Chat</Text>
+            <FontAwesome5 name='comment' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
+            <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Chat</Text>
           </View>
         ),
       }}
@@ -123,8 +123,8 @@ const BottomTabs = () => (
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <FontAwesome5 name='user-alt' size={21} color={focused ? '#344E41' : '#9DB2CE'} />
-            <Text style={{ color: focused ? '#344E41' : '#9DB2CE', fontSize: 12 }}>Profile</Text>
+            <FontAwesome5 name='user-alt' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
+            <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Profile</Text>
           </View>
         ),
       }}

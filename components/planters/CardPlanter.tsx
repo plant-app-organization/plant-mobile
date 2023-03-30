@@ -24,7 +24,7 @@ const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
         JL
       </Avatar>
       <Text className='pt-2 font-semibold text-center'>{props.name}</Text>
-      <Text className='text-xs text-green-900'>{props.deals} plantdeals</Text>
+      <Text className='text-xs text-gray-800'>{props.deals} plantdeals</Text>
     </TouchableOpacity>
   );
 };

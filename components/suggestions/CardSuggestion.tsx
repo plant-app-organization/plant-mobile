@@ -10,15 +10,29 @@ interface CardSuggestionProps {
 
 const CardSuggestion: React.FunctionComponent<CardSuggestionProps> = (props) => {
   const navigation = useNavigation();
+
+  let backgroundColorStyle;
+
+  if (props.search === 'Montserrat') {
+    backgroundColorStyle = 'bg-orange-100';
+  } else if (props.search === 'Lyrata') {
+    backgroundColorStyle = 'bg-blue-100';
+  } else if (props.search === 'Olivier') {
+    backgroundColorStyle = 'bg-yellow-100';
+  } else if (props.search === 'Plantes grasses') {
+    backgroundColorStyle = 'bg-purple-100';
+  } else if (props.search === 'Cactus') {
+    backgroundColorStyle = 'bg-green-100';
+  }
+
   return (
     <TouchableOpacity
-      className='w-[150px] rounded-2xl bg-white items-center py-5 mr-5 shadow-sm'
+      className={`w-[150px] rounded-2xl ${backgroundColorStyle} items-center py-5 mr-5 shadow-sm`}
       onPress={() => navigation.navigate('ListingScreen')}
     >
       <Text className='font-semibold'>{props.search}</Text>
       <Text>{props.views} vues</Text>
     </TouchableOpacity>
-
   );
 };
 
