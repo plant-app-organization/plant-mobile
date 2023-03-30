@@ -1,0 +1,19 @@
+query getUserBookmarks {
+  userBookmarks {
+    id
+    price
+    plantName
+    pictures
+    bookmarkedBy
+    description
+    category
+    health
+    pot
+    isBookmarked
+    plantHeight
+    maintenanceDifficultyLevel
+    isActive
+    createdAt
+    updatedAt
+  }
+}

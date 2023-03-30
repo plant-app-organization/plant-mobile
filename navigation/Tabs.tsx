@@ -47,7 +47,6 @@ const BottomTabs = () => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <FontAwesome5 name='home' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
             <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Accueil</Text>
-
           </View>
         ),
       }}
@@ -62,7 +61,6 @@ const BottomTabs = () => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <FontAwesome5 name='search' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
             <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Rechercher</Text>
-
           </View>
         ),
       }}
@@ -94,7 +92,6 @@ const BottomTabs = () => (
                 width: '90%',
                 height: '90%',
                 borderRadius: '100%',
-
               }}
             >
               <FontAwesome5 name='leaf' size={21} color='white' />
@@ -114,7 +111,6 @@ const BottomTabs = () => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <FontAwesome5 name='comment' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
             <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Chat</Text>
-
           </View>
         ),
       }}
@@ -129,13 +125,12 @@ const BottomTabs = () => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <FontAwesome5 name='user-alt' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
             <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Profile</Text>
-
           </View>
         ),
       }}
     />
 
-    <Tab.Screen name='Listing' component={ListingScreen} options={{ tabBarButton: () => null }} />
+    {/* <Tab.Screen name='Listing' component={ListingScreen} options={{ tabBarButton: () => null }} /> */}
   </Tab.Navigator>
 );
 

@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 
 import {
   StatusBar,
@@ -9,27 +8,20 @@ import {
   Text,
   TextInput,
   ScrollView,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  useWindowDimensions,
   FlatList,
 } from 'react-native';
+import { useGetUserBookmarksQuery } from '../../graphql/graphql';
 
 import { Image } from 'expo-image';
+import { useReactiveVar } from '@apollo/client';
+import { bookmarksVar } from '../../variables/bookmarks';
 
-import { Spinner, Switch } from 'native-base';
-
-import CardProduct from '../../components/product/CardProduct';
-import CardDeal from '../../components/super-deals/CardDeal';
 import CardCategorie from '../../components/categories/CardCategorie';
 import CardPlanter from '../../components/planters/CardPlanter';
 import CardSuggestion from '../../components/suggestions/CardSuggestion';
 // import CardAntigaspi from '../../components/antigaspi/CardAntigaspi';
-import { Avatar } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
-import { NoDeprecatedCustomRule } from 'graphql';
-import { FontAwesome5 } from '@expo/vector-icons';
+
 import { useUser } from '@clerk/clerk-expo';
 
 interface HomeScreenProps {}
@@ -39,34 +31,10 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const { isSignedIn, user } = useUser();
   // const { getToken } = useAuth();
 
+  const { data: userBookmarks, refetch: refetchUserBookmarks } = useGetUserBookmarksQuery();
+  console.log('userBookmarks', userBookmarks);
+  userBookmarks && bookmarksVar(userBookmarks?.userBookmarks);
   // console.log('user clerk ', user);
-  const plantesData: { name: string; prix: number; photo: string }[] = [
-    {
-      name: 'Montserrat1',
-      prix: 60.0,
-      photo: 'https://thumbs.dreamstime.com/z/plante-plante-green-flower-sun-summer-154287762.jpg',
-    },
-    {
-      name: 'Ficus Lyrata',
-      prix: 20.0,
-      photo: 'https://i.ibb.co/sWBGrQs/un-mur-de-monstera-6107712.webp',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-    },
-    {
-      name: 'Montserrat2',
-      prix: 98.0,
-      photo: 'https://i.ibb.co/zX3qTxG/69570f4534a4212babd87b1b4d7e08088435ab30.jpg',
-    },
-    {
-      name: 'Montserrat3',
-      prix: 18.0,
-      photo: 'https://thumbs.dreamstime.com/z/plante-plante-green-flower-sun-summer-154287762.jpg',
-    },
-  ];
 
   const dealData: { entreprise: string; ville: string; photo: string }[] = [
     {

@@ -47,6 +47,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
   const [isOpen, setIsOpen] = useState<boolean | void | undefined>(false);
   const zoomValue = useRef(new Animated.Value(0)).current;
   const [nameEvo, setNameIndex] = useState(0);
+  const navigation = useNavigation();
   const onSignOutPress = async () => {
     try {
       await SecureStore.deleteItemAsync('__clerk_client_jwt');
@@ -219,7 +220,10 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
+          <TouchableOpacity
+            className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'
+            onPress={() => navigation.navigate('Bookmarks')}
+          >
             <FontAwesomeIcon className='opacity-30 w-1/12' name='heart' size={18} />
             <View className='w-10/12'>
               <Text>Mes favoris</Text>
@@ -251,7 +255,10 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             <FontAwesomeIcon name='angle-right' size={18} />
           </TouchableOpacity>
 
-          <TouchableOpacity className='w-full flex-row items-center justify-between py-5'>
+          <TouchableOpacity
+            className='w-full flex-row items-center justify-between py-5'
+            onPress={onSignOutPress}
+          >
             <FontAwesomeIcon className='opacity-30 w-1/12' name='user' size={18} />
             <View className='w-10/12'>
               <Text>Me déconnecter</Text>

@@ -19,31 +19,25 @@ interface CardProductProps {
 
 const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
   const [like, setLike] = useState(props.isBookmarked);
+  console.log('PROPS', props);
   const [likesCounter, setLikesCounter] = useState<number | null>(
     props.bookmarkedBy != null && props.bookmarkedBy.length > 0 ? props.bookmarkedBy.length : null,
   );
-  console.log('like', like);
+  console.log('🔥like', like, 'likesCounter', likesCounter);
+
+  // console.log('like', like);
   const [bookmarkOffer] = useBookmarkOfferMutation({
     variables: { offerId: props.id },
   });
 
   const toast = useToast();
-  /* const handleLike = async () => {
-    !like &&
-      toast.show({
-        title: "L'annonce a été ajoutée à vos favoris !",
-      });
-    const response = await bookmarkOffer({
-      variables: {
-        offerId: props.id,
-      },
-    });
-    setLike(!like);
-  }; */
-  // console.log('props dans carproduct', props);
+  const bookmarksArray = useReactiveVar(bookmarksVar);
+
   const scaleAnimation = useRef(new Animated.Value(1)).current;
   const navigation = useNavigation();
   const handleLike = async () => {
+    console.log(bookmarksArray);
+
     Animated.sequence([
       Animated.timing(scaleAnimation, {
         toValue: 1.5,
@@ -56,12 +50,26 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
         useNativeDriver: true,
       }),
     ]).start();
-    like && likesCounter ? setLikesCounter(likesCounter - 1) : setLikesCounter(likesCounter + 1);
-    !like && likesCounter && setLikesCounter(likesCounter + 1);
 
-    setLike(!like);
+    if (like && likesCounter) {
+      bookmarksVar(bookmarksArray.filter((e) => e.id !== props.id));
+      setLikesCounter(likesCounter - 1);
+      setLike(false);
+    }
+    if (!like && likesCounter) {
+      // console.log('!like && likesCounter');
+      bookmarksVar([...bookmarksArray, props]);
+      setLikesCounter(likesCounter + 1);
+      setLike(true);
+    }
+    if ((!like && !likesCounter) || (!like && likesCounter == 0)) {
+      // console.log('!like && !likesCounter');
 
-    console.log('ajout du like');
+      bookmarksVar([props]);
+      setLikesCounter(likesCounter + 1);
+      setLike(true);
+    }
+
     !like &&
       toast.show({
         title: "L'annonce a été ajoutée à vos favoris !",
@@ -111,7 +119,7 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
               </Text>
             )}
             <HeartIcon
-              color={like ? '#e74c3c' : '#d8d8d8'}
+              color={bookmarksArray.some((el) => el.id == props.id) ? '#e74c3c' : '#d8d8d8'}
               className='h-6 w-6 pr-2'
               onPress={() => handleLike()}
             />

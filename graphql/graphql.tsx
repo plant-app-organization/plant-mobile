@@ -77,7 +77,10 @@ export type Query = {
   OffersList: Array<Offer>;
   /** Get List of Offers Searched */
   OffersListSearch: Array<Offer>;
+  getBookmarksByUserId: Scalars['String'];
   hello: Scalars['String'];
+  userBookmarks: Array<Offer>;
+  userData: UserModel;
   userDataById: UserModel;
 };
 
@@ -90,6 +93,11 @@ export type QueryOffersListArgs = {
 export type QueryOffersListSearchArgs = {
   filters: Array<Scalars['String']>;
   searchInput: Scalars['String'];
+};
+
+
+export type QueryGetBookmarksByUserIdArgs = {
+  offerId: Scalars['String'];
 };
 
 
@@ -146,6 +154,11 @@ export type GetOffersQueryVariables = Exact<{
 
 
 export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string }> };
+
+export type GetUserBookmarksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserBookmarksQuery = { __typename?: 'Query', userBookmarks: Array<{ __typename?: 'Offer', id: string, price: number, plantName: string, pictures: Array<string>, bookmarkedBy: Array<string>, description: string, category: string, health: string, pot: boolean, isBookmarked?: boolean | null, plantHeight: number, maintenanceDifficultyLevel: string, isActive: boolean, createdAt: any, updatedAt: any }> };
 
 export type GetUserDataByIdQueryVariables = Exact<{
   userId: Scalars['String'];
@@ -281,6 +294,54 @@ export function useGetOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHo
 export type GetOffersQueryHookResult = ReturnType<typeof useGetOffersQuery>;
 export type GetOffersLazyQueryHookResult = ReturnType<typeof useGetOffersLazyQuery>;
 export type GetOffersQueryResult = Apollo.QueryResult<GetOffersQuery, GetOffersQueryVariables>;
+export const GetUserBookmarksDocument = gql`
+    query getUserBookmarks {
+  userBookmarks {
+    id
+    price
+    plantName
+    pictures
+    bookmarkedBy
+    description
+    category
+    health
+    pot
+    isBookmarked
+    plantHeight
+    maintenanceDifficultyLevel
+    isActive
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetUserBookmarksQuery__
+ *
+ * To run a query within a React component, call `useGetUserBookmarksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserBookmarksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserBookmarksQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserBookmarksQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserBookmarksQuery, GetUserBookmarksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetUserBookmarksQuery, GetUserBookmarksQueryVariables>(GetUserBookmarksDocument, options);
+      }
+export function useGetUserBookmarksLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserBookmarksQuery, GetUserBookmarksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetUserBookmarksQuery, GetUserBookmarksQueryVariables>(GetUserBookmarksDocument, options);
+        }
+export type GetUserBookmarksQueryHookResult = ReturnType<typeof useGetUserBookmarksQuery>;
+export type GetUserBookmarksLazyQueryHookResult = ReturnType<typeof useGetUserBookmarksLazyQuery>;
+export type GetUserBookmarksQueryResult = Apollo.QueryResult<GetUserBookmarksQuery, GetUserBookmarksQueryVariables>;
 export const GetUserDataByIdDocument = gql`
     query getUserDataById($userId: String!) {
   userDataById(userId: $userId) {

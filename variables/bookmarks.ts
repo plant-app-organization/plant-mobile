@@ -1,3 +1,3 @@
 import { makeVar } from '@apollo/client';
 
-export const bookmarksVar = makeVar([]);
+export const bookmarksVar = makeVar();

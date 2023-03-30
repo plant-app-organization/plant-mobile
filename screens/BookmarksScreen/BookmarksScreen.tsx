@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   Platform,
+  FlatList,
   StatusBar,
   SafeAreaView,
   View,
@@ -13,7 +14,8 @@ import {
   TouchableOpacity,
   Button,
 } from 'react-native';
-import { Spinner } from 'native-base';
+import { useReactiveVar } from '@apollo/client';
+import { bookmarksVar } from '../../variables/bookmarks';
 import { LinearGradient } from 'expo-linear-gradient';
 import CardProduct from '../../components/product/CardProduct';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -24,96 +26,13 @@ interface FavorisScreenProps {}
 const FavorisScreen: React.FunctionComponent<FavorisScreenProps> = (props) => {
   const navigation = useNavigation();
 
-  const products: { name: string; prix: number; photo: string; categorie: string }[] = [
-    {
-      name: 'Montserrat1',
-      prix: 60.0,
-      photo: 'https://thumbs.dreamstime.com/z/plante-plante-green-flower-sun-summer-154287762.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Ficus Lyrata',
-      prix: 20.0,
-      photo: 'https://i.ibb.co/sWBGrQs/un-mur-de-monstera-6107712.webp',
-      categorie: 'plante rare',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Montserrat2',
-      prix: 98.0,
-      photo: 'https://i.ibb.co/zX3qTxG/69570f4534a4212babd87b1b4d7e08088435ab30.jpg',
-      categorie: 'plante rare',
-    },
-    {
-      name: 'Montserrat3',
-      prix: 18.0,
-      photo: 'https://thumbs.dreamstime.com/z/plante-plante-green-flower-sun-summer-154287762.jpg',
-      categorie: 'plante rare',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante rare',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante rare',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-    {
-      name: 'Plante kinthia',
-      prix: 38.0,
-      photo: 'https://i.ibb.co/DGSMfwX/63b038b2f4d6638e12691a62097e9e24fa203426.jpg',
-      categorie: 'plante grasse',
-    },
-  ];
+  const userBookmarks = useReactiveVar(bookmarksVar);
+  console.log('userBookmarks in Bookmarksscreen', userBookmarks);
 
-  const plantes = products.map((data, i) => {
-    return <CardProduct key={i} name={data.name} prix={data.prix} photo={data.photo} />;
+  const bookmarksCards = userBookmarks.map((data, i) => {
+    return <CardProduct key={i} {...data} isBookmarked={true} />;
   });
+  const renderItem = useCallback(({ item }) => <CardProduct {...item} isBookmarked={true} />, []);
 
   return (
     <View className='w-screen'>
@@ -137,10 +56,23 @@ const FavorisScreen: React.FunctionComponent<FavorisScreenProps> = (props) => {
 
           <View className='items-start justify-start pt-0'>
             <View className='w-full'>
-              <Text className='p-4 pl-6'>{plantes.length}+ résultats</Text>
-              <ScrollView className='pl-6 w-screen' showsHorizontalScrollIndicator={false}>
-                <View className='w-screen flex-row flex-wrap'>{plantes}</View>
-              </ScrollView>
+              <Text className='p-4 pl-6'>{userBookmarks?.length} Annonces dans vos favoris</Text>
+              <View className='w-screen'>
+                <FlatList
+                  numColumns={2}
+                  horizontal={false}
+                  initialNumToRender={4}
+                  maxToRenderPerBatch={6}
+                  ItemSeparatorComponent={() => <View className='h-4' />}
+                  columnWrapperStyle={{
+                    flex: 1,
+                    justifyContent: 'space-evenly',
+                  }}
+                  data={userBookmarks}
+                  renderItem={renderItem}
+                  keyExtractor={(item) => item.id}
+                />
+              </View>
             </View>
           </View>
         </SafeAreaView>
