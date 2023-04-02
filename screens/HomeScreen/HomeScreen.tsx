@@ -9,6 +9,8 @@ import {
   TextInput,
   ScrollView,
   FlatList,
+  Pressable,
+  useWindowDimensions,
 } from 'react-native';
 import { useGetUserBookmarksQuery } from '../../graphql/graphql';
 
@@ -30,7 +32,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const [search, setSearch] = useState<string>('');
   const { isSignedIn, user } = useUser();
   // const { getToken } = useAuth();
-
+  const { width, height } = useWindowDimensions();
   const { data: userBookmarks, refetch: refetchUserBookmarks } = useGetUserBookmarksQuery();
   console.log('userBookmarks', userBookmarks);
   userBookmarks && bookmarksVar(userBookmarks?.userBookmarks);
@@ -180,13 +182,18 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             </View>
           </View>
         )}
-        <TextInput
-          className='w-10/12 bg-white rounded-full shadow-sm px-4 py-3 mt-6'
-          placeholder='Rechercher une plante'
-          value={search}
-          onChangeText={(value) => setSearch(value)}
-          placeholderTextColor='#AFAFAF'
-        />
+
+        <Pressable onPress={() => props.navigation.navigate('BottomTabs', { screen: 'Search' })}>
+          <View pointerEvents='none' style={{ width: width, paddingHorizontal: 14 }}>
+            <TextInput
+              className=' bg-white rounded-full shadow-sm px-4 py-3 mt-6'
+              placeholder='Rechercher une plante'
+              value={search}
+              onChangeText={(value) => setSearch(value)}
+              placeholderTextColor='#AFAFAF'
+            />
+          </View>
+        </Pressable>
       </LinearGradient>
 
       <ScrollView className='w-screen mb-20 bg-white' showsVerticalScrollIndicator={false}>

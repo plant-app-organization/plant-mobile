@@ -27,7 +27,7 @@ const FavorisScreen: React.FunctionComponent<FavorisScreenProps> = (props) => {
   const navigation = useNavigation();
 
   const userBookmarks = useReactiveVar(bookmarksVar);
-  console.log('userBookmarks in Bookmarksscreen', userBookmarks);
+  // console.log('userBookmarks in Bookmarksscreen', userBookmarks);
 
   const bookmarksCards = userBookmarks.map((data, i) => {
     return <CardProduct key={i} {...data} isBookmarked={true} />;
