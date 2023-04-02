@@ -91,7 +91,7 @@ const BottomTabs = () => (
                 backgroundColor: '#BFE6CB',
                 width: '90%',
                 height: '90%',
-                borderRadius: '100%',
+                borderRadius: 200,
               }}
             >
               <FontAwesome5 name='leaf' size={21} color='white' />

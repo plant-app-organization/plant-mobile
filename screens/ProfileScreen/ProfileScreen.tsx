@@ -245,7 +245,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
                   fontSize: 10,
                 }}
               >
-                {userBookmarks.length}
+                {userBookmarks?.length}
               </Badge>
             </View>
             <FontAwesomeIcon name='angle-right' size={18} />

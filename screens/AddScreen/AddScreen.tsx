@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '@env';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, useEffect } from 'react'
+import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '@env'
+import PropTypes from 'prop-types'
 import {
   Platform,
   StatusBar,
@@ -12,7 +12,7 @@ import {
   TextInput,
   useWindowDimensions,
   Dimensions,
-} from 'react-native';
+} from 'react-native'
 import {
   Select,
   FormControl,
@@ -26,79 +26,82 @@ import {
   Button,
   Stack,
   Input,
-} from 'native-base';
-import { LinearGradient } from 'expo-linear-gradient';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
-import { useCreateNewOfferMutation } from '../../graphql/graphql';
-import * as ImagePicker from 'expo-image-picker';
-import Slider from '@react-native-community/slider';
+} from 'native-base'
+import { LinearGradient } from 'expo-linear-gradient'
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
+import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
+import { useCreateNewOfferMutation } from '../../graphql/graphql'
+import * as ImagePicker from 'expo-image-picker'
+import Slider from '@react-native-community/slider'
 
-import ModalPreview from '../../components/modals/ModalPreview';
+import ModalPreview from '../../components/modals/ModalPreview'
 
 interface AddScreenProps {}
 
 const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
-  const { width, height } = useWindowDimensions();
-  const [createNewOffer] = useCreateNewOfferMutation();
-  const toast = useToast();
+  const { width, height } = useWindowDimensions()
+  const [createNewOffer] = useCreateNewOfferMutation()
+  const toast = useToast()
 
-  const { getToken } = useAuth();
-  const [sessionToken, setSessionToken] = React.useState('');
+  const { getToken } = useAuth()
+  const [sessionToken, setSessionToken] = React.useState('')
 
-  const { isSignedIn, user } = useUser();
-  const isFocused = useIsFocused();
-  const navigation = useNavigation();
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [price, setPrice] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
-  const [pot, setPot] = useState<boolean>(false);
-  const [health, setHealth] = useState<string>('');
-  const [maintenanceDifficultyLevel, setMaintenanceDifficultyLevel] = useState<string>('');
-  const [isOpen, setIsOpen] = useState<boolean | void | undefined>(false);
-  const [isLoaderOpen, setIsLoaderOpen] = useState<boolean | void | undefined>(false);
-  const [fullScreenImage, setFullScreenImage] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const { isSignedIn, user } = useUser()
+  const isFocused = useIsFocused()
+  const [title, setTitle] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
+  const [price, setPrice] = useState<string>('')
+  const [category, setCategory] = useState<string>('')
+  const [pot, setPot] = useState<boolean>(false)
+  const [health, setHealth] = useState<string>('')
+  const [maintenanceDifficultyLevel, setMaintenanceDifficultyLevel] = useState<string>('')
+  const [isOpen, setIsOpen] = useState<boolean | void | undefined>(false)
+  const [isLoaderOpen, setIsLoaderOpen] = useState<boolean | void | undefined>(false)
+  const [fullScreenImage, setFullScreenImage] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   // const [slideStartingValue, setSlideStartingValue] = useState(0);
   // const [slideStartingCount, setSlideStartingCount] = useState(0);
-  const [plantHeight, setPlantHeight] = useState<number>(0);
+  const [plantHeight, setPlantHeight] = useState<number>(0)
 
   const openModalHandler = () => {
-    console.log('CLICKED');
-    setShowModal(true);
-  };
+    console.log('CLICKED')
+    setShowModal(true)
+  }
 
   function handleDeleteImage(index) {
-    const newImagesUrls = [...imagesUrls];
-    newImagesUrls.splice(index, 1);
-    setImagesUrls(newImagesUrls);
+    const newImagesUrls = [...imagesUrls]
+    newImagesUrls.splice(index, 1)
+    setImagesUrls(newImagesUrls)
   }
 
   const handleToggle = () => {
-    setPot(!pot);
-  };
+    setPot(!pot)
+  }
 
-  const [imagesUrls, setImagesUrls] = useState([]);
+  const [imagesUrls, setImagesUrls] = useState([])
   useEffect(() => {
-    !isSignedIn && setIsOpen(true);
-  }, [isSignedIn, isFocused]);
+    !isSignedIn && isFocused && setIsOpen(true)
+  }, [isSignedIn, isFocused])
+
+  const closeModal = () => {
+    setIsOpen(false)
+  }
 
   const handleNavigation = () => {
-    navigation.navigate('BottomTabs', { screen: 'Home' });
-    setIsOpen(false);
-  };
+    props.navigation.navigate('BottomTabs', { screen: 'Home' })
+    closeModal()
+  }
 
   useEffect(() => {
     const scheduler = setInterval(async () => {
-      const token = await getToken();
-      setSessionToken(token as string);
-    }, 1000);
+      const token = await getToken()
+      setSessionToken(token as string)
+    }, 1000)
 
-    return () => clearInterval(scheduler);
-  }, []);
+    return () => clearInterval(scheduler)
+  }, [])
 
   const addImage = async () => {
     if (imagesUrls.length < 3) {
@@ -109,20 +112,20 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
       }).then((image) => {
         // console.log('image', image);
         if (image.canceled) {
-          return;
+          return
         }
         if (!image.canceled) {
-          console.log('image.assets', image.assets);
-          setIsLoaderOpen(true);
-          const data = new FormData();
+          console.log('image.assets', image.assets)
+          setIsLoaderOpen(true)
+          const data = new FormData()
           const source = {
             uri: image.assets[0].uri,
             type: 'image/jpeg',
             name: 'newPic',
-          };
-          data.append('file', source);
-          data.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET);
-          data.append('cloud_name', process.env.CLOUDINARY_CLOUD_NAME);
+          }
+          data.append('file', source)
+          data.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET)
+          data.append('cloud_name', process.env.CLOUDINARY_CLOUD_NAME)
           fetch(
             `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
             {
@@ -132,24 +135,24 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           )
             .then((res) => res.json())
             .then(async (data) => {
-              console.log('📸data.secure_url', data.secure_url);
-              setImagesUrls([...imagesUrls, data.secure_url]);
-              setIsLoaderOpen(false);
+              console.log('📸data.secure_url', data.secure_url)
+              setImagesUrls([...imagesUrls, data.secure_url])
+              setIsLoaderOpen(false)
             })
             .catch((err) => {
-              console.log(err);
-            });
+              console.log(err)
+            })
         }
-      });
+      })
     } else {
       toast.show({
         title: '3 images maximum',
-      });
+      })
     }
-  };
+  }
   const onCreateNewOfferPress = async () => {
     if (title != '' && price != '' && description.length > 20 && imagesUrls.length) {
-      console.log('🧡requete!');
+      console.log('🧡requete!')
       const response = await createNewOffer({
         variables: {
           newOfferInput: {
@@ -164,16 +167,16 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             maintenanceDifficultyLevel,
           },
         },
-      });
-      console.log('response', response);
+      })
+      console.log('response', response)
       response &&
         toast.show({
           title: '🪴 Votre offre a été publiée !',
-        });
+        })
     } else {
-      alert('Erreur', 'Veuillez remplir tous les champs');
+      alert('Erreur', 'Veuillez remplir tous les champs')
     }
-  };
+  }
 
   return (
     <LinearGradient
@@ -269,7 +272,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                                 variant='ghost'
                                 colorScheme='blueGray'
                                 onPress={() => {
-                                  setShowModal(false);
+                                  setShowModal(false)
                                 }}
                               >
                                 fermer
@@ -286,7 +289,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                       <FontAwesomeIcon name={'times-circle'} size={20} color={'white'} />
                     </TouchableOpacity>
                   </View>
-                );
+                )
               })}
             </View>
 
@@ -378,7 +381,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   //   setPlantHeight(Math.floor(value));
                   // }}
                   onSlidingComplete={(value) => {
-                    setPlantHeight(value);
+                    setPlantHeight(value)
                   }}
                 />
               </View>
@@ -485,7 +488,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             <Modal.Body>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('BottomTabs', { screen: 'Profile' });
+                  props.navigate('BottomTabs', { screen: 'Profile' })
                 }}
               >
                 <Text
@@ -497,7 +500,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               </TouchableOpacity>
             </Modal.Body>
             <Modal.Footer style={{ backgroundColor: '#f2fff3' }}>
-              <TouchableOpacity onPress={handleNavigation}>
+              <TouchableOpacity onPress={() => handleNavigation()}>
                 <Text className='text-xs   ml-3 text-center font-Roboto   '>Non merci</Text>
               </TouchableOpacity>
             </Modal.Footer>
@@ -515,7 +518,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
         </Modal>
       </SafeAreaView>
     </LinearGradient>
-  );
-};
+  )
+}
 
-export default AddScreen;
+export default AddScreen
