@@ -66,7 +66,7 @@ const FavorisScreen: React.FunctionComponent<FavorisScreenProps> = (props) => {
                   ItemSeparatorComponent={() => <View className='h-4' />}
                   columnWrapperStyle={{
                     flex: 1,
-                    justifyContent: 'space-evenly',
+                    alignItems: 'flex-start',
                   }}
                   data={userBookmarks}
                   renderItem={renderItem}

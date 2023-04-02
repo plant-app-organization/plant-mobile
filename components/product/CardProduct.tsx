@@ -1,5 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, Animated } from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  Animated,
+  useWindowDimensions,
+} from 'react-native';
 import { HeartIcon } from 'react-native-heroicons/solid';
 import { Image } from 'expo-image';
 import { useReactiveVar } from '@apollo/client';
@@ -18,6 +25,7 @@ interface CardProductProps {
 }
 
 const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
+  const { width, height } = useWindowDimensions();
   const [like, setLike] = useState(props.isBookmarked);
   console.log('PROPS', props);
   const [likesCounter, setLikesCounter] = useState<number | null>(
@@ -32,11 +40,12 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
 
   const toast = useToast();
   const bookmarksArray = useReactiveVar(bookmarksVar);
+  console.log('🍔bookmarksArray ', bookmarksArray);
 
   const scaleAnimation = useRef(new Animated.Value(1)).current;
   const navigation = useNavigation();
   const handleLike = async () => {
-    console.log(bookmarksArray);
+    // console.log(bookmarksArray);
 
     Animated.sequence([
       Animated.timing(scaleAnimation, {
@@ -51,7 +60,7 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
       }),
     ]).start();
 
-    if (like && likesCounter) {
+    if ((like && likesCounter) || (like && !likesCounter)) {
       bookmarksVar(bookmarksArray.filter((e) => e.id !== props.id));
       setLikesCounter(likesCounter - 1);
       setLike(false);
@@ -65,7 +74,7 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
     if ((!like && !likesCounter) || (!like && likesCounter == 0)) {
       // console.log('!like && !likesCounter');
 
-      bookmarksVar([props]);
+      bookmarksVar([...bookmarksArray, props]);
       setLikesCounter(likesCounter + 1);
       setLike(true);
     }
@@ -83,10 +92,14 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
 
   const blurhash =
     '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
-
+  console.log(
+    '🪴.some ???',
+    bookmarksArray.some((el) => el.id == props.id),
+  );
   return (
     <TouchableOpacity
-      className='w-1/2 px-2'
+      style={{ width: width * 0.5 }}
+      className=' px-2'
       onPress={() =>
         navigation.navigate('Listing', { listingData: props, likesCounter, like, handleLike })
       }

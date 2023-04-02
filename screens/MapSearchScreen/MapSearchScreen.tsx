@@ -157,13 +157,17 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                   <View className='w-screen'>
                     <FlatList
                       numColumns={2}
+                      // contentContainerStyle={{
+                      //   alignItems: 'flex-start',
+                      // }}
+
                       horizontal={false}
                       initialNumToRender={4}
                       maxToRenderPerBatch={6}
                       ItemSeparatorComponent={() => <View className='h-4' />}
                       columnWrapperStyle={{
                         flex: 1,
-                        justifyContent: 'space-evenly',
+                        alignItems: 'flex-start',
                       }}
                       data={searchOffersData?.OffersListSearch}
                       renderItem={renderItem}

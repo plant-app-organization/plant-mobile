@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Text, TouchableOpacity, View, StyleSheet, Animated } from 'react-native';
 import { Image } from 'expo-image';
-import { Avatar, ScrollView } from 'native-base';
+import { Avatar, ScrollView, useToast } from 'native-base';
+import { useReactiveVar } from '@apollo/client';
+import { bookmarksVar } from '../../variables/bookmarks';
 import AuthorDisplay from '../../components/AuthorDisplay/AuthorDisplay';
 
 import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid';
@@ -14,6 +16,7 @@ const blurhash =
 
 const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
   const [like, setLike] = useState(props.route.params.like);
+  const toast = useToast();
   const [likesCounter, setLikesCounter] = useState<number | null>(props.route.params.likesCounter);
   console.log('props.route.params', props.route.params);
   console.log('like', like);
@@ -34,6 +37,7 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
     updatedAt,
   } = props.route.params.listingData;
   const navigation = useNavigation();
+  const bookmarksArray = useReactiveVar(bookmarksVar);
 
   const addLike = () => {
     setLikesCounter(likesCounter + 1);
@@ -43,6 +47,53 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
   const dislike = () => {
     setLike(false);
     setLikesCounter(likesCounter - 1);
+  };
+  const scaleAnimation = useRef(new Animated.Value(1)).current;
+
+  const handleLike = async () => {
+    // console.log(bookmarksArray);
+
+    Animated.sequence([
+      Animated.timing(scaleAnimation, {
+        toValue: 1.5,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnimation, {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    if (like && likesCounter) {
+      bookmarksVar(bookmarksArray.filter((e) => e.id !== id));
+      setLikesCounter(likesCounter - 1);
+      setLike(false);
+    }
+    if (!like && likesCounter) {
+      // console.log('!like && likesCounter');
+      bookmarksVar([...bookmarksArray, props]);
+      setLikesCounter(likesCounter + 1);
+      setLike(true);
+    }
+    if ((!like && !likesCounter) || (!like && likesCounter == 0)) {
+      // console.log('!like && !likesCounter');
+
+      bookmarksVar([...bookmarksArray, props]);
+      setLikesCounter(likesCounter + 1);
+      setLike(true);
+    }
+
+    !like &&
+      toast.show({
+        title: "L'annonce a été ajoutée à vos favoris !",
+      });
+    const response = await bookmarkOffer({
+      variables: {
+        offerId: props.id,
+      },
+    });
   };
 
   return (
@@ -128,10 +179,7 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
                 {likesCounter != null && likesCounter > 0 && (
                   <Text className='mr-1'>{likesCounter}</Text>
                 )}
-                <HeartIcon
-                  color={like && likesCounter && likesCounter > 0 ? '#e74c3c' : '#d8d8d8'}
-                  size={20}
-                />
+                <HeartIcon color={like ? '#e74c3c' : '#d8d8d8'} size={20} />
               </TouchableOpacity>
               <Text className='text-2xl text-green-900'>{price} €</Text>
             </View>
