@@ -106,6 +106,20 @@ const BottomTabs = () => (
       name='Chat'
       component={ChatScreen}
       options={{
+        tabBarBadge: 2,
+        tabBarBadgeStyle: {
+          backgroundColor: '#BFE6CB',
+          fontSize: 9,
+          color: '#1E293B',
+          padding: 0,
+          maxWidth: 15,
+          minWidth: 15,
+          minHeight: 15,
+          maxHeight: 15,
+          lineHeight: 15,
+          alignSelf: undefined,
+        },
+
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
