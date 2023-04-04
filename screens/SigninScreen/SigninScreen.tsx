@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import {
   Platform,
   StatusBar,
@@ -10,55 +10,52 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-} from 'react-native';
-import { useToast, Input, InputGroup } from 'native-base';
-import { LinearGradient } from 'expo-linear-gradient';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { useSignIn } from '@clerk/clerk-expo';
-import { SignInWithOAuth } from '../../components/SignInWithOAuth/SignInWithOAuth';
+} from 'react-native'
+import { useToast, Input, InputGroup } from 'native-base'
+import { LinearGradient } from 'expo-linear-gradient'
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import { useSignIn } from '@clerk/clerk-expo'
+import { SignInWithOAuth } from '../../components/SignInWithOAuth/SignInWithOAuth'
 
 interface SigninScreenProps {}
 //
 //
 const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
-  const [emailAddress, setEmailAddress] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const { signIn, setSession, isLoaded } = useSignIn();
-  const toast = useToast();
+  const [emailAddress, setEmailAddress] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const { signIn, setSession, isLoaded } = useSignIn()
+  const toast = useToast()
 
   const handleTextChange = (inputText) => {
-    setEmailAddress(inputText.toLowerCase());
-  };
+    setEmailAddress(inputText.toLowerCase())
+  }
 
   const onSignInPress = async () => {
     if (!isLoaded) {
-      return;
+      return
     }
 
     try {
       const completeSignIn = await signIn.create({
         identifier: emailAddress,
         password,
-      });
+      })
 
-      await setSession(completeSignIn.createdSessionId);
+      await setSession(completeSignIn.createdSessionId)
     } catch (err) {
       if (err) {
         toast.show({
           title: 'Email ou mot de passe incorrect',
-        });
+        })
       }
-      console.log('Error:> ' + (err.errors ? err.errors[0].message : err));
+      console.log('Error:> ' + (err.errors ? err.errors[0].message : err))
     }
-  };
+  }
 
-  const onSignUpPress = () => props.navigation.replace('SignupScreen');
+  const onSignUpPress = () => props.navigation.replace('SignupScreen')
 
   return (
-    <LinearGradient
-      colors={['#ccedcf', '#bee6c2', '#8CE795', '#8CE795', '#86E4A1', '#bee6c2']}
-      className=' w-screen h-screen px-22'
-    >
+    <LinearGradient colors={['#cfe9f1', '#eafdf4', '#FEFFFF']} className=' w-screen h-screen px-22'>
       <SafeAreaView
         style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
       >
@@ -237,7 +234,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
         </View>
       </SafeAreaView>
     </LinearGradient>
-  );
-};
+  )
+}
 
-export default SigninScreen;
+export default SigninScreen

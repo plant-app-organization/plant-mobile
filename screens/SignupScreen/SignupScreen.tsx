@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import {
   Platform,
   StatusBar,
@@ -11,31 +11,31 @@ import {
   TextInput,
   Image,
   ScrollView,
-} from 'react-native';
-import { sessionIdVar } from '../../variables/session';
+} from 'react-native'
+import { sessionIdVar } from '../../variables/session'
 
-import { Spinner } from 'native-base';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Box, Input } from 'native-base';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { useSignUp } from '@clerk/clerk-expo';
-import { SignUpWithOAuth } from '../../components/SignUpWithOAuth/SignUpWithOAuth';
+import { Spinner } from 'native-base'
+import { LinearGradient } from 'expo-linear-gradient'
+import { Button, Box, Input } from 'native-base'
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import { useSignUp } from '@clerk/clerk-expo'
+import { SignUpWithOAuth } from '../../components/SignUpWithOAuth/SignUpWithOAuth'
 
 interface SignupScreenProps {}
 
 const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
-  const [username, setUsername] = useState<string>('');
-  const [emailAddress, setEmailAddress] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const { isLoaded, signUp } = useSignUp();
+  const [username, setUsername] = useState<string>('')
+  const [emailAddress, setEmailAddress] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const { isLoaded, signUp } = useSignUp()
 
   const handleTextChange = (inputText) => {
-    setEmailAddress(inputText.toLowerCase());
-  };
+    setEmailAddress(inputText.toLowerCase())
+  }
 
   const onSignUpPress = async () => {
     if (!isLoaded) {
-      return;
+      return
     }
 
     try {
@@ -46,31 +46,28 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
           password,
         })
         .then((result) => {
-          console.log('result from signup create', result);
+          console.log('result from signup create', result)
           if (result.status === 'complete') {
-            console.log(result);
-            sessionIdVar(result.createdSessionId);
+            console.log(result)
+            sessionIdVar(result.createdSessionId)
           } else {
             // console.log(result);
           }
         })
-        .catch((err) => console.error('error', err.errors[0].longMessage));
+        .catch((err) => console.error('error', err.errors[0].longMessage))
 
-      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
 
-      props.navigation.navigate('VerifyCode');
+      props.navigation.navigate('VerifyCode')
     } catch (err: any) {
-      console.log('Error:> ' + err?.status || '');
-      console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err);
+      console.log('Error:> ' + err?.status || '')
+      console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err)
     }
-  };
-  const onSignInPress = () => props.navigation.replace('SigninScreen');
+  }
+  const onSignInPress = () => props.navigation.replace('SigninScreen')
 
   return (
-    <LinearGradient
-      colors={['#ccedcf', '#bee6c2', '#8CE795', '#8CE795', '#86E4A1', '#bee6c2']}
-      className=' w-screen h-screen px-22'
-    >
+    <LinearGradient colors={['#cfe9f1', '#eafdf4', '#FEFFFF']} className=' w-screen h-screen px-22'>
       <SafeAreaView
         style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
       >
@@ -229,7 +226,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
         </View>
       </SafeAreaView>
     </LinearGradient>
-  );
-};
+  )
+}
 
-export default SignupScreen;
+export default SignupScreen

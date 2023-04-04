@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Image } from 'expo-image';
+import React, { useState, useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { Image } from 'expo-image'
 
 import {
   Platform,
@@ -10,23 +10,20 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-} from 'react-native';
-import { Button } from 'native-base';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
+} from 'react-native'
+import { Button } from 'native-base'
+import { LinearGradient } from 'expo-linear-gradient'
+import { useNavigation } from '@react-navigation/native'
 
 interface SecondPresentationScreenProps {}
 
 const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreenProps> = (
   props,
 ) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   return (
-    <LinearGradient
-      colors={['#ccedcf', '#bee6c2', '#8CE795', '#8CE795', '#86E4A1', '#bee6c2']}
-      className='h-screen w-screen'
-    >
+    <LinearGradient colors={['#cfe9f1', '#eafdf4', '#FEFFFF']} className='h-screen w-screen'>
       <SafeAreaView
         style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
       >
@@ -104,7 +101,7 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
         </View>
       </SafeAreaView>
     </LinearGradient>
-  );
-};
+  )
+}
 
-export default SecondPresentationScreen;
+export default SecondPresentationScreen

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Platform,
   StatusBar,
@@ -10,51 +10,39 @@ import {
   Animated,
   Image,
   SafeAreaView,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+} from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 
 //
 
 interface ChatScreenProps {}
 
 const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([
     { id: 1, message: 'Bonjour' },
     { id: 2, message: 'Comment ça va ?' },
     { id: 3, message: 'Je vais bien, merci !' },
-  ]);
+  ])
 
-  const fadeIn = new Animated.Value(0);
+  const fadeIn = new Animated.Value(0)
 
   const handleSend = () => {
-    if (message.trim() === '') return;
+    if (message.trim() === '') return
 
-    const newMessage = { id: messages.length + 1, message };
-    setMessages([...messages, newMessage]);
-    setMessage('');
+    const newMessage = { id: messages.length + 1, message }
+    setMessages([...messages, newMessage])
+    setMessage('')
 
-    fadeIn.setValue(0);
+    fadeIn.setValue(0)
     Animated.timing(fadeIn, {
       toValue: 1,
       duration: 500,
       useNativeDriver: true,
-    }).start();
-  };
+    }).start()
+  }
   return (
-    <LinearGradient
-      colors={[
-        '#f2fff3',
-        '#e2f7f6',
-        '#f0fafb',
-        '#fdf5fb',
-        '#f2fff3',
-        '#e2f7f6',
-        '#f0fafb',
-        '#fdf5fb',
-      ]}
-      className='h-screen w-screen flex-1'
-    >
+    <LinearGradient colors={['#BFE6CB', '#EFFFFD', '#FEFFFF']} className='h-screen w-screen flex-1'>
       <SafeAreaView
         style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
         className='h-screen w-screen flex-1 justify-start items-center'
@@ -104,8 +92,8 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
         </View>
       </SafeAreaView>
     </LinearGradient>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   chatContainer: {
     flex: 1,
@@ -183,6 +171,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
-});
+})
 
-export default ChatScreen;
+export default ChatScreen

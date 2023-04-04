@@ -180,16 +180,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
 
   return (
     <LinearGradient
-      colors={[
-        '#f2fff3',
-        '#e2f7f6',
-        '#f0fafb',
-        '#fdf5fb',
-        '#f2fff3',
-        '#e2f7f6',
-        '#f0fafb',
-        '#fdf5fb',
-      ]}
+      colors={['#BFE6CB', '#EFFFFD', '#FEFFFF']}
       className='min-h-screen w-screen flex-1'
     >
       <SafeAreaView

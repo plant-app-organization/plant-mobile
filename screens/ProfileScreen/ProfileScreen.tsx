@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Image } from 'expo-image';
+import React, { useState, useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { Image } from 'expo-image'
 
 import {
   Platform,
@@ -12,21 +12,21 @@ import {
   TouchableOpacity,
   StyleSheet,
   Animated,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { LinearGradient, LinearGradientPoint } from 'expo-linear-gradient';
-import { Avatar, Modal, Badge } from 'native-base';
-import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import ConfettiCannon from 'react-native-confetti-cannon';
-import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
-import * as SecureStore from 'expo-secure-store';
-import PokemonModal from '../../components/modal/PokemonModal';
-import { useReactiveVar } from '@apollo/client';
-import { bookmarksVar } from '../../variables/bookmarks';
+} from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { LinearGradient, LinearGradientPoint } from 'expo-linear-gradient'
+import { Avatar, Modal, Badge } from 'native-base'
+import ProgressBar from '../../components/ProgressBar/ProgressBar'
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import ConfettiCannon from 'react-native-confetti-cannon'
+import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
+import * as SecureStore from 'expo-secure-store'
+import PokemonModal from '../../components/modal/PokemonModal'
+import { useReactiveVar } from '@apollo/client'
+import { bookmarksVar } from '../../variables/bookmarks'
 
 interface ProfileScreenProps {
-  progress: number;
+  progress: number
 }
 
 const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
@@ -35,90 +35,90 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
     require('../../assets/avatar2.png'),
     require('../../assets/avatar3.png'),
     require('../../assets/avatar4.png'),
-  ];
-  const userBookmarks = useReactiveVar(bookmarksVar);
+  ]
+  const userBookmarks = useReactiveVar(bookmarksVar)
 
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn, user } = useUser()
   if (!isSignedIn) {
-    props.navigation.replace('SigninScreen');
+    props.navigation.replace('SigninScreen')
   }
 
-  const name = ['Joliflor', 'Floraroma', 'Beautiflore', 'Melodiflore'];
-  const { getToken, signOut } = useAuth();
-  const [sessionToken, setSessionToken] = React.useState('');
-  const [progress, setProgress] = useState(0);
-  const [imageIndex, setImageIndex] = useState(0);
-  const [isOpen, setIsOpen] = useState<boolean | void | undefined>(false);
-  const zoomValue = useRef(new Animated.Value(0)).current;
-  const [nameEvo, setNameIndex] = useState(0);
-  const navigation = useNavigation();
+  const name = ['Joliflor', 'Floraroma', 'Beautiflore', 'Melodiflore']
+  const { getToken, signOut } = useAuth()
+  const [sessionToken, setSessionToken] = React.useState('')
+  const [progress, setProgress] = useState(0)
+  const [imageIndex, setImageIndex] = useState(0)
+  const [isOpen, setIsOpen] = useState<boolean | void | undefined>(false)
+  const zoomValue = useRef(new Animated.Value(0)).current
+  const [nameEvo, setNameIndex] = useState(0)
+  const navigation = useNavigation()
   const onSignOutPress = async () => {
     try {
-      await SecureStore.deleteItemAsync('__clerk_client_jwt');
-      await signOut();
+      await SecureStore.deleteItemAsync('__clerk_client_jwt')
+      await signOut()
     } catch (err: any) {
-      console.log('Error:> ' + err?.status || '');
-      console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err);
+      console.log('Error:> ' + err?.status || '')
+      console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err)
     }
-  };
+  }
   useEffect(() => {
     const scheduler = setInterval(async () => {
-      const token = await getToken();
-      setSessionToken(token as string);
-    }, 1000);
+      const token = await getToken()
+      setSessionToken(token as string)
+    }, 1000)
 
-    return () => clearInterval(scheduler);
-  }, []);
+    return () => clearInterval(scheduler)
+  }, [])
   useEffect(() => {
     Animated.timing(zoomValue, {
       toValue: 1,
       duration: 5000,
       useNativeDriver: true,
-    }).start();
-  }, []);
+    }).start()
+  }, [])
 
   useEffect(() => {
     if (imageIndex > 0) {
-      setIsOpen(true);
+      setIsOpen(true)
     }
-  }, [imageIndex]);
+  }, [imageIndex])
 
   const handleButtonClick = () => {
     if (progress < 25) {
-      setProgress(progress + 5);
-      setImageIndex(0);
-      setNameIndex(0);
+      setProgress(progress + 5)
+      setImageIndex(0)
+      setNameIndex(0)
     } else if (progress < 50) {
-      setProgress(progress + 5);
-      setImageIndex(1);
-      setNameIndex(1);
+      setProgress(progress + 5)
+      setImageIndex(1)
+      setNameIndex(1)
     } else if (progress < 75) {
-      setProgress(progress + 5);
-      setImageIndex(2);
-      setNameIndex(2);
+      setProgress(progress + 5)
+      setImageIndex(2)
+      setNameIndex(2)
     } else if (progress <= 95) {
-      setProgress(progress + 5);
-      setImageIndex(3);
-      setNameIndex(3);
+      setProgress(progress + 5)
+      setImageIndex(3)
+      setNameIndex(3)
     } else {
-      setProgress(progress);
-      setImageIndex(3);
-      setNameIndex(3);
+      setProgress(progress)
+      setImageIndex(3)
+      setNameIndex(3)
     }
-  };
+  }
 
-  const personalPlants: JSX.Element[] = [];
+  const personalPlants: JSX.Element[] = []
   for (let i = 0; i < 5; i++) {
-    let style = { color: 'black' };
+    let style = { color: 'black' }
     if (i < 3) {
-      style = { color: 'orange' };
+      style = { color: 'orange' }
     }
-    personalPlants.push(<FontAwesomeIcon name='star' style={style} />);
+    personalPlants.push(<FontAwesomeIcon name='star' style={style} />)
   }
 
   const handleModalClose = () => {
-    setIsOpen(false);
-  };
+    setIsOpen(false)
+  }
 
   return (
     <>
@@ -288,7 +288,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
         </View>
       </SafeAreaView>
     </>
-  );
-};
+  )
+}
 
-export default ProfileScreen;
+export default ProfileScreen

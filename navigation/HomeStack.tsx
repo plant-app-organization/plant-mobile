@@ -1,28 +1,28 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeStackNavigatorParamList } from './types';
+import React from 'react'
+import { useEffect } from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { HomeStackNavigatorParamList } from './types'
 
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
-import DevScreen from '../screens/DevScreen/DevScreen';
-import FirstScreenLogo from '../screens/FirstScreenLogo/FirstScreenLogo';
-import FirstPresentationScreen from '../screens/FirstPresentationScreen/FirstPresentationScreen';
-import SecondPresentationScreen from '../screens/SecondPresentationScreen/SecondPresentationScreen';
-import SignupScreen from '../screens/SignupScreen/SignupScreen';
-import SigninScreen from '../screens/SigninScreen/SigninScreen';
-import BookmarksScreen from '../screens/BookmarksScreen/BookmarksScreen';
-import VerifyCodeScreen from '../screens/VerifyCodeScreen/VerifyCodeScreen';
-import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import ParamCompteScreen from '../screens/ParamCompteScreen/ParamCompteScreen';
-import ListingScreen from '../screens/ListingScreen/ListingScreen';
-import BottomTabs from './Tabs';
-import LinkingConfiguration from './LinkingConfiguration';
-import { ClerkLoaded, useUser } from '@clerk/clerk-expo';
-import ParamScreen from '../screens/ParamScreen/ParamScreen';
-import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen';
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { StatusBar } from 'expo-status-bar'
+import DevScreen from '../screens/DevScreen/DevScreen'
+import FirstScreenLogo from '../screens/FirstScreenLogo/FirstScreenLogo'
+import FirstPresentationScreen from '../screens/FirstPresentationScreen/FirstPresentationScreen'
+import SecondPresentationScreen from '../screens/SecondPresentationScreen/SecondPresentationScreen'
+import SignupScreen from '../screens/SignupScreen/SignupScreen'
+import SigninScreen from '../screens/SigninScreen/SigninScreen'
+import BookmarksScreen from '../screens/BookmarksScreen/BookmarksScreen'
+import VerifyCodeScreen from '../screens/VerifyCodeScreen/VerifyCodeScreen'
+import HomeScreen from '../screens/HomeScreen/HomeScreen'
+import ParamCompteScreen from '../screens/ParamCompteScreen/ParamCompteScreen'
+import ListingScreen from '../screens/ListingScreen/ListingScreen'
+import BottomTabs from './Tabs'
+import LinkingConfiguration from './LinkingConfiguration'
+import { ClerkLoaded, useUser } from '@clerk/clerk-expo'
+import ParamScreen from '../screens/ParamScreen/ParamScreen'
+import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
 
-const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>();
+const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>()
 const config = {
   animation: 'spring',
   config: {
@@ -33,11 +33,11 @@ const config = {
     restDisplacementThreshold: 0.01,
     restSpeedThreshold: 0.01,
   },
-};
+}
 
 const HomeStackNavigator = () => {
-  const { isSignedIn } = useUser();
-  console.log('isSignedIn', isSignedIn);
+  const { isSignedIn } = useUser()
+  console.log('isSignedIn', isSignedIn)
 
   return (
     <SafeAreaProvider>
@@ -49,14 +49,14 @@ const HomeStackNavigator = () => {
       >
         {!isSignedIn ? (
           <>
-            {/* <HomeStack.Screen
+            <HomeStack.Screen
               name='DevScreen'
               component={DevScreen}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
               }}
-            /> */}
+            />
             <HomeStack.Screen name='BottomTabs' component={BottomTabs} />
 
             <HomeStack.Screen
@@ -164,7 +164,7 @@ const HomeStackNavigator = () => {
         )}
       </HomeStack.Navigator>
     </SafeAreaProvider>
-  );
-};
+  )
+}
 
-export default HomeStackNavigator;
+export default HomeStackNavigator
