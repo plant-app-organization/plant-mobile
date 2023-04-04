@@ -1,17 +1,17 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, { useEffect, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, PixelRatio } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import React, { useEffect, useRef } from 'react'
+import { StyleSheet, TouchableOpacity, View, Text, PixelRatio } from 'react-native'
+import { FontAwesome5 } from '@expo/vector-icons'
 
-import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import MapSearchScreen from '../screens/MapSearchScreen/MapSearchScreen';
-import ChatScreen from '../screens/ChatScreen/ChatScreen';
-import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
-import AddScreen from '../screens/AddScreen/AddScreen';
-import ListingScreen from '../screens/ListingScreen/ListingScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen'
+import MapSearchScreen from '../screens/MapSearchScreen/MapSearchScreen'
+import ChatScreen from '../screens/ChatScreen/ChatScreen'
+import ProfileScreen from '../screens/ProfileScreen/ProfileScreen'
+import AddScreen from '../screens/AddScreen/AddScreen'
+import ListingScreen from '../screens/ListingScreen/ListingScreen'
 
-import * as Animatable from 'react-native-animatable';
-import { shouldInclude } from '@apollo/client/utilities';
+import * as Animatable from 'react-native-animatable'
+import { shouldInclude } from '@apollo/client/utilities'
 
 const TabArr = [
   { route: 'Home', label: 'Accueil', icon: 'home', component: HomeScreen },
@@ -24,13 +24,14 @@ const TabArr = [
   { route: 'Add', label: 'Vendre', icon: 'plus', component: AddScreen },
   { route: 'Chat', label: 'Chat', icon: 'comment', component: ChatScreen },
   { route: 'Profile', label: 'Profil', icon: 'user-alt', component: ProfileScreen },
-];
+]
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 const BottomTabs = () => (
   <Tab.Navigator
     screenOptions={{
+      tabBarHideOnKeyboard: true,
       headerShown: false,
       tabBarStyle: {
         height: 80,
@@ -146,9 +147,9 @@ const BottomTabs = () => (
 
     {/* <Tab.Screen name='Listing' component={ListingScreen} options={{ tabBarButton: () => null }} /> */}
   </Tab.Navigator>
-);
+)
 
-export default BottomTabs;
+export default BottomTabs
 
 const styles = StyleSheet.create({
   container: {
@@ -160,4 +161,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-});
+})

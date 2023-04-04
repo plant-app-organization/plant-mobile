@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react'
 import {
   StatusBar,
   Platform,
@@ -11,59 +11,59 @@ import {
   TouchableOpacity,
   RefreshControl,
   FlatList,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import CardProduct from '../../components/product/CardProduct';
-import { useSearchOffersQuery } from '../../graphql/graphql';
-import { useReactiveVar } from '@apollo/client';
-import { bookmarksVar } from '../../variables/bookmarks';
-import LoadingView from '../../components/LoadingView/LoadingView';
+} from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
+import CardProduct from '../../components/product/CardProduct'
+import { useSearchOffersQuery } from '../../graphql/graphql'
+import { useReactiveVar } from '@apollo/client'
+import { bookmarksVar } from '../../variables/bookmarks'
+import LoadingView from '../../components/LoadingView/LoadingView'
 interface MapSearchScreenProps {}
 
 const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) => {
-  const [filters, setFilters] = useState<string[]>([]);
-  const [searchInput, setSearchInput] = useState<string>('');
-  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [filters, setFilters] = useState<string[]>([])
+  const [searchInput, setSearchInput] = useState<string>('')
+  const [refreshing, setRefreshing] = useState<boolean>(false)
   const { data: searchOffersData, refetch: refetchSearchOffersData } = useSearchOffersQuery({
     variables: { searchInput, filters },
-  });
-  console.log('🙂filters', filters);
+  })
+  console.log('🙂filters', filters)
   // console.log('searchOffersData', searchOffersData);
-  const renderItem = useCallback(({ item }) => <CardProduct {...item} />, []);
+  const renderItem = useCallback(({ item }) => <CardProduct {...item} />, [])
   const handleFilterPress = (filterValue: string) => {
     if (filterValue == 'all') {
-      setFilters([]);
-      refetchSearchOffersData({ filters: [] });
+      setFilters([])
+      refetchSearchOffersData({ filters: [] })
     } else {
       if (filters.some((e) => e === filterValue)) {
-        setFilters(filters.filter((e) => e !== filterValue));
-        refetchSearchOffersData({ filters: filters.filter((e) => e !== filterValue) });
+        setFilters(filters.filter((e) => e !== filterValue))
+        refetchSearchOffersData({ filters: filters.filter((e) => e !== filterValue) })
       } else {
-        setFilters([...filters, filterValue]);
-        refetchSearchOffersData({ filters: [...filters, filterValue] });
+        setFilters([...filters, filterValue])
+        refetchSearchOffersData({ filters: [...filters, filterValue] })
       }
     }
-  };
+  }
 
   const wait = (timeout: number) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-  };
+    return new Promise((resolve) => setTimeout(resolve, timeout))
+  }
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
+    setRefreshing(true)
 
     wait(2000).then(() => {
-      refetchSearchOffersData(), setRefreshing(false);
-    });
-  }, []);
+      refetchSearchOffersData(), setRefreshing(false)
+    })
+  }, [])
   //
-  let stylefilter = {};
+  let stylefilter = {}
 
   const onChangeText = (text: string) => {
     if (text.length > 2) {
-      console.log('go', text);
+      console.log('go', text)
     }
-    setSearchInput(text);
-  };
+    setSearchInput(text)
+  }
 
   // const filteredProducts = products.filter(filterProducts);
 
@@ -71,16 +71,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
     <View className='w-screen'>
       <LinearGradient
         // Background Linear Gradient
-        colors={[
-          '#f2fff3',
-          '#e2f7f6',
-          '#f0fafb',
-          '#fdf5fb',
-          '#f2fff3',
-          '#e2f7f6',
-          '#f0fafb',
-          '#fdf5fb',
-        ]}
+        colors={['#BFE6CB', '#EFFFFD', '#FEFFFF']}
         style={styles.background}
       >
         <SafeAreaView
@@ -98,7 +89,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
             }
           >
             <TextInput
-              className='font-Roboto w-11/12 border-green-50 border-solid bg-green-100  text-left  rounded-2xl border ml-4 p-3 mr-4 mt-4'
+              className='font-Roboto w-11/12 border-green-50 border-solid bg-white  text-left  rounded-2xl border ml-4 p-3 mr-4 mt-4'
               placeholder='Rechercher une plante'
               value={searchInput}
               onChangeText={onChangeText}
@@ -113,36 +104,36 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
               >
                 <TouchableOpacity
                   onPress={() => setFilters([])}
-                  className={`${!filters.length && 'bg-green-100'}
-                  text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
+                  className={`${!filters.length && 'border'}
+                  bg-yellow-100	border-solid rounded-2xl  p-2 mr-2`}
                 >
                   <Text className='font-Roboto '>Toutes les catégories</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('succulent')}
-                  className={`${filters.some((e) => e === 'succulent') && 'bg-green-100'}
-                  text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
+                  className={`${filters.some((e) => e === 'succulent') && 'border'}
+                  bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
                 >
                   <Text className='font-Roboto '>Plantes grasses</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('rare')}
-                  className={`${filters.some((e) => e === 'rare') && 'bg-green-100'}
-                  text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
+                  className={`${filters.some((e) => e === 'rare') && 'border'}
+                  bg-blue-100	border-solid rounded-2xl  p-2 mr-2`}
                 >
                   <Text className='font-Roboto '>Rares</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('interior')}
-                  className={`${filters.some((e) => e === 'interior') && 'bg-green-100'}
-                  text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
+                  className={`${filters.some((e) => e === 'interior') && 'border'}
+                  bg-orange-100	 border-solid rounded-2xl  p-2 mr-2`}
                 >
                   <Text className='font-Roboto '>Plante d'intérieur</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleFilterPress('tropical')}
-                  className={`${filters.some((e) => e === 'tropical') && 'bg-green-100'}
-                  text-white	border-slate-400 border-solid rounded-2xl border p-2 mr-2`}
+                  className={`${filters.some((e) => e === 'tropical') && 'border'}
+                  bg-purple-100	 border-solid rounded-2xl  p-2 mr-2`}
                 >
                   <Text className='font-Roboto '>Tropicales</Text>
                 </TouchableOpacity>
@@ -185,8 +176,8 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         </SafeAreaView>
       </LinearGradient>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   background: {
@@ -198,6 +189,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ecf0f1',
     padding: 8,
   },
-});
+})
 
-export default MapSearchScreen;
+export default MapSearchScreen

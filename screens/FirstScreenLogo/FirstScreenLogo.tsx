@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Button, StyleSheet, Text } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React, { useState, useRef, useEffect } from 'react'
+import { View, Button, StyleSheet, Text } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 
 interface FirstScreenLogoProps {}
 
 const FirstScreenLogo: React.FunctionComponent<FirstScreenLogoProps> = (props) => {
   return (
     <LinearGradient
-      colors={['#ccedcf', '#bee6c2', '#8CE795', '#8CE795', '#86E4A1', '#bee6c2']}
+      colors={['#cfe9f1', '#eafdf4', '#FEFFFF']}
       className='w-screen h-screen flex items-center justify-center'
     >
       <View className='h-200 flex items-center justify-center '>
@@ -15,25 +15,18 @@ const FirstScreenLogo: React.FunctionComponent<FirstScreenLogoProps> = (props) =
           style={{
             width: '100%',
             height: '27%',
-            shadowColor: '#3FA96A',
-            shadowOffset: {
-              width: 2,
-              height: 2,
-            },
-            shadowOpacity: 3.22,
-            shadowRadius: 5.1,
-            fontSize: 58,
-            elevation: 3, // pour Android seulement
+
+            fontSize: 56,
           }}
-          className='font-Gentle text-white text-6xl'
+          className='font-Gentle text-black text-6xl'
         >
           Plante.
         </Text>
 
-        <Text className='text-green-600 text-3xl -mt-4 font-LANENAR text-xl'>Seconde vie</Text>
+        <Text className='text-black text-3xl -mt-4 font-LANENAR text-xl'>Seconde vie</Text>
       </View>
     </LinearGradient>
-  );
-};
+  )
+}
 
-export default FirstScreenLogo;
+export default FirstScreenLogo

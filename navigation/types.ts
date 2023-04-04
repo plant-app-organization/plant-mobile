@@ -1,21 +1,22 @@
 export type HomeStackNavigatorParamList = {
-  FirstScreenLogo: undefined;
-  FirstPresentationScreen: undefined;
-  SecondPresentationScreen: undefined;
-  HomeScreen: undefined;
-  Signupscreen: undefined;
-  Signinscreen: undefined;
-  FavorisScreen: undefined;
-  ParamScreen: undefined;
-  ParamCompteScreen: undefined;
-  ListingScreen: undefined;
-  UserProfileScreen: undefined;
-};
+  DevScreen: undefined
+  FirstScreenLogo: undefined
+  FirstPresentationScreen: undefined
+  SecondPresentationScreen: undefined
+  HomeScreen: undefined
+  Signupscreen: undefined
+  Signinscreen: undefined
+  FavorisScreen: undefined
+  ParamScreen: undefined
+  ParamCompteScreen: undefined
+  ListingScreen: undefined
+  UserProfileScreen: undefined
+}
 
 export type BottomTabNavigatorParamList = {
-  HomeScreen: undefined;
-  MapSearchScreen: undefined;
-  AddScreen: undefined;
-  ChatScreen: undefined;
-  ProfileScreen: undefined;
-};
+  HomeScreen: undefined
+  MapSearchScreen: undefined
+  AddScreen: undefined
+  ChatScreen: undefined
+  ProfileScreen: undefined
+}
