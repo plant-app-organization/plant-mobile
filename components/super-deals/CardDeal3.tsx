@@ -6,16 +6,16 @@ import { ChevronRightIcon } from 'react-native-heroicons/solid'
 
 import { Image } from 'expo-image'
 
-interface CardDealProps {
+interface CardDeal3Props {
   Name: string
 
   photo: string
 }
 
-const CardDeal: React.FunctionComponent<CardDealProps> = (props) => {
+const CardDeal3: React.FunctionComponent<CardDeal3Props> = (props) => {
   return (
     <View className='bg-translate'>
-      <TouchableOpacity className='h-32 w-52 bg-red-600 rounded-lg relative mr-5'>
+      <TouchableOpacity className='h-32 w-52 bg-green-600 rounded-lg relative mr-5'>
         <Image
           source={{ uri: props.photo }}
           className='w-full h-full rounded-lg opacity-70'
@@ -32,4 +32,4 @@ const CardDeal: React.FunctionComponent<CardDealProps> = (props) => {
   )
 }
 
-export default CardDeal
+export default CardDeal3

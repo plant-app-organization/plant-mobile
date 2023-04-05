@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 import {
   StatusBar,
@@ -11,32 +11,34 @@ import {
   FlatList,
   Pressable,
   useWindowDimensions,
-} from 'react-native';
-import { useGetUserBookmarksQuery } from '../../graphql/graphql';
+  TouchableOpacity,
+} from 'react-native'
+import { useGetUserBookmarksQuery } from '../../graphql/graphql'
+import { useNavigation } from '@react-navigation/native'
+import { Image } from 'expo-image'
+import { useReactiveVar } from '@apollo/client'
+import { bookmarksVar } from '../../variables/bookmarks'
 
-import { Image } from 'expo-image';
-import { useReactiveVar } from '@apollo/client';
-import { bookmarksVar } from '../../variables/bookmarks';
-
-import CardCategorie from '../../components/categories/CardCategorie';
-import CardPlanter from '../../components/planters/CardPlanter';
-import CardSuggestion from '../../components/suggestions/CardSuggestion';
+import CardCategorie from '../../components/categories/CardCategorie'
+import CardPlanter from '../../components/planters/CardPlanter'
+import CardSuggestion from '../../components/suggestions/CardSuggestion'
 // import CardAntigaspi from '../../components/antigaspi/CardAntigaspi';
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient'
 
-import { useUser } from '@clerk/clerk-expo';
+import { useUser } from '@clerk/clerk-expo'
 
 interface HomeScreenProps {}
 //
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
-  const [search, setSearch] = useState<string>('');
-  const { isSignedIn, user } = useUser();
+  const [search, setSearch] = useState<string>('')
+  const { isSignedIn, user } = useUser()
   // const { getToken } = useAuth();
-  const { width, height } = useWindowDimensions();
-  const { data: userBookmarks, refetch: refetchUserBookmarks } = useGetUserBookmarksQuery();
-  console.log('userBookmarks', userBookmarks);
-  userBookmarks && bookmarksVar(userBookmarks?.userBookmarks);
+  const { width, height } = useWindowDimensions()
+  const { data: userBookmarks, refetch: refetchUserBookmarks } = useGetUserBookmarksQuery()
+  console.log('userBookmarks', userBookmarks)
+  userBookmarks && bookmarksVar(userBookmarks?.userBookmarks)
   // console.log('user clerk ', user);
+  const navigation = useNavigation()
 
   const dealData: { entreprise: string; ville: string; photo: string }[] = [
     {
@@ -63,7 +65,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       photo:
         'https://i.ibb.co/wND4G6c/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-90935e01-c32d-428b-9e32-5d8929c45a5.png',
     },
-  ];
+  ]
 
   const categorieData: { name: string; image: string }[] = [
     {
@@ -86,7 +88,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       name: 'Cactus',
       image: require('/assets/05-removebg.png'),
     },
-  ];
+  ]
 
   const plantersData: { name: string; deals: number; image: string }[] = [
     {
@@ -130,7 +132,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       image:
         'https://thumbs.dreamstime.com/z/business-man-standing-confident-smile-portrait-successful-suit-smiling-proud-outdoors-44304293.jpg',
     },
-  ];
+  ]
 
   const suggestionData: { search: string; views: number }[] = [
     {
@@ -153,11 +155,11 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       search: 'Olivier',
       views: 69,
     },
-  ];
+  ]
 
   const suggestion = suggestionData.map((data, i) => {
-    return <CardSuggestion key={i} search={data.search} views={data.views} />;
-  });
+    return <CardSuggestion key={i} search={data.search} views={data.views} />
+  })
 
   return (
     <SafeAreaView
@@ -236,7 +238,25 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             contentContainerStyle={{ padding: 20 }}
           />
         </View>
+        <View className='w-full'>
+          <Text className='pl-5 pb-4 text-lg w-full '>🔫 Ta plante au quotidien</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('EntretienScreen')}
+            className={`w-[100%] h-[120px] flex flex-row items-center bg-pink-100 rounded-lg mb-3 relative`}
+          >
+            <View className='w-6/12 h-full flex-row items-center'>
+              <Text className='font-semibold text-slate-800	font-bold	text-xl ml-4'>
+                Entretien 💊
+              </Text>
+            </View>
 
+            <Image
+              source={require('../../assets/03-removebg.png')}
+              className='w-6/12 h-full rounded-lg'
+              contentFit='cover'
+            />
+          </TouchableOpacity>
+        </View>
         <View className='h-[50px] w-full' />
 
         <View className='w-full h-40'>
@@ -281,7 +301,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       </ScrollView>
     </SafeAreaView>
     // </LinearGradient>
-  );
-};
+  )
+}
 
-export default HomeScreen;
+export default HomeScreen

@@ -27,24 +27,12 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
       <SafeAreaView
         style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
       >
-        <View className='w-screen h-screen items-center justify-evenly px-10 pt-10'>
+        <View className='w-screen h-screen items-center justify-evenly px-10 '>
           <View className='mb-8 w-full flex justify-center items-center'>
-            <Text style={{ color: '#3FA96A' }} className='font-Gentle text-4xl font-bold'>
+            <Text style={{ color: 'black' }} className='font-Gentle text-4xl font-bold'>
               Plante.
             </Text>
-            <Text
-              style={{
-                shadowColor: '#3FA96A',
-                shadowOffset: {
-                  width: 2,
-                  height: 2,
-                },
-                shadowOpacity: 3.22,
-                shadowRadius: 5.1,
-                elevation: 3, // pour Android seulement
-              }}
-              className='font-Roboto  text-white text-lg font-bold'
-            >
+            <Text className='font-Roboto  text-black text-lg font-bold'>
               Découvrez, achetez, vendez
             </Text>
           </View>
@@ -53,22 +41,15 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
               width: '100%',
               height: '35%',
               marginTop: 10,
-              shadowColor: '#3FA96A',
-              shadowOffset: {
-                width: 0,
-                height: 3,
-              },
-              shadowOpacity: 3.22,
-              shadowRadius: 5.1,
             }}
             source={require('../../assets/logo2.png')}
           />
           <View className='w-full'>
             <Text className='font-Roboto   text-black text-xl font-bold mt-8 leading-8 text-center'>
               faites un geste pour la{' '}
-              <Text className='font-Roboto   text-white font-bold'>planète</Text>: achetez une
-              plante <Text className='font-Roboto  text-white font-bold'>local</Text> et luttez
-              contre le <Text className='font-Roboto  text-white font-bold'>gaspillage</Text>
+              <Text className='font-Roboto   text-[#ccedcf] font-bold'>planète</Text>: achetez une
+              plante <Text className='font-Roboto  text-[#ccedcf] font-bold'>local</Text> et luttez
+              contre le <Text className='font-Roboto  text-[#ccedcf] font-bold'>gaspillage</Text>
             </Text>
             <View className='flex justify-center items-center mt-10 mb-10'>
               <View
@@ -79,14 +60,6 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
                   backgroundColor: '#ccedcf',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  shadowColor: '#3FA96A',
-                  shadowOffset: {
-                    width: 0,
-                    height: 3,
-                  },
-                  shadowOpacity: 15.22,
-                  shadowRadius: 16.1,
-                  elevation: 3, // pour Android seulement
                 }}
               >
                 <TouchableOpacity

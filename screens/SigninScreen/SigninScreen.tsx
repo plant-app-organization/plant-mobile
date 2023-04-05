@@ -61,22 +61,14 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
       >
         <View className='w-full h-full px-22'>
           <View className='flex items-center justify-end h-[15%]'>
-            <Text style={{ color: '#3FA96A' }} className='font-Gentle text-3xl'>
+            <Text style={{ color: 'black' }} className='font-Gentle text-3xl'>
               Plante.
             </Text>
             <Text
-              className='text-white text-center text-xl font-antipasto'
+              className='text-black text-center text-xl font-antipasto'
               style={{
                 width: '100%',
                 height: '28%',
-                shadowColor: '#3FA96A',
-                shadowOffset: {
-                  width: 2,
-                  height: 2,
-                },
-                shadowOpacity: 3.22,
-                shadowRadius: 5.1,
-                elevation: 10, // pour Android seulement
               }}
             >
               Découvrez, achetez, vendez
@@ -132,14 +124,6 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
               className='h-[45px] w-[200px] rounded-3xl flex items-center justify-center'
               style={{
                 backgroundColor: '#ccedcf',
-                shadowColor: '#3FA96A',
-                shadowOffset: {
-                  width: 0,
-                  height: 3,
-                },
-                shadowOpacity: 15.22,
-                shadowRadius: 12.1,
-                elevation: 10, // pour Android seulement
               }}
               onPress={onSignInPress}
             >
@@ -154,14 +138,6 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
                 style={{
                   backgroundColor: '#ccedcf',
-                  shadowColor: '#3FA96A',
-                  shadowOffset: {
-                    width: 0,
-                    height: 3,
-                  },
-                  shadowOpacity: 15.22,
-                  shadowRadius: 12.1,
-                  elevation: 10, // pour Android seulement
                 }}
                 onPress={() => console.log('hello facebook')}
               >
@@ -174,15 +150,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center mb-8 mt-8'
                 style={{
                   backgroundColor: '#ccedcf',
-                  shadowColor: '#3FA96A',
-                  shadowOffset: {
-                    width: 0,
-                    height: 3,
-                  },
-                  shadowOpacity: 15.22,
-                  shadowRadius: 12.1,
-                      elevation: 10, // pour Android seulement
-
+                 
                 }}
 
                 onPress={onSignUpPress}
@@ -196,13 +164,6 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
                 style={{
                   backgroundColor: '#ccedcf',
-                  shadowColor: '#3FA96A',
-                  shadowOffset: {
-                    width: 0,
-                    height: 3,
-                  },
-                  shadowOpacity: 15.22,
-                  shadowRadius: 12.1,
                 }}
                 onPress={() => console.log('fb')}
               >
@@ -214,14 +175,6 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
                 style={{
                   backgroundColor: '#ccedcf',
-                  shadowColor: '#3FA96A',
-                  shadowOffset: {
-                    width: 0,
-                    height: 3,
-                  },
-                  shadowOpacity: 15.22,
-                  shadowRadius: 12.1,
-                  elevation: 10, // pour Android seulement
                 }}
                 onPress={onSignUpPress}
               >
