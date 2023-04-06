@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
 import {
   StatusBar,
@@ -8,23 +9,27 @@ import {
   Text,
   TextInput,
   ScrollView,
-  FlatList,
-  Pressable,
-  useWindowDimensions,
+  StyleSheet,
+  ImageBackground,
   TouchableOpacity,
+  useWindowDimensions,
+  FlatList,
 } from 'react-native'
-import { useGetUserBookmarksQuery } from '../../graphql/graphql'
-import { useNavigation } from '@react-navigation/native'
-import { Image } from 'expo-image'
-import { useReactiveVar } from '@apollo/client'
-import { bookmarksVar } from '../../variables/bookmarks'
 
+import { Image } from 'expo-image'
+
+import { Spinner, Switch } from 'native-base'
+
+import CardProduct from '../../components/product/CardProduct'
+import CardDeal from '../../components/super-deals/CardDeal'
 import CardCategorie from '../../components/categories/CardCategorie'
 import CardPlanter from '../../components/planters/CardPlanter'
 import CardSuggestion from '../../components/suggestions/CardSuggestion'
 // import CardAntigaspi from '../../components/antigaspi/CardAntigaspi';
+import { Avatar } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
-
+import { NoDeprecatedCustomRule } from 'graphql'
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { useUser } from '@clerk/clerk-expo'
 
 interface HomeScreenProps {}
@@ -70,23 +75,24 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const categorieData: { name: string; image: string }[] = [
     {
       name: 'Tropicales',
-      image: require('/assets/01-removebg.png'),
+      image: 'https://i.ibb.co/1Mk58wt/Capture-d-e-cran-2023-01-31-a-15-10-06.png',
     },
     {
       name: 'Rares',
-      image: require('/assets/02-removebg.png'),
+      image: 'https://i.ibb.co/6ZZDhNy/Capture-d-e-cran-2023-01-31-a-15-09-44.png',
     },
     {
       name: 'du Potager',
-      image: require('/assets/03-removebg.png'),
+      image: 'https://i.ibb.co/gDbcht3/Capture-d-e-cran-2023-01-31-a-15-09-58.png',
     },
     {
       name: 'Aromatiques',
-      image: require('/assets/04-removebg.png'),
+      image: 'https://i.ibb.co/KjMfWz9/Capture-d-e-cran-2023-01-31-a-15-10-10.png',
     },
     {
       name: 'Cactus',
-      image: require('/assets/05-removebg.png'),
+      image:
+        'https://i.ibb.co/3NgC17d/Hedmo-create-me-a-montserrat-plant-hyper-realistic-with-white-b-ae53c179-487b-4e18-84a6-395a98bbdf5b.png',
     },
   ]
 
@@ -164,7 +170,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: '#BFE6CB',
+        backgroundColor: 'white',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
@@ -176,6 +182,17 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       >
         {isSignedIn && (
           <View className='w-full flex-row items-center justify-start px-4'>
+            <Avatar
+              style={{}}
+              bg='amber.500'
+              source={{
+                uri: user?.profileImageUrl,
+              }}
+              size='md'
+            >
+              NB
+              <Avatar.Badge bg='green.500' size='23%' />
+            </Avatar>
             <View>
               <Text className='ml-4 text-xl font-semibold text-slate-800'>
                 Bonjour {user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1)}
@@ -184,24 +201,19 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             </View>
           </View>
         )}
-
-        <Pressable onPress={() => props.navigation.navigate('BottomTabs', { screen: 'Search' })}>
-          <View pointerEvents='none' style={{ width: width, paddingHorizontal: 14 }}>
-            <TextInput
-              className=' bg-white rounded-full shadow-sm px-4 py-3 mt-6'
-              placeholder='Rechercher une plante'
-              value={search}
-              onChangeText={(value) => setSearch(value)}
-              placeholderTextColor='#AFAFAF'
-            />
-          </View>
-        </Pressable>
+        <TextInput
+          className='w-10/12 bg-white rounded-full shadow-sm px-4 py-3 mt-6'
+          placeholder='Rechercher une plante'
+          value={search}
+          onChangeText={(value) => setSearch(value)}
+          placeholderTextColor='#AFAFAF'
+        />
       </LinearGradient>
 
-      <ScrollView className='w-screen mb-20 bg-white' showsVerticalScrollIndicator={false}>
+      <ScrollView className='w-screen mb-20' showsVerticalScrollIndicator={false}>
         <View className='w-screen h-[20px]' />
-        <Text className='pl-5 text-lg w-full'>⭐️ Planters</Text>
         <View className='w-full'>
+          <Text className='pl-5 text-lg '>⭐ Top planters</Text>
           <FlatList
             data={plantersData}
             renderItem={({ item }) => (
@@ -213,7 +225,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View>
 
-        {/* <View className='w-full'>
+        {/* <View className='h-[50px] w-full' />
+
+        <View className='w-full'>
           <Text className='pl-5 text-lg '>🎉 Super deals / ventes privées !</Text>
           <FlatList
             data={dealData}
