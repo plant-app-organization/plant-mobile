@@ -11,6 +11,7 @@ export type HomeStackNavigatorParamList = {
   ParamCompteScreen: undefined
   ListingScreen: undefined
   UserProfileScreen: undefined
+  EntretienScreen: undefined
 }
 
 export type BottomTabNavigatorParamList = {

@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { SafeAreaView, View, Text, Button } from 'react-native';
-import { Spinner } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { SafeAreaView, View, Text, Button } from 'react-native'
+import { Spinner } from 'native-base'
+import { useNavigation } from '@react-navigation/native'
 interface DevScreenProps {}
 // comment
 const DevScreen: React.FunctionComponent<DevScreenProps> = (props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   return (
     <View className='flex flex-column h-full justify-center items-center'>
@@ -25,6 +25,12 @@ const DevScreen: React.FunctionComponent<DevScreenProps> = (props) => {
       />
       <Button
         className='p-4'
+        title='Go to Entretien Screen'
+        onPress={() => navigation.navigate('EntretienScreen')}
+      />
+
+      <Button
+        className='p-4'
         title='Go to Presentation2 Screen'
         onPress={() => navigation.navigate('SecondPresentationScreen')}
       />
@@ -37,6 +43,11 @@ const DevScreen: React.FunctionComponent<DevScreenProps> = (props) => {
         className='p-4'
         title='Go to Signin Screen'
         onPress={() => navigation.navigate('SigninScreen')}
+      />
+      <Button
+        className='p-4'
+        title='Go to User profile Screen'
+        onPress={() => navigation.navigate('UserProfileScreen')}
       />
 
       <Button
@@ -60,7 +71,7 @@ const DevScreen: React.FunctionComponent<DevScreenProps> = (props) => {
         onPress={() => navigation.navigate('ParamCompteScreen')}
       />
     </View>
-  );
-};
+  )
+}
 
-export default DevScreen;
+export default DevScreen
