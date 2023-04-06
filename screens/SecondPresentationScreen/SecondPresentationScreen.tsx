@@ -52,16 +52,7 @@ const SecondPresentationScreen: React.FunctionComponent<SecondPresentationScreen
               contre le <Text className='font-Roboto  text-[#ccedcf] font-bold'>gaspillage</Text>
             </Text>
             <View className='flex justify-center items-center mt-10 mb-10'>
-              <View
-                style={{
-                  height: 40,
-                  width: 180,
-                  borderRadius: 25,
-                  backgroundColor: '#ccedcf',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
+              <View className='h-[45px] w-[150px] border-solid rounded-2xl flex items-center justify-center border-2'>
                 <TouchableOpacity
                   className='h-40 w-180 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl'
                   onPress={() => navigation.navigate('HomeScreen')}

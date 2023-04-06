@@ -152,10 +152,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
               </View>
             </View>
             <TouchableOpacity
-              className='h-[45px] w-[200px] rounded-3xl flex items-center justify-center'
-              style={{
-                backgroundColor: '#ccedcf',
-              }}
+              className='h-[45px] w-[200px] rounded-2xl flex items-center justify-center border-solid border-2 '
               onPress={onSignUpPress}
             >
               <Text className='text-black text-ml font-Roboto'> Créer mon compte</Text>
@@ -168,10 +165,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
               <SignUpWithOAuth />
 
               <TouchableOpacity
-                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center  mb-8 mt-8'
-                style={{
-                  backgroundColor: '#ccedcf',
-                }}
+                className='h-[45px] w-[300px] rounded-2xl flex items-center justify-center border-2 border-solid  mb-8 mt-8'
                 onPress={() => console.log('hello facebook')}
               >
                 <Text style={{ color: '#395590' }} className='text-black text-ml font-Roboto '>
@@ -179,10 +173,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
-                style={{
-                  backgroundColor: '#ccedcf',
-                }}
+                className='h-[45px] w-[300px] rounded-2xl flex items-center border-2 border-solid justify-center'
                 onPress={onSignInPress}
               >
                 <Text className='text-black text-ml font-Roboto '>

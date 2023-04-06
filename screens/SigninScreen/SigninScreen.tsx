@@ -65,7 +65,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
               Plante.
             </Text>
             <Text
-              className='text-black text-center text-xl font-antipasto'
+              className='text-black text-center text-xl font-Roboto'
               style={{
                 width: '100%',
                 height: '28%',
@@ -78,7 +78,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
           <View className='m-15 flex flex-col justify-around items-center h-[45%]'>
             <View className='h-[80%] flex flex-col justify-center'>
               <View className='h-[25%] mb-5'>
-                <Text className='font-antipasto text-black text-left text-xl'>Se connecter :</Text>
+                <Text className='font-Roboto text-black text-left text-xl'>Se connecter :</Text>
               </View>
 
               <View
@@ -121,13 +121,10 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
             </View>
 
             <TouchableOpacity
-              className='h-[45px] w-[200px] rounded-3xl flex items-center justify-center'
-              style={{
-                backgroundColor: '#ccedcf',
-              }}
+              className='h-[45px] w-[200px] border-solid rounded-2xl flex items-center justify-center border-2'
               onPress={onSignInPress}
             >
-              <Text className='text-black text-lg font-antipasto'> Connexion</Text>
+              <Text className='text-black text-lg font-Roboto'> Connexion</Text>
             </TouchableOpacity>
           </View>
 
@@ -135,10 +132,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
             <Text>OU</Text>
             <View className='h-[45%] flex flex-col justify-around'>
               <TouchableOpacity
-                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
-                style={{
-                  backgroundColor: '#ccedcf',
-                }}
+                className='h-[45px] w-[300px] rounded-2xl flex items-center justify-center border-solid border-2'
                 onPress={() => console.log('hello facebook')}
               >
                 <Text style={{ color: '#d24e41' }} className='text-black text-ml font-Roboto'>
@@ -161,10 +155,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 </Text>
               </TouchableOpacity> */}
               <TouchableOpacity
-                className='h-[45px] w-[280px] rounded-3xl flex items-center justify-center'
-                style={{
-                  backgroundColor: '#ccedcf',
-                }}
+                className='h-[45px] w-[300px] rounded-2xl flex items-center justify-center border-2 border-solid mb-8 mt-8'
                 onPress={() => console.log('fb')}
               >
                 <Text style={{ color: '#395590' }} className='text-black text-ml font-Roboto'>
@@ -172,10 +163,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
-                style={{
-                  backgroundColor: '#ccedcf',
-                }}
+                className='h-[45px] w-[300px] rounded-2xl flex items-center justify-center border-2 border-solid'
                 onPress={onSignUpPress}
               >
                 <Text className='text-black text-ml font-Roboto'>

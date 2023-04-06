@@ -73,11 +73,7 @@ export function SignUpWithOAuth() {
 
   return (
     <TouchableOpacity
-      className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center'
-      style={{
-        backgroundColor: '#ccedcf',
-        shadowColor: '#3FA96A',
-      }}
+      className='h-[45px] w-[300px] rounded-2xl flex items-center justify-center border-2 border-solid'
       onPress={onPress}
     >
       <Text style={{ color: '#d24e41' }} className=' font-antipasto'>

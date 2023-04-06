@@ -50,18 +50,9 @@ const FirstPresentationScreen: React.FunctionComponent<FirstPresentationScreenPr
               🌱
             </Text>
             <View className='flex items-center mt-10 mb-10'>
-              <View
-                style={{
-                  height: 40,
-                  width: 180,
-                  borderRadius: 25,
-                  backgroundColor: '#ccedcf',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
+              <View className='h-[45px] w-[150px] border-solid rounded-2xl flex items-center justify-center border-2'>
                 <TouchableOpacity
-                  className='h-40 w-180 rounded-25 flex items-center justify-center shadow-lg hover:shadow-xl'
+                  className='h-40 w-180 rounded-25 flex items-center justify-center shadow-lg hover:shadow-xl '
                   onPress={() => navigation.navigate('SecondPresentationScreen')}
                 >
                   <Text className='font-Roboto  text-black text-s font-bold'>Suivant</Text>
