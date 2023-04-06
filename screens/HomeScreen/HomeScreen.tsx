@@ -31,6 +31,8 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { NoDeprecatedCustomRule } from 'graphql'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { useUser } from '@clerk/clerk-expo'
+import { useGetUserBookmarksQuery } from '../../graphql/graphql'
+import { useNavigation } from '@react-navigation/native'
 
 interface HomeScreenProps {}
 //

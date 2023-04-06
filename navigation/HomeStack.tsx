@@ -12,7 +12,6 @@ import SecondPresentationScreen from '../screens/SecondPresentationScreen/Second
 import SignupScreen from '../screens/SignupScreen/SignupScreen'
 import SigninScreen from '../screens/SigninScreen/SigninScreen'
 import BookmarksScreen from '../screens/BookmarksScreen/BookmarksScreen'
-<<<<<<< HEAD
 import EntretienScreen from '../screens/EntretienScreen/EntretienScreen'
 
 import VerifyCodeScreen from '../screens/VerifyCodeScreen/VerifyCodeScreen'
@@ -25,18 +24,6 @@ import { ClerkLoaded, useUser } from '@clerk/clerk-expo'
 import ParamScreen from '../screens/ParamScreen/ParamScreen'
 import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
 
-=======
-import VerifyCodeScreen from '../screens/VerifyCodeScreen/VerifyCodeScreen'
-import HomeScreen from '../screens/HomeScreen/HomeScreen'
-import ParamCompteScreen from '../screens/ParamCompteScreen/ParamCompteScreen'
-import ListingScreen from '../screens/ListingScreen/ListingScreen'
-import BottomTabs from './Tabs'
-import LinkingConfiguration from './LinkingConfiguration'
-import { ClerkLoaded, useUser } from '@clerk/clerk-expo'
-import ParamScreen from '../screens/ParamScreen/ParamScreen'
-import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
-
->>>>>>> 25bc179205ed20e3618214974fe8f4f3d9800018
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>()
 const config = {
   animation: 'spring',
