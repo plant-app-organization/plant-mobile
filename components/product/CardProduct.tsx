@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react'
 import {
   View,
   Text,
@@ -6,48 +6,49 @@ import {
   TouchableOpacity,
   Animated,
   useWindowDimensions,
-} from 'react-native';
-import { HeartIcon } from 'react-native-heroicons/solid';
-import { Image } from 'expo-image';
-import { useReactiveVar } from '@apollo/client';
-import { bookmarksVar } from '../../variables/bookmarks';
-import { useNavigation } from '@react-navigation/native';
-import { useBookmarkOfferMutation } from '../../graphql/graphql';
-import { useToast, Modal } from 'native-base';
-import { useUser } from '@clerk/clerk-expo';
+} from 'react-native'
+import { HeartIcon } from 'react-native-heroicons/solid'
+import { Image } from 'expo-image'
+import { useReactiveVar } from '@apollo/client'
+import { bookmarksVar } from '../../variables/bookmarks'
+import { useNavigation } from '@react-navigation/native'
+import { useBookmarkOfferMutation } from '../../graphql/graphql'
+import { useToast, Modal } from 'native-base'
+import { useUser } from '@clerk/clerk-expo'
 
 interface CardProductProps {
-  plantName: string;
-  price: number;
-  pictures: string[];
-  id: string;
-  isBookmarked: boolean;
-  bookmarkedBy: string[] | null;
+  plantName: string
+  price: number
+  pictures: string[]
+  id: string
+  isBookmarked: boolean
+  bookmarkedBy: string[] | null
+  city: string
 }
 
 const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
-  const { width, height } = useWindowDimensions();
-  const [like, setLike] = useState(props.isBookmarked);
-  const [isOpen, setIsOpen] = useState(false);
-  console.log('PROPS', props);
+  const { width, height } = useWindowDimensions()
+  const [like, setLike] = useState(props.isBookmarked)
+  const [isOpen, setIsOpen] = useState(false)
+  console.log('PROPS', props)
   const [likesCounter, setLikesCounter] = useState<number | null>(
     props.bookmarkedBy != null && props.bookmarkedBy.length > 0 ? props.bookmarkedBy.length : null,
-  );
-  console.log('🔥like', like, 'likesCounter', likesCounter);
+  )
+  console.log('🔥like', like, 'likesCounter', likesCounter)
 
   // console.log('like', like);
   const [bookmarkOffer] = useBookmarkOfferMutation({
     variables: { offerId: props.id },
-  });
+  })
 
-  const { isSignedIn } = useUser();
+  const { isSignedIn } = useUser()
 
-  const toast = useToast();
-  const bookmarksArray = useReactiveVar(bookmarksVar);
-  console.log('🍔bookmarksArray ', bookmarksArray);
+  const toast = useToast()
+  const bookmarksArray = useReactiveVar(bookmarksVar)
+  console.log('🍔bookmarksArray ', bookmarksArray)
 
-  const scaleAnimation = useRef(new Animated.Value(1)).current;
-  const navigation = useNavigation();
+  const scaleAnimation = useRef(new Animated.Value(1)).current
+  const navigation = useNavigation()
   const handleLike = async () => {
     if (isSignedIn) {
       Animated.sequence([
@@ -61,48 +62,48 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
           duration: 100,
           useNativeDriver: true,
         }),
-      ]).start();
+      ]).start()
 
       if ((like && likesCounter) || (like && !likesCounter)) {
-        bookmarksVar(bookmarksArray.filter((e) => e.id !== props.id));
-        setLikesCounter(likesCounter - 1);
-        setLike(false);
+        bookmarksVar(bookmarksArray.filter((e) => e.id !== props.id))
+        setLikesCounter(likesCounter - 1)
+        setLike(false)
       }
       if (!like && likesCounter) {
         // console.log('!like && likesCounter');
-        bookmarksVar([...bookmarksArray, props]);
-        setLikesCounter(likesCounter + 1);
-        setLike(true);
+        bookmarksVar([...bookmarksArray, props])
+        setLikesCounter(likesCounter + 1)
+        setLike(true)
       }
       if ((!like && !likesCounter) || (!like && likesCounter == 0)) {
         // console.log('!like && !likesCounter');
 
-        bookmarksVar([...bookmarksArray, props]);
-        setLikesCounter(likesCounter + 1);
-        setLike(true);
+        bookmarksVar([...bookmarksArray, props])
+        setLikesCounter(likesCounter + 1)
+        setLike(true)
       }
 
       !like &&
         toast.show({
           title: "L'annonce a été ajoutée à vos favoris !",
-        });
+        })
       const response = await bookmarkOffer({
         variables: {
           offerId: props.id,
         },
-      });
+      })
     } else {
-      setIsOpen(true);
+      setIsOpen(true)
     }
     // console.log(bookmarksArray);
-  };
+  }
 
   const blurhash =
-    '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+    '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj['
   console.log(
     '🪴.some ???',
     bookmarksArray.some((el) => el.id == props.id),
-  );
+  )
   return (
     <>
       <TouchableOpacity
@@ -125,7 +126,8 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
         <View className='flex flex-row justify-between items-center pr-2'>
           <View className='flex flex-column'>
             <Text className='pl-2 pt-2 font-semibold'>{props.price},00 €</Text>
-            <Text className='pl-2 pt-0'>{props.plantName}</Text>
+            <Text className='pl-2 pt-0 text-green-800 font-bold'>{props.plantName}</Text>
+            <Text className='pl-2 pt-0 text-xs'>{props.city}</Text>
           </View>
           <TouchableOpacity>
             <Animated.View
@@ -158,7 +160,7 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
           <Modal.Body>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('BottomTabs', { screen: 'Profile' });
+                navigation.navigate('BottomTabs', { screen: 'Profile' })
               }}
             >
               <Text
@@ -177,7 +179,7 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
         </Modal.Content>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default CardProduct;
+export default CardProduct

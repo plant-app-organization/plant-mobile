@@ -1,25 +1,25 @@
-import React, { useState, useRef } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { Text, TouchableOpacity, View, StyleSheet, Animated } from 'react-native';
-import { Image } from 'expo-image';
-import { Avatar, ScrollView, useToast } from 'native-base';
-import { useReactiveVar } from '@apollo/client';
-import { bookmarksVar } from '../../variables/bookmarks';
-import AuthorDisplay from '../../components/AuthorDisplay/AuthorDisplay';
+import React, { useState, useRef } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { Text, TouchableOpacity, View, StyleSheet, Animated } from 'react-native'
+import { Image } from 'expo-image'
+import { Avatar, ScrollView, useToast } from 'native-base'
+import { useReactiveVar } from '@apollo/client'
+import { bookmarksVar } from '../../variables/bookmarks'
+import AuthorDisplay from '../../components/AuthorDisplay/AuthorDisplay'
 
-import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid';
-import Swiper from 'react-native-swiper';
+import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid'
+import Swiper from 'react-native-swiper'
 interface ListingScreenProps {}
 
 const blurhash =
-  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj['
 
 const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
-  const [like, setLike] = useState(props.route.params.like);
-  const toast = useToast();
-  const [likesCounter, setLikesCounter] = useState<number | null>(props.route.params.likesCounter);
-  console.log('props.route.params', props.route.params);
-  console.log('like', like);
+  const [like, setLike] = useState(props.route.params.like)
+  const toast = useToast()
+  const [likesCounter, setLikesCounter] = useState<number | null>(props.route.params.likesCounter)
+  console.log('props.route.params', props.route.params)
+  console.log('like', like)
   const {
     authorId,
     category,
@@ -35,20 +35,21 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
     pot,
     price,
     updatedAt,
-  } = props.route.params.listingData;
-  const navigation = useNavigation();
-  const bookmarksArray = useReactiveVar(bookmarksVar);
+    city,
+  } = props.route.params.listingData
+  const navigation = useNavigation()
+  const bookmarksArray = useReactiveVar(bookmarksVar)
 
   const addLike = () => {
-    setLikesCounter(likesCounter + 1);
-    setLike(true);
-  };
+    setLikesCounter(likesCounter + 1)
+    setLike(true)
+  }
 
   const dislike = () => {
-    setLike(false);
-    setLikesCounter(likesCounter - 1);
-  };
-  const scaleAnimation = useRef(new Animated.Value(1)).current;
+    setLike(false)
+    setLikesCounter(likesCounter - 1)
+  }
+  const scaleAnimation = useRef(new Animated.Value(1)).current
 
   const handleLike = async () => {
     // console.log(bookmarksArray);
@@ -64,37 +65,37 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
         duration: 100,
         useNativeDriver: true,
       }),
-    ]).start();
+    ]).start()
 
     if (like && likesCounter) {
-      bookmarksVar(bookmarksArray.filter((e) => e.id !== id));
-      setLikesCounter(likesCounter - 1);
-      setLike(false);
+      bookmarksVar(bookmarksArray.filter((e) => e.id !== id))
+      setLikesCounter(likesCounter - 1)
+      setLike(false)
     }
     if (!like && likesCounter) {
       // console.log('!like && likesCounter');
-      bookmarksVar([...bookmarksArray, props]);
-      setLikesCounter(likesCounter + 1);
-      setLike(true);
+      bookmarksVar([...bookmarksArray, props])
+      setLikesCounter(likesCounter + 1)
+      setLike(true)
     }
     if ((!like && !likesCounter) || (!like && likesCounter == 0)) {
       // console.log('!like && !likesCounter');
 
-      bookmarksVar([...bookmarksArray, props]);
-      setLikesCounter(likesCounter + 1);
-      setLike(true);
+      bookmarksVar([...bookmarksArray, props])
+      setLikesCounter(likesCounter + 1)
+      setLike(true)
     }
 
     !like &&
       toast.show({
         title: "L'annonce a été ajoutée à vos favoris !",
-      });
+      })
     const response = await bookmarkOffer({
       variables: {
         offerId: props.id,
       },
-    });
-  };
+    })
+  }
 
   return (
     <View className='h-screen w-screen bg-white'>
@@ -116,7 +117,7 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
                   contentFit='cover'
                 />
               </View>
-            );
+            )
           })}
 
           {/* <View style={styles.slide1}>
@@ -154,8 +155,9 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
           <View className='flex flex-row  px-3'>
             <View className='w-8/12 flex-cols justify-between'>
               <Text className='text-2xl font-medium mb-4'>{plantName}</Text>
+              <Text className='text-sm font-semibold'> Localisation : {city} </Text>
               <Text>
-                <Text className='text-sm font-semibold'>Condition : </Text>
+                <Text className='text-sm font-semibold'>État : </Text>
                 <Text>{health}</Text>
               </Text>
               <Text className='my-1'>
@@ -171,9 +173,9 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
               <TouchableOpacity
                 className='flex-row items-center'
                 onPress={() => {
-                  like && likesCounter ? dislike() : addLike();
-                  !like && likesCounter && setLikesCounter(likesCounter + 1);
-                  props.route.params.handleLike();
+                  like && likesCounter ? dislike() : addLike()
+                  !like && likesCounter && setLikesCounter(likesCounter + 1)
+                  props.route.params.handleLike()
                 }}
               >
                 {likesCounter != null && likesCounter > 0 && (
@@ -206,10 +208,10 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
         </ScrollView>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default ListingScreen;
+export default ListingScreen
 
 const styles = StyleSheet.create({
   container: {
@@ -230,4 +232,4 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
   },
-});
+})
