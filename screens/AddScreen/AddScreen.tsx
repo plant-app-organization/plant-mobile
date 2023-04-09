@@ -34,8 +34,8 @@ import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
 import { useCreateNewOfferMutation } from '../../graphql/graphql'
 import * as ImagePicker from 'expo-image-picker'
 import Slider from '@react-native-community/slider'
-import { AddressAutofill } from '@mapbox/search-js-react'
 import ModalPreview from '../../components/modals/ModalPreview'
+import MapboxPlacesAutocomplete from 'react-native-mapbox-places-autocomplete'
 
 interface AddScreenProps {}
 
@@ -60,7 +60,8 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   const [isLoaderOpen, setIsLoaderOpen] = useState<boolean | void | undefined>(false)
   const [fullScreenImage, setFullScreenImage] = useState(false)
   const [showModal, setShowModal] = useState(false)
-
+  const [location, setLocation] = useState(null)
+  console.log('🔎Location', location)
   // const [slideStartingValue, setSlideStartingValue] = useState(0);
   // const [slideStartingCount, setSlideStartingCount] = useState(0);
   const [plantHeight, setPlantHeight] = useState<number>(0)
@@ -151,7 +152,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
     }
   }
   const onCreateNewOfferPress = async () => {
-    if (title != '' && price != '' && description.length > 20 && imagesUrls.length) {
+    if (location && title != '' && price != '' && description.length > 20 && imagesUrls.length) {
       console.log('🧡requete!')
       const response = await createNewOffer({
         variables: {
@@ -165,6 +166,12 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             pot,
             plantHeight: Math.floor(plantHeight),
             maintenanceDifficultyLevel,
+            location: location.place_name,
+            latitude: location.center[0],
+            longitude: location.center[1],
+            city: location.context[1].text,
+            postcode: location.context[0].text,
+            region: location.context[2].text,
           },
         },
       })
@@ -283,7 +290,26 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 )
               })}
             </View>
-
+            <MapboxPlacesAutocomplete
+              id='location'
+              placeholder='Adresse'
+              accessToken='pk.eyJ1IjoiYXBwcGxhbnRlMTMiLCJhIjoiY2xnM2E3ZWxqMGRjdTNlbW0zM29yOW11dyJ9.KrLjOXdxjOv5_UacB_E95Q' // MAPBOX_PUBLIC_TOKEN is stored in .env root project folder
+              onPlaceSelect={(data) => {
+                setLocation(data)
+              }}
+              onClearInput={({ id }) => {
+                id === 'location' && setLocation(null)
+              }}
+              countryId='FR'
+              containerStyle={{
+                marginBottom: 12,
+                width: width * 0.9,
+                backgroundColor: 'white',
+                padding: 5,
+                borderRadius: 10,
+              }}
+              inputStyle={{ backgroundColor: 'white', color: 'black', fontWeight: 'bold' }}
+            />
             <View className='w-full min-h-[100vh] flex flex-col justify-evenly items-center pt-10 '>
               <View
                 style={{
@@ -296,7 +322,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 <Input
                   variant='outline'
                   value={title}
-                  onChangeText={setTitle}
+                  onChangeText={(value) => setTitle(value)}
                   placeholder='Titre'
                 />
               </View>
@@ -311,7 +337,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 <Input
                   variant='outline'
                   value={description}
-                  onChangeText={setDescription}
+                  onChangeText={(value) => setDescription(value)}
                   placeholder='Description'
                 />
               </View>
@@ -341,7 +367,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                       width: 70,
                     }}
                     value={price}
-                    onChangeText={setPrice}
+                    onChangeText={(value) => setPrice(value)}
                     keyboardType='numeric'
                     placeholder='0,00'
                   />
@@ -438,14 +464,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     <Select.Item label='difficile' value='difficult' />
                   </Select>
                 </FormControl>
-                <AddressAutofill accessToken='my-access-token-here'>
-                  <input
-                    name='address'
-                    placeholder='Address'
-                    type='text'
-                    autoComplete='address-line1'
-                  />
-                </AddressAutofill>
+
                 <View className='flex items-center mt-10 mb-20'>
                   <View
                     style={{

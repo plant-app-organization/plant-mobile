@@ -17,5 +17,11 @@ query searchOffers($searchInput: String!, $filters: [String!]!) {
     maintenanceDifficultyLevel
     bookmarkedBy
     isBookmarked
+    latitude
+    longitude
+    location
+    city
+    postcode
+    region
   }
 }

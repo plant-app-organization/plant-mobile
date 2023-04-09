@@ -44,31 +44,43 @@ export type Offer = {
   authorId: Scalars['String'];
   bookmarkedBy: Array<Scalars['String']>;
   category: Scalars['String'];
+  city: Scalars['String'];
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   health: Scalars['String'];
   id: Scalars['ID'];
   isActive: Scalars['Boolean'];
   isBookmarked?: Maybe<Scalars['Boolean']>;
+  latitude: Scalars['Float'];
+  location: Scalars['String'];
+  longitude: Scalars['Float'];
   maintenanceDifficultyLevel: Scalars['String'];
   pictures: Array<Scalars['String']>;
   plantHeight: Scalars['Int'];
   plantName: Scalars['String'];
+  postcode: Scalars['String'];
   pot: Scalars['Boolean'];
   price: Scalars['Int'];
+  region: Scalars['String'];
   updatedAt: Scalars['DateTime'];
 };
 
 export type OfferInput = {
   category: Scalars['String'];
+  city: Scalars['String'];
   description: Scalars['String'];
   health: Scalars['String'];
+  latitude: Scalars['Float'];
+  location: Scalars['String'];
+  longitude: Scalars['Float'];
   maintenanceDifficultyLevel: Scalars['String'];
   pictures: Array<Scalars['String']>;
   plantHeight: Scalars['Float'];
   plantName: Scalars['String'];
+  postcode: Scalars['String'];
   pot: Scalars['Boolean'];
   price: Scalars['Float'];
+  region: Scalars['String'];
 };
 
 export type Query = {
@@ -153,7 +165,7 @@ export type GetOffersQueryVariables = Exact<{
 }>;
 
 
-export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string }> };
+export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, latitude: number, longitude: number, location: string }> };
 
 export type GetUserBookmarksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -180,7 +192,7 @@ export type SearchOffersQueryVariables = Exact<{
 }>;
 
 
-export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, bookmarkedBy: Array<string>, isBookmarked?: boolean | null }> };
+export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, bookmarkedBy: Array<string>, isBookmarked?: boolean | null, latitude: number, longitude: number, location: string, city: string, postcode: string, region: string }> };
 
 
 export const BookmarkOfferDocument = gql`
@@ -263,6 +275,9 @@ export const GetOffersDocument = gql`
     updatedAt
     plantHeight
     maintenanceDifficultyLevel
+    latitude
+    longitude
+    location
   }
 }
     `;
@@ -434,6 +449,12 @@ export const SearchOffersDocument = gql`
     maintenanceDifficultyLevel
     bookmarkedBy
     isBookmarked
+    latitude
+    longitude
+    location
+    city
+    postcode
+    region
   }
 }
     `;
