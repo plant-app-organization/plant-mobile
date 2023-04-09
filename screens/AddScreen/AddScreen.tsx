@@ -38,7 +38,7 @@ import ModalPreview from '../../components/modals/ModalPreview'
 import MapboxPlacesAutocomplete from 'react-native-mapbox-places-autocomplete'
 
 interface AddScreenProps {}
-
+//
 const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   const { width, height } = useWindowDimensions()
   const [createNewOffer] = useCreateNewOfferMutation()
