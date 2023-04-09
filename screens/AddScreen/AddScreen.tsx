@@ -438,6 +438,14 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                     <Select.Item label='difficile' value='difficult' />
                   </Select>
                 </FormControl>
+                <AddressAutofill accessToken='my-access-token-here'>
+                  <input
+                    name='address'
+                    placeholder='Address'
+                    type='text'
+                    autoComplete='address-line1'
+                  />
+                </AddressAutofill>
                 <View className='flex items-center mt-10 mb-20'>
                   <View
                     style={{
