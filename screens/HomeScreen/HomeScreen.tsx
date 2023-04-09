@@ -33,6 +33,8 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { useUser } from '@clerk/clerk-expo'
 import { useGetUserBookmarksQuery } from '../../graphql/graphql'
 import { useNavigation } from '@react-navigation/native'
+import { useReactiveVar } from '@apollo/client'
+import { bookmarksVar } from '../../variables/bookmarks'
 
 interface HomeScreenProps {}
 //

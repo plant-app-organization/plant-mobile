@@ -34,7 +34,7 @@ import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
 import { useCreateNewOfferMutation } from '../../graphql/graphql'
 import * as ImagePicker from 'expo-image-picker'
 import Slider from '@react-native-community/slider'
-
+import { AddressAutofill } from '@mapbox/search-js-react'
 import ModalPreview from '../../components/modals/ModalPreview'
 
 interface AddScreenProps {}
