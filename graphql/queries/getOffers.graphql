@@ -15,5 +15,8 @@ query getOffers($filters: [String!]!) {
     updatedAt
     plantHeight
     maintenanceDifficultyLevel
+    latitude
+    longitude
+    location
   }
 }

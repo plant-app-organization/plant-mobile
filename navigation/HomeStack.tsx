@@ -12,6 +12,8 @@ import SecondPresentationScreen from '../screens/SecondPresentationScreen/Second
 import SignupScreen from '../screens/SignupScreen/SignupScreen'
 import SigninScreen from '../screens/SigninScreen/SigninScreen'
 import BookmarksScreen from '../screens/BookmarksScreen/BookmarksScreen'
+import EntretienScreen from '../screens/EntretienScreen/EntretienScreen'
+
 import VerifyCodeScreen from '../screens/VerifyCodeScreen/VerifyCodeScreen'
 import HomeScreen from '../screens/HomeScreen/HomeScreen'
 import ParamCompteScreen from '../screens/ParamCompteScreen/ParamCompteScreen'
@@ -127,6 +129,14 @@ const HomeStackNavigator = () => {
             <HomeStack.Screen
               name='Bookmarks'
               component={BookmarksScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='EntretienScreen'
+              component={EntretienScreen}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
