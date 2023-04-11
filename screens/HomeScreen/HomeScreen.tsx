@@ -174,7 +174,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: 'white',
+        backgroundColor: '#BFE6CB',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
@@ -214,10 +214,10 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         />
       </LinearGradient>
 
-      <ScrollView className='w-screen mb-20' showsVerticalScrollIndicator={false}>
+      <ScrollView className='w-screen mb-20 bg-white' showsVerticalScrollIndicator={false}>
         <View className='w-screen h-[20px]' />
         <View className='w-full'>
-          <Text className='pl-5 text-lg '>⭐ Top planters</Text>
+          <Text className='pl-5 text-lg font-semibold'>Top planters</Text>
           <FlatList
             data={plantersData}
             renderItem={({ item }) => (
@@ -247,7 +247,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='h-[50px] w-full' />
 
         <View className='w-full'>
-          <Text className='pl-5 text-lg w-full'>🍃 Catégories</Text>
+          <Text className='pl-5 text-lg w-full font-semibold'>Catégories</Text>
           <FlatList
             data={categorieData}
             renderItem={({ item }) => <CardCategorie name={item.name} image={item.image} />}
@@ -257,7 +257,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View>
         <View className='w-full'>
-          <Text className='pl-5 pb-4 text-lg w-full '>🔫 Ta plante au quotidien</Text>
+          <Text className='pl-5 pb-4 text-lg w-full font-semibold'>Ta plante au quotidien</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('EntretienScreen')}
             className={`w-[100%] h-[120px] flex flex-row items-center bg-pink-100 rounded-lg mb-3 relative`}
