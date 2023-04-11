@@ -6,6 +6,7 @@ import { Spinner } from 'native-base'
 import { Image } from 'expo-image'
 
 import { ChevronRightIcon } from 'react-native-heroicons/solid'
+import { LinearGradient } from 'expo-linear-gradient'
 
 interface CardCategorieProps {
   name: string
@@ -13,33 +14,48 @@ interface CardCategorieProps {
 }
 
 const CardCategorie: React.FunctionComponent<CardCategorieProps> = (props) => {
-  let backgroundColorCard
+  let firstColor
+  let secondColor
 
   if (props.name === 'Tropicales') {
-    backgroundColorCard = 'bg-orange-100'
+    firstColor = '#FFFFE8'
+    secondColor = '#FFFFF2'
   } else if (props.name === 'Rares') {
-    backgroundColorCard = 'bg-blue-100'
+    firstColor = '#FFEFFC'
+    secondColor = '#FFF9FE'
   } else if (props.name === 'du Potager') {
-    backgroundColorCard = 'bg-yellow-100'
+    firstColor = '#FDF5E9'
+    secondColor = '#FFF8F0'
   } else if (props.name === 'Aromatiques') {
-    backgroundColorCard = 'bg-purple-100'
+    firstColor = '#E7FFEC'
+    secondColor = '#F3FFF6'
   } else if (props.name === 'Cactus') {
-    backgroundColorCard = 'bg-green-100'
+    firstColor = '#E4F5FF'
+    secondColor = '#F5FBFF'
   }
 
   return (
-    <TouchableOpacity
-      className={`w-[100%] h-[120px] flex flex-row items-center ${backgroundColorCard} rounded-lg mb-3 relative`}
+    <LinearGradient
+      start={{ x: 0.5, y: 0.8 }}
+      end={{ x: 0.8, y: 0 }}
+      colors={[`${firstColor}`, `${secondColor}`]}
+      className='w-[100%] h-[120px] rounded-lg mb-3'
     >
-      <View className='w-6/12 h-full flex-row items-center'>
-        <Text className='font-semibold text-slate-800	font-bold	text-xl ml-4'>
-          Plantes {'\n'}
-          {props.name}
-        </Text>
-      </View>
+      <TouchableOpacity className='w-full h-full flex flex-row'>
+        <View className='w-6/12 h-full flex-row items-center'>
+          <Text className='font-semibold text-slate-800	font-bold	text-lg ml-4'>
+            Plantes {'\n'}
+            {props.name}
+          </Text>
+        </View>
 
-      <Image source={props.image} className='w-6/12 h-full rounded-lg' contentFit='cover' />
-    </TouchableOpacity>
+        <Image
+          source={props.image}
+          className='w-6/12 h-full rounded-lg relative z-20'
+          contentFit='cover'
+        />
+      </TouchableOpacity>
+    </LinearGradient>
   )
 }
 

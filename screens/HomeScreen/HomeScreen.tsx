@@ -20,12 +20,12 @@ import { Image } from 'expo-image'
 
 import { Spinner, Switch } from 'native-base'
 
+import PlantCareScreen from '../../screens/PlantCareScreen/PlantCareScreen'
 import CardProduct from '../../components/product/CardProduct'
 import CardDeal from '../../components/super-deals/CardDeal'
 import CardCategorie from '../../components/categories/CardCategorie'
 import CardPlanter from '../../components/planters/CardPlanter'
 import CardSuggestion from '../../components/suggestions/CardSuggestion'
-// import CardAntigaspi from '../../components/antigaspi/CardAntigaspi';
 import { Avatar } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
 import { NoDeprecatedCustomRule } from 'graphql'
@@ -79,24 +79,23 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const categorieData: { name: string; image: string }[] = [
     {
       name: 'Tropicales',
-      image: 'https://i.ibb.co/1Mk58wt/Capture-d-e-cran-2023-01-31-a-15-10-06.png',
+      image: require('../../assets/categories/tropicPlant.png'),
     },
     {
       name: 'Rares',
-      image: 'https://i.ibb.co/6ZZDhNy/Capture-d-e-cran-2023-01-31-a-15-09-44.png',
-    },
-    {
-      name: 'du Potager',
-      image: 'https://i.ibb.co/gDbcht3/Capture-d-e-cran-2023-01-31-a-15-09-58.png',
-    },
-    {
-      name: 'Aromatiques',
-      image: 'https://i.ibb.co/KjMfWz9/Capture-d-e-cran-2023-01-31-a-15-10-10.png',
+      image: require('../../assets/categories/starPlant.png'),
     },
     {
       name: 'Cactus',
-      image:
-        'https://i.ibb.co/3NgC17d/Hedmo-create-me-a-montserrat-plant-hyper-realistic-with-white-b-ae53c179-487b-4e18-84a6-395a98bbdf5b.png',
+      image: require('../../assets/categories/cactusPlant.png'),
+    },
+    {
+      name: 'du Potager',
+      image: require('../../assets/categories/gardenPlant.png'),
+    },
+    {
+      name: 'Aromatiques',
+      image: require('../../assets/categories/basilicPlant.png'),
     },
   ]
 
@@ -179,9 +178,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       }}
     >
       <LinearGradient
-        // start={{ x: 0.5, y: 0.8 }}
-        // end={{ x: 0.8, y: 0 }}
-        colors={['#BFE6CB', '#EFFFFD', '#FEFFFF']}
+        // start={{ x: 0.1, y: 0 }}
+        // end={{ x: 0.9, y: 0 }}
+        colors={['#BFE6CB', 'white']}
         className='w-screen flex-col items-center py-5'
       >
         {isSignedIn && (
@@ -217,7 +216,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       <ScrollView className='w-screen mb-20 bg-white' showsVerticalScrollIndicator={false}>
         <View className='w-screen h-[20px]' />
         <View className='w-full'>
-          <Text className='pl-5 text-lg font-semibold'>Top planters</Text>
+          <Text className='pl-5 text-xl font-semibold'>Top planters</Text>
           <FlatList
             data={plantersData}
             renderItem={({ item }) => (
@@ -247,7 +246,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='h-[50px] w-full' />
 
         <View className='w-full'>
-          <Text className='pl-5 text-lg w-full font-semibold'>Catégories</Text>
+          <Text className='pl-5 text-xl w-full font-semibold'>Catégories</Text>
           <FlatList
             data={categorieData}
             renderItem={({ item }) => <CardCategorie name={item.name} image={item.image} />}
@@ -256,29 +255,39 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             contentContainerStyle={{ padding: 20 }}
           />
         </View>
-        <View className='w-full'>
-          <Text className='pl-5 pb-4 text-lg w-full font-semibold'>Ta plante au quotidien</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('EntretienScreen')}
-            className={`w-[100%] h-[120px] flex flex-row items-center bg-pink-100 rounded-lg mb-3 relative`}
-          >
-            <View className='w-6/12 h-full flex-row items-center'>
-              <Text className='font-semibold text-slate-800	font-bold	text-xl ml-4'>
-                Entretien 💊
-              </Text>
-            </View>
 
-            <Image
-              source={require('../../assets/03-removebg.png')}
-              className='w-6/12 h-full rounded-lg'
-              contentFit='cover'
-            />
-          </TouchableOpacity>
+        <View className='h-[50px] w-full' />
+
+        <View className='w-full items-center'>
+          <Text className='pl-5 pb-4 text-xl w-full font-semibold'>Ta plante au quotidien</Text>
+
+          <LinearGradient
+            colors={['#EDFAFE', 'white', '#FDF5E9']}
+            start={{ x: 0.2, y: 0.8 }}
+            end={{ x: 0.8, y: 0 }}
+            className='w-[90%] h-[120px] rounded-lg'
+          >
+            <TouchableOpacity
+              onPress={() => navigation.navigate('PlantCareScreen')}
+              className='w-full h-full flex flex-row'
+            >
+              <View className='w-6/12 h-full flex-row items-center'>
+                <Text className='font-semibold text-slate-800	font-bold	text-lg ml-4'>Entretien</Text>
+              </View>
+
+              <Image
+                source={require('../../assets/categories/carePlant.png')}
+                className='w-6/12 h-full rounded-lg'
+                contentFit='cover'
+              />
+            </TouchableOpacity>
+          </LinearGradient>
         </View>
+
         <View className='h-[50px] w-full' />
 
         <View className='w-full h-40'>
-          <Text className='pl-5 text-lg mb-4'>⚡ Publicité</Text>
+          <Text className='pl-5 pb-4 text-lg w-full font-normal'>Publicité</Text>
           <Image
             source='https://i.ibb.co/FWY0jhd/02-01-decouvrir-histoire-de-marseille.jpg'
             contentFit='cover'
@@ -287,7 +296,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View>
 
-        <View className='h-[100px] w-full' />
+        <View className='h-[50px] w-full' />
 
         {/* <View className='w-full'>
           <Text className='pl-5 text-lg'>👀 À la une</Text>
@@ -305,7 +314,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='h-[50px] w-full' />
 
         <View className='w-full'>
-          <Text className='pl-5 text-lg'>👉 Suggestions de recherche</Text>
+          <Text className='pl-5 pb-4 text-xl w-full font-semibold'>Suggestions de recherche</Text>
           <FlatList
             data={suggestionData}
             renderItem={({ item }) => <CardSuggestion search={item.search} views={item.views} />}
