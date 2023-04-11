@@ -1,71 +1,71 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, LogBox } from 'react-native';
-import { NativeBaseProvider, Spinner } from 'native-base';
-import React, { useState } from 'react';
-import { ClerkProvider } from '@clerk/clerk-expo';
-import * as SecureStore from 'expo-secure-store';
-import { setContext } from '@apollo/client/link/context';
+import { StatusBar } from 'expo-status-bar'
+import { StyleSheet, Text, View, LogBox } from 'react-native'
+import { NativeBaseProvider, Spinner } from 'native-base'
+import React, { useState } from 'react'
+import { ClerkProvider } from '@clerk/clerk-expo'
+import * as SecureStore from 'expo-secure-store'
+import { setContext } from '@apollo/client/link/context'
 
 // import { API_URL } from '@env';
-import RootNavigator from './navigation';
-import { useFonts } from 'expo-font';
-LogBox.ignoreAllLogs();
+import RootNavigator from './navigation'
+import { useFonts } from 'expo-font'
+LogBox.ignoreAllLogs()
 
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client';
-import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client'
+import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
 const tokenCache = {
   getToken(key: string) {
     try {
-      return SecureStore.getItemAsync(key);
+      return SecureStore.getItemAsync(key)
     } catch (err) {
-      return null;
+      return null
     }
   },
   saveToken(key: string, value: string) {
     try {
-      return SecureStore.setItemAsync(key, value);
+      return SecureStore.setItemAsync(key, value)
     } catch (err) {
-      return null;
+      return null
     }
   },
-};
+}
 export default function App() {
   //
-  const [userToken, setUserToken] = useState<string | null>(null);
+  const [userToken, setUserToken] = useState<string | null>(null)
 
   const retrieveToken = async () => {
-    const token = await SecureStore.getItemAsync('__clerk_client_jwt');
-    console.log('🔐userToken in SecureStore', token);
-    setUserToken(token);
-  };
-  retrieveToken();
-  console.log('🪴 API_URL', process.env.API_URL);
+    const token = await SecureStore.getItemAsync('__clerk_client_jwt')
+    console.log('🔐userToken in SecureStore', token)
+    setUserToken(token)
+  }
+  retrieveToken()
+  console.log('🪴 API_URL', process.env.API_URL)
   //
   // const token = await getToken();
   const httpLink = createHttpLink({
     uri: process.env.API_URL,
-  });
+  })
 
   // Initialize Apollo Client.
   const authLink = setContext((_, { headers }) => {
     const retrieveToken = async () => {
-      const token = await SecureStore.getItemAsync('__clerk_client_jwt');
+      const token = await SecureStore.getItemAsync('__clerk_client_jwt')
       // console.log('🔐userToken in SecureStore', token);
-      setUserToken(token);
-    };
-    retrieveToken();
+      setUserToken(token)
+    }
+    retrieveToken()
     return {
       headers: {
         ...headers,
         authorization: userToken ? `Bearer ${userToken}` : '',
       },
-    };
-  });
+    }
+  })
 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
-  });
+  })
 
   const [fontsLoaded] = useFonts({
     LANENAR: require('./assets/fonts/LANENAR.ttf'),
@@ -73,7 +73,7 @@ export default function App() {
     Roboto: require('./assets/fonts/Roboto.ttf'),
     antipasto: require('./assets/fonts/antipasto.ttf'),
     helvetica: require('./assets/fonts/helvetica.ttf'),
-  });
+  })
 
   return (
     <ApolloProvider client={client}>
@@ -84,5 +84,5 @@ export default function App() {
         </NativeBaseProvider>
       </ClerkProvider>
     </ApolloProvider>
-  );
+  )
 }

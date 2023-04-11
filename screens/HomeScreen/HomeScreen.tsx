@@ -259,7 +259,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='w-full'>
           <Text className='pl-5 pb-4 text-lg w-full '>🔫 Ta plante au quotidien</Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate('EntretienScreen')}
+            onPress={() => navigation.navigate('PlantCareScreen')}
             className={`w-[100%] h-[120px] flex flex-row items-center bg-pink-100 rounded-lg mb-3 relative`}
           >
             <View className='w-6/12 h-full flex-row items-center'>
