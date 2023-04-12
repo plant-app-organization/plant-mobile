@@ -36,6 +36,9 @@ import { useNavigation } from '@react-navigation/native'
 import { useReactiveVar } from '@apollo/client'
 import { bookmarksVar } from '../../variables/bookmarks'
 
+import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+
 interface HomeScreenProps {}
 //
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
@@ -82,20 +85,20 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       image: require('../../assets/categories/tropicPlant.png'),
     },
     {
-      name: 'Rares',
-      image: require('../../assets/categories/starPlant.png'),
+      name: 'Aromatiques',
+      image: require('../../assets/categories/basilicPlant02.png'),
+    },
+    {
+      name: 'du Potager',
+      image: require('../../assets/categories/tomatePlant.png'),
     },
     {
       name: 'Cactus',
       image: require('../../assets/categories/cactusPlant.png'),
     },
     {
-      name: 'du Potager',
-      image: require('../../assets/categories/gardenPlant.png'),
-    },
-    {
-      name: 'Aromatiques',
-      image: require('../../assets/categories/basilicPlant.png'),
+      name: 'Rares',
+      image: require('../../assets/categories/starPlant.png'),
     },
   ]
 
@@ -216,7 +219,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       <ScrollView className='w-screen mb-20 bg-white' showsVerticalScrollIndicator={false}>
         <View className='w-screen h-[20px]' />
         <View className='w-full'>
-          <Text className='pl-5 text-xl font-semibold'>Top planters</Text>
+          <Text className='pl-5 text-lg font-semibold tracking-widest uppercase'>Top Planters</Text>
           <FlatList
             data={plantersData}
             renderItem={({ item }) => (
@@ -231,7 +234,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         {/* <View className='h-[50px] w-full' />
 
         <View className='w-full'>
-          <Text className='pl-5 text-lg '>🎉 Super deals / ventes privées !</Text>
+          <Text className='pl-5 text-xl '>🎉 Super deals / ventes privées !</Text>
           <FlatList
             data={dealData}
             renderItem={({ item }) => (
@@ -246,7 +249,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='h-[50px] w-full' />
 
         <View className='w-full'>
-          <Text className='pl-5 text-xl w-full font-semibold'>Catégories</Text>
+          <Text className='pl-5 text-lg w-full font-semibold tracking-widest uppercase'>
+            Catégories
+          </Text>
           <FlatList
             data={categorieData}
             renderItem={({ item }) => <CardCategorie name={item.name} image={item.image} />}
@@ -259,7 +264,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='h-[50px] w-full' />
 
         <View className='w-full items-center'>
-          <Text className='pl-5 pb-4 text-xl w-full font-semibold'>Ta plante au quotidien</Text>
+          <Text className='pl-5 pb-4 text-lg w-full font-semibold tracking-widest uppercase'>
+            Ta plante au quotidien
+          </Text>
 
           <LinearGradient
             colors={['#EDFAFE', 'white', '#FDF5E9']}
@@ -272,7 +279,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               className='w-full h-full flex flex-row'
             >
               <View className='w-6/12 h-full flex-row items-center'>
-                <Text className='font-semibold text-slate-800	font-bold	text-lg ml-4'>Entretien</Text>
+                <Text className='font-normal text-slate-800 text-lg ml-4'>Entretien</Text>
               </View>
 
               <Image
@@ -299,7 +306,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='h-[50px] w-full' />
 
         {/* <View className='w-full'>
-          <Text className='pl-5 text-lg'>👀 À la une</Text>
+          <Text className='pl-5 text-xl'>👀 À la une</Text>
           <FlatList
             data={plantesData}
             renderItem={({ item }) => (
@@ -314,7 +321,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='h-[50px] w-full' />
 
         <View className='w-full'>
-          <Text className='pl-5 pb-4 text-xl w-full font-semibold'>Suggestions de recherche</Text>
+          <Text className='pl-5 text-lg w-full font-semibold tracking-widest uppercase'>
+            Suggestions
+          </Text>
           <FlatList
             data={suggestionData}
             renderItem={({ item }) => <CardSuggestion search={item.search} views={item.views} />}

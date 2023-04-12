@@ -24,8 +24,8 @@ const CardCategorie: React.FunctionComponent<CardCategorieProps> = (props) => {
     firstColor = '#FFEFFC'
     secondColor = '#FFF9FE'
   } else if (props.name === 'du Potager') {
-    firstColor = '#FDF5E9'
-    secondColor = '#FFF8F0'
+    firstColor = '#FDE9E9'
+    secondColor = '#FFF0F0'
   } else if (props.name === 'Aromatiques') {
     firstColor = '#E7FFEC'
     secondColor = '#F3FFF6'
@@ -43,7 +43,7 @@ const CardCategorie: React.FunctionComponent<CardCategorieProps> = (props) => {
     >
       <TouchableOpacity className='w-full h-full flex flex-row'>
         <View className='w-6/12 h-full flex-row items-center'>
-          <Text className='font-semibold text-slate-800	font-bold	text-lg ml-4'>
+          <Text className='font-normal text-black	text-lg ml-4 tracking-wide'>
             Plantes {'\n'}
             {props.name}
           </Text>
