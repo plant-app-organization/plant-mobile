@@ -13,6 +13,7 @@ import SignupScreen from '../screens/SignupScreen/SignupScreen'
 import SigninScreen from '../screens/SigninScreen/SigninScreen'
 import BookmarksScreen from '../screens/BookmarksScreen/BookmarksScreen'
 import PlantCareScreen from '../screens/PlantCareScreen/PlantCareScreen'
+import PlantDiseaseScreen from '../screens/PlantDiseaseScreen/PlantDiseaseScreen'
 
 import VerifyCodeScreen from '../screens/VerifyCodeScreen/VerifyCodeScreen'
 import HomeScreen from '../screens/HomeScreen/HomeScreen'
@@ -23,6 +24,7 @@ import LinkingConfiguration from './LinkingConfiguration'
 import { ClerkLoaded, useUser } from '@clerk/clerk-expo'
 import ParamScreen from '../screens/ParamScreen/ParamScreen'
 import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
+import PlantIdentityScreen from '../screens/PlantIdentityScreen/PlantIdentityScreen'
 
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>()
 const config = {
@@ -142,6 +144,22 @@ const HomeStackNavigator = () => {
                 animation: 'slide_from_right',
               }}
             />
+            <HomeStack.Screen
+              name='PlantDiseaseScreen'
+              component={PlantDiseaseScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='PlantIdentityScreen'
+              component={PlantIdentityScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
           </>
         ) : (
           <>
@@ -165,14 +183,6 @@ const HomeStackNavigator = () => {
             <HomeStack.Screen
               name='Bookmarks'
               component={BookmarksScreen}
-              options={{
-                animationTypeForReplace: 'push',
-                animation: 'slide_from_right',
-              }}
-            />
-            <HomeStack.Screen
-              name='PlantCareScreen'
-              component={PlantCareScreen}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',

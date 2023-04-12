@@ -17,41 +17,43 @@ import Dropdown from '../../components/dropdown/Dropdown'
 
 import { ChevronLeftIcon } from 'react-native-heroicons/solid'
 
-const CARING_TITLE = [
+const DISEASE_TITLE = [
   {
     id: '01',
-    title: 'Arrosage',
+    title: 'Feuilles jaunes',
   },
   {
     id: '02',
-    title: 'Luminosité',
+    title: 'Moucherons',
   },
   {
     id: '03',
-    title: 'Température',
+    title: 'Moisissures',
   },
 
   {
     id: '04',
-    title: 'Rempotage',
+    title: 'Maladies',
   },
 ]
 
-const CARING_DESCRIPTION = {
-  watering: "Description pour l'arrosage",
-  brightness: 'Description pour la luminosité',
-  temperature: 'Description pour la temparature',
-  potting: 'Description pour rempotage',
+const DISEASE_DESCRIPTION = {
+  fallenLeaves: 'Description pour les feuilles jaunes',
+  midges: 'Description pour les moucherons',
+  mold: 'Description pour les moisissures',
+  disease: 'Description pour les maladies',
 }
 
-interface PlantCareScreenProps {}
+interface PlantDiseaseScreenProps {}
 
-const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) => {
+const PlantDiseaseScreen: React.FunctionComponent<PlantDiseaseScreenProps> = (props) => {
   const [filters, setFilters] = useState<string[]>([])
   const [searchInput, setSearchInput] = useState<string>('')
   const [refreshing, setRefreshing] = useState<boolean>(false)
   // const [lastTitle, setLastTitle] = useState<string>('Arrosage')
-  const [caringDescription, setCaringDescription] = useState<string>(CARING_DESCRIPTION.watering)
+  const [diseaseDescription, setDiseaseDescription] = useState<string>(
+    DISEASE_DESCRIPTION.fallenLeaves,
+  )
 
   const navigation = useNavigation()
 
@@ -62,14 +64,14 @@ const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) =
   // console.log('DATA FROM REQUEST ⭐️', searchOffersData)
 
   const selectTitle = (title) => {
-    if (title === 'Luminosité') {
-      setCaringDescription(CARING_DESCRIPTION.brightness)
-    } else if (title === 'Température') {
-      setCaringDescription(CARING_DESCRIPTION.temperature)
-    } else if (title === 'Arrosage') {
-      setCaringDescription(CARING_DESCRIPTION.watering)
-    } else if (title === 'Rempotage') {
-      setCaringDescription(CARING_DESCRIPTION.potting)
+    if (title === 'Feuilles jaunes') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.fallenLeaves)
+    } else if (title === 'Moucherons') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.midges)
+    } else if (title === 'Moisissures') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.mold)
+    } else if (title === 'Maladies') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.disease)
     }
   }
 
@@ -94,14 +96,14 @@ const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) =
   return (
     <SafeAreaView
       style={{
-        backgroundColor: '#CFF5FF',
+        backgroundColor: '#FFE2C0',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
       <LinearGradient
         // start={{ x: 0.1, y: 0 }}
         // end={{ x: 0.9, y: 0 }}
-        colors={['#CFF5FF', 'white']}
+        colors={['#FFE2C0', 'white']}
         className='w-full h-[100px]'
       >
         <View className='w-full h-full flex flex-row items-center justify-around'>
@@ -111,13 +113,13 @@ const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) =
           >
             <ChevronLeftIcon color={'black'} />
           </TouchableOpacity>
-          <Text className='w-8/12 text-xl font-bold'>L'entretien</Text>
+          <Text className='w-8/12 text-xl font-bold'>Que se passe-t-il ?</Text>
         </View>
       </LinearGradient>
 
       <View className='h-[80px] bg-white'>
         <FlatList
-          data={CARING_TITLE}
+          data={DISEASE_TITLE}
           renderItem={({ item }) => <Dropdown title={item.title} selectTitle={selectTitle} />}
           keyExtractor={(item) => item.id}
           horizontal={true}
@@ -131,10 +133,10 @@ const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) =
       </View>
 
       <View className='h-full p-5 bg-white'>
-        <Text className='text-lg text-justify'>{caringDescription}</Text>
+        <Text className='text-lg text-justify'>{diseaseDescription}</Text>
       </View>
     </SafeAreaView>
   )
 }
 
-export default PlantCareScreen
+export default PlantDiseaseScreen
