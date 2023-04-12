@@ -25,21 +25,31 @@ const Dropdown: React.FunctionComponent<DropdownProps> = (props) => {
 
   const checkIconName = () => {
     if (props.title === 'La lumière') {
-      return <MaterialCommunityIcons name='lightbulb-on' size={25} color='black' />
+      return <MaterialCommunityIcons name='weather-sunny' size={30} color='black' />
     } else if (props.title === 'La température') {
-      return <MaterialCommunityIcons name='thermometer' size={25} color='black' />
+      return <MaterialCommunityIcons name='thermometer' size={30} color='black' />
+    } else if (props.title === "L'acceuillir") {
+      return <MaterialCommunityIcons name='human-male-child' size={30} color='black' />
     } else if (props.title === 'Le rempotage') {
-      return <MaterialCommunityIcons name='shovel' size={25} color='black' />
+      return <MaterialCommunityIcons name='shovel' size={30} color='black' />
     } else if (props.title === "L'arrosage") {
-      return <MaterialCommunityIcons name='watering-can' size={25} color='black' />
-    } else if (props.title === 'Feuilles jaunes') {
-      return <MaterialCommunityIcons name='leaf' size={25} color='black' />
+      return <MaterialCommunityIcons name='watering-can' size={30} color='black' />
+    } else if (props.title === 'La rouille') {
+      return <MaterialCommunityIcons name='biohazard' size={30} color='black' />
     } else if (props.title === 'Moucherons') {
-      return <MaterialCommunityIcons name='bee' size={30} color='black' />
+      return <MaterialCommunityIcons name='bee' size={35} color='black' />
+    } else if (props.title === 'Les thrips') {
+      return <MaterialCommunityIcons name='alien' size={30} color='black' />
+    } else if (props.title === 'Les araignées rouges') {
+      return <MaterialCommunityIcons name='spider-thread' size={30} color='black' />
+    } else if (props.title === 'Les fourmis') {
+      return <MaterialCommunityIcons name='google-downasaur' size={30} color='black' />
+    } else if (props.title === 'Les cochenilles') {
+      return <MaterialCommunityIcons name='butterfly' size={30} color='black' />
     } else if (props.title === 'Moisissures') {
-      return <MaterialCommunityIcons name='billiards-rack' size={30} color='black' />
-    } else if (props.title === 'Maladies et nuisibles') {
-      return <MaterialCommunityIcons name='hospital-box' size={25} color='black' />
+      return <MaterialCommunityIcons name='mushroom' size={30} color='black' />
+    } else if (props.title === 'L’oïdium') {
+      return <MaterialCommunityIcons name='virus' size={30} color='black' />
     }
   }
 
@@ -56,7 +66,7 @@ const Dropdown: React.FunctionComponent<DropdownProps> = (props) => {
           </View>
         </View>
         <View className={`w-full py-5 px-5 ${isOpen ? 'flex' : 'hidden'}`}>
-          <Text className='text-justify text-sm'>{props.description}</Text>
+          <Text className='text-justify text-sm text-left'>{props.description}</Text>
         </View>
       </View>
     </TouchableOpacity>
