@@ -20,12 +20,12 @@ import { Image } from 'expo-image'
 
 import { Spinner, Switch } from 'native-base'
 
+import PlantCareScreen from '../../screens/PlantCareScreen/PlantCareScreen'
 import CardProduct from '../../components/product/CardProduct'
 import CardDeal from '../../components/super-deals/CardDeal'
 import CardCategorie from '../../components/categories/CardCategorie'
 import CardPlanter from '../../components/planters/CardPlanter'
 import CardSuggestion from '../../components/suggestions/CardSuggestion'
-// import CardAntigaspi from '../../components/antigaspi/CardAntigaspi';
 import { Avatar } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
 import { NoDeprecatedCustomRule } from 'graphql'
@@ -35,6 +35,9 @@ import { useGetUserBookmarksQuery } from '../../graphql/graphql'
 import { useNavigation } from '@react-navigation/native'
 import { useReactiveVar } from '@apollo/client'
 import { bookmarksVar } from '../../variables/bookmarks'
+
+import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 interface HomeScreenProps {}
 //
@@ -79,24 +82,23 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const categorieData: { name: string; image: string }[] = [
     {
       name: 'Tropicales',
-      image: 'https://i.ibb.co/1Mk58wt/Capture-d-e-cran-2023-01-31-a-15-10-06.png',
-    },
-    {
-      name: 'Rares',
-      image: 'https://i.ibb.co/6ZZDhNy/Capture-d-e-cran-2023-01-31-a-15-09-44.png',
-    },
-    {
-      name: 'du Potager',
-      image: 'https://i.ibb.co/gDbcht3/Capture-d-e-cran-2023-01-31-a-15-09-58.png',
+      image: require('../../assets/categories/tropicPlant.png'),
     },
     {
       name: 'Aromatiques',
-      image: 'https://i.ibb.co/KjMfWz9/Capture-d-e-cran-2023-01-31-a-15-10-10.png',
+      image: require('../../assets/categories/basilicPlant02.png'),
+    },
+    {
+      name: 'du Potager',
+      image: require('../../assets/categories/tomatePlant.png'),
     },
     {
       name: 'Cactus',
-      image:
-        'https://i.ibb.co/3NgC17d/Hedmo-create-me-a-montserrat-plant-hyper-realistic-with-white-b-ae53c179-487b-4e18-84a6-395a98bbdf5b.png',
+      image: require('../../assets/categories/cactusPlant.png'),
+    },
+    {
+      name: 'Rares',
+      image: require('../../assets/categories/starPlant.png'),
     },
   ]
 
@@ -174,14 +176,14 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: 'white',
+        backgroundColor: '#BFE6CB',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
       <LinearGradient
-        // start={{ x: 0.5, y: 0.8 }}
-        // end={{ x: 0.8, y: 0 }}
-        colors={['#BFE6CB', '#EFFFFD', '#FEFFFF']}
+        // start={{ x: 0.1, y: 0 }}
+        // end={{ x: 0.9, y: 0 }}
+        colors={['#BFE6CB', 'white']}
         className='w-screen flex-col items-center py-5'
       >
         {isSignedIn && (
@@ -214,10 +216,10 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         />
       </LinearGradient>
 
-      <ScrollView className='w-screen mb-20' showsVerticalScrollIndicator={false}>
+      <ScrollView className='w-screen mb-20 bg-white' showsVerticalScrollIndicator={false}>
         <View className='w-screen h-[20px]' />
         <View className='w-full'>
-          <Text className='pl-5 text-lg '>⭐ Top planters</Text>
+          <Text className='pl-5 text-lg font-semibold tracking-widest uppercase'>Top Planters</Text>
           <FlatList
             data={plantersData}
             renderItem={({ item }) => (
@@ -232,7 +234,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         {/* <View className='h-[50px] w-full' />
 
         <View className='w-full'>
-          <Text className='pl-5 text-lg '>🎉 Super deals / ventes privées !</Text>
+          <Text className='pl-5 text-xl '>🎉 Super deals / ventes privées !</Text>
           <FlatList
             data={dealData}
             renderItem={({ item }) => (
@@ -247,7 +249,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='h-[50px] w-full' />
 
         <View className='w-full'>
-          <Text className='pl-5 text-lg w-full'>🍃 Catégories</Text>
+          <Text className='pl-5 text-lg w-full font-semibold tracking-widest uppercase'>
+            Catégories
+          </Text>
           <FlatList
             data={categorieData}
             renderItem={({ item }) => <CardCategorie name={item.name} image={item.image} />}
@@ -256,29 +260,42 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             contentContainerStyle={{ padding: 20 }}
           />
         </View>
-        <View className='w-full'>
-          <Text className='pl-5 pb-4 text-lg w-full '>🔫 Ta plante au quotidien</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('PlantCareScreen')}
-            className={`w-[100%] h-[120px] flex flex-row items-center bg-pink-100 rounded-lg mb-3 relative`}
-          >
-            <View className='w-6/12 h-full flex-row items-center'>
-              <Text className='font-semibold text-slate-800	font-bold	text-xl ml-4'>
-                Entretien 💊
-              </Text>
-            </View>
 
-            <Image
-              source={require('../../assets/03-removebg.png')}
-              className='w-6/12 h-full rounded-lg'
-              contentFit='cover'
-            />
-          </TouchableOpacity>
+        <View className='h-[50px] w-full' />
+
+        <View className='w-full items-center'>
+          <Text className='pl-5 pb-4 text-lg w-full font-semibold tracking-widest uppercase'>
+            Ta plante au quotidien
+          </Text>
+
+          <LinearGradient
+            colors={['#EDFAFE', 'white', '#FDF5E9']}
+            start={{ x: 0.2, y: 0.8 }}
+            end={{ x: 0.8, y: 0 }}
+            className='w-[90%] h-[120px] rounded-lg'
+
+          >
+            <TouchableOpacity
+              onPress={() => navigation.navigate('PlantCareScreen')}
+              className='w-full h-full flex flex-row'
+            >
+              <View className='w-6/12 h-full flex-row items-center'>
+                <Text className='font-normal text-slate-800 text-lg ml-4'>Entretien</Text>
+              </View>
+
+              <Image
+                source={require('../../assets/categories/carePlant.png')}
+                className='w-6/12 h-full rounded-lg'
+                contentFit='cover'
+              />
+            </TouchableOpacity>
+          </LinearGradient>
         </View>
+
         <View className='h-[50px] w-full' />
 
         <View className='w-full h-40'>
-          <Text className='pl-5 text-lg mb-4'>⚡ Publicité</Text>
+          <Text className='pl-5 pb-4 text-lg w-full font-normal'>Publicité</Text>
           <Image
             source='https://i.ibb.co/FWY0jhd/02-01-decouvrir-histoire-de-marseille.jpg'
             contentFit='cover'
@@ -287,10 +304,10 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View>
 
-        <View className='h-[100px] w-full' />
+        <View className='h-[50px] w-full' />
 
         {/* <View className='w-full'>
-          <Text className='pl-5 text-lg'>👀 À la une</Text>
+          <Text className='pl-5 text-xl'>👀 À la une</Text>
           <FlatList
             data={plantesData}
             renderItem={({ item }) => (
@@ -305,7 +322,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='h-[50px] w-full' />
 
         <View className='w-full'>
-          <Text className='pl-5 text-lg'>👉 Suggestions de recherche</Text>
+          <Text className='pl-5 text-lg w-full font-semibold tracking-widest uppercase'>
+            Suggestions
+          </Text>
           <FlatList
             data={suggestionData}
             renderItem={({ item }) => <CardSuggestion search={item.search} views={item.views} />}
