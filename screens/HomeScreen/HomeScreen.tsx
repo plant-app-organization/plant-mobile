@@ -273,6 +273,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             start={{ x: 0.2, y: 0.8 }}
             end={{ x: 0.8, y: 0 }}
             className='w-[90%] h-[120px] rounded-lg'
+
           >
             <TouchableOpacity
               onPress={() => navigation.navigate('PlantCareScreen')}

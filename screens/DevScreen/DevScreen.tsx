@@ -25,8 +25,8 @@ const DevScreen: React.FunctionComponent<DevScreenProps> = (props) => {
       />
       <Button
         className='p-4'
-        title='Go to Entretien Screen'
-        onPress={() => navigation.navigate('EntretienScreen')}
+        title='Go to PlantCare Screen'
+        onPress={() => navigation.navigate('PlantCareScreen')}
       />
 
       <Button

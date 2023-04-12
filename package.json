@@ -48,6 +48,7 @@
     "react-native-confetti-cannon": "^1.5.2",
     "react-native-draglist": "^3.0.5",
     "react-native-fs": "^2.20.0",
+    "react-native-google-places-autocomplete": "^2.5.1",
     "react-native-heroicons": "^3.2.0",
     "react-native-mapbox-places-autocomplete": "^0.0.3",
     "react-native-maps": "^1.4.0",

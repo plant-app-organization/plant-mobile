@@ -35,7 +35,8 @@ import { useCreateNewOfferMutation } from '../../graphql/graphql'
 import * as ImagePicker from 'expo-image-picker'
 import Slider from '@react-native-community/slider'
 import ModalPreview from '../../components/modals/ModalPreview'
-import MapboxPlacesAutocomplete from 'react-native-mapbox-places-autocomplete'
+// import MapboxPlacesAutocomplete from 'react-native-mapbox-places-autocomplete'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 interface AddScreenProps {}
 //
@@ -52,6 +53,9 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [price, setPrice] = useState<string>('')
+
+  const [regionName, setRegionName] = useState<string>('')
+  const [postCode, setPostCode] = useState<string>('')
   const [category, setCategory] = useState<string>('')
   const [pot, setPot] = useState<boolean>(false)
   const [health, setHealth] = useState<string>('')
@@ -65,7 +69,26 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   // const [slideStartingValue, setSlideStartingValue] = useState(0);
   // const [slideStartingCount, setSlideStartingCount] = useState(0);
   const [plantHeight, setPlantHeight] = useState<number>(0)
+  const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
+  console.log('api', GOOGLE_PLACES_API_KEY)
 
+  const onSelectLocation = (data, details) => {
+    // Trouver l'objet dans details qui contient un tableau nommé types qui contient "postal_code"
+    const addressComponents = details.address_components
+    const postalCodeObject = addressComponents.find((component) =>
+      component.types.includes('postal_code'),
+    )
+    const postalCode = postalCodeObject.long_name
+    const regionObject = addressComponents.find((component) =>
+      component.types.includes('administrative_area_level_1'),
+    )
+    const region = regionObject.long_name
+    console.log('postalCode', postalCode)
+    setPostCode(postalCode)
+    setRegionName(region)
+    setLocation({ ...data, ...details })
+    // console.log('🤹data', data, '🔥details', details)
+  }
   const openModalHandler = () => {
     console.log('CLICKED')
     setShowModal(true)
@@ -166,12 +189,12 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             pot,
             plantHeight: Math.floor(plantHeight),
             maintenanceDifficultyLevel,
-            location: location.place_name,
-            latitude: location.center[1],
-            longitude: location.center[0],
-            city: location.context[1].text,
-            postcode: location.context[0].text,
-            region: location.context[2].text,
+            location: location.formatted_address,
+            latitude: location.geometry.location.lat,
+            longitude: location.geometry.location.lng,
+            city: location.vicinity,
+            postcode: postCode,
+            region: regionName,
           },
         },
       })
@@ -290,7 +313,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 )
               })}
             </View>
-            <MapboxPlacesAutocomplete
+            {/* <MapboxPlacesAutocomplete
               id='location'
               placeholder='Adresse'
               accessToken='pk.eyJ1IjoiYXBwcGxhbnRlMTMiLCJhIjoiY2xnM2E3ZWxqMGRjdTNlbW0zM29yOW11dyJ9.KrLjOXdxjOv5_UacB_E95Q' // MAPBOX_PUBLIC_TOKEN is stored in .env root project folder
@@ -309,6 +332,44 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 borderRadius: 10,
               }}
               inputStyle={{ backgroundColor: 'white', color: 'black', fontWeight: 'bold' }}
+            /> */}
+
+            <GooglePlacesAutocomplete
+              placeholder='Adresse'
+              onPress={(data, details = null) => {
+                onSelectLocation(data, details)
+              }}
+              query={{
+                key: GOOGLE_PLACES_API_KEY,
+                language: 'fr',
+                components: 'country:fr',
+              }}
+              fetchDetails={true}
+              enablePoweredByContainer={false}
+              onFail={(error) => console.log(error)}
+              onNotFound={() => console.log('no results')}
+              listEmptyComponent={() => (
+                <View style={{ flex: 1 }}>
+                  <Text>Nous n'avons pas trouvé cette adresse</Text>
+                </View>
+              )}
+              textInputProps={{
+                autoFocus: true,
+                blurOnSubmit: false,
+              }}
+              styles={{
+                container: {
+                  flex: 0,
+                  width: 0.9 * width,
+                },
+                description: {
+                  color: '#000',
+                  fontSize: 16,
+                },
+                predefinedPlacesDescription: {
+                  color: '#3caf50',
+                },
+              }}
             />
             <View className='w-full min-h-[100vh] flex flex-col justify-evenly items-center pt-10 '>
               <View
