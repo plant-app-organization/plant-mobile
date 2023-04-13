@@ -197,6 +197,38 @@ const HomeStackNavigator = () => {
                 animation: 'slide_from_right',
               }}
             />
+            <HomeStack.Screen
+              name='PlantCareScreen'
+              component={PlantCareScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='PlantDiseaseScreen'
+              component={PlantDiseaseScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='PlantIdentityScreen'
+              component={PlantIdentityScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='PlantIdentityInfoScreen'
+              component={PlantIdentityInfoScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
           </>
         )}
       </HomeStack.Navigator>
