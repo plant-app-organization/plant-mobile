@@ -125,7 +125,7 @@ const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) =
           contentContainerStyle={{
             height: '100%',
             alignItems: 'center',
-            // backgroundColor: 'lightblue',
+            display: 'flex',
           }}
         />
       </View>

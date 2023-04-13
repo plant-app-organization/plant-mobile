@@ -25,6 +25,7 @@ import { ClerkLoaded, useUser } from '@clerk/clerk-expo'
 import ParamScreen from '../screens/ParamScreen/ParamScreen'
 import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
 import PlantIdentityScreen from '../screens/PlantIdentityScreen/PlantIdentityScreen'
+import PlantIdentityInfoScreen from '../screens/PlantIdentityInfoScreen/PlantIdentityInfoScreen'
 
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>()
 const config = {
@@ -155,6 +156,14 @@ const HomeStackNavigator = () => {
             <HomeStack.Screen
               name='PlantIdentityScreen'
               component={PlantIdentityScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='PlantIdentityInfoScreen'
+              component={PlantIdentityInfoScreen}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
