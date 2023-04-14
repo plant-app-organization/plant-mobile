@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
 import PropTypes from 'prop-types'
 import {
   Platform,
@@ -11,11 +12,14 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native'
-import { useToast, Input, InputGroup } from 'native-base'
+import { useToast, Input, Pressable, Icon, InputGroup } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { useSignIn } from '@clerk/clerk-expo'
 import { SignInWithOAuth } from '../../components/SignInWithOAuth/SignInWithOAuth'
+
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import { ChevronLeftIcon } from 'react-native-heroicons/solid'
+import { MaterialIcons } from '@expo/vector-icons'
 
 interface SigninScreenProps {}
 //
@@ -24,7 +28,9 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
   const [emailAddress, setEmailAddress] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const { signIn, setSession, isLoaded } = useSignIn()
+  const [show, setShow] = React.useState(false)
   const toast = useToast()
+  const navigation = useNavigation()
 
   const handleTextChange = (inputText) => {
     setEmailAddress(inputText.toLowerCase())
@@ -55,92 +61,82 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
   const onSignUpPress = () => props.navigation.replace('SignupScreen')
 
   return (
-    <LinearGradient colors={['#cfe9f1', '#eafdf4', '#FEFFFF']} className=' w-screen h-screen px-22'>
+    <LinearGradient colors={['#C3EFD8', 'white', 'white']} className=' w-screen h-screen px-22'>
       <SafeAreaView
         style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
       >
-        <View className='w-full h-full px-22'>
-          <View className='flex items-center justify-end h-[15%]'>
-            <Text style={{ color: 'black' }} className='font-Gentle text-3xl'>
-              Plante.
-            </Text>
-            <Text
-              className='text-black text-center text-xl font-Roboto'
-              style={{
-                width: '100%',
-                height: '28%',
-              }}
-            >
-              Découvrez, achetez, vendez
-            </Text>
-          </View>
+        <View className='flex items-center justify-evenly h-[25%] relative'>
+          <Text className='font-Gentle text-4xl text-black'>Plante.</Text>
+          <Text className='w-[90%] text-black text-lg tracking-widest'>
+            <Text className='font-bold'>Connectez-vous </Text>
+            pour commencer à acheter ou vendre vos plantes
+          </Text>
 
-          <View className='m-15 flex flex-col justify-around items-center h-[45%]'>
-            <View className='h-[80%] flex flex-col justify-center'>
-              <View className='h-[25%] mb-5'>
-                <Text className='font-Roboto text-black text-left text-xl'>Se connecter :</Text>
-              </View>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            className='w-[40px] h-[40px] justify-center items-center rounded-full border border-gray-200 bg-white opacity-50 absolute top-5 left-5 z-10 shadow'
+          >
+            <ChevronLeftIcon color={'black'} />
+          </TouchableOpacity>
+        </View>
 
-              <View
-                style={{
-                  position: 'relative',
-
-                  paddingLeft: 20,
-                  marginBottom: 20,
-                  width: 300,
-                }}
-              >
-                <Input
-                  variant='rounded'
-                  size='md'
-                  placeholder='Email'
-                  value={emailAddress}
-                  onChangeText={handleTextChange}
-                  autoCapitalize='none'
+        <View className='justify-evenly items-center h-[20%]'>
+          <Input
+            variant='rounded'
+            size='xl'
+            placeholder='Email'
+            borderColor={'#737373'}
+            value={emailAddress}
+            onChangeText={handleTextChange}
+            autoCapitalize='none'
+            w={'80%'}
+          />
+          <Input
+            variant='rounded'
+            size='xl'
+            borderColor={'#737373'}
+            placeholder='Mot de passe'
+            value={password}
+            onChangeText={setPassword}
+            // secureTextEntry={true}
+            w={'80%'}
+            type={show ? 'text' : 'password'}
+            InputRightElement={
+              <Pressable onPress={() => setShow(!show)}>
+                <Icon
+                  as={<MaterialIcons name={show ? 'visibility' : 'visibility-off'} />}
+                  size={5}
+                  mr='2'
+                  color='muted.400'
                 />
-              </View>
+              </Pressable>
+            }
+          />
+        </View>
 
-              <View
-                style={{
-                  position: 'relative',
-
-                  paddingLeft: 20,
-
-                  width: 300,
-                }}
-              >
-                <Input
-                  variant='rounded'
-                  size='md'
-                  placeholder='Mot de passe'
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry={true}
-                />
-              </View>
-            </View>
-
+        <View className='w-full h-[60%]'>
+          <View className='w-full h-[35%] items-center justify-evenly'>
             <TouchableOpacity
-              className='h-[45px] w-[200px] border-solid rounded-2xl flex items-center justify-center border-2'
+              className='h-[45px] w-[80%] rounded-full flex items-center justify-center bg-black shadow-lg'
               onPress={onSignInPress}
             >
-              <Text className='text-black text-lg font-Roboto'> Connexion</Text>
+              <Text className='text-white text-lg tracking-widest'>Se connecter</Text>
             </TouchableOpacity>
+            <Text className='font-semibold'>OU</Text>
           </View>
 
-          <View className='w-full h-[40%] flex flex-col justify-evenly items-center'>
-            <Text>OU</Text>
-            <View className='h-[45%] flex flex-col justify-around'>
-              <TouchableOpacity
-                className='h-[45px] w-[300px] rounded-2xl flex items-center justify-center border-solid border-2'
-                onPress={() => console.log('hello facebook')}
-              >
-                <Text style={{ color: '#d24e41' }} className='text-black text-ml font-Roboto'>
-                  Continuer avec google <FontAwesomeIcon name='google' size={15} />
-                </Text>
-              </TouchableOpacity>
+          <View className='w-full h-[40%] items-center justify-evenly'>
+            <TouchableOpacity
+              className='h-[45px] w-[80%] flex flex-row rounded-full items-center justify-evenly bg-white shadow-sm border border-gray-300'
+              onPress={() => console.log('hello facebook')}
+            >
+              <View className='w-[25px] h-[25px] bg-red-500 items-center justify-center rounded-full'>
+                <FontAwesomeIcon name='google' size={15} color='white' />
+              </View>
+              <Text className='text-md font-semibold tracking-widest'>Continuer avec Google</Text>
+            </TouchableOpacity>
 
-              {/* <TouchableOpacity
+            {/* <TouchableOpacity
                 className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center mb-8 mt-8'
                 style={{
                   backgroundColor: '#ccedcf',
@@ -154,23 +150,25 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 Pas encore inscrit ? Créer un commpte !
                 </Text>
               </TouchableOpacity> */}
-              <TouchableOpacity
-                className='h-[45px] w-[300px] rounded-2xl flex items-center justify-center border-2 border-solid mb-8 mt-8'
-                onPress={() => console.log('fb')}
-              >
-                <Text style={{ color: '#395590' }} className='text-black text-ml font-Roboto'>
-                  Continuer avec Facebook <FontAwesomeIcon name='facebook' size={15} />
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                className='h-[45px] w-[300px] rounded-2xl flex items-center justify-center border-2 border-solid'
-                onPress={onSignUpPress}
-              >
-                <Text className='text-black text-ml font-Roboto'>
-                  Pas encore inscrit ? Créer un compte !
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              className='h-[45px] w-[80%] flex flex-row rounded-full items-center justify-evenly bg-white shadow-sm border border-gray-300'
+              onPress={() => console.log('fb')}
+            >
+              <View className='w-[25px] h-[25px] items-center justify-center rounded-full bg-[#395590]'>
+                <FontAwesomeIcon name='facebook' size={15} color='white' />
+              </View>
+              <Text className='text-black font-semibold text-md tracking-widest'>
+                Continuer avec Facebook
+              </Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity
+              className='h-[45px] w-[80%] rounded-full items-center justify-center bg-white border border-gray-700 shadow-sm'
+              onPress={onSignUpPress}
+            >
+              <Text className='text-black text-md font-semibold tracking-widest'>
+                Créer un compte
+              </Text>
+            </TouchableOpacity> */}
           </View>
         </View>
       </SafeAreaView>
