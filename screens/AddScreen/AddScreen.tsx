@@ -226,7 +226,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
       <ScrollView>
         <View className='w-screen h-full items-center justify-evenly '>
           <View className='h-[20vh] w-full justify-evenly items-center'>
-            <Text className='text-2xl font-Roboto text-black'>Vends une plante</Text>
+            <Text className='text-2xl font-Roboto text-black'>Vendez votre plante</Text>
             <View className=' w-full flex items-center'>
               <TouchableOpacity
                 // style={{
@@ -361,8 +361,10 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           </View>
 
           <View className='w-[90%] bg-white min-h-screen items-center justify-evenly rounded-lg shadow mt-10'>
-            <View>
-              <Text className='text-base font-semibold'>Quel est le nom de votre plante ?</Text>
+            <View className='py-5'>
+              <Text className='text-base font-semibold mb-3'>
+                Quel est le nom de votre plante ?
+              </Text>
               <Input
                 variant='filled'
                 value={title}
@@ -373,8 +375,8 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 w='80%'
               />
             </View>
-            <View>
-              <Text className='text-base font-semibold'>Décrivez votre plante</Text>
+            <View className='py-5'>
+              <Text className='text-base font-semibold mb-3'>Décrivez votre plante</Text>
               <Input
                 variant='filled'
                 value={description}
@@ -386,53 +388,43 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               />
             </View>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Text className=' text-l font-Roboto mr-1'>Prix :</Text>
-
+            <View className='w-[80%] flex flex-row py-5'>
+              <View className='w-6/12 flex flex-row items-center justify-evenly'>
+                <Text className='text-base font-semibold'>Prix :</Text>
                 <TextInput
                   style={{
-                    height: 40,
-                    fontSize: 15,
-                    borderWidth: 0.5,
-                    borderColor: 'gray',
-                    borderRadius: 10,
-                    padding: 10,
-                    width: 70,
+                    fontSize: 16,
+                    backgroundColor: '#F5F5F5',
+                    paddingVertical: 8,
+                    paddingHorizontal: 12,
+                    borderRadius: 4,
                   }}
                   value={price}
                   onChangeText={(value) => setPrice(value)}
                   keyboardType='numeric'
-                  placeholder='0,00'
+                  placeholder='0,00 €'
                 />
-                <Text className=' text-l font-Roboto ml-1 mr-10'>€</Text>
               </View>
-              <TouchableOpacity onPress={handleToggle}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <FontAwesomeIcon
-                    name={!pot ? 'check-square' : 'square-o'}
-                    size={24}
-                    color={!pot ? '#008000' : '#808080'}
-                  />
-                  <Text style={{ marginLeft: 8 }}>Avec cache-pot</Text>
-                </View>
+
+              <TouchableOpacity
+                onPress={handleToggle}
+                className='w-6/12 flex flex-row items-center justify-evenly'
+              >
+                <FontAwesomeIcon
+                  name={!pot ? 'check-square' : 'square-o'}
+                  size={24}
+                  color={!pot ? '#008000' : '#808080'}
+                />
+                <Text className='text-base font-semibold'>Cache-pot</Text>
               </TouchableOpacity>
             </View>
 
-            <View className='justify-evenly items-center '>
-              <Text>Hauteur: {Math.floor(plantHeight).toString()} cm</Text>
+            <View className='py-5 w-[80%] items-center'>
+              <Text className='font-semibold text-base'>
+                Hauteur: {Math.floor(plantHeight).toString()} cm
+              </Text>
               <Slider
-                style={{ width: 300, height: 40 }}
+                style={{ width: '100%' }}
                 minimumValue={0}
                 maximumValue={300}
                 minimumTrackTintColor='#3FA96A'
@@ -447,14 +439,16 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               />
             </View>
 
-            <View>
-              <FormControl w='3/4' maxW='300' isRequired isInvalid>
+            <View className='w-[80%] py-5 items-center'>
+              <FormControl w='100%' isRequired isInvalid>
                 <Select
                   className='rounded-sm'
                   selectedValue={category}
                   minWidth='200'
                   accessibilityLabel='Catégorie'
                   placeholder=' Catégorie'
+                  fontSize={16}
+                  placeholderTextColor='black'
                   _selectedItem={{
                     bg: 'teal.600',
                     endIcon: <CheckIcon size={3} />,
@@ -470,12 +464,14 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 </Select>
               </FormControl>
 
-              <FormControl w='3/4' maxW='300' isRequired isInvalid className='mt-10 mb-10'>
+              <FormControl w='100%' isRequired isInvalid className='mt-10 mb-10'>
                 <Select
                   selectedValue={health}
                   minWidth='200'
                   accessibilityLabel='Santé'
                   placeholder='État de santé'
+                  fontSize={16}
+                  placeholderTextColor='black'
                   _selectedItem={{
                     bg: 'teal.600',
                     endIcon: <CheckIcon size={5} />,
@@ -490,12 +486,14 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 </Select>
               </FormControl>
 
-              <FormControl w='3/4' maxW='300' isRequired isInvalid>
+              <FormControl w='100%' isRequired isInvalid>
                 <Select
                   selectedValue={maintenanceDifficultyLevel}
                   minWidth='200'
                   accessibilityLabel='Entretien'
                   placeholder='Entretien'
+                  fontSize={16}
+                  placeholderTextColor='black'
                   _selectedItem={{
                     bg: 'teal.600',
                     endIcon: <CheckIcon size={5} />,
@@ -508,38 +506,18 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   <Select.Item label='difficile' value='difficult' />
                 </Select>
               </FormControl>
-
-              <View className='flex items-center mt-10 mb-20'>
-                <View
-                  style={{
-                    height: 40,
-                    width: 200,
-                    borderRadius: 25,
-                    backgroundColor: '#ccedcf',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    shadowColor: '#3FA96A',
-                    shadowOffset: {
-                      width: 0,
-                      height: 3,
-                    },
-                    shadowOpacity: 15.22,
-                    shadowRadius: 16.1,
-                    elevation: 10, // pour Android seulement
-                  }}
-                >
-                  <TouchableOpacity
-                    className='h-40 w-200 rounded-25 bg-ccedcf flex items-center justify-center shadow-lg hover:shadow-xl '
-                    onPress={onCreateNewOfferPress}
-                  >
-                    <Text className='font-Roboto text-black text-ml '>AJOUTER</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
             </View>
           </View>
+
+          <TouchableOpacity
+            className='bg-white w-[80%] my-10 py-3 rounded-2xl justify-center items-center shadow border border-gray-200'
+            onPress={onCreateNewOfferPress}
+          >
+            <Text className='text-zinc-800 text-lg font-semibold tracking-widest'>Ajouter</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
+
       <Modal isOpen={isOpen} safeAreaTop={true}>
         <Modal.Content style={{ backgroundColor: '#f2fff3' }} maxWidth='350'>
           <Modal.Header style={{ backgroundColor: '#f2fff3' }}>
