@@ -18,9 +18,8 @@ import {
 
 import { Image } from 'expo-image'
 
-import { Spinner, Switch } from 'native-base'
+import { ChevronRightIcon, Spinner, Switch } from 'native-base'
 
-import PlantCareScreen from '../../screens/PlantCareScreen/PlantCareScreen'
 import CardProduct from '../../components/product/CardProduct'
 import CardDeal from '../../components/super-deals/CardDeal'
 import CardCategorie from '../../components/categories/CardCategorie'
@@ -29,7 +28,6 @@ import CardSuggestion from '../../components/suggestions/CardSuggestion'
 import { Avatar } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
 import { NoDeprecatedCustomRule } from 'graphql'
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { useUser } from '@clerk/clerk-expo'
 import { useGetUserBookmarksQuery } from '../../graphql/graphql'
 import { useNavigation } from '@react-navigation/native'
@@ -268,28 +266,54 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             Ta plante au quotidien
           </Text>
 
-          <LinearGradient
-            colors={['#EDFAFE', 'white', '#FDF5E9']}
-            start={{ x: 0.2, y: 0.8 }}
-            end={{ x: 0.8, y: 0 }}
-            className='w-[90%] h-[120px] rounded-lg'
-
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PlantCareScreen')}
+            className='w-[90%] h-[90px] bg-white flex flex-row items-center justify-evenly rounded-lg shadow'
           >
-            <TouchableOpacity
-              onPress={() => navigation.navigate('PlantCareScreen')}
-              className='w-full h-full flex flex-row'
-            >
-              <View className='w-6/12 h-full flex-row items-center'>
-                <Text className='font-normal text-slate-800 text-lg ml-4'>Entretien</Text>
-              </View>
+            <Image
+              source={require('../../assets/icons/watercan-icon.png')}
+              className='w-[50px] h-[50px]'
+              contentFit='cover'
+            />
+            <View className='w-8/12 h-10/12 flex-row items-center'>
+              <Text className='font-semibold text-slate-800 text-[15px] ml-3'>L'entretien</Text>
+            </View>
+            <ChevronRightIcon color='black' />
+          </TouchableOpacity>
 
-              <Image
-                source={require('../../assets/categories/carePlant.png')}
-                className='w-6/12 h-full rounded-lg'
-                contentFit='cover'
-              />
-            </TouchableOpacity>
-          </LinearGradient>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PlantDiseaseScreen')}
+            className='w-[90%] h-[90px] bg-white flex flex-row items-center justify-evenly rounded-lg shadow my-5'
+          >
+            <Image
+              source={require('../../assets/icons/question-icon.png')}
+              className='w-[45px] h-[45px]'
+              contentFit='cover'
+            />
+            <View className='w-8/12 h-10/12 flex-row items-center'>
+              <Text className='font-semibold text-slate-800 text-[15px] ml-3'>
+                Que se passe-t-il ?
+              </Text>
+            </View>
+            <ChevronRightIcon color='black' />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PlantIdentityScreen')}
+            className='w-[90%] h-[90px] bg-white flex flex-row items-center justify-evenly rounded-lg shadow'
+          >
+            <Image
+              source={require('../../assets/icons/plant-icon.png')}
+              className='w-[45px] h-[45px]'
+              contentFit='cover'
+            />
+            <View className='w-8/12 h-10/12 flex-row items-center'>
+              <Text className='font-semibold text-slate-800 text-[15px] ml-3'>
+                Carte d'identité des plantes
+              </Text>
+            </View>
+            <ChevronRightIcon color='black' />
+          </TouchableOpacity>
         </View>
 
         <View className='h-[50px] w-full' />

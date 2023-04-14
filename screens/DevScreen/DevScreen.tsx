@@ -28,6 +28,11 @@ const DevScreen: React.FunctionComponent<DevScreenProps> = (props) => {
         title='Go to PlantCare Screen'
         onPress={() => navigation.navigate('PlantCareScreen')}
       />
+      <Button
+        className='p-4'
+        title='Go to PlantDiseaseScreen Screen'
+        onPress={() => navigation.navigate('PlantDiseaseScreen')}
+      />
 
       <Button
         className='p-4'
