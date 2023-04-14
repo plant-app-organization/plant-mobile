@@ -17,32 +17,43 @@ import Dropdown from '../../components/dropdown/Dropdown'
 
 import { ChevronLeftIcon } from 'react-native-heroicons/solid'
 
+import { DISEASE_DESCRIPTION } from '../../data/PlantDiseaseData'
+
 const DISEASE_TITLE = [
   {
     id: '01',
-    title: 'Feuilles jaunes',
+    title: 'Les thrips',
   },
   {
     id: '02',
-    title: 'Moucherons',
+    title: 'Les moucherons',
   },
   {
     id: '03',
-    title: 'Moisissures',
+    title: 'Les araignées rouges',
   },
 
   {
     id: '04',
-    title: 'Maladies',
+    title: 'Les fourmis',
+  },
+  {
+    id: '05',
+    title: 'Les cochenilles',
+  },
+  {
+    id: '06',
+    title: 'La rouille',
+  },
+  {
+    id: '07',
+    title: 'L’oïdium',
+  },
+  {
+    id: '08',
+    title: 'Pourriture des racines',
   },
 ]
-
-const DISEASE_DESCRIPTION = {
-  fallenLeaves: 'Description pour les feuilles jaunes',
-  midges: 'Description pour les moucherons',
-  mold: 'Description pour les moisissures',
-  disease: 'Description pour les maladies',
-}
 
 interface PlantDiseaseScreenProps {}
 
@@ -64,14 +75,22 @@ const PlantDiseaseScreen: React.FunctionComponent<PlantDiseaseScreenProps> = (pr
   // console.log('DATA FROM REQUEST ⭐️', searchOffersData)
 
   const selectTitle = (title) => {
-    if (title === 'Feuilles jaunes') {
-      setDiseaseDescription(DISEASE_DESCRIPTION.fallenLeaves)
-    } else if (title === 'Moucherons') {
-      setDiseaseDescription(DISEASE_DESCRIPTION.midges)
-    } else if (title === 'Moisissures') {
-      setDiseaseDescription(DISEASE_DESCRIPTION.mold)
-    } else if (title === 'Maladies') {
-      setDiseaseDescription(DISEASE_DESCRIPTION.disease)
+    if (title === 'Les thrips') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.lesthrips)
+    } else if (title === 'Les moucherons') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.lesmoucherons)
+    } else if (title === 'Les araignées rouges') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.lesaraignéesrouges)
+    } else if (title === 'Les fourmis') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.lesfourmis)
+    } else if (title === 'Les cochenilles') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.lescochenilles)
+    } else if (title === 'La rouille') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.larouille)
+    } else if (title === 'L’oïdium') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.oïdium)
+    } else if (title === 'Pourriture des racines') {
+      setDiseaseDescription(DISEASE_DESCRIPTION.pourriture)
     }
   }
 
