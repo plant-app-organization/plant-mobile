@@ -46,6 +46,7 @@ const CARING_DESCRIPTION = {
 
 interface PlantCareScreenProps {}
 
+
 const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) => {
   const [filters, setFilters] = useState<string[]>([])
   const [searchInput, setSearchInput] = useState<string>('')
@@ -134,6 +135,7 @@ const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) =
         <Text className='text-lg text-justify'>{caringDescription}</Text>
       </View>
     </SafeAreaView>
+
   )
 }
 

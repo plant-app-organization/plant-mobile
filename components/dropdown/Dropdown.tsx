@@ -34,16 +34,27 @@ const Dropdown: React.FunctionComponent<DropdownProps> = (props) => {
       return <MaterialCommunityIcons name='billiards-rack' size={30} color='#575757' />
     } else if (props.title === 'Maladies') {
       return <MaterialCommunityIcons name='hospital-box' size={25} color='#575757' />
+
     }
   }
 
   return (
+
     <TouchableOpacity onPress={() => onPressHandler()}>
       <View
         className={`w-[140px] mx-2 rounded-lg py-3 flex flex-row items-center justify-center focus:bg-violet-700`}
       >
         <View className='flex flex-row items-center justify-center'>
           <Text>{checkIconName()}</Text>
+
+          </View>
+          <View className='w-[85%] flex flex-row justify-between items-center'>
+            <Text className='text-lg'>{props.title}</Text>
+            <ChevronDownIcon color={'gray'} />
+          </View>
+        </View>
+        <View className={`w-full py-5 px-5 ${isOpen ? 'flex' : 'hidden'}`}>
+          <Text className='text-justify text-sm text-left'>{props.description}</Text>
         </View>
         <Text
           className={`text-md font-semibold ml-2 ${isSelected ? 'text-black' : 'text-[#575757]'}`}

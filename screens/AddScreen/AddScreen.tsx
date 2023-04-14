@@ -35,7 +35,6 @@ import { useCreateNewOfferMutation } from '../../graphql/graphql'
 import * as ImagePicker from 'expo-image-picker'
 import Slider from '@react-native-community/slider'
 import ModalPreview from '../../components/modals/ModalPreview'
-// import MapboxPlacesAutocomplete from 'react-native-mapbox-places-autocomplete'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 interface AddScreenProps {}
@@ -73,7 +72,6 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   console.log('api', GOOGLE_PLACES_API_KEY)
 
   const onSelectLocation = (data, details) => {
-    // Trouver l'objet dans details qui contient un tableau nommé types qui contient "postal_code"
     const addressComponents = details.address_components
     const postalCodeObject = addressComponents.find((component) =>
       component.types.includes('postal_code'),
@@ -313,26 +311,6 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 )
               })}
             </View>
-            {/* <MapboxPlacesAutocomplete
-              id='location'
-              placeholder='Adresse'
-              accessToken='pk.eyJ1IjoiYXBwcGxhbnRlMTMiLCJhIjoiY2xnM2E3ZWxqMGRjdTNlbW0zM29yOW11dyJ9.KrLjOXdxjOv5_UacB_E95Q' // MAPBOX_PUBLIC_TOKEN is stored in .env root project folder
-              onPlaceSelect={(data) => {
-                setLocation(data)
-              }}
-              onClearInput={({ id }) => {
-                id === 'location' && setLocation(null)
-              }}
-              countryId='FR'
-              containerStyle={{
-                marginBottom: 12,
-                width: width * 0.9,
-                backgroundColor: 'white',
-                padding: 5,
-                borderRadius: 10,
-              }}
-              inputStyle={{ backgroundColor: 'white', color: 'black', fontWeight: 'bold' }}
-            /> */}
 
             <GooglePlacesAutocomplete
               placeholder='Adresse'
