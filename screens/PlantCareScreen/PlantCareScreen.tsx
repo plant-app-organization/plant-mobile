@@ -16,6 +16,7 @@ import { useSearchOffersQuery } from '../../graphql/graphql'
 import Dropdown from '../../components/dropdown/Dropdown'
 
 import { ChevronLeftIcon } from 'react-native-heroicons/solid'
+import { CARING_DESCRIPTION } from '../../data/PlantCareData'
 
 const CARING_TITLE = [
   {
@@ -37,15 +38,7 @@ const CARING_TITLE = [
   },
 ]
 
-const CARING_DESCRIPTION = {
-  watering: "Description pour l'arrosage",
-  brightness: 'Description pour la luminosité',
-  temperature: 'Description pour la temparature',
-  potting: 'Description pour rempotage',
-}
-
 interface PlantCareScreenProps {}
-
 
 const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) => {
   const [filters, setFilters] = useState<string[]>([])
@@ -135,7 +128,6 @@ const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) =
         <Text className='text-lg text-justify'>{caringDescription}</Text>
       </View>
     </SafeAreaView>
-
   )
 }
 
