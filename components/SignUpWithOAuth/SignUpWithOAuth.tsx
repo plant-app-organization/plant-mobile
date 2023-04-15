@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { useSignUp } from '@clerk/clerk-expo'
 import { log } from '../../logger'
 import { styles } from './Styles'
@@ -73,12 +73,13 @@ export function SignUpWithOAuth() {
 
   return (
     <TouchableOpacity
-      className='h-[45px] w-[300px] rounded-2xl flex items-center justify-center border-2 border-solid'
+      className='h-[45px] w-[80%] flex flex-row rounded-full items-center justify-evenly bg-white shadow-sm border border-gray-300'
       onPress={onPress}
     >
-      <Text style={{ color: '#d24e41' }} className=' font-antipasto'>
-        Continuer avec avec Google <FontAwesomeIcon name='google' size={18} />
-      </Text>
+      <View className='w-[25px] h-[25px] bg-red-500 items-center justify-center rounded-full'>
+        <FontAwesomeIcon name='google' size={15} color='white' />
+      </View>
+      <Text className='text-md font-semibold tracking-widest'>Continuer avec Google</Text>
     </TouchableOpacity>
   )
 }
