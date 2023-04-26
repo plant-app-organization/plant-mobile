@@ -20,10 +20,11 @@ const FirstScreenLogo: React.FunctionComponent<FirstScreenLogoProps> = (props) =
           }}
           className='font-Gentle text-black text-6xl'
         >
-          Plante.
+          Plant
+          <Text className='opacity-10 font-Gentle'>b</Text>
         </Text>
 
-        <Text className='text-black text-3xl -mt-4 font-LANENAR text-xl'>Seconde vie</Text>
+        <Text className='text-black text-3xl -mt-4 font-LANENAR text-xl'>second life</Text>
       </View>
     </LinearGradient>
   )
