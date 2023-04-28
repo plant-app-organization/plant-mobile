@@ -1,45 +1,44 @@
 export const DISEASE_DESCRIPTION = {
   lesthrips: `Comment les identifier ?
 
-apparition de taches ocres sur le dessous ou le dessous avec une observation de plus près vous pouvez peut  être voir des thrips grand comme un grain de riz.
-Les thrips adultes peuvent voler, ils pondent leurs œufs dans le terreau, les larves se développent dans la terre avant de rejoindre les feuilles (souvent les plus jeunes pousses bien tendres) afin de les grignoter petit à petit sans aucun scrupule !
+  Apparition de taches ocres sur le dessus ou le dessous. Avec une observation de plus près, vous pouvez peut-être voir des thrips grands comme un grain de riz.
+  Les thrips adultes peuvent voler. Ils pondent leurs œufs dans le terreau et les larves se développent dans la terre avant de rejoindre les feuilles, souvent les plus jeunes pousses bien tendres, afin de les grignoter petit à petit sans aucun scrupule !"
 
 S’en débarrasser !!
 
-dans un premier temps il faut isoler la plante pour éviter la contamination , si il ya quelques feuilles touchées coupez-les , douchez la plante de manière à enlever le max de thrips possible et nettoyez les feuilles au savon noir pendant un mois une fois par semaine. Il faut aussi changer le terreau car certaines larves risquent d’être toujours là. Les thrips détestent l’humidité.
-Les thrips attaquent le plus souvent les plantes déjà affaiblies, alors gardez l'œil ouvert !
+"Dans un premier temps, il faut isoler la plante pour éviter la contamination.
+S'il y a quelques feuilles touchées, coupez-les. Douchez la plante de manière à enlever le maximum de thrips possible et nettoyez les feuilles au savon noir pendant un mois, une fois par semaine. 
+Il faut aussi changer le terreau car certaines larves risquent d’être toujours là. Les thrips détestent l’humidité. Les thrips attaquent le plus souvent les plantes déjà affaiblies, alors gardez l'œil ouvert !"
 
 `,
   lesmoucherons: `Comment les identifier ?
 
-Nuisible très facilement identifiable surtout  quand un moucherons vous tourne autour devant votre série sur netflix mais bref si non approchez vous de votre pot et vous en verrez aussi 
-Les moucherons n’ont une durée de vie de seulement 4 ou 5 jours mais se reproduisent très rapidement !
+  Nuisible très facilement identifiable, surtout quand un moucheron vous tourne autour devant votre série sur Netflix. 
+  Mais bref, sinon, approchez-vous de votre pot et vous en verrez aussi. Les moucherons n'ont une durée de vie que de seulement 4 ou 5 jours, mais se reproduisent très rapidement!
 
 S’en débarrasser !!
 
-Laissez bien sécher votre terreau car les moucherons viennent pondre dans un terreau humide espacer vos arrosages
-Placez une couche de billes d’argile ou de sable au dessus de la motte de terre afin de créer une barrière entre les moucherons et votre terreau, ce qui les empêchera de pondre de nouveau
+Laissez bien sécher votre terreau, car les moucherons viennent pondre dans un terreau humide. Éspacez vos arrosages.
+Placez une couche de billes d’argile ou de sable au-dessus de la motte de terre afin de créer une barrière entre les moucherons et votre terreau, ce qui les empêchera de pondre de nouveau.
 
 `,
   lesaraignéesrouges: `Comment les identifier ?
 
-De fines toiles apparaissent sur les feuilles et les tiges , ces acariens jaunissent les feuilles en suçant la sève.
+  De fines toiles apparaissent sur les feuilles et les tiges. Ces acariens jaunissent les feuilles en suçant la sève.
 
 S’en débarrasser !!
 
-arroser la plante pour se débarrasser des acariens et nettoyer les feuilles avec un chiffon humide, pour éviter leur réapparition, brumiser régulièrement votre plante pour humidifier l'atmosphère et nettoyez-la régulièrement.
-
+Arroser la plante pour se débarrasser des acariens et nettoyer les feuilles avec un chiffon humide. Pour éviter leur réapparition, brumiser régulièrement votre plante pour humidifier l'atmosphère et nettoyez-la régulièrement.
 `,
   lesfourmis: `Comment les identifier ?
 
-C’est assez rapide vous les verrez très facilement sous votre pot le plus souvent.
-  
+  C'est assez rapide, vous les verrez très facilement sous votre pot le plus souvent.
+
 Comment s’en débarrasser !!
 
-Les fourmis ne sont pas particulièrement dangereuses pour vos plantes mais elles pourraient endommager le système racinaire donc il vaut mieux s’en débarrasser
+Les fourmis ne sont pas particulièrement dangereuses pour vos plantes, mais elles pourraient endommager le système racinaire, donc il vaut mieux s'en débarrasser. 
 Une astuce de grand-mère qui marche ?
-Mélanger une cuillère à café de cannelle dans votre terreau de surface, les fourmis détestent ça et quitteront votre pot illico !
-Mais attention elles risquent de migrer dans un autre endroit peu adapté, alors afin de guider leur migration je vous conseille de placer un second pot rempli de terreau à côté et d’attendre qu’elles se mettent dedans avant de placer le pot en extérieur.
+Mélangez une cuillère à café de cannelle dans votre terreau de surface. Les fourmis détestent ça et quitteront votre pot illico ! Mais attention, elles risquent de migrer vers un autre endroit peu adapté. Alors, afin de guider leur migration, je vous conseille de placer un second pot rempli de terreau à côté et d'attendre qu'elles s'y installent avant de placer le pot à l'extérieur.
 
 `,
 

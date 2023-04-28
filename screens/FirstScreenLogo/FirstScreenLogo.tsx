@@ -18,10 +18,10 @@ const FirstScreenLogo: React.FunctionComponent<FirstScreenLogoProps> = (props) =
 
             fontSize: 56,
           }}
-          className='font-Gentle text-black text-6xl'
+          className='font-Gentle text-rose-500 text-6xl'
         >
-          Plant
-          <Text className='opacity-10 font-Gentle'>b</Text>
+          <Text className='text-rose-900 font-Gentle'>Wi</Text>
+          low
         </Text>
 
         <Text className='text-black text-3xl -mt-4 font-LANENAR text-xl'>second life</Text>

@@ -11,11 +11,12 @@ import {
   Platform,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native'
 
 import { Image } from 'expo-image'
 import { LinearGradient } from 'expo-linear-gradient'
-
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { ChevronLeftIcon } from 'react-native-heroicons/solid'
 
 interface PlantIdentityInfoScreenProps {
@@ -80,45 +81,62 @@ const PlantIdentityInfoScreen: React.FunctionComponent<PlantIdentityInfoScreenPr
 
           <Image source={image} contentFit='cover' className='w-full h-full' />
         </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View className='w-full h-[10%] items-center justify-center'>
+            <Text className='text-lg font-semibold'>{name}</Text>
+          </View>
 
-        <View className='w-full h-[5%] items-center justify-center'>
-          <Text className='text-lg font-semibold'>{name}</Text>
-        </View>
-
-        <View className='w-full h-[45%]'>
-          <View className='mb-3 mt-3 flex flex-row'>
-            <Text className='text-md font-semibold w-4/12 ml-3 text-[15px]'>Origine</Text>
-            <Text className='ml-2'>{origin}</Text>
+          <View className='w-full h-[45%]'>
+            <View className='mb-3 mt-3 flex flex-row'>
+              <Text className='text-md font-semibold w-4/12 ml-5 text-[15px]'>
+                <MaterialCommunityIcons name='map-marker' size={25} color='#575757' /> :
+              </Text>
+              <Text className='ml-2'>{origin}</Text>
+            </View>
+            <View className='mb-3 flex flex-row'>
+              <Text className='text-md font-semibold w-4/12 ml-5 text-[15px]'>
+                <MaterialCommunityIcons name='thermometer' size={25} color='#575757' /> :
+              </Text>
+              <Text className='ml-2'>{temperature}</Text>
+            </View>
+            <View className='mb-3 flex flex-row'>
+              <Text className='text-md font-semibold w-4/12 ml-5 text-[15px]'>
+                <MaterialCommunityIcons name='paw' size={25} color='#575757' /> :
+              </Text>
+              <Text className='ml-2'>{petFriendly}</Text>
+            </View>
+            <View className='mb-3 flex flex-row'>
+              <Text className='text-md font-semibold w-4/12 ml-5 text-[15px]'>
+                <MaterialCommunityIcons name='flower-poppy' size={25} color='#575757' /> :
+              </Text>
+              <Text className='ml-2'>{flowering}</Text>
+            </View>
+            <View className='mb-3 flex flex-row'>
+              <Text className='text-md font-semibold w-4/12 ml-5 text-[15px]'>
+                <MaterialCommunityIcons name='account-group' size={25} color='#575757' /> :
+              </Text>
+              <Text className='ml-2'>{family}</Text>
+            </View>
+            <View className='mb-3 flex flex-row'>
+              <Text className='text-md font-semibold w-4/12 ml-5 text-[15px]'>
+                <MaterialCommunityIcons name='white-balance-sunny' size={25} color='#575757' /> :
+              </Text>
+              <Text className='ml-2'>{exposition}</Text>
+            </View>
+            <View className='mb-3 flex flex-row'>
+              <Text className='text-md font-semibold w-4/12 ml-5 text-[15px]'>
+                <MaterialCommunityIcons name='tape-measure' size={25} color='#575757' /> :
+              </Text>
+              <Text className='ml-2'>{dimension}</Text>
+            </View>
+            <View className='mb-3 flex flex-row'>
+              <Text className='text-md font-semibold w-4/12 ml-5 text-[15px]'>
+                <MaterialCommunityIcons name='watering-can' size={25} color='#575757' /> :
+              </Text>
+              <Text className='ml-2'>{watering}</Text>
+            </View>
           </View>
-          <View className='mb-3 flex flex-row'>
-            <Text className='text-md font-semibold w-4/12 ml-3 text-[15px]'>Température</Text>
-            <Text className='ml-2'>{temperature}</Text>
-          </View>
-          <View className='mb-3 flex flex-row'>
-            <Text className='text-md font-semibold w-4/12 ml-3 text-[15px]'>Pour les animaux</Text>
-            <Text className='ml-2'>{petFriendly}</Text>
-          </View>
-          <View className='mb-3 flex flex-row'>
-            <Text className='text-md font-semibold w-4/12 ml-3 text-[15px]'>Floraison</Text>
-            <Text className='ml-2'>{flowering}</Text>
-          </View>
-          <View className='mb-3 flex flex-row'>
-            <Text className='text-md font-semibold w-4/12 ml-3 text-[15px]'>Famille</Text>
-            <Text className='ml-2'>{family}</Text>
-          </View>
-          <View className='mb-3 flex flex-row'>
-            <Text className='text-md font-semibold w-4/12 ml-3 text-[15px]'>Exposition</Text>
-            <Text className='ml-2'>{exposition}</Text>
-          </View>
-          <View className='mb-3 flex flex-row'>
-            <Text className='text-md font-semibold w-4/12 ml-3 text-[15px]'>Dimension</Text>
-            <Text className='ml-2'>{dimension}</Text>
-          </View>
-          <View className='mb-3 flex flex-row'>
-            <Text className='text-md font-semibold w-4/12 ml-3 text-[15px]'>Arrosage</Text>
-            <Text className='ml-2'>{watering}</Text>
-          </View>
-        </View>
+        </ScrollView>
       </View>
     </SafeAreaView>
   )
