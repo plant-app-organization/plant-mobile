@@ -7,6 +7,7 @@ import {
   Platform,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native'
 
 import { useNavigation } from '@react-navigation/native'
@@ -63,7 +64,7 @@ const PlantDiseaseScreen: React.FunctionComponent<PlantDiseaseScreenProps> = (pr
   const [refreshing, setRefreshing] = useState<boolean>(false)
   // const [lastTitle, setLastTitle] = useState<string>('Arrosage')
   const [diseaseDescription, setDiseaseDescription] = useState<string>(
-    DISEASE_DESCRIPTION.fallenLeaves,
+    DISEASE_DESCRIPTION.lesthrips,
   )
 
   const navigation = useNavigation()
@@ -150,10 +151,11 @@ const PlantDiseaseScreen: React.FunctionComponent<PlantDiseaseScreenProps> = (pr
           }}
         />
       </View>
-
-      <View className='h-full p-5 bg-white'>
-        <Text className='text-lg text-justify'>{diseaseDescription}</Text>
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View className='h-full p-5 bg-white'>
+          <Text className='text-lg text-justify'>{diseaseDescription}</Text>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

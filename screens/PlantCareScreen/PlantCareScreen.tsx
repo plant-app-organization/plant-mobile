@@ -7,6 +7,7 @@ import {
   Platform,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native'
 
 import { useNavigation } from '@react-navigation/native'
@@ -123,10 +124,11 @@ const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) =
           }}
         />
       </View>
-
-      <View className='h-full p-5 bg-white'>
-        <Text className='text-lg text-justify'>{caringDescription}</Text>
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View className='h-full p-5 bg-white'>
+          <Text className='text-lg text-justify'>{caringDescription}</Text>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
