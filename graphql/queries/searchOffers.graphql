@@ -1,5 +1,5 @@
-query searchOffers($searchInput: String!, $filters: [String!]!) {
-  OffersListSearch(searchInput: $searchInput, filters: $filters) {
+query searchOffers($searchInput: String!, $filters: [String!]!, $environment: String!) {
+  OffersListSearch(searchInput: $searchInput, filters: $filters, environment: $environment) {
     id
     authorId
     plantName
@@ -9,6 +9,7 @@ query searchOffers($searchInput: String!, $filters: [String!]!) {
     price
     health
     category
+    environment
     pot
     isActive
     createdAt
