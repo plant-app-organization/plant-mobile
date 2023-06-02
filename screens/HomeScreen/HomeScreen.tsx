@@ -139,14 +139,14 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: '#BFE6CB',
+        backgroundColor: '#C0FFE7',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
       <LinearGradient
         // start={{ x: 0.1, y: 0 }}
         // end={{ x: 0.9, y: 0 }}
-        colors={['#BFE6CB', 'white']}
+        colors={['#C0FFE7', 'white']}
         className='w-screen flex-col items-center py-5'
       >
         {isSignedIn && (
