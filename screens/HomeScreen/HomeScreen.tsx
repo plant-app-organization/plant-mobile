@@ -147,7 +147,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         // start={{ x: 0.1, y: 0 }}
         // end={{ x: 0.9, y: 0 }}
         colors={['#BFE6CB', 'white']}
-        className='w-screen flex-col items-center'
+        className='w-screen flex-col items-center pt-0'
       >
         {isSignedIn && (
           <View className='w-full flex-row items-center justify-start px-4'>
@@ -188,7 +188,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           </View>
         )}
         <TextInput
-          className='w-11/12 bg-white rounded-lg shadow-sm px-4 py-3 mt-2 mb-4'
+          className='w-11/12 bg-white rounded-lg shadow-sm px-4 py-3 mt-2 mb-1'
           placeholder='Rechercher une plante'
           value={search}
           onChangeText={(value) => setSearch(value)}
@@ -198,7 +198,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         />
       </LinearGradient>
 
-      <ScrollView className='w-screen mb-20 bg-white' showsVerticalScrollIndicator={false}>
+      <ScrollView className='w-screen bg-white pt-4' showsVerticalScrollIndicator={false}>
         <View className='w-full'>
           <MaskedView
             style={{ height: 27, marginTop: 10 }}
