@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import {
   StatusBar,
   Platform,
@@ -14,6 +14,8 @@ import {
   useWindowDimensions,
   Pressable,
 } from 'react-native'
+import { useIsFocused } from '@react-navigation/native'
+
 import { LinearGradient } from 'expo-linear-gradient'
 import CardProduct from '../../components/product/CardProduct'
 import { useSearchOffersQuery } from '../../graphql/graphql'
@@ -28,32 +30,83 @@ import { Image } from 'expo-image'
 interface MapSearchScreenProps {}
 
 const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) => {
+  // console.log('🏓🏓🏓🏓🏓props.route.params.filter in mapsearchscreen', props.route.params.filter)
   const [resultsDisplay, setResultsDisplay] = useState<string>('list')
   const [filters, setFilters] = useState<string[]>([])
   const [searchInput, setSearchInput] = useState<string>('')
+  const [environment, setEnvironment] = useState<string>('')
+
   const [refreshing, setRefreshing] = useState<boolean>(false)
   const { data: searchOffersData, refetch: refetchSearchOffersData } = useSearchOffersQuery({
-    variables: { searchInput, filters },
+    variables: { searchInput, filters, environment },
   })
   console.log('🙂filters', filters)
+  console.log('🤩environment', environment)
+  const inputRef = useRef(null)
+
   const navigation = useNavigation()
   const { width, height } = useWindowDimensions()
-  console.log('searchOffersData', searchOffersData)
+  const isFocused = useIsFocused()
+
+  // console.log('searchOffersData', searchOffersData)
   const renderItem = useCallback(({ item }) => <CardProduct {...item} />, [])
   const handleFilterPress = (filterValue: string) => {
     if (filterValue == 'all') {
+      console.log('clic ALL')
       setFilters([])
-      refetchSearchOffersData({ filters: [] })
+      setEnvironment('')
+      refetchSearchOffersData({ filters: [], environment: '' })
     } else {
       if (filters.some((e) => e === filterValue)) {
         setFilters(filters.filter((e) => e !== filterValue))
-        refetchSearchOffersData({ filters: filters.filter((e) => e !== filterValue) })
+        refetchSearchOffersData({ environment, filters: filters.filter((e) => e !== filterValue) })
       } else {
         setFilters([...filters, filterValue])
-        refetchSearchOffersData({ filters: [...filters, filterValue] })
+        refetchSearchOffersData({ environment, filters: [...filters, filterValue] })
       }
     }
   }
+
+  const handleEnvironmentPress = (environmentValue: string) => {
+    if (environmentValue == 'indoor') {
+      if (environment == 'indoorAndOutdoor') {
+        setEnvironment('outdoor')
+        refetchSearchOffersData({ filters, environment: 'indoor' })
+      } else if (environment == 'indoor') {
+        setEnvironment('')
+        refetchSearchOffersData({ filters, environment: '' })
+      } else if (environment == 'outdoor') {
+        setEnvironment('indoorAndOutdoor')
+        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor' })
+      } else if (environment == '') {
+        setEnvironment('indoor')
+        refetchSearchOffersData({ filters, environment: 'indoor' })
+      }
+    } else if (environmentValue == 'outdoor') {
+      if (environment == 'indoorAndOutdoor') {
+        setEnvironment('indoor')
+        refetchSearchOffersData({ filters, environment: 'outdoor' })
+      } else if (environment == 'indoor') {
+        setEnvironment('indoorAndOutdoor')
+        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor' })
+      } else if (environment == 'outdoor') {
+        setEnvironment('')
+        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor' })
+      } else if (environment == '') {
+        setEnvironment('outdoor')
+        refetchSearchOffersData({ filters, environment: 'outdoor' })
+      }
+    }
+  }
+  useEffect(() => {
+    props.route?.params?.comingFromHomeScreenInput == true
+      ? inputRef.current?.focus()
+      : console.log('not coming from homescreen')
+
+    props.route?.params?.filter
+      ? setFilters([props.route.params.filter])
+      : console.log('PAS DE FILTRE DANS LA ROUTE')
+  }, [isFocused])
 
   const wait = (timeout: number) => {
     return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -89,11 +142,12 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
       }
     >
       <TextInput
-        className='font-Roboto w-11/12 border-green-50 border-solid bg-white  text-left  rounded-2xl border ml-4 p-3 mr-4 mt-4'
+        className='w-12/12 bg-white rounded-lg shadow-sm px-4 py-3 mt-6 mx-3'
         placeholder='Rechercher une plante'
         value={searchInput}
         onChangeText={onChangeText}
-        placeholderTextColor='#000'
+        placeholderTextColor='#AFAFAF'
+        ref={inputRef}
       />
 
       <View className='flex-row justify-around items-center w-full pt-4'>
@@ -103,11 +157,29 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
           showsHorizontalScrollIndicator={false}
         >
           <TouchableOpacity
-            onPress={() => setFilters([])}
-            className={`${!filters.length && 'border'}
+            onPress={() => handleFilterPress('all')}
+            className={`${!filters.length && environment == '' && 'border'}
       bg-yellow-100	border-solid rounded-2xl  p-2 mr-2`}
           >
-            <Text className='font-Roboto '>Toutes les catégories</Text>
+            <Text className='font-Roboto '>Tout</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleEnvironmentPress('indoor')}
+            className={`${
+              (environment == 'indoor' || environment === 'indoorAndOutdoor') && 'border'
+            }
+      bg-orange-100	 border-solid rounded-2xl  p-2 mr-2`}
+          >
+            <Text className='font-Roboto '>Plantes d'intérieur</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleEnvironmentPress('outdoor')}
+            className={`${
+              (environment === 'outdoor' || environment === 'indoorAndOutdoor') && 'border'
+            }
+      bg-orange-100	 border-solid rounded-2xl  p-2 mr-2`}
+          >
+            <Text className='font-Roboto '>Plantes d'extérieur</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => handleFilterPress('succulent')}
@@ -123,19 +195,27 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
           >
             <Text className='font-Roboto '>Rares</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleFilterPress('interior')}
-            className={`${filters.some((e) => e === 'interior') && 'border'}
-      bg-orange-100	 border-solid rounded-2xl  p-2 mr-2`}
-          >
-            <Text className='font-Roboto '>Plante d'intérieur</Text>
-          </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => handleFilterPress('tropical')}
             className={`${filters.some((e) => e === 'tropical') && 'border'}
       bg-purple-100	 border-solid rounded-2xl  p-2 mr-2`}
           >
             <Text className='font-Roboto '>Tropicales</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleFilterPress('kitchenGarden')}
+            className={`${filters.some((e) => e === 'kitchenGarden') && 'border'}
+      bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
+          >
+            <Text className='font-Roboto '>Potager</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleFilterPress('aromatic')}
+            className={`${filters.some((e) => e === 'aromatic') && 'border'}
+      bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
+          >
+            <Text className='font-Roboto '>Aromatiques</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>

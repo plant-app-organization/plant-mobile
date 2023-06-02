@@ -28,6 +28,7 @@ import {
   Button,
   Stack,
   Input,
+  TextArea,
 } from 'native-base'
 
 import { LinearGradient } from 'expo-linear-gradient'
@@ -61,6 +62,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   const [regionName, setRegionName] = useState<string>('')
   const [postCode, setPostCode] = useState<string>('')
   const [category, setCategory] = useState<string>('')
+  const [environment, setEnvironment] = useState<string>('')
   const [pot, setPot] = useState<boolean>(false)
   const [health, setHealth] = useState<string>('')
   const [maintenanceDifficultyLevel, setMaintenanceDifficultyLevel] = useState<string>('')
@@ -188,6 +190,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             pictures: imagesUrls,
             price: Number(price),
             category,
+            environment,
             health,
             pot,
             plantHeight: Math.floor(plantHeight),
@@ -207,7 +210,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           title: '🪴 Votre offre a été publiée !',
         })
     } else {
-      alert('Erreur', 'Veuillez remplir tous les champs')
+      alert('Veuillez remplir tous les champs')
     }
   }
 
@@ -377,8 +380,9 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             </View>
             <View className='py-5'>
               <Text className='text-base font-semibold mb-3'>Décrivez votre plante</Text>
-              <Input
-                variant='filled'
+
+              <TextArea
+                h={20}
                 value={description}
                 onChangeText={(value) => setDescription(value)}
                 placeholder='Description'
@@ -440,6 +444,26 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             </View>
 
             <View className='w-[80%] py-5 items-center'>
+              <FormControl w='100%' isRequired isInvalid className='mt-10 mb-10'>
+                <Select
+                  selectedValue={environment}
+                  minWidth='200'
+                  accessibilityLabel='Environnement'
+                  placeholder='Intérieur ou extérieur'
+                  fontSize={16}
+                  placeholderTextColor='black'
+                  _selectedItem={{
+                    bg: 'teal.600',
+                    endIcon: <CheckIcon size={5} />,
+                  }}
+                  mt={1}
+                  onValueChange={(itemValue) => setEnvironment(itemValue)}
+                >
+                  <Select.Item label='Intérieur' value='indoor' />
+                  <Select.Item label='Extérieur' value='outdoor' />
+                  <Select.Item label='Intérieur & extérieur' value='both' />
+                </Select>
+              </FormControl>
               <FormControl w='100%' isRequired isInvalid>
                 <Select
                   className='rounded-sm'
@@ -459,6 +483,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   <Select.Item label='Tropicales' value='tropical' />
                   <Select.Item label='Rares' value='rare' />
                   <Select.Item label='Aromatiques' value='aromatic' />
+                  <Select.Item label='Plantes du potager' value='kitchenGarden' />
                   <Select.Item label='Plantes grasses' value='succulent' />
                   <Select.Item label='Autre' value='autre' />
                 </Select>

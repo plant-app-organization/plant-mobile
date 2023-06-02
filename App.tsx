@@ -73,6 +73,10 @@ export default function App() {
     Roboto: require('./assets/fonts/Roboto.ttf'),
     antipasto: require('./assets/fonts/antipasto.ttf'),
     helvetica: require('./assets/fonts/helvetica.ttf'),
+    manrope_regular: require('./assets/fonts/manrope.regular.otf'),
+    manrope_bold: require('./assets/fonts/manrope.bold.otf'),
+    manrope_extra_bold: require('./assets/fonts/manrope.extrabold.otf'),
+    manrope_semi_bold: require('./assets/fonts/manrope.semibold.otf'),
   })
 
   return (

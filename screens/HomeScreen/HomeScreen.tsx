@@ -17,9 +17,10 @@ import {
 } from 'react-native'
 
 import { Image } from 'expo-image'
+import MaskedView from '@react-native-masked-view/masked-view'
 
 import { ChevronRightIcon, Spinner, Switch } from 'native-base'
-
+import PlantersDisplay from '../../components/PlantersDisplay/PlantersDisplay'
 import CardProduct from '../../components/product/CardProduct'
 import CardDeal from '../../components/super-deals/CardDeal'
 import CardCategorie from '../../components/categories/CardCategorie'
@@ -83,64 +84,20 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       image: require('../../assets/categories/tropicPlant.png'),
     },
     {
-      name: 'Aromatiques',
-      image: require('../../assets/categories/basilicPlant02.png'),
-    },
-    {
-      name: 'du Potager',
-      image: require('../../assets/categories/tomatePlant.png'),
+      name: 'Rares',
+      image: require('../../assets/categories/starPlant.png'),
     },
     {
       name: 'Cactus',
       image: require('../../assets/categories/cactusPlant.png'),
     },
     {
-      name: 'Rares',
-      image: require('../../assets/categories/starPlant.png'),
-    },
-  ]
-
-  const plantersData: { name: string; deals: number; image: string }[] = [
-    {
-      name: 'Marie',
-      deals: 1205,
-      image:
-        'https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      name: 'Aromatiques',
+      image: require('../../assets/categories/basilicPlant02.png'),
     },
     {
-      name: 'William',
-      deals: 1123,
-      image:
-        'https://images.unsplash.com/photo-1601233749202-95d04d5b3c00?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2876&q=80',
-    },
-    {
-      name: 'Jardiland',
-      deals: 1058,
-      image: '',
-    },
-    {
-      name: 'Lucas',
-      deals: 978,
-      image:
-        'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-    },
-    {
-      name: 'Axel',
-      deals: 898,
-      image:
-        'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-    },
-    {
-      name: 'Gabriel',
-      deals: 861,
-      image:
-        'https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80',
-    },
-    {
-      name: 'Maxime',
-      deals: 561,
-      image:
-        'https://thumbs.dreamstime.com/z/business-man-standing-confident-smile-portrait-successful-suit-smiling-proud-outdoors-44304293.jpg',
+      name: 'du Potager',
+      image: require('../../assets/categories/tomatePlant.png'),
     },
   ]
 
@@ -170,6 +127,14 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const suggestion = suggestionData.map((data, i) => {
     return <CardSuggestion key={i} search={data.search} views={data.views} />
   })
+  const inputRef = useRef(null)
+
+  const navigateToMapSearchScreen = () => {
+    inputRef.current?.blur()
+    navigation.navigate('Search', {
+      comingFromHomeScreenInput: true,
+    })
+  }
 
   return (
     <SafeAreaView
@@ -198,27 +163,60 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               <Avatar.Badge bg='green.500' size='23%' />
             </Avatar>
             <View>
-              <Text className='ml-4 text-xl font-semibold text-slate-800'>
+              <MaskedView
+                style={{ height: 32, backgroundColor: 'white' }}
+                maskElement={
+                  <Text className='ml-4 text-xl' style={{ fontFamily: 'manrope_extra_bold' }}>
+                    Bonjour {user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1)}
+                  </Text>
+                }
+              >
+                <LinearGradient
+                  colors={['#6AB2DF', '#81BBA1', '#709045']}
+                  start={{ x: 1, y: 1 }}
+                  end={{ x: 0, y: 0.33 }}
+                  style={{ flex: 1 }}
+                />
+              </MaskedView>
+              {/* <Text className='ml-4 text-xl font-semibold text-slate-800'>
                 Bonjour {user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1)}
+              </Text> */}
+              <Text className='ml-4 text-xs ' style={{ fontFamily: 'OpenSans', color: '#323232' }}>
+                Découvre les nouvelles offres !
               </Text>
-              <Text className='ml-4 text-xs text-slate-700'>Découvre les nouvelles offres !</Text>
             </View>
           </View>
         )}
         <TextInput
-          className='w-10/12 bg-white rounded-full shadow-sm px-4 py-3 mt-6'
+          className='w-11/12 bg-white rounded-lg shadow-sm px-4 py-3 mt-6'
           placeholder='Rechercher une plante'
           value={search}
           onChangeText={(value) => setSearch(value)}
           placeholderTextColor='#AFAFAF'
+          onFocus={navigateToMapSearchScreen}
+          ref={inputRef}
         />
       </LinearGradient>
 
       <ScrollView className='w-screen mb-20 bg-white' showsVerticalScrollIndicator={false}>
-        <View className='w-screen h-[20px]' />
         <View className='w-full'>
-          <Text className='pl-5 text-lg font-semibold tracking-widest uppercase'>Top Planters</Text>
-          <FlatList
+          <MaskedView
+            style={{ height: 27, marginTop: 10 }}
+            maskElement={
+              <Text className='ml-6 text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                Top Planters autour de moi
+              </Text>
+            }
+          >
+            <LinearGradient
+              colors={['#709045', '#6AB2DF', '#81BBA1']}
+              start={{ x: 1, y: 1 }}
+              end={{ x: 0, y: 0.33 }}
+              style={{ flex: 1 }}
+            />
+          </MaskedView>
+          {/* <Text className='pl-5 text-lg font-semibold tracking-widest uppercase'>Top Planters</Text> */}
+          {/* <FlatList
             data={plantersData}
             renderItem={({ item }) => (
               <CardPlanter name={item.name} image={item.image} deals={item.deals} />
@@ -226,7 +224,8 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             keyExtractor={(item) => item.key}
             horizontal={true}
             contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
-          />
+          /> */}
+          <PlantersDisplay />
         </View>
 
         {/* <View className='h-[50px] w-full' />
@@ -244,12 +243,22 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View> */}
 
-        <View className='h-[50px] w-full' />
-
         <View className='w-full'>
-          <Text className='pl-5 text-lg w-full font-semibold tracking-widest uppercase'>
-            Catégories
-          </Text>
+          <MaskedView
+            style={{ height: 27, marginTop: 10 }}
+            maskElement={
+              <Text className='ml-6 text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                Catégories
+              </Text>
+            }
+          >
+            <LinearGradient
+              colors={['#709045', '#6AB2DF', '#81BBA1']}
+              start={{ x: 1, y: 1 }}
+              end={{ x: 0, y: 0.33 }}
+              style={{ flex: 1 }}
+            />
+          </MaskedView>
           <FlatList
             data={categorieData}
             renderItem={({ item }) => <CardCategorie name={item.name} image={item.image} />}
@@ -258,14 +267,22 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             contentContainerStyle={{ padding: 20 }}
           />
         </View>
-
-        <View className='h-[50px] w-full' />
-
-        <View className='w-full items-center'>
-          <Text className='pl-5 pb-4 text-lg w-full font-semibold tracking-widest uppercase'>
-            Ta plante au quotidien
-          </Text>
-
+        <MaskedView
+          style={{ height: 27, marginTop: 10 }}
+          maskElement={
+            <Text className='ml-6 text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+              Ta plante au quotiden
+            </Text>
+          }
+        >
+          <LinearGradient
+            colors={['#709045', '#6AB2DF', '#81BBA1']}
+            start={{ x: 1, y: 1 }}
+            end={{ x: 0, y: 0.33 }}
+            style={{ flex: 1 }}
+          />
+        </MaskedView>
+        <View className='w-full items-center mt-4'>
           <TouchableOpacity
             onPress={() => navigation.navigate('PlantCareScreen')}
             className='w-[90%] h-[90px] bg-white flex flex-row items-center justify-evenly rounded-lg shadow'
@@ -316,9 +333,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           </TouchableOpacity>
         </View>
 
-        <View className='h-[50px] w-full' />
-
-        <View className='w-full h-40'>
+        {/* <View className='w-full h-40'>
           <Text className='pl-5 pb-4 text-lg w-full font-normal'>Publicité</Text>
           <Image
             source='https://i.ibb.co/FWY0jhd/02-01-decouvrir-histoire-de-marseille.jpg'
@@ -326,9 +341,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             transition={1000}
             className='w-full h-full'
           />
-        </View>
-
-        <View className='h-[50px] w-full' />
+        </View> */}
 
         {/* <View className='w-full'>
           <Text className='pl-5 text-xl'>👀 À la une</Text>
@@ -346,9 +359,21 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         <View className='h-[50px] w-full' />
 
         <View className='w-full'>
-          <Text className='pl-5 text-lg w-full font-semibold tracking-widest uppercase'>
-            Suggestions
-          </Text>
+          <MaskedView
+            style={{ height: 27, marginTop: 10 }}
+            maskElement={
+              <Text className='ml-6 text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                Suggestions
+              </Text>
+            }
+          >
+            <LinearGradient
+              colors={['#709045', '#6AB2DF', '#81BBA1']}
+              start={{ x: 1, y: 1 }}
+              end={{ x: 0, y: 0.33 }}
+              style={{ flex: 1 }}
+            />
+          </MaskedView>
           <FlatList
             data={suggestionData}
             renderItem={({ item }) => <CardSuggestion search={item.search} views={item.views} />}

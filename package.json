@@ -21,6 +21,7 @@
     "@heroicons/react": "^2.0.15",
     "@klarna/react-native-vector-drawable": "^0.4.0",
     "@react-native-community/slider": "4.4.2",
+    "@react-native-masked-view/masked-view": "0.2.8",
     "@react-navigation/bottom-tabs": "6",
     "@react-navigation/native": "6",
     "@react-navigation/native-stack": "6",

@@ -47,6 +47,7 @@ export type Offer = {
   city: Scalars['String'];
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
+  environment: Scalars['String'];
   health: Scalars['String'];
   id: Scalars['ID'];
   isActive: Scalars['Boolean'];
@@ -69,6 +70,7 @@ export type OfferInput = {
   category: Scalars['String'];
   city: Scalars['String'];
   description: Scalars['String'];
+  environment: Scalars['String'];
   health: Scalars['String'];
   latitude: Scalars['Float'];
   location: Scalars['String'];
@@ -103,6 +105,7 @@ export type QueryOffersListArgs = {
 
 
 export type QueryOffersListSearchArgs = {
+  environment: Scalars['String'];
   filters: Array<Scalars['String']>;
   searchInput: Scalars['String'];
 };
@@ -165,7 +168,7 @@ export type GetOffersQueryVariables = Exact<{
 }>;
 
 
-export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, latitude: number, longitude: number, location: string }> };
+export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, environment: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, latitude: number, longitude: number, location: string }> };
 
 export type GetUserBookmarksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -189,10 +192,11 @@ export type RegisterMutation = { __typename?: 'Mutation', register: string };
 export type SearchOffersQueryVariables = Exact<{
   searchInput: Scalars['String'];
   filters: Array<Scalars['String']> | Scalars['String'];
+  environment: Scalars['String'];
 }>;
 
 
-export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, bookmarkedBy: Array<string>, isBookmarked?: boolean | null, latitude: number, longitude: number, location: string, city: string, postcode: string, region: string }> };
+export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, environment: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, bookmarkedBy: Array<string>, isBookmarked?: boolean | null, latitude: number, longitude: number, location: string, city: string, postcode: string, region: string }> };
 
 
 export const BookmarkOfferDocument = gql`
@@ -269,6 +273,7 @@ export const GetOffersDocument = gql`
     price
     health
     category
+    environment
     pot
     isActive
     createdAt
@@ -430,8 +435,12 @@ export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const SearchOffersDocument = gql`
-    query searchOffers($searchInput: String!, $filters: [String!]!) {
-  OffersListSearch(searchInput: $searchInput, filters: $filters) {
+    query searchOffers($searchInput: String!, $filters: [String!]!, $environment: String!) {
+  OffersListSearch(
+    searchInput: $searchInput
+    filters: $filters
+    environment: $environment
+  ) {
     id
     authorId
     plantName
@@ -441,6 +450,7 @@ export const SearchOffersDocument = gql`
     price
     health
     category
+    environment
     pot
     isActive
     createdAt
@@ -473,6 +483,7 @@ export const SearchOffersDocument = gql`
  *   variables: {
  *      searchInput: // value for 'searchInput'
  *      filters: // value for 'filters'
+ *      environment: // value for 'environment'
  *   },
  * });
  */

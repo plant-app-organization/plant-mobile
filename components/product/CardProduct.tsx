@@ -45,7 +45,7 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
 
   const toast = useToast()
   const bookmarksArray = useReactiveVar(bookmarksVar)
-  console.log('🍔bookmarksArray ', bookmarksArray)
+  // console.log('🍔bookmarksArray ', bookmarksArray)
 
   const scaleAnimation = useRef(new Animated.Value(1)).current
   const navigation = useNavigation()

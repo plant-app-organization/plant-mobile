@@ -9,6 +9,7 @@ query getOffers($filters: [String!]!) {
     price
     health
     category
+    environment
     pot
     isActive
     createdAt

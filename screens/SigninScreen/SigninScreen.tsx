@@ -161,14 +161,14 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 Continuer avec Facebook
               </Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
+            <TouchableOpacity
               className='h-[45px] w-[80%] rounded-full items-center justify-center bg-white border border-gray-700 shadow-sm'
               onPress={onSignUpPress}
             >
               <Text className='text-black text-md font-semibold tracking-widest'>
                 Créer un compte
               </Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
       </SafeAreaView>

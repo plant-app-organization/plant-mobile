@@ -43,7 +43,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
     if (!isLoaded) {
       return
     }
-
+    console.log('test', username, emailAddress, password)
     try {
       await signUp
         .create({
@@ -163,14 +163,14 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                   Continuer avec Facebook
                 </Text>
               </TouchableOpacity>
-              {/* <TouchableOpacity
+              <TouchableOpacity
                 className='h-[45px] w-[300px] rounded-full items-center border-2 border-solid justify-center'
                 onPress={onSignInPress}
               >
-                <Text className='text-black text-ml font-Roboto '>
+                <Text className='text-black text-ml font-Roboto'>
                   Déjà inscrit ? Connectez-vous !
                 </Text>
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
           </View>
         </View>
