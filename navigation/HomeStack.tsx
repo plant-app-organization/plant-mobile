@@ -121,14 +121,7 @@ const HomeStackNavigator = () => {
                 animation: 'slide_from_right',
               }}
             />
-            <HomeStack.Screen
-              name='UserProfile'
-              component={UserProfileScreen}
-              options={{
-                animationTypeForReplace: 'push',
-                animation: 'slide_from_right',
-              }}
-            />
+
             <HomeStack.Screen
               name='Bookmarks'
               component={BookmarksScreen}

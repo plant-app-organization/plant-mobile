@@ -122,171 +122,111 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
 
   return (
     <>
-      <Modal isOpen={isOpen} safeAreaTop={true}>
-        <Modal.Content
-          style={{ backgroundColor: '#f2fff3' }}
-          className='justify-center item-center	bg-transparent'
-          maxWidth='350'
+      <LinearGradient
+        // Background Linear Gradient
+        colors={['#BFE6CB', '#EFFFFD', '#FEFFFF']}
+      >
+        <SafeAreaView
+          style={{
+            paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+          }}
         >
-          <Modal.Body>
-            <View className='items-center rounded'>
-              <Text className='font-antipasto text-black text-4xl'>Felicitations !!!</Text>
-              <Animated.Image
-                source={images[imageIndex]}
-                style={{
-                  marginTop: 20,
-                  width: imageIndex === 1 ? 170 : 200,
-                  height: imageIndex === 1 ? 190 : 200,
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 5,
-                    height: 1,
-                  },
-                  shadowOpacity: 0.32,
-                  shadowRadius: 4.1,
-                }}
-              />
-              <Text className='font-Roboto  text-black text-2xl'>
-                Bravo, tu passes au niveau suivant, évolution en {name[nameEvo]}
-              </Text>
-              <TouchableOpacity
-                className='rounded mt-10 p-3'
-                style={{
-                  backgroundColor: '#3FA96A',
-                }}
-                onPress={handleModalClose}
-              >
-                <Text className='text-white font-Roboto  align-center'>Close</Text>
+          <View className='w-full h-full px-5 flex justify-between 	'>
+            <View className='w-full h-[20%] flex-row border-b border-gray-200'>
+              <View className='w-6/12 h-full flex-row items-center'>
+                <Avatar
+                  bg='amber.500'
+                  source={{
+                    uri: user?.profileImageUrl,
+                  }}
+                  size='lg'
+                >
+                  NB
+                  <Avatar.Badge bg='green.500' size='23%' />
+                </Avatar>
+
+                <View className='ml-4'>
+                  <Text className='text-xl font-Roboto mb-2'>
+                    {user?.username?.charAt().toUpperCase() + user?.username?.slice(1)}
+                  </Text>
+                  <Text>{personalPlants}</Text>
+                </View>
+              </View>
+
+              <TouchableOpacity className='w-6/12 h-full flex-row items-center justify-end'>
+                <Text className='font-Roboto text-lg	 mr-4'>Modifier mon profil</Text>
+                <FontAwesomeIcon name='angle-right' size={20} />
               </TouchableOpacity>
             </View>
-          </Modal.Body>
-        </Modal.Content>
-      </Modal>
 
-      <SafeAreaView
-        style={{
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'white',
-          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-        }}
-      >
-        <View className='w-full h-[30%] justify-evenly items-center'>
-          <Image
-            source={images[imageIndex]}
-            className='w-[100px] h-[100px]'
-            style={{
-              // width: imageIndex === 1 ? 110 : 130,
-              // height: imageIndex === 1 ? 125 : 130,
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 2,
-                height: 2,
-              },
-              shadowOpacity: 0.32,
-              shadowRadius: 4.1,
-            }}
-          />
-          <View className='w-10/12 h-[50px] justify-between rounded-lg'>
-            <ProgressBar progress={progress} height={15} color='#3FA96A' />
-
-            <TouchableOpacity className='items-center' onPress={handleButtonClick}>
-              <Text>Progress</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View className='w-full h-full px-4'>
-          <View className='w-full h-[20%] flex-row border-b border-gray-200'>
-            <View className='w-6/12 h-full flex-row items-center'>
-              <Avatar
-                bg='amber.500'
-                source={{
-                  uri: user?.profileImageUrl,
-                }}
-                size='lg'
-              >
-                NB
-                <Avatar.Badge bg='green.500' size='23%' />
-              </Avatar>
-
-              <View className='ml-4'>
-                <Text className='text-xl font-Roboto mb-2'>
-                  {user?.username?.charAt().toUpperCase() + user?.username?.slice(1)}
-                </Text>
-                <Text>{personalPlants}</Text>
+            <TouchableOpacity
+              className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'
+              onPress={() => navigation.navigate('Bookmarks')}
+            >
+              <FontAwesomeIcon className=' w-1/12 text-red-300 ' name='heart' size={20} />
+              <View className='w-10/12 flex flex-row'>
+                <Text className='text-lg	 font-Roboto'>Mes favoris</Text>
+                <Badge
+                  colorScheme='success'
+                  variant='subtle'
+                  rounded='full'
+                  mt={-4}
+                  mr={0}
+                  pr={1}
+                  pl={1}
+                  zIndex={1}
+                  alignSelf='flex-start'
+                  _text={{
+                    fontSize: 10,
+                  }}
+                >
+                  {userBookmarks?.length}
+                </Badge>
               </View>
-            </View>
-
-            <TouchableOpacity className='w-6/12 h-full flex-row items-center justify-end'>
-              <Text className='font-Roboto text-sm mr-4'>Modifier mon profil</Text>
               <FontAwesomeIcon name='angle-right' size={20} />
             </TouchableOpacity>
+
+            <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
+              <FontAwesomeIcon className=' w-1/12 text-yellow-300' name='euro' size={20} />
+              <View className='w-10/12'>
+                <Text className='text-lg	 font-Roboto'>Mes ventes</Text>
+              </View>
+              <FontAwesomeIcon name='angle-right' size={20} />
+            </TouchableOpacity>
+
+            <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
+              <FontAwesomeIcon className=' w-1/12 text-blue-300	' name='shopping-cart' size={20} />
+              <View className='w-10/12'>
+                <Text className='text-lg	 font-Roboto'>Mes achats</Text>
+              </View>
+              <FontAwesomeIcon name='angle-right' size={20} />
+            </TouchableOpacity>
+
+            <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
+              <FontAwesomeIcon className=' w-1/12 text-neutral-400' name='commenting' size={20} />
+              <View className='w-10/12'>
+                <Text className='text-lg	 font-Roboto'>Mes avis</Text>
+              </View>
+              <FontAwesomeIcon name='angle-right' size={20} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              className='w-full flex-row items-center justify-center  py-9'
+              onPress={onSignOutPress}
+            >
+              <View className='w-10/12 items-center'>
+                <FontAwesomeIcon
+                  className=' w-1/12 text-pink-300 self-center	'
+                  name='user'
+                  size={20}
+                />
+
+                <Text className='text-lg	 font-Roboto'>Me déconnecter</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-
-          <TouchableOpacity
-            className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'
-            onPress={() => navigation.navigate('Bookmarks')}
-          >
-            <FontAwesomeIcon className='opacity-30 w-1/12' name='heart' size={18} />
-            <View className='w-10/12 flex flex-row'>
-              <Text>Mes favoris</Text>
-              <Badge
-                colorScheme='success'
-                variant='subtle'
-                rounded='full'
-                mt={-4}
-                mr={0}
-                pr={1}
-                pl={1}
-                zIndex={1}
-                alignSelf='flex-start'
-                _text={{
-                  fontSize: 10,
-                }}
-              >
-                {userBookmarks?.length}
-              </Badge>
-            </View>
-            <FontAwesomeIcon name='angle-right' size={18} />
-          </TouchableOpacity>
-
-          <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
-            <FontAwesomeIcon className='opacity-30 w-1/12' name='euro' size={18} />
-            <View className='w-10/12'>
-              <Text>Mes ventes</Text>
-            </View>
-            <FontAwesomeIcon name='angle-right' size={18} />
-          </TouchableOpacity>
-
-          <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
-            <FontAwesomeIcon className='opacity-30 w-1/12' name='shopping-cart' size={18} />
-            <View className='w-10/12'>
-              <Text>Mes achats</Text>
-            </View>
-            <FontAwesomeIcon name='angle-right' size={18} />
-          </TouchableOpacity>
-
-          <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
-            <FontAwesomeIcon className='opacity-30 w-1/12' name='commenting' size={18} />
-            <View className='w-10/12'>
-              <Text>Mes avis</Text>
-            </View>
-            <FontAwesomeIcon name='angle-right' size={18} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            className='w-full flex-row items-center justify-between py-5'
-            onPress={onSignOutPress}
-          >
-            <FontAwesomeIcon className='opacity-30 w-1/12' name='user' size={18} />
-            <View className='w-10/12'>
-              <Text>Me déconnecter</Text>
-            </View>
-            <FontAwesomeIcon name='angle-right' size={18} />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+        </SafeAreaView>
+      </LinearGradient>
     </>
   )
 }
