@@ -43,12 +43,12 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
     if (!isLoaded) {
       return
     }
-    console.log('test', username, emailAddress, password)
+    console.log('credential', username, emailAddress)
     try {
       await signUp
         .create({
-          username,
           emailAddress,
+          username,
           password,
         })
         .then((result) => {
@@ -57,7 +57,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
             console.log(result)
             sessionIdVar(result.createdSessionId)
           } else {
-            // console.log(result);
+            console.log(result)
           }
         })
         .catch((err) => console.error('error', err.errors[0].longMessage))

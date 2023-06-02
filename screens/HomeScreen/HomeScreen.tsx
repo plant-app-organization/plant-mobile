@@ -147,7 +147,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         // start={{ x: 0.1, y: 0 }}
         // end={{ x: 0.9, y: 0 }}
         colors={['#BFE6CB', 'white']}
-        className='w-screen flex-col items-center py-5'
+        className='w-screen flex-col items-center'
       >
         {isSignedIn && (
           <View className='w-full flex-row items-center justify-start px-4'>
@@ -188,7 +188,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           </View>
         )}
         <TextInput
-          className='w-11/12 bg-white rounded-lg shadow-sm px-4 py-3 mt-6'
+          className='w-11/12 bg-white rounded-lg shadow-sm px-4 py-3 mt-2 mb-4'
           placeholder='Rechercher une plante'
           value={search}
           onChangeText={(value) => setSearch(value)}
