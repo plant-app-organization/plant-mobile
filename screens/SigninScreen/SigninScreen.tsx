@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Image,
 } from 'react-native'
 import { useToast, Input, Pressable, Icon, InputGroup } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -66,7 +67,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
         style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
       >
         <View className='flex items-center justify-evenly h-[25%] relative'>
-          <Text className='font-Gentle text-4xl text-black'>Plante.</Text>
+          <Image source={require('../../assets/plantb.png')} className='w-40 h-24' />
           <Text className='w-[90%] text-black text-lg tracking-widest'>
             <Text className='font-bold'>Connectez-vous </Text>
             pour commencer à acheter ou vendre vos plantes

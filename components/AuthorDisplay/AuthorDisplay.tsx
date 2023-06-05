@@ -1,28 +1,28 @@
-import React from 'react';
-import { View, useWindowDimensions, Text, TouchableOpacity } from 'react-native';
-import { Avatar, ScrollView } from 'native-base';
-import { StarIcon } from 'react-native-heroicons/solid';
+import React from 'react'
+import { View, useWindowDimensions, Text, TouchableOpacity } from 'react-native'
+import { Avatar, ScrollView } from 'native-base'
+import { StarIcon } from 'react-native-heroicons/solid'
 
-import { useGetUserDataByIdQuery } from '../../graphql/graphql';
-import { useNavigation } from '@react-navigation/native';
+import { useGetUserDataByIdQuery } from '../../graphql/graphql'
+import { useNavigation } from '@react-navigation/native'
 
 interface AuthorDisplayProps {
-  userId: string;
+  userId: string
 }
 
 const AuthorDisplay: React.FunctionComponent<AuthorDisplayProps> = (props) => {
-  const { height, width } = useWindowDimensions();
-  const navigation = useNavigation();
+  const { height, width } = useWindowDimensions()
+  const navigation = useNavigation()
 
   //   console.log('props.userId', props.userId);
 
   const { data: userData, refetch: refetchUserData } = useGetUserDataByIdQuery({
     variables: { userId: props.userId },
-  });
+  })
 
   //   console.log('userData', userData?.userDataById);
   if (!userData) {
-    return <Text>Loading...</Text>;
+    return <Text>Loading...</Text>
   }
   return (
     <TouchableOpacity
@@ -51,7 +51,7 @@ const AuthorDisplay: React.FunctionComponent<AuthorDisplayProps> = (props) => {
         </View>
       </>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-export default AuthorDisplay;
+export default AuthorDisplay

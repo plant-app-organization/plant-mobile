@@ -79,7 +79,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
       >
         <View className='w-full h-full px-22'>
           <View className='flex items-center justify-evenly h-[25%] relative'>
-            <Text className='font-Gentle text-4xl text-black'>Plante.</Text>
+            <Image source={require('../../assets/plantb.png')} className='w-40 h-24' />
             <Text className='w-[90%] text-black text-lg tracking-wide'>
               <Text className='font-bold'>Inscrivez-vous </Text>
               pour découvrir, acheter et vendre des plantes

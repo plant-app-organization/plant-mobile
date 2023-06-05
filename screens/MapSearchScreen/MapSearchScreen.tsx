@@ -141,228 +141,216 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         />
       }
     >
-      <TextInput
-        className='w-12/12 bg-white rounded-lg shadow-sm px-4 py-3 mt-6 mx-3'
-        placeholder='Rechercher une plante'
-        value={searchInput}
-        onChangeText={onChangeText}
-        placeholderTextColor='#AFAFAF'
-        ref={inputRef}
-      />
-
-      <View className='flex-row justify-around items-center w-full pt-4'>
-        <ScrollView
-          className='w-screen pl-4'
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        >
-          <TouchableOpacity
-            onPress={() => handleFilterPress('all')}
-            className={`${!filters.length && environment == '' && 'border'}
-      bg-yellow-100	border-solid rounded-2xl  p-2 mr-2`}
-          >
-            <Text className='font-Roboto '>Tout</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleEnvironmentPress('indoor')}
-            className={`${
-              (environment == 'indoor' || environment === 'indoorAndOutdoor') && 'border'
-            }
-      bg-orange-100	 border-solid rounded-2xl  p-2 mr-2`}
-          >
-            <Text className='font-Roboto '>Plantes d'intérieur</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleEnvironmentPress('outdoor')}
-            className={`${
-              (environment === 'outdoor' || environment === 'indoorAndOutdoor') && 'border'
-            }
-      bg-orange-100	 border-solid rounded-2xl  p-2 mr-2`}
-          >
-            <Text className='font-Roboto '>Plantes d'extérieur</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleFilterPress('succulent')}
-            className={`${filters.some((e) => e === 'succulent') && 'border'}
-      bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
-          >
-            <Text className='font-Roboto '>Plantes grasses</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleFilterPress('rare')}
-            className={`${filters.some((e) => e === 'rare') && 'border'}
-      bg-blue-100	border-solid rounded-2xl  p-2 mr-2`}
-          >
-            <Text className='font-Roboto '>Rares</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => handleFilterPress('tropical')}
-            className={`${filters.some((e) => e === 'tropical') && 'border'}
-      bg-purple-100	 border-solid rounded-2xl  p-2 mr-2`}
-          >
-            <Text className='font-Roboto '>Tropicales</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleFilterPress('kitchenGarden')}
-            className={`${filters.some((e) => e === 'kitchenGarden') && 'border'}
-      bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
-          >
-            <Text className='font-Roboto '>Potager</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleFilterPress('aromatic')}
-            className={`${filters.some((e) => e === 'aromatic') && 'border'}
-      bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
-          >
-            <Text className='font-Roboto '>Aromatiques</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
-      <View className='items-start justify-start pt-0'>
-        {searchOffersData ? (
-          <View className='w-screen'>
-            <Text className='px-4 py-2 pl-6 font-Roboto '>
-              {searchOffersData?.OffersListSearch.length} résultats
-            </Text>
+      <View className='w-screen bg-white'>
+        <View className='items-start justify-start pt-0'>
+          {searchOffersData ? (
             <View className='w-screen'>
-              {resultsDisplay == 'list' ? (
-                <FlatList
-                  numColumns={2}
-                  // contentContainerStyle={{
-                  //   alignItems: 'flex-start',
-                  // }}
+              <Text className='px-4 py-2 pl-6 font-Roboto '>
+                {searchOffersData?.OffersListSearch.length} résultats
+              </Text>
+              <View className='w-screen'>
+                {resultsDisplay == 'list' ? (
+                  <FlatList
+                    numColumns={2}
+                    // contentContainerStyle={{
+                    //   alignItems: 'flex-start',
+                    // }}
 
-                  horizontal={false}
-                  initialNumToRender={4}
-                  maxToRenderPerBatch={6}
-                  ItemSeparatorComponent={() => <View className='h-4' />}
-                  columnWrapperStyle={{
-                    flex: 1,
-                    alignItems: 'flex-start',
-                  }}
-                  data={searchOffersData?.OffersListSearch}
-                  renderItem={renderItem}
-                  keyExtractor={(item) => item.id}
-                />
-              ) : (
-                <MapView
-                  style={{ width: '100%', height: 700 }}
-                  provider={'google'}
-                  initialRegion={{
-                    latitude: 46.3396952,
-                    longitude: 2.6072057,
-                    latitudeDelta: 10,
-                    longitudeDelta: 10,
-                  }}
-                >
-                  {searchOffersData.OffersListSearch.map((e, index) => {
-                    return (
-                      <Marker
-                        key={index}
-                        coordinate={{
-                          latitude: e.latitude,
-                          longitude: e.longitude,
-                        }}
-                        pinColor='pink'
-                      >
-                        <Callout
-                          style={{
-                            width: 0.4 * width,
-                            height: 0.25 * width,
+                    horizontal={false}
+                    initialNumToRender={4}
+                    maxToRenderPerBatch={6}
+                    ItemSeparatorComponent={() => <View className='h-4' />}
+                    columnWrapperStyle={{
+                      flex: 1,
+                      alignItems: 'flex-start',
+                    }}
+                    data={searchOffersData?.OffersListSearch}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
+                  />
+                ) : (
+                  <MapView
+                    style={{ width: '100%', height: 700 }}
+                    provider={'google'}
+                    initialRegion={{
+                      latitude: 46.3396952,
+                      longitude: 2.6072057,
+                      latitudeDelta: 10,
+                      longitudeDelta: 10,
+                    }}
+                  >
+                    {searchOffersData.OffersListSearch.map((e, index) => {
+                      return (
+                        <Marker
+                          key={index}
+                          coordinate={{
+                            latitude: e.latitude,
+                            longitude: e.longitude,
                           }}
-                          onPress={() => navigation.navigate('Listing', { listingData: e })}
+                          pinColor='pink'
                         >
-                          <View className='flex flex-row justify-between'>
-                            <View className='flex'>
-                              <Text>{e.plantName}</Text>
-                              <Text>{e.city}</Text>
-                            </View>
-                            <View className='flex'>
-                              <Text className='font-bold'>{e.price} €</Text>
-                            </View>
-                          </View>
-                          <View style={{ alignItems: 'center', alignContent: 'center' }}>
-                            <Text>
-                              slltlll
-                              <Image
-                                source={{ uri: e.pictures[0] }}
-                                style={{ height: 200, width: 200, borderRadius: 5 }}
-                                resizeMode='cover'
-                              />
-                            </Text>
-                          </View>
-                          <CalloutSubview
+                          <Callout
                             style={{
-                              alignItems: 'flex-end',
+                              width: 0.4 * width,
+                              height: 0.25 * width,
                             }}
-                            onPress={() => {
-                              console.log('onPress Clicked')
-                            }}
+                            onPress={() => navigation.navigate('Listing', { listingData: e })}
                           >
-                            <ChevronDoubleRightIcon color={'black'} />
-                          </CalloutSubview>
-                        </Callout>
-                      </Marker>
-                    )
-                  })}
-                </MapView>
-              )}
+                            <View className='flex flex-row justify-between'>
+                              <View className='flex'>
+                                <Text>{e.plantName}</Text>
+                                <Text>{e.city}</Text>
+                              </View>
+                              <View className='flex'>
+                                <Text className='font-bold'>{e.price} €</Text>
+                              </View>
+                            </View>
+                            <View style={{ alignItems: 'center', alignContent: 'center' }}>
+                              <Text>
+                                slltlll
+                                <Image
+                                  source={{ uri: e.pictures[0] }}
+                                  style={{ height: 200, width: 200, borderRadius: 5 }}
+                                  resizeMode='cover'
+                                />
+                              </Text>
+                            </View>
+                            <CalloutSubview
+                              style={{
+                                alignItems: 'flex-end',
+                              }}
+                              onPress={() => {
+                                console.log('onPress Clicked')
+                              }}
+                            >
+                              <ChevronDoubleRightIcon color={'black'} />
+                            </CalloutSubview>
+                          </Callout>
+                        </Marker>
+                      )
+                    })}
+                  </MapView>
+                )}
+              </View>
             </View>
-          </View>
-        ) : (
-          <View className='flex-1 w-screen '>
-            <LoadingView />
-          </View>
-        )}
+          ) : (
+            <View className='flex-1 w-screen '>
+              <LoadingView />
+            </View>
+          )}
+        </View>
       </View>
     </ScrollView>
   )
 
   return (
-    <View className='w-screen'>
-      <LinearGradient
-        // Background Linear Gradient
-        colors={['#BFE6CB', '#EFFFFD', '#FEFFFF']}
-        style={styles.background}
-      >
-        <SafeAreaView
-          style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
-        >
+    <SafeAreaView
+      style={{
+        backgroundColor: '#C0FFE7',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+      }}
+    >
+      <LinearGradient colors={['#C0FFE7', 'white']} className='w-full h-[200px]'>
+        <View className=' mb-5 mt-5 justify-around'>
           <View className='flex flex-row justify-evenly pb-2'>
             <TouchableOpacity
               onPress={() => setResultsDisplay('list')}
               className={`${resultsDisplay == 'list' ? 'opacity-100' : 'opacity-70'}
-        bg-green-100	border-solid rounded-md  p-2 mr-2 px-4 flex flex-row items-center`}
+              bg-white	border-solid rounded-md  p-2 mr-2 px-4 flex flex-row items-center`}
             >
               <Text className='font-Roboto'>Les annonces</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setResultsDisplay('map')}
               className={`${resultsDisplay == 'map' ? 'opacity-100' : 'opacity-70'}
-        bg-blue-100	border-solid rounded-md  p-1 mr-2 px-4 flex flex-row items-center opacity`}
+        bg-white	border-solid rounded-md  p-1 mr-2 px-4 flex flex-row items-center opacity`}
             >
               <MapIcon color={'black'} />
               <Text className='font-Roboto ml-2'>Voir sur la carte</Text>
             </TouchableOpacity>
           </View>
-          {resultsContainer}
-        </SafeAreaView>
+          <TextInput
+            className='w-12/12 bg-white rounded-lg shadow-sm px-4 py-3 mt-6 mx-3 '
+            placeholder='Rechercher une plante'
+            value={searchInput}
+            onChangeText={onChangeText}
+            placeholderTextColor='#AFAFAF'
+            ref={inputRef}
+          />
+          <View className='flex-row justify-around items-center w-full mt-10 '>
+            <ScrollView
+              className='w-screen pl-4'
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <TouchableOpacity
+                onPress={() => handleFilterPress('all')}
+                className={`${!filters.length && environment == '' && 'border'}
+      bg-yellow-100	border-solid rounded-2xl  p-2 mr-2`}
+              >
+                <Text className='font-Roboto '>Tout</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleEnvironmentPress('indoor')}
+                className={`${
+                  (environment == 'indoor' || environment === 'indoorAndOutdoor') && 'border'
+                }
+      bg-orange-100	 border-solid rounded-2xl  p-2 mr-2`}
+              >
+                <Text className='font-Roboto '>Plantes d'intérieur</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleEnvironmentPress('outdoor')}
+                className={`${
+                  (environment === 'outdoor' || environment === 'indoorAndOutdoor') && 'border'
+                }
+      bg-orange-100	 border-solid rounded-2xl  p-2 mr-2`}
+              >
+                <Text className='font-Roboto '>Plantes d'extérieur</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleFilterPress('succulent')}
+                className={`${filters.some((e) => e === 'succulent') && 'border'}
+      bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
+              >
+                <Text className='font-Roboto '>Plantes grasses</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleFilterPress('rare')}
+                className={`${filters.some((e) => e === 'rare') && 'border'}
+      bg-blue-100	border-solid rounded-2xl  p-2 mr-2`}
+              >
+                <Text className='font-Roboto '>Rares</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => handleFilterPress('tropical')}
+                className={`${filters.some((e) => e === 'tropical') && 'border'}
+      bg-purple-100	 border-solid rounded-2xl  p-2 mr-2`}
+              >
+                <Text className='font-Roboto '>Tropicales</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleFilterPress('kitchenGarden')}
+                className={`${filters.some((e) => e === 'kitchenGarden') && 'border'}
+      bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
+              >
+                <Text className='font-Roboto '>Potager</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleFilterPress('aromatic')}
+                className={`${filters.some((e) => e === 'aromatic') && 'border'}
+      bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
+              >
+                <Text className='font-Roboto '>Aromatiques</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </View>
       </LinearGradient>
-    </View>
+      {resultsContainer}
+    </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  background: {
-    width: '100%',
-    height: '100%',
-  },
-  container: {
-    flexDirection: 'row',
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-  },
-})
 
 export default MapSearchScreen
