@@ -213,7 +213,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
 
           {resultsDisplay == 'list' ? (
             <FlatList
-              style={{ marginBottom: 450 }}
+              style={Platform.OS == 'ios' ? { marginBottom: 450 } : null}
               numColumns={2}
               // contentContainerStyle={{
               //   alignItems: 'flex-start',
@@ -323,7 +323,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
       <LinearGradient
         colors={['#C0FFE7', 'white']}
         className='w-full '
-        style={{ height: height * 0.18 }}
+        style={{ height: Platform.OS === 'ios' ? height * 0.22 : height * 0.29 }}
       >
         <View className=' mb-5 mt-5 justify-around'>
           <View className='flex flex-row justify-evenly pb-2'>
