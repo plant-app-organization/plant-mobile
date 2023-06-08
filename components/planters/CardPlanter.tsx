@@ -1,13 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { SafeAreaView, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
-import { Avatar } from 'native-base';
-import { ChevronRightIcon } from 'react-native-heroicons/solid';
+import React, { useState, useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { SafeAreaView, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
+import { Avatar } from 'native-base'
+import { ChevronRightIcon } from 'react-native-heroicons/solid'
+import { Box, Skeleton, VStack, Center, HStack } from 'native-base'
 
 interface CardPlanterProps {
-  name: string;
-  deals: number;
-  image: string;
+  name: string
+  deals: number
+  image: string
+  loading: boolean
 }
 
 const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
@@ -26,7 +28,7 @@ const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
       <Text className='pt-2 font-semibold text-center'>{props.name}</Text>
       <Text className='text-xs text-gray-800'>{props.deals} plantdeals</Text>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-export default CardPlanter;
+export default CardPlanter
