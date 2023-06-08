@@ -109,6 +109,8 @@ export type QueryOffersListArgs = {
 export type QueryOffersListSearchArgs = {
   environment: Scalars['String'];
   filters: Array<Scalars['String']>;
+  limit?: Scalars['Int'];
+  offset?: Scalars['Int'];
   searchInput: Scalars['String'];
 };
 
@@ -200,6 +202,8 @@ export type SearchOffersQueryVariables = Exact<{
   searchInput: Scalars['String'];
   filters: Array<Scalars['String']> | Scalars['String'];
   environment: Scalars['String'];
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
 }>;
 
 
@@ -479,11 +483,13 @@ export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const SearchOffersDocument = gql`
-    query searchOffers($searchInput: String!, $filters: [String!]!, $environment: String!) {
+    query searchOffers($searchInput: String!, $filters: [String!]!, $environment: String!, $limit: Int, $offset: Int) {
   OffersListSearch(
     searchInput: $searchInput
     filters: $filters
     environment: $environment
+    limit: $limit
+    offset: $offset
   ) {
     id
     authorId
@@ -528,6 +534,8 @@ export const SearchOffersDocument = gql`
  *      searchInput: // value for 'searchInput'
  *      filters: // value for 'filters'
  *      environment: // value for 'environment'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
  *   },
  * });
  */

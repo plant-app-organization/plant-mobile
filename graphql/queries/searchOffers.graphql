@@ -1,5 +1,17 @@
-query searchOffers($searchInput: String!, $filters: [String!]!, $environment: String!) {
-  OffersListSearch(searchInput: $searchInput, filters: $filters, environment: $environment) {
+query searchOffers(
+  $searchInput: String!
+  $filters: [String!]!
+  $environment: String!
+  $limit: Int
+  $offset: Int
+) {
+  OffersListSearch(
+    searchInput: $searchInput
+    filters: $filters
+    environment: $environment
+    limit: $limit
+    offset: $offset
+  ) {
     id
     authorId
     plantName

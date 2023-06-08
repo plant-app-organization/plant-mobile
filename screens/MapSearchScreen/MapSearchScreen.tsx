@@ -35,11 +35,39 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
   const [filters, setFilters] = useState<string[]>([])
   const [searchInput, setSearchInput] = useState<string>('')
   const [environment, setEnvironment] = useState<string>('')
+  //offset and hasMore for infinite scroll
+  const [offset, setOffset] = useState(0)
+  const [hasMore, setHasMore] = useState(true)
 
   const [refreshing, setRefreshing] = useState<boolean>(false)
-  const { data: searchOffersData, refetch: refetchSearchOffersData } = useSearchOffersQuery({
-    variables: { searchInput, filters, environment },
+  const {
+    data: searchOffersData,
+    refetch: refetchSearchOffersData,
+    fetchMore,
+  } = useSearchOffersQuery({
+    variables: { searchInput, filters, environment, limit: 6, offset },
   })
+
+  const fetchMoreData = () => {
+    if (!hasMore) {
+      return
+    }
+
+    fetchMore({
+      variables: {
+        offset: offset + 6,
+      },
+    }).then((fetchMoreResult) => {
+      console.log('✨fetchMoreResult', fetchMoreResult)
+      if (
+        !fetchMoreResult.data.OffersListSearch ||
+        fetchMoreResult.data.OffersListSearch.length === 0
+      ) {
+        setHasMore(false)
+      }
+      setOffset(offset + 6)
+    })
+  }
   console.log('🙂filters', filters)
   console.log('🤩environment', environment)
   const inputRef = useRef(null)
@@ -55,14 +83,29 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
       console.log('clic ALL')
       setFilters([])
       setEnvironment('')
-      refetchSearchOffersData({ filters: [], environment: '' })
+      setHasMore(true)
+      refetchSearchOffersData({ filters: [], environment: '', offset: 0, limit: 6 })
     } else {
       if (filters.some((e) => e === filterValue)) {
         setFilters(filters.filter((e) => e !== filterValue))
-        refetchSearchOffersData({ environment, filters: filters.filter((e) => e !== filterValue) })
+        setHasMore(true)
+        setOffset(0)
+        refetchSearchOffersData({
+          environment,
+          filters: filters.filter((e) => e !== filterValue),
+          offset: 0,
+          limit: 6,
+        })
       } else {
         setFilters([...filters, filterValue])
-        refetchSearchOffersData({ environment, filters: [...filters, filterValue] })
+        setHasMore(true)
+        setOffset(0)
+        refetchSearchOffersData({
+          environment,
+          filters: [...filters, filterValue],
+          offset: 0,
+          limit: 6,
+        })
       }
     }
   }
@@ -71,30 +114,46 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
     if (environmentValue == 'indoor') {
       if (environment == 'indoorAndOutdoor') {
         setEnvironment('outdoor')
-        refetchSearchOffersData({ filters, environment: 'indoor' })
+        setHasMore(true)
+
+        refetchSearchOffersData({ filters, environment: 'indoor', offset: 0, limit: 6 })
       } else if (environment == 'indoor') {
         setEnvironment('')
-        refetchSearchOffersData({ filters, environment: '' })
+        setHasMore(true)
+
+        refetchSearchOffersData({ filters, environment: '', offset: 0, limit: 6 })
       } else if (environment == 'outdoor') {
         setEnvironment('indoorAndOutdoor')
-        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor' })
+        setHasMore(true)
+
+        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor', offset: 0, limit: 6 })
       } else if (environment == '') {
         setEnvironment('indoor')
-        refetchSearchOffersData({ filters, environment: 'indoor' })
+        setHasMore(true)
+
+        refetchSearchOffersData({ filters, environment: 'indoor', offset: 0, limit: 6 })
       }
     } else if (environmentValue == 'outdoor') {
       if (environment == 'indoorAndOutdoor') {
         setEnvironment('indoor')
-        refetchSearchOffersData({ filters, environment: 'outdoor' })
+        setHasMore(true)
+
+        refetchSearchOffersData({ filters, environment: 'outdoor', offset: 0, limit: 6 })
       } else if (environment == 'indoor') {
         setEnvironment('indoorAndOutdoor')
-        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor' })
+        setHasMore(true)
+
+        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor', offset: 0, limit: 6 })
       } else if (environment == 'outdoor') {
-        setEnvironment('')
-        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor' })
+        setEnvironment('indoorAndOutdoor')
+        setHasMore(true)
+
+        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor', offset: 0, limit: 6 })
       } else if (environment == '') {
         setEnvironment('outdoor')
-        refetchSearchOffersData({ filters, environment: 'outdoor' })
+        setHasMore(true)
+
+        refetchSearchOffersData({ filters, environment: 'outdoor', offset: 0, limit: 6 })
       }
     }
   }
@@ -115,7 +174,11 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
     setRefreshing(true)
 
     wait(2000).then(() => {
-      refetchSearchOffersData(), setRefreshing(false)
+      console.log('environment', environment)
+      refetchSearchOffersData({ filters, environment, offset: 0, limit: 6 }),
+        setRefreshing(false),
+        setOffset(0),
+        setHasMore(true)
     })
   }, [])
   //
@@ -129,118 +192,125 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
   }
 
   // const filteredProducts = products.filter(filterProducts);
-  let resultsContainer = (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          tintColor='#87BC23'
-          colors={['#87BC23', '#139DB8']}
-        />
-      }
-    >
-      <View className='w-screen bg-white'>
-        <View className='items-start justify-start pt-0'>
-          {searchOffersData ? (
-            <View className='w-screen'>
-              <Text className='px-4 py-2 pl-6 font-Roboto '>
-                {searchOffersData?.OffersListSearch.length} résultats
-              </Text>
-              <View className='w-screen'>
-                {resultsDisplay == 'list' ? (
-                  <FlatList
-                    numColumns={2}
-                    // contentContainerStyle={{
-                    //   alignItems: 'flex-start',
-                    // }}
+  const resultsContainer = (
+    // <ScrollView
+    //   showsVerticalScrollIndicator={false}
+    //   refreshControl={
+    //     <RefreshControl
+    //       refreshing={refreshing}
+    //       onRefresh={onRefresh}
+    //       tintColor='#87BC23'
+    //       colors={['#87BC23', '#139DB8']}
+    //     />
+    //   }
+    // >
+    <View>
+      {searchOffersData ? (
+        <View className='w-screen bg-white'>
+          <Text className='px-4 pb-2 pl-6 font-Roboto '>
+            {searchOffersData?.OffersListSearch.length} résultats
+          </Text>
 
-                    horizontal={false}
-                    initialNumToRender={4}
-                    maxToRenderPerBatch={6}
-                    ItemSeparatorComponent={() => <View className='h-4' />}
-                    columnWrapperStyle={{
-                      flex: 1,
-                      alignItems: 'flex-start',
-                    }}
-                    data={searchOffersData?.OffersListSearch}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                  />
-                ) : (
-                  <MapView
-                    style={{ width: '100%', height: 700 }}
-                    provider={'google'}
-                    initialRegion={{
-                      latitude: 46.3396952,
-                      longitude: 2.6072057,
-                      latitudeDelta: 10,
-                      longitudeDelta: 10,
-                    }}
-                  >
-                    {searchOffersData.OffersListSearch.map((e, index) => {
-                      return (
-                        <Marker
-                          key={index}
-                          coordinate={{
-                            latitude: e.latitude,
-                            longitude: e.longitude,
-                          }}
-                          pinColor='pink'
-                        >
-                          <Callout
-                            style={{
-                              width: 0.4 * width,
-                              height: 0.25 * width,
-                            }}
-                            onPress={() => navigation.navigate('Listing', { listingData: e })}
-                          >
-                            <View className='flex flex-row justify-between'>
-                              <View className='flex'>
-                                <Text>{e.plantName}</Text>
-                                <Text>{e.city}</Text>
-                              </View>
-                              <View className='flex'>
-                                <Text className='font-bold'>{e.price} €</Text>
-                              </View>
-                            </View>
-                            <View style={{ alignItems: 'center', alignContent: 'center' }}>
-                              <Text>
-                                slltlll
-                                <Image
-                                  source={{ uri: e.pictures[0] }}
-                                  style={{ height: 200, width: 200, borderRadius: 5 }}
-                                  resizeMode='cover'
-                                />
-                              </Text>
-                            </View>
-                            <CalloutSubview
-                              style={{
-                                alignItems: 'flex-end',
-                              }}
-                              onPress={() => {
-                                console.log('onPress Clicked')
-                              }}
-                            >
-                              <ChevronDoubleRightIcon color={'black'} />
-                            </CalloutSubview>
-                          </Callout>
-                        </Marker>
-                      )
-                    })}
-                  </MapView>
-                )}
-              </View>
-            </View>
+          {resultsDisplay == 'list' ? (
+            <FlatList
+              style={{ marginBottom: 450 }}
+              numColumns={2}
+              // contentContainerStyle={{
+              //   alignItems: 'flex-start',
+              // }}
+              onEndReached={fetchMoreData}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                  tintColor='#87BC23'
+                  colors={['#87BC23', '#139DB8']}
+                />
+              }
+              onEndReachedThreshold={0.1} // The threshold at which the fetchMoreData function should be called. 0.5 means "when half of the list is remaining".
+              horizontal={false}
+              initialNumToRender={4}
+              maxToRenderPerBatch={8}
+              ItemSeparatorComponent={() => <View className='h-4' />}
+              columnWrapperStyle={{
+                flex: 1,
+                alignItems: 'flex-start',
+              }}
+              data={searchOffersData?.OffersListSearch}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
           ) : (
-            <View className='flex-1 w-screen '>
-              <LoadingView />
-            </View>
+            <MapView
+              style={{ width: '100%', height: 700 }}
+              provider={'google'}
+              initialRegion={{
+                latitude: 46.3396952,
+                longitude: 2.6072057,
+                latitudeDelta: 10,
+                longitudeDelta: 10,
+              }}
+            >
+              {searchOffersData.OffersListSearch.map((e, index) => {
+                return (
+                  <Marker
+                    key={index}
+                    coordinate={{
+                      latitude: e.latitude,
+                      longitude: e.longitude,
+                    }}
+                    pinColor='pink'
+                  >
+                    <Callout
+                      style={{
+                        width: 0.4 * width,
+                        height: 0.25 * width,
+                      }}
+                      onPress={() => navigation.navigate('Listing', { listingData: e })}
+                    >
+                      <View className='flex flex-row justify-between'>
+                        <View className='flex'>
+                          <Text>{e.plantName}</Text>
+                          <Text>{e.city}</Text>
+                        </View>
+                        <View className='flex'>
+                          <Text className='font-bold'>{e.price} €</Text>
+                        </View>
+                      </View>
+                      <View style={{ alignItems: 'center', alignContent: 'center' }}>
+                        <Text>
+                          slltlll
+                          <Image
+                            source={{ uri: e.pictures[0] }}
+                            style={{ height: 200, width: 200, borderRadius: 5 }}
+                            resizeMode='cover'
+                          />
+                        </Text>
+                      </View>
+                      <CalloutSubview
+                        style={{
+                          alignItems: 'flex-end',
+                        }}
+                        onPress={() => {
+                          console.log('onPress Clicked')
+                        }}
+                      >
+                        <ChevronDoubleRightIcon color={'black'} />
+                      </CalloutSubview>
+                    </Callout>
+                  </Marker>
+                )
+              })}
+            </MapView>
           )}
         </View>
-      </View>
-    </ScrollView>
+      ) : (
+        <View className='flex-1 w-screen h-screen '>
+          <LoadingView />
+        </View>
+      )}
+    </View>
+    // </ScrollView>
   )
 
   return (
@@ -250,7 +320,11 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
-      <LinearGradient colors={['#C0FFE7', 'white']} className='w-full h-[200px]'>
+      <LinearGradient
+        colors={['#C0FFE7', 'white']}
+        className='w-full '
+        style={{ height: height * 0.18 }}
+      >
         <View className=' mb-5 mt-5 justify-around'>
           <View className='flex flex-row justify-evenly pb-2'>
             <TouchableOpacity
