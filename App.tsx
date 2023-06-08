@@ -13,6 +13,8 @@ LogBox.ignoreAllLogs()
 
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client'
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
+import { offsetLimitPagination } from '@apollo/client/utilities'
+
 const tokenCache = {
   getToken(key: string) {
     try {
@@ -64,7 +66,20 @@ export default function App() {
 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            OffersListSearch: {
+              keyArgs: ['searchInput', 'filters', 'environment'], // fields that uniquely identify the data
+              merge(existing = [], incoming) {
+                return [...existing, ...incoming]
+              },
+            },
+          },
+        },
+      },
+    }),
   })
 
   const [fontsLoaded] = useFonts({
