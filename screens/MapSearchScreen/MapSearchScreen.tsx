@@ -45,7 +45,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
     refetch: refetchSearchOffersData,
     fetchMore,
   } = useSearchOffersQuery({
-    variables: { searchInput, filters, environment, limit: 6, offset },
+    variables: { searchInput, filters, environment, limit: 10, offset },
   })
 
   const fetchMoreData = () => {
@@ -55,7 +55,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
 
     fetchMore({
       variables: {
-        offset: offset + 6,
+        offset: offset + 10,
       },
     }).then((fetchMoreResult) => {
       console.log('✨fetchMoreResult', fetchMoreResult)
@@ -65,7 +65,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
       ) {
         setHasMore(false)
       }
-      setOffset(offset + 6)
+      setOffset(offset + 10)
     })
   }
   console.log('🙂filters', filters)
@@ -84,7 +84,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
       setFilters([])
       setEnvironment('')
       setHasMore(true)
-      refetchSearchOffersData({ filters: [], environment: '', offset: 0, limit: 6 })
+      refetchSearchOffersData({ filters: [], environment: '', offset: 0, limit: 10 })
     } else {
       if (filters.some((e) => e === filterValue)) {
         setFilters(filters.filter((e) => e !== filterValue))
@@ -94,7 +94,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
           environment,
           filters: filters.filter((e) => e !== filterValue),
           offset: 0,
-          limit: 6,
+          limit: 10,
         })
       } else {
         setFilters([...filters, filterValue])
@@ -104,7 +104,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
           environment,
           filters: [...filters, filterValue],
           offset: 0,
-          limit: 6,
+          limit: 10,
         })
       }
     }
@@ -116,44 +116,44 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         setEnvironment('outdoor')
         setHasMore(true)
 
-        refetchSearchOffersData({ filters, environment: 'indoor', offset: 0, limit: 6 })
+        refetchSearchOffersData({ filters, environment: 'indoor', offset: 0, limit: 10 })
       } else if (environment == 'indoor') {
         setEnvironment('')
         setHasMore(true)
 
-        refetchSearchOffersData({ filters, environment: '', offset: 0, limit: 6 })
+        refetchSearchOffersData({ filters, environment: '', offset: 0, limit: 10 })
       } else if (environment == 'outdoor') {
         setEnvironment('indoorAndOutdoor')
         setHasMore(true)
 
-        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor', offset: 0, limit: 6 })
+        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor', offset: 0, limit: 10 })
       } else if (environment == '') {
         setEnvironment('indoor')
         setHasMore(true)
 
-        refetchSearchOffersData({ filters, environment: 'indoor', offset: 0, limit: 6 })
+        refetchSearchOffersData({ filters, environment: 'indoor', offset: 0, limit: 10 })
       }
     } else if (environmentValue == 'outdoor') {
       if (environment == 'indoorAndOutdoor') {
         setEnvironment('indoor')
         setHasMore(true)
 
-        refetchSearchOffersData({ filters, environment: 'outdoor', offset: 0, limit: 6 })
+        refetchSearchOffersData({ filters, environment: 'outdoor', offset: 0, limit: 10 })
       } else if (environment == 'indoor') {
         setEnvironment('indoorAndOutdoor')
         setHasMore(true)
 
-        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor', offset: 0, limit: 6 })
+        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor', offset: 0, limit: 10 })
       } else if (environment == 'outdoor') {
         setEnvironment('indoorAndOutdoor')
         setHasMore(true)
 
-        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor', offset: 0, limit: 6 })
+        refetchSearchOffersData({ filters, environment: 'indoorAndOutdoor', offset: 0, limit: 10 })
       } else if (environment == '') {
         setEnvironment('outdoor')
         setHasMore(true)
 
-        refetchSearchOffersData({ filters, environment: 'outdoor', offset: 0, limit: 6 })
+        refetchSearchOffersData({ filters, environment: 'outdoor', offset: 0, limit: 10 })
       }
     }
   }
@@ -175,7 +175,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
 
     wait(2000).then(() => {
       console.log('environment', environment)
-      refetchSearchOffersData({ filters, environment, offset: 0, limit: 6 }),
+      refetchSearchOffersData({ filters, environment, offset: 0, limit: 10 }),
         setRefreshing(false),
         setOffset(0),
         setHasMore(true)
@@ -227,7 +227,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                   colors={['#87BC23', '#139DB8']}
                 />
               }
-              onEndReachedThreshold={0.1} // The threshold at which the fetchMoreData function should be called. 0.5 means "when half of the list is remaining".
+              onEndReachedThreshold={0.7} // The threshold at which the fetchMoreData function should be called. 0.5 means "when half of the list is remaining".
               horizontal={false}
               initialNumToRender={4}
               maxToRenderPerBatch={8}
@@ -239,6 +239,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
               data={searchOffersData?.OffersListSearch}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
+              showsVerticalScrollIndicator={false}
             />
           ) : (
             <MapView

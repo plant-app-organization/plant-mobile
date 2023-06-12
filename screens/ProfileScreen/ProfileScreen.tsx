@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Animated,
+  ScrollView,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient, LinearGradientPoint } from 'expo-linear-gradient'
@@ -161,7 +162,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             </TouchableOpacity>
           </View>
         </LinearGradient>
-        <View className='w-full h-full px-5 flex justify-between bg-white 	'>
+        <ScrollView className='w-full h-full px-5 flex bg-white 	'>
           <TouchableOpacity
             className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'
             onPress={() => navigation.navigate('Bookmarks')}
@@ -227,7 +228,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
               <Text className='text-lg	 font-Roboto'>Me déconnecter</Text>
             </View>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </>
   )
