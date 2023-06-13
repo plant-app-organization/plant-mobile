@@ -101,9 +101,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       image: require('../../assets/categories/tomatePlant.png'),
     },
   ]
-  const suggestion = suggestionData.map((data, i) => {
-    return <CardSuggestion key={i} search={data.search} views={data.views} />
-  })
+
   const inputRef = useRef(null)
 
   const navigateToMapSearchScreen = () => {

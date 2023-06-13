@@ -48,6 +48,9 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
   }
   console.log('🔥props.route.params dans UserProfileScreen', props.route.params)
   const navigation = useNavigation()
+
+  const { offers, avatar, createdAt, id, isPro, updatedAt, userBio, userName, city } =
+    props.route.params.userData
   return (
     <LinearGradient colors={['#C3EEEF', 'white', 'white']} className='h-screen w-screen flex-1'>
       <SafeAreaView
@@ -55,20 +58,25 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
         className='h-screen w-screen flex-1 justify-between '
       >
         <View className='w-full h-full px-5 flex justify-between '>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            className='w-[40px] h-[40px] justify-center items-center rounded-full border border-gray-200 bg-white opacity-50 absolute top-5 left-5 z-10 shadow'
+          >
+            <ChevronLeftIcon color={'black'} />
+          </TouchableOpacity>
           <View className='flex items-center justify-center mb-10  '>
             <Image
               source={{
-                uri: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+                uri: avatar,
               }}
               className='w-24 h-24 rounded-full'
             />
-            <Text className='text-2xl font-bold mt-2'>{user.pseudo}</Text>
-            <Text className='text-gray-500'>{user.city}</Text>
+            <Text className='text-2xl font-bold mt-2'>{userName}</Text>
+            {city && <Text className='text-gray-500'>{user.city}</Text>}
           </View>
-
           <View className='border-b border-gray-200 pb-4 mb-4'>
             <Text className='text-xl font-bold'>à propos de moi:</Text>
-            <Text className='text-gray-600 mt-2'>{user.description}</Text>
+            <Text className='text-gray-600 mt-2'>{userBio}</Text>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Text className='text-xl font-bold mb-5'>Ma Note:</Text>
@@ -79,10 +87,10 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
 
             <View className='mb-4'>
               <Text className='text-xl font-bold'>les ventes en cours:</Text>
-              {user.listings.map((listing, index) => (
+              {offers.map((listing, index) => (
                 <View key={index} className='border border-gray-200 rounded-md p-4 mt-2'>
-                  <Text className='text-lg font-bold'>{listing.title}</Text>
-                  <Text className='text-gray-600 mt-1'>{listing.price}</Text>
+                  <Text className='text-lg font-bold'>{listing}</Text>
+                  <Text className='text-gray-600 mt-1'>{listing}</Text>
                 </View>
               ))}
             </View>

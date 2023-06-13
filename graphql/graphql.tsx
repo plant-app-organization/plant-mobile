@@ -192,7 +192,7 @@ export type GetSuggestionsQuery = { __typename?: 'Query', SuggestionsList: Array
 export type GetTopPlantersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetTopPlantersQuery = { __typename?: 'Query', UsersList: Array<{ __typename?: 'UserModel', id: string, userName: string, avatar: string, offerIds: Array<string> }> };
+export type GetTopPlantersQuery = { __typename?: 'Query', UsersList: Array<{ __typename?: 'UserModel', id: string, userName: string, avatar: string, offerIds: Array<string>, userBio: string, isPro: boolean, createdAt: any }> };
 
 export type GetUserBookmarksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -382,6 +382,9 @@ export const GetTopPlantersDocument = gql`
     userName
     avatar
     offerIds
+    userBio
+    isPro
+    createdAt
   }
 }
     `;

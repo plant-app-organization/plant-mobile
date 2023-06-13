@@ -4,5 +4,8 @@ query getTopPlanters {
     userName
     avatar
     offerIds
+    userBio
+    isPro
+    createdAt
   }
 }
