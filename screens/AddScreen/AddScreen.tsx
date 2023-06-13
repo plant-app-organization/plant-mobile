@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '@env'
 import PropTypes from 'prop-types'
 
@@ -71,12 +71,13 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   const [fullScreenImage, setFullScreenImage] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [location, setLocation] = useState(null)
-  console.log('🔎Location', location)
+  // console.log('🔎Location', location)
+  // console.log('title', title)
   // const [slideStartingValue, setSlideStartingValue] = useState(0);
   // const [slideStartingCount, setSlideStartingCount] = useState(0);
   const [plantHeight, setPlantHeight] = useState<number>(0)
   const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
-  console.log('api', GOOGLE_PLACES_API_KEY)
+  // console.log('api', GOOGLE_PLACES_API_KEY)
 
   const onSelectLocation = (data, details) => {
     const addressComponents = details.address_components
@@ -92,7 +93,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
     setPostCode(postalCode)
     setRegionName(region)
     setLocation({ ...data, ...details })
-    // console.log('🤹data', data, '🔥details', details)
+    console.log('🤹data', data, '🔥details', details)
   }
   const openModalHandler = () => {
     console.log('CLICKED')
@@ -144,7 +145,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           return
         }
         if (!image.canceled) {
-          console.log('image.assets', image.assets)
+          // console.log('image.assets', image.assets)
           setIsLoaderOpen(true)
           const data = new FormData()
           const source = {
@@ -164,12 +165,12 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           )
             .then((res) => res.json())
             .then(async (data) => {
-              console.log('📸data.secure_url', data.secure_url)
+              // console.log('📸data.secure_url', data.secure_url)
               setImagesUrls([...imagesUrls, data.secure_url])
               setIsLoaderOpen(false)
             })
             .catch((err) => {
-              console.log(err)
+              // console.log(err)
             })
         }
       })
@@ -181,7 +182,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   }
   const onCreateNewOfferPress = async () => {
     if (location && title != '' && price != '' && description.length > 20 && imagesUrls.length) {
-      console.log('🧡requete!')
+      // console.log('🧡requete!')
       const response = await createNewOffer({
         variables: {
           newOfferInput: {
@@ -204,7 +205,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           },
         },
       })
-      console.log('response', response)
+      // console.log('response', response)
       response &&
         toast.show({
           title: '🪴 Votre offre a été publiée !',
@@ -213,6 +214,14 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
       alert('Veuillez remplir tous les champs')
     }
   }
+
+  const handleDescriptionChange = useCallback((value) => {
+    setDescription(value)
+  }, [])
+
+  const handleTitleChange = useCallback((value) => {
+    setTitle(value)
+  }, [])
 
   return (
     <LinearGradient colors={['#CFF5FF', 'white']} className='h-screen w-screen'>
@@ -225,7 +234,11 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
         <ScrollView>
           <View className='w-screen h-full items-center justify-evenly '>
             <View className='h-[20vh] w-full justify-evenly items-center'>
+<<<<<<< HEAD
               <Text className='text-2xl font-semibold text-black'>Vendez votre plante</Text>
+=======
+              <Text className='text-2xl font-Roboto text-black'>Vendez votre plante</Text>
+>>>>>>> 03738ea7520a1afc0e1527148c31bc48106774a6
               <View className=' w-full flex items-center'>
                 <TouchableOpacity
                   // style={{
@@ -246,17 +259,34 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               </View>
             </View>
 
+<<<<<<< HEAD
             <View className='flex-row mt-5 mr-5 ml-5'>
               {imagesUrls.map((imageUrl, index) => {
                 return (
                   <View key={index} className='relative '>
                     <TouchableOpacity onPress={() => openModalHandler()}>
+=======
+            <View className='flex-row mr-5 ml-5'>
+              {imagesUrls.map((imageUrl, index) => {
+                return (
+                  <View key={index} className='relative mb-2'>
+                    <TouchableOpacity
+                      onPress={() => openModalHandler()}
+                      style={{ width: width * 0.3, height: width * 0.2 }}
+                    >
+>>>>>>> 03738ea7520a1afc0e1527148c31bc48106774a6
                       <Image
                         key={index}
                         alt='image'
                         className='rounded-md mr-2'
+<<<<<<< HEAD
                         width={width * 0.3}
                         height={width * 0.2}
+=======
+                        style={{ width: '100%', height: '100%' }}
+                        // width={width * 0.3}
+                        // height={width * 0.2}
+>>>>>>> 03738ea7520a1afc0e1527148c31bc48106774a6
                         resizeMode='cover'
                         source={{
                           uri: imageUrl,
@@ -364,10 +394,17 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 <Text className='text-base font-semibold mb-3'>
                   Quel est le nom de votre plante ?
                 </Text>
+<<<<<<< HEAD
                 <Input
                   variant='filled'
                   value={title}
                   onChangeText={(value) => setTitle(value)}
+=======
+                <TextInput
+                  variant='filled'
+                  value={title}
+                  onChangeText={handleTitleChange}
+>>>>>>> 03738ea7520a1afc0e1527148c31bc48106774a6
                   placeholder='Titre'
                   size='xl'
                   fontSize={15}
@@ -377,10 +414,17 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               <View className='py-5'>
                 <Text className='text-base font-semibold mb-3'>Décrivez votre plante</Text>
 
+<<<<<<< HEAD
                 <TextArea
                   h={20}
                   value={description}
                   onChangeText={(value) => setDescription(value)}
+=======
+                <TextInput
+                  h={20}
+                  value={description}
+                  onChangeText={handleDescriptionChange}
+>>>>>>> 03738ea7520a1afc0e1527148c31bc48106774a6
                   placeholder='Description'
                   size='xl'
                   fontSize={15}
@@ -542,7 +586,11 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
         <Modal isOpen={isOpen} safeAreaTop={true}>
           <Modal.Content style={{ backgroundColor: '#f2fff3' }} maxWidth='350'>
             <Modal.Header style={{ backgroundColor: '#f2fff3' }}>
+<<<<<<< HEAD
               <Text className='text-xl font-semibold    ml-3 text-center'>
+=======
+              <Text className='text-xl font-Roboto   ml-3 text-center'>
+>>>>>>> 03738ea7520a1afc0e1527148c31bc48106774a6
                 Connectez-vous pour découvrir toutes les fonctionnalités
               </Text>
             </Modal.Header>
@@ -554,7 +602,11 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               >
                 <Text
                   style={{ backgroundColor: '#f2fff3' }}
+<<<<<<< HEAD
                   className='text-md font-semibold  text-center  ml-3 '
+=======
+                  className='text-md font-Roboto text-center  ml-3 '
+>>>>>>> 03738ea7520a1afc0e1527148c31bc48106774a6
                 >
                   Se connecter ou s'inscrire
                 </Text>
@@ -562,7 +614,11 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             </Modal.Body>
             <Modal.Footer style={{ backgroundColor: '#f2fff3' }}>
               <TouchableOpacity onPress={() => handleNavigation()}>
+<<<<<<< HEAD
                 <Text className='text-xs   ml-3 text-center font-semibold'>Non merci</Text>
+=======
+                <Text className='text-xs   ml-3 text-center font-Roboto   '>Non merci</Text>
+>>>>>>> 03738ea7520a1afc0e1527148c31bc48106774a6
               </TouchableOpacity>
             </Modal.Footer>
           </Modal.Content>
@@ -571,7 +627,11 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
           <Modal.Content maxWidth='350' style={{ backgroundColor: '#f2fff3' }}>
             <Modal.Body>
               <Spinner size='lg' color='emerald.500' accessibilityLabel='Loading image' />
+<<<<<<< HEAD
               <Text className='text-sm font-semibold  color-deepBlue font-ralewayBold mt-2  my-2 text-center '>
+=======
+              <Text className='text-sm font-Roboto  color-deepBlue font-ralewayBold mt-2  my-2 text-center '>
+>>>>>>> 03738ea7520a1afc0e1527148c31bc48106774a6
                 Envoi de l'image en cours ...
               </Text>
             </Modal.Body>

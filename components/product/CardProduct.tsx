@@ -30,11 +30,11 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
   const { width, height } = useWindowDimensions()
   const [like, setLike] = useState(props.isBookmarked)
   const [isOpen, setIsOpen] = useState(false)
-  console.log('PROPS', props)
+  // console.log('PROPS', props)
   const [likesCounter, setLikesCounter] = useState<number | null>(
     props.bookmarkedBy != null && props.bookmarkedBy.length > 0 ? props.bookmarkedBy.length : null,
   )
-  console.log('🔥like', like, 'likesCounter', likesCounter)
+  // console.log('🔥like', like, 'likesCounter', likesCounter)
 
   // console.log('like', like);
   const [bookmarkOffer] = useBookmarkOfferMutation({

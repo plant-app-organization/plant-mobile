@@ -91,6 +91,8 @@ export type Query = {
   OffersList: Array<Offer>;
   /** Get List of Offers Searched */
   OffersListSearch: Array<Offer>;
+  /** Get List of Users with the largest amount of active offers */
+  UsersList: Array<UserModel>;
   getBookmarksByUserId: Scalars['String'];
   hello: Scalars['String'];
   userBookmarks: Array<Offer>;
@@ -107,6 +109,8 @@ export type QueryOffersListArgs = {
 export type QueryOffersListSearchArgs = {
   environment: Scalars['String'];
   filters: Array<Scalars['String']>;
+  limit?: Scalars['Int'];
+  offset?: Scalars['Int'];
   searchInput: Scalars['String'];
 };
 
@@ -170,6 +174,11 @@ export type GetOffersQueryVariables = Exact<{
 
 export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, environment: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, latitude: number, longitude: number, location: string }> };
 
+export type GetTopPlantersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTopPlantersQuery = { __typename?: 'Query', UsersList: Array<{ __typename?: 'UserModel', id: string, userName: string, avatar: string, offerIds: Array<string> }> };
+
 export type GetUserBookmarksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -193,6 +202,8 @@ export type SearchOffersQueryVariables = Exact<{
   searchInput: Scalars['String'];
   filters: Array<Scalars['String']> | Scalars['String'];
   environment: Scalars['String'];
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
 }>;
 
 
@@ -314,6 +325,43 @@ export function useGetOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHo
 export type GetOffersQueryHookResult = ReturnType<typeof useGetOffersQuery>;
 export type GetOffersLazyQueryHookResult = ReturnType<typeof useGetOffersLazyQuery>;
 export type GetOffersQueryResult = Apollo.QueryResult<GetOffersQuery, GetOffersQueryVariables>;
+export const GetTopPlantersDocument = gql`
+    query getTopPlanters {
+  UsersList {
+    id
+    userName
+    avatar
+    offerIds
+  }
+}
+    `;
+
+/**
+ * __useGetTopPlantersQuery__
+ *
+ * To run a query within a React component, call `useGetTopPlantersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTopPlantersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTopPlantersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTopPlantersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetTopPlantersQuery, GetTopPlantersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetTopPlantersQuery, GetTopPlantersQueryVariables>(GetTopPlantersDocument, options);
+      }
+export function useGetTopPlantersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTopPlantersQuery, GetTopPlantersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetTopPlantersQuery, GetTopPlantersQueryVariables>(GetTopPlantersDocument, options);
+        }
+export type GetTopPlantersQueryHookResult = ReturnType<typeof useGetTopPlantersQuery>;
+export type GetTopPlantersLazyQueryHookResult = ReturnType<typeof useGetTopPlantersLazyQuery>;
+export type GetTopPlantersQueryResult = Apollo.QueryResult<GetTopPlantersQuery, GetTopPlantersQueryVariables>;
 export const GetUserBookmarksDocument = gql`
     query getUserBookmarks {
   userBookmarks {
@@ -435,11 +483,13 @@ export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const SearchOffersDocument = gql`
-    query searchOffers($searchInput: String!, $filters: [String!]!, $environment: String!) {
+    query searchOffers($searchInput: String!, $filters: [String!]!, $environment: String!, $limit: Int, $offset: Int) {
   OffersListSearch(
     searchInput: $searchInput
     filters: $filters
     environment: $environment
+    limit: $limit
+    offset: $offset
   ) {
     id
     authorId
@@ -484,6 +534,8 @@ export const SearchOffersDocument = gql`
  *      searchInput: // value for 'searchInput'
  *      filters: // value for 'filters'
  *      environment: // value for 'environment'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
  *   },
  * });
  */

@@ -1,0 +1,8 @@
+query getTopPlanters {
+  UsersList {
+    id
+    userName
+    avatar
+    offerIds
+  }
+}
