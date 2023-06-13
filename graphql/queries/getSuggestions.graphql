@@ -1,0 +1,6 @@
+query getSuggestions {
+  SuggestionsList {
+    id
+    title
+  }
+}

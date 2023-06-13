@@ -37,6 +37,7 @@ import { bookmarksVar } from '../../variables/bookmarks'
 
 import { MaterialIcons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import SuggestionsDisplay from '../../components/SuggestionsDisplay/SuggestionsDisplay'
 
 interface HomeScreenProps {}
 //
@@ -148,7 +149,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         // end={{ x: 0.9, y: 0 }}
         colors={['#C0FFE7', 'white']}
         className='w-screen flex-col items-center py-5'
-
       >
         {isSignedIn && (
           <View className='w-full flex-row items-center justify-start px-4'>
@@ -375,15 +375,8 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               style={{ flex: 1 }}
             />
           </MaskedView>
-          <FlatList
-            data={suggestionData}
-            renderItem={({ item }) => <CardSuggestion search={item.search} views={item.views} />}
-            keyExtractor={(item) => item.key}
-            horizontal={true}
-            contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
-          />
         </View>
-
+        <SuggestionsDisplay />
         <View className='h-[100px] w-full' />
       </ScrollView>
     </SafeAreaView>

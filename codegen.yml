@@ -1,5 +1,5 @@
 overwrite: true
-schema: 'http://192.168.1.53:8080/graphql'
+schema: 'http://192.168.43.128:8080/graphql'
 
 documents: 'graphql/queries/*.graphql'
 generates:
@@ -14,4 +14,4 @@ generates:
       withHooks: true
       apolloReactHooksImportFrom: '@apollo/client'
       headers:
-        Authorization: 'Bearer ${TOKEN}' # replace `TOKEN` with the actual name of your token variable
+        Authorization: 'Bearer ${TOKEN}'

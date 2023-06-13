@@ -91,6 +91,8 @@ export type Query = {
   OffersList: Array<Offer>;
   /** Get List of Offers Searched */
   OffersListSearch: Array<Offer>;
+  /** Get List of Suggestions */
+  SuggestionsList: Array<SuggestionModel>;
   /** Get List of Users with the largest amount of active offers */
   UsersList: Array<UserModel>;
   getBookmarksByUserId: Scalars['String'];
@@ -133,6 +135,14 @@ export type RegisterInput = {
   userName: Scalars['String'];
 };
 
+export type SuggestionModel = {
+  __typename?: 'SuggestionModel';
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type UserModel = {
   __typename?: 'UserModel';
   avatar: Scalars['String'];
@@ -173,6 +183,11 @@ export type GetOffersQueryVariables = Exact<{
 
 
 export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, environment: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, latitude: number, longitude: number, location: string }> };
+
+export type GetSuggestionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSuggestionsQuery = { __typename?: 'Query', SuggestionsList: Array<{ __typename?: 'SuggestionModel', id: string, title: string }> };
 
 export type GetTopPlantersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -325,6 +340,41 @@ export function useGetOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHo
 export type GetOffersQueryHookResult = ReturnType<typeof useGetOffersQuery>;
 export type GetOffersLazyQueryHookResult = ReturnType<typeof useGetOffersLazyQuery>;
 export type GetOffersQueryResult = Apollo.QueryResult<GetOffersQuery, GetOffersQueryVariables>;
+export const GetSuggestionsDocument = gql`
+    query getSuggestions {
+  SuggestionsList {
+    id
+    title
+  }
+}
+    `;
+
+/**
+ * __useGetSuggestionsQuery__
+ *
+ * To run a query within a React component, call `useGetSuggestionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSuggestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSuggestionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSuggestionsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetSuggestionsQuery, GetSuggestionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetSuggestionsQuery, GetSuggestionsQueryVariables>(GetSuggestionsDocument, options);
+      }
+export function useGetSuggestionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSuggestionsQuery, GetSuggestionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetSuggestionsQuery, GetSuggestionsQueryVariables>(GetSuggestionsDocument, options);
+        }
+export type GetSuggestionsQueryHookResult = ReturnType<typeof useGetSuggestionsQuery>;
+export type GetSuggestionsLazyQueryHookResult = ReturnType<typeof useGetSuggestionsLazyQuery>;
+export type GetSuggestionsQueryResult = Apollo.QueryResult<GetSuggestionsQuery, GetSuggestionsQueryVariables>;
 export const GetTopPlantersDocument = gql`
     query getTopPlanters {
   UsersList {

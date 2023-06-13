@@ -30,7 +30,10 @@ import { Image } from 'expo-image'
 interface MapSearchScreenProps {}
 
 const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) => {
-  // console.log('🏓🏓🏓🏓🏓props.route.params.filter in mapsearchscreen', props.route.params.filter)
+  console.log(
+    '🏓🏓🏓🏓🏓props.route?.params?.searchInput in mapsearchscreen',
+    props.route?.params?.searchInput,
+  )
   const [resultsDisplay, setResultsDisplay] = useState<string>('list')
   const [filters, setFilters] = useState<string[]>([])
   const [searchInput, setSearchInput] = useState<string>('')
@@ -158,12 +161,16 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
     }
   }
   useEffect(() => {
-    props.route?.params?.comingFromHomeScreenInput == true
+    props.route?.params?.comingFromHomeScreenInput == true || props.route?.params?.searchInput
       ? inputRef.current?.focus()
       : console.log('not coming from homescreen')
 
     props.route?.params?.filter
       ? setFilters([props.route.params.filter])
+      : console.log('PAS DE FILTRE DANS LA ROUTE')
+
+    props.route?.params?.searchInput
+      ? setSearchInput(props.route.params.searchInput)
       : console.log('PAS DE FILTRE DANS LA ROUTE')
   }, [isFocused])
 
