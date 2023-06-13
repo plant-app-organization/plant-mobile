@@ -148,7 +148,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         // end={{ x: 0.9, y: 0 }}
         colors={['#C0FFE7', 'white']}
         className='w-screen flex-col items-center py-5'
-
       >
         {isSignedIn && (
           <View className='w-full flex-row items-center justify-start px-4'>
@@ -199,7 +198,11 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         />
       </LinearGradient>
 
-      <ScrollView className='w-screen bg-white pt-4' showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className='w-screen bg-white pt-4'
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled
+      >
         <View className='w-full'>
           <MaskedView
             style={{ height: 27, marginTop: 10 }}
@@ -384,7 +387,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View>
 
-        <View className='h-[100px] w-full' />
+        <View className='h-[200px] w-full' />
       </ScrollView>
     </SafeAreaView>
     // </LinearGradient>
