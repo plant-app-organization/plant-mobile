@@ -162,36 +162,6 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             </TouchableOpacity>
           </View>
         </LinearGradient>
-<<<<<<< HEAD
-        <ScrollView className=' bg-white' showsVerticalScrollIndicator={false}>
-          <View className='h-screen  px-5 flex justify-evenly'>
-            <TouchableOpacity
-              className='w-full flex-row items-center justify-between border-b border-gray-200'
-              onPress={() => navigation.navigate('Bookmarks')}
-            >
-              <FontAwesomeIcon className=' w-1/12 text-red-300 ' name='heart' size={20} />
-              <View className='w-10/12 flex flex-row'>
-                <Text className='text-lg	font-semibold'>Mes favoris</Text>
-                <Badge
-                  colorScheme='success'
-                  variant='subtle'
-                  rounded='full'
-                  mt={-4}
-                  mr={0}
-                  pr={1}
-                  pl={1}
-                  zIndex={1}
-                  alignSelf='flex-start'
-                  _text={{
-                    fontSize: 10,
-                  }}
-                >
-                  {userBookmarks?.length}
-                </Badge>
-              </View>
-              <FontAwesomeIcon name='angle-right' size={20} />
-            </TouchableOpacity>
-=======
         <ScrollView className='w-full h-full px-5 flex bg-white 	'>
           <TouchableOpacity
             className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'
@@ -268,7 +238,6 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
               <Text className='text-lg	 font-Roboto'>Me déconnecter</Text>
             </View>
           </TouchableOpacity>
->>>>>>> 03738ea7520a1afc0e1527148c31bc48106774a6
         </ScrollView>
       </SafeAreaView>
     </>
