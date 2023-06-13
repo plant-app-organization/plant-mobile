@@ -1,39 +1,34 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import PropTypes from 'prop-types';
-import { SafeAreaView, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import PropTypes from 'prop-types'
+import { SafeAreaView, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
 
 interface CardSuggestionProps {
-  search: string;
-  views: number;
+  search: string
 }
 
 const CardSuggestion: React.FunctionComponent<CardSuggestionProps> = (props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
-  let backgroundColorStyle;
+  const backgroundColorStyles = [
+    'bg-orange-100',
+    'bg-blue-100',
+    'bg-yellow-100',
+    'bg-purple-100',
+    'bg-green-100',
+  ]
 
-  if (props.search === 'Montserrat') {
-    backgroundColorStyle = 'bg-orange-100';
-  } else if (props.search === 'Lyrata') {
-    backgroundColorStyle = 'bg-blue-100';
-  } else if (props.search === 'Olivier') {
-    backgroundColorStyle = 'bg-yellow-100';
-  } else if (props.search === 'Plantes grasses') {
-    backgroundColorStyle = 'bg-purple-100';
-  } else if (props.search === 'Cactus') {
-    backgroundColorStyle = 'bg-green-100';
-  }
+  const backgroundColorStyle =
+    backgroundColorStyles[Math.floor(Math.random() * backgroundColorStyles.length)]
 
   return (
     <TouchableOpacity
-      className={`w-[150px] rounded-2xl ${backgroundColorStyle} items-center py-5 mr-5 shadow-sm`}
-      onPress={() => navigation.navigate('ListingScreen')}
+      className={`w-[150px] rounded-2xl bg-orange-100 ${backgroundColorStyle} items-center py-5 mr-5 shadow-sm`}
+      onPress={() => navigation.navigate('Search', { searchInput: props.search })}
     >
       <Text className='font-semibold'>{props.search}</Text>
-      <Text>{props.views} vues</Text>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-export default CardSuggestion;
+export default CardSuggestion
