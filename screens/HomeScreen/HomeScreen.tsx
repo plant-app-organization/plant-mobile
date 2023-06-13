@@ -101,30 +101,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       image: require('../../assets/categories/tomatePlant.png'),
     },
   ]
-
-  const suggestionData: { search: string; views: number }[] = [
-    {
-      search: 'Montserrat',
-      views: 171,
-    },
-    {
-      search: 'Cactus',
-      views: 121,
-    },
-    {
-      search: 'Lyrata',
-      views: 101,
-    },
-    {
-      search: 'Plantes grasses',
-      views: 99,
-    },
-    {
-      search: 'Olivier',
-      views: 69,
-    },
-  ]
-
   const suggestion = suggestionData.map((data, i) => {
     return <CardSuggestion key={i} search={data.search} views={data.views} />
   })
@@ -199,7 +175,11 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         />
       </LinearGradient>
 
-      <ScrollView className='w-screen bg-white pt-4' showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className='w-screen bg-white pt-4'
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled
+      >
         <View className='w-full'>
           <MaskedView
             style={{ height: 27, marginTop: 10 }}
@@ -376,8 +356,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             />
           </MaskedView>
         </View>
+
         <SuggestionsDisplay />
-        <View className='h-[100px] w-full' />
+        <View className='h-[200px] w-full' />
       </ScrollView>
     </SafeAreaView>
     // </LinearGradient>

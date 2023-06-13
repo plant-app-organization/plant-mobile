@@ -155,6 +155,7 @@ const PlantDiseaseScreen: React.FunctionComponent<PlantDiseaseScreenProps> = (pr
         <View className='h-full p-5 bg-white'>
           <Text className='text-lg text-justify'>{diseaseDescription}</Text>
         </View>
+        <View className='h-[100px] w-full' />
       </ScrollView>
     </SafeAreaView>
   )

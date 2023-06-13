@@ -128,6 +128,7 @@ const PlantCareScreen: React.FunctionComponent<PlantCareScreenProps> = (props) =
         <View className='h-full p-5 bg-white'>
           <Text className='text-lg text-justify'>{caringDescription}</Text>
         </View>
+        <View className='h-[200px] w-full' />
       </ScrollView>
     </SafeAreaView>
   )

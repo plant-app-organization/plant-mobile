@@ -53,6 +53,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
       if (err) {
         toast.show({
           title: 'Email ou mot de passe incorrect',
+          placement: 'top',
         })
       }
       console.log('Error:> ' + (err.errors ? err.errors[0].message : err))

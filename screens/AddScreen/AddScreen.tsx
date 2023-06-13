@@ -224,7 +224,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   }, [])
 
   return (
-    <LinearGradient colors={['#CFF5FF', 'white']} className='h-screen w-screen'>
+    <LinearGradient colors={['#FFE2C0', 'white']} className='min-h-screen w-screen flex-1'>
       <SafeAreaView
         style={{
           flex: 1,
@@ -255,21 +255,17 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               </View>
             </View>
 
-            <View className='flex-row mr-5 ml-5'>
+            <View className='flex-row mt-5 mr-5 ml-5'>
               {imagesUrls.map((imageUrl, index) => {
                 return (
-                  <View key={index} className='relative mb-2'>
-                    <TouchableOpacity
-                      onPress={() => openModalHandler()}
-                      style={{ width: width * 0.3, height: width * 0.2 }}
-                    >
+                  <View key={index} className='relative '>
+                    <TouchableOpacity onPress={() => openModalHandler()}>
                       <Image
                         key={index}
                         alt='image'
                         className='rounded-md mr-2'
-                        style={{ width: '100%', height: '100%' }}
-                        // width={width * 0.3}
-                        // height={width * 0.2}
+                        width={width * 0.3}
+                        height={width * 0.2}
                         resizeMode='cover'
                         source={{
                           uri: imageUrl,
@@ -377,10 +373,10 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                 <Text className='text-base font-semibold mb-3'>
                   Quel est le nom de votre plante ?
                 </Text>
-                <TextInput
+                <Input
                   variant='filled'
                   value={title}
-                  onChangeText={handleTitleChange}
+                  onChangeText={(value) => setTitle(value)}
                   placeholder='Titre'
                   size='xl'
                   fontSize={15}
@@ -390,10 +386,10 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               <View className='py-5'>
                 <Text className='text-base font-semibold mb-3'>Décrivez votre plante</Text>
 
-                <TextInput
+                <TextArea
                   h={20}
                   value={description}
-                  onChangeText={handleDescriptionChange}
+                  onChangeText={(value) => setDescription(value)}
                   placeholder='Description'
                   size='xl'
                   fontSize={15}
@@ -549,6 +545,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             >
               <Text className='text-zinc-800 text-lg font-semibold tracking-widest'>Ajouter</Text>
             </TouchableOpacity>
+            <View className='h-[100px] w-full' />
           </View>
         </ScrollView>
 
