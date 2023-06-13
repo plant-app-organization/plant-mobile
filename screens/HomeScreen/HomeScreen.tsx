@@ -37,6 +37,7 @@ import { bookmarksVar } from '../../variables/bookmarks'
 
 import { MaterialIcons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import SuggestionsDisplay from '../../components/SuggestionsDisplay/SuggestionsDisplay'
 
 interface HomeScreenProps {}
 //
@@ -100,30 +101,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       image: require('../../assets/categories/tomatePlant.png'),
     },
   ]
-
-  const suggestionData: { search: string; views: number }[] = [
-    {
-      search: 'Montserrat',
-      views: 171,
-    },
-    {
-      search: 'Cactus',
-      views: 121,
-    },
-    {
-      search: 'Lyrata',
-      views: 101,
-    },
-    {
-      search: 'Plantes grasses',
-      views: 99,
-    },
-    {
-      search: 'Olivier',
-      views: 69,
-    },
-  ]
-
   const suggestion = suggestionData.map((data, i) => {
     return <CardSuggestion key={i} search={data.search} views={data.views} />
   })
@@ -378,15 +355,9 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               style={{ flex: 1 }}
             />
           </MaskedView>
-          <FlatList
-            data={suggestionData}
-            renderItem={({ item }) => <CardSuggestion search={item.search} views={item.views} />}
-            keyExtractor={(item) => item.key}
-            horizontal={true}
-            contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
-          />
         </View>
 
+        <SuggestionsDisplay />
         <View className='h-[200px] w-full' />
       </ScrollView>
     </SafeAreaView>
