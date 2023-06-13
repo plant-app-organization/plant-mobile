@@ -49,7 +49,7 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
   console.log('🔥props.route.params dans UserProfileScreen', props.route.params)
   const navigation = useNavigation()
 
-  const { offers, avatar, createdAt, id, isPro, updatedAt, userBio, userName, city } =
+  const { offerIds, avatar, createdAt, id, isPro, updatedAt, userBio, userName, city } =
     props.route.params.userData
   return (
     <LinearGradient colors={['#C3EEEF', 'white', 'white']} className='h-screen w-screen flex-1'>
@@ -87,7 +87,7 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
 
             <View className='mb-4'>
               <Text className='text-xl font-bold'>les ventes en cours:</Text>
-              {offers.map((listing, index) => (
+              {offerIds.map((listing, index) => (
                 <View key={index} className='border border-gray-200 rounded-md p-4 mt-2'>
                   <Text className='text-lg font-bold'>{listing}</Text>
                   <Text className='text-gray-600 mt-1'>{listing}</Text>

@@ -28,7 +28,7 @@ const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
             isPro: props.isPro,
             userBio: props.userBio,
             userName: props.name,
-            offers: props.offers,
+            offerIds: props.offers,
           },
         })
       }

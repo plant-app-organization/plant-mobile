@@ -7,5 +7,6 @@ query getUserDataById($userId: String!) {
     isPro
     createdAt
     updatedAt
+    offerIds
   }
 }

@@ -204,7 +204,7 @@ export type GetUserDataByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetUserDataByIdQuery = { __typename?: 'Query', userDataById: { __typename?: 'UserModel', id: string, userName: string, userBio: string, avatar: string, isPro: boolean, createdAt: any, updatedAt: any } };
+export type GetUserDataByIdQuery = { __typename?: 'Query', userDataById: { __typename?: 'UserModel', id: string, userName: string, userBio: string, avatar: string, isPro: boolean, createdAt: any, updatedAt: any, offerIds: Array<string> } };
 
 export type RegisterMutationVariables = Exact<{
   newUserInput: RegisterInput;
@@ -473,6 +473,7 @@ export const GetUserDataByIdDocument = gql`
     isPro
     createdAt
     updatedAt
+    offerIds
   }
 }
     `;
