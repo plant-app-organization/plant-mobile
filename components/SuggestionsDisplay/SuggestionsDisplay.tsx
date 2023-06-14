@@ -20,6 +20,7 @@ export default function SuggestionsDisplay() {
       keyExtractor={(item) => item.key}
       horizontal={true}
       contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+      showsHorizontalScrollIndicator={false}
     />
   )
 }
