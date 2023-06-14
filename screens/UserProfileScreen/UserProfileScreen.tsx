@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native'
 import { LinearGradient, LinearGradientPoint } from 'expo-linear-gradient'
 import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid'
 import UserOffersDisplay from '../../components/UserOffersDisplay/UserOffersDisplay'
+import MaskedView from '@react-native-masked-view/masked-view'
 
 interface UserProfileScreenProps {}
 
@@ -48,29 +49,75 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
           >
             <ChevronLeftIcon color={'black'} />
           </TouchableOpacity>
-          <View className='flex items-center justify-center mb-10  '>
+          <View className='flex items-center justify-center mb-10 mt-10  '>
             <Image
               source={{
                 uri: avatar,
               }}
-              className='w-24 h-24 rounded-full'
+              className='w-28 h-28 rounded-full'
             />
-            <Text className='text-2xl font-bold mt-2'>{userName}</Text>
+
+            <Text className='text-2xl font-bold mt-2 text-emerald-700	'>{userName}</Text>
             {/* {city && <Text className='text-gray-500'>{user.city}</Text>} */}
           </View>
+
           <View className='border-b border-gray-200 pb-4 mb-4'>
-            <Text className='text-xl font-bold'>à propos de moi:</Text>
-            <Text className='text-gray-600 mt-2'>{userBio}</Text>
+            <MaskedView
+              style={{ height: 27, marginTop: 10 }}
+              maskElement={
+                <Text className=' text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                  À propos de moi
+                </Text>
+              }
+            >
+              <LinearGradient
+                colors={['#709045', '#6AB2DF', '#81BBA1']}
+                start={{ x: 1, y: 1 }}
+                end={{ x: 0, y: 0.33 }}
+                style={{ flex: 1 }}
+              />
+            </MaskedView>
+
+            <Text className='text-gray-600 mt-4'>{userBio}</Text>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Text className='text-xl font-bold mb-5'>Ma Note:</Text>
+            <MaskedView
+              style={{ height: 27, marginTop: 10 }}
+              maskElement={
+                <Text className=' text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                  Ma Note
+                </Text>
+              }
+            >
+              <LinearGradient
+                colors={['#709045', '#6AB2DF', '#81BBA1']}
+                start={{ x: 1, y: 1 }}
+                end={{ x: 0, y: 0.33 }}
+                style={{ flex: 1 }}
+              />
+            </MaskedView>
+
             <View className='mb-4 items-center justify-center'>
               <Text className='text-xl'>{personalPlants}</Text>
               <Text className='text-yellow-500 text-3xl mt-2'>5/5</Text>
             </View>
 
             <View className='mb-4'>
-              <Text className='text-xl font-bold'>les ventes en cours:</Text>
+              <MaskedView
+                style={{ height: 27, marginTop: 10 }}
+                maskElement={
+                  <Text className='text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                    Ventes en cours
+                  </Text>
+                }
+              >
+                <LinearGradient
+                  colors={['#709045', '#6AB2DF', '#81BBA1']}
+                  start={{ x: 1, y: 1 }}
+                  end={{ x: 0, y: 0.33 }}
+                  style={{ flex: 1 }}
+                />
+              </MaskedView>
               {/* {offerIds.map((listing, index) => (
                 <View key={index} className='border border-gray-200 rounded-md p-4 mt-2'>
                   <Text className='text-lg font-bold'>{listing}</Text>

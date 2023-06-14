@@ -133,6 +133,7 @@ const PlantDiseaseScreen: React.FunctionComponent<PlantDiseaseScreenProps> = (pr
           >
             <ChevronLeftIcon color={'black'} />
           </TouchableOpacity>
+
           <Text className='w-8/12 text-xl font-bold'>Que se passe-t-il ?</Text>
         </View>
       </LinearGradient>
