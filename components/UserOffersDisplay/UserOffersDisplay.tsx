@@ -18,8 +18,8 @@ const UserOffersDisplay: React.FunctionComponent<UserOffersDisplayProps> = ({ of
   const renderItem = useCallback(({ item }) => <CardProduct {...item} />, [])
 
   return (
-    <View className='items-start justify-start pt-0'>
-      <Text className=''>{offerIds?.length} Annonces publiées par le user</Text>
+    <View className='items-start justify-start pt-0 '>
+      <Text className=' px-2 my-2'>{offerIds?.length} annonces en ligne</Text>
       <FlatList
         numColumns={2}
         horizontal={false}
