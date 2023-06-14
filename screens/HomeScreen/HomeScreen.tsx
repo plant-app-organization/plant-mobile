@@ -19,13 +19,12 @@ import {
 import { Image } from 'expo-image'
 import MaskedView from '@react-native-masked-view/masked-view'
 
-import { ChevronRightIcon, Spinner, Switch } from 'native-base'
+import { ChevronRightIcon } from 'native-base'
 import PlantersDisplay from '../../components/PlantersDisplay/PlantersDisplay'
 import CardProduct from '../../components/product/CardProduct'
 import CardDeal from '../../components/super-deals/CardDeal'
 import CardCategorie from '../../components/categories/CardCategorie'
-import CardPlanter from '../../components/planters/CardPlanter'
-import CardSuggestion from '../../components/suggestions/CardSuggestion'
+
 import { Avatar } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
 import { NoDeprecatedCustomRule } from 'graphql'
