@@ -26,6 +26,7 @@ import ParamScreen from '../screens/ParamScreen/ParamScreen'
 import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
 import PlantIdentityScreen from '../screens/PlantIdentityScreen/PlantIdentityScreen'
 import PlantIdentityInfoScreen from '../screens/PlantIdentityInfoScreen/PlantIdentityInfoScreen'
+import { TransitionSpecs } from '@react-navigation/stack'
 
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>()
 const config = {
@@ -181,6 +182,7 @@ const HomeStackNavigator = () => {
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
+                animationDuration: 10,
               }}
             />
             <HomeStack.Screen
@@ -189,6 +191,7 @@ const HomeStackNavigator = () => {
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
+                animationDuration: 10,
               }}
             />
             <HomeStack.Screen
@@ -197,6 +200,7 @@ const HomeStackNavigator = () => {
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
+                animationDuration: 10,
               }}
             />
             <HomeStack.Screen
@@ -205,6 +209,7 @@ const HomeStackNavigator = () => {
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
+                animationDuration: 10,
               }}
             />
             <HomeStack.Screen
@@ -213,6 +218,7 @@ const HomeStackNavigator = () => {
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
+                animationDuration: 10,
               }}
             />
             <HomeStack.Screen
@@ -221,6 +227,7 @@ const HomeStackNavigator = () => {
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
+                animationDuration: 10,
               }}
             />
             <HomeStack.Screen
@@ -229,6 +236,7 @@ const HomeStackNavigator = () => {
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
+                animationDuration: 10,
               }}
             />
           </>
