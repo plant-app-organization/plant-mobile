@@ -89,6 +89,8 @@ export type Query = {
   __typename?: 'Query';
   /** Get List of Offers */
   OffersList: Array<Offer>;
+  /** Get List of Offers and data By Ids */
+  OffersListByIds: Array<Offer>;
   /** Get List of Offers Searched */
   OffersListSearch: Array<Offer>;
   /** Get List of Suggestions */
@@ -105,6 +107,11 @@ export type Query = {
 
 export type QueryOffersListArgs = {
   filters: Array<Scalars['String']>;
+};
+
+
+export type QueryOffersListByIdsArgs = {
+  offerIds: Array<Scalars['String']>;
 };
 
 
@@ -183,6 +190,13 @@ export type GetOffersQueryVariables = Exact<{
 
 
 export type GetOffersQuery = { __typename?: 'Query', OffersList: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, environment: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, latitude: number, longitude: number, location: string }> };
+
+export type GetOffersDataByIdsQueryVariables = Exact<{
+  offerIds: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetOffersDataByIdsQuery = { __typename?: 'Query', OffersListByIds: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, pictures: Array<string>, description: string, price: number, health: string, category: string, environment: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, bookmarkedBy: Array<string>, isBookmarked?: boolean | null, latitude: number, longitude: number, location: string, city: string, postcode: string, region: string }> };
 
 export type GetSuggestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -340,6 +354,63 @@ export function useGetOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHo
 export type GetOffersQueryHookResult = ReturnType<typeof useGetOffersQuery>;
 export type GetOffersLazyQueryHookResult = ReturnType<typeof useGetOffersLazyQuery>;
 export type GetOffersQueryResult = Apollo.QueryResult<GetOffersQuery, GetOffersQueryVariables>;
+export const GetOffersDataByIdsDocument = gql`
+    query getOffersDataByIds($offerIds: [String!]!) {
+  OffersListByIds(offerIds: $offerIds) {
+    id
+    authorId
+    plantName
+    pictures
+    description
+    price
+    health
+    category
+    environment
+    pot
+    isActive
+    createdAt
+    updatedAt
+    plantHeight
+    maintenanceDifficultyLevel
+    bookmarkedBy
+    isBookmarked
+    latitude
+    longitude
+    location
+    city
+    postcode
+    region
+  }
+}
+    `;
+
+/**
+ * __useGetOffersDataByIdsQuery__
+ *
+ * To run a query within a React component, call `useGetOffersDataByIdsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOffersDataByIdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOffersDataByIdsQuery({
+ *   variables: {
+ *      offerIds: // value for 'offerIds'
+ *   },
+ * });
+ */
+export function useGetOffersDataByIdsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetOffersDataByIdsQuery, GetOffersDataByIdsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetOffersDataByIdsQuery, GetOffersDataByIdsQueryVariables>(GetOffersDataByIdsDocument, options);
+      }
+export function useGetOffersDataByIdsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetOffersDataByIdsQuery, GetOffersDataByIdsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetOffersDataByIdsQuery, GetOffersDataByIdsQueryVariables>(GetOffersDataByIdsDocument, options);
+        }
+export type GetOffersDataByIdsQueryHookResult = ReturnType<typeof useGetOffersDataByIdsQuery>;
+export type GetOffersDataByIdsLazyQueryHookResult = ReturnType<typeof useGetOffersDataByIdsLazyQuery>;
+export type GetOffersDataByIdsQueryResult = Apollo.QueryResult<GetOffersDataByIdsQuery, GetOffersDataByIdsQueryVariables>;
 export const GetSuggestionsDocument = gql`
     query getSuggestions {
   SuggestionsList {
