@@ -102,8 +102,10 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
     },
   ]
 
+
   const inputRef = useRef(null)
-  //
+
+  
   const navigateToMapSearchScreen = () => {
     inputRef.current?.blur()
     navigation.navigate('Search', {
