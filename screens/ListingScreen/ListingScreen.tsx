@@ -128,14 +128,20 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
         >
           {pictures.map((imgUrl: string, index: number) => {
             return (
-              <View style={styles.slide1} key={index}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Gallery', { images: pictures, title: plantName })
+                }
+                style={styles.slide1}
+                key={index}
+              >
                 <Image
                   className='w-full h-full'
                   source={imgUrl}
                   placeholder={blurhash}
                   contentFit='cover'
                 />
-              </View>
+              </TouchableOpacity>
             )
           })}
 

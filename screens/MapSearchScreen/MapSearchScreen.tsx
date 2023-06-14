@@ -338,7 +338,9 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
               className={`${resultsDisplay == 'list' ? 'opacity-100' : 'opacity-70'}
               bg-white	border-solid rounded-md  p-2 mr-2 px-4 flex flex-row items-center`}
             >
-              <Text className='font-Roboto'>Les annonces</Text>
+              <Text className='' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+                Les annonces
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setResultsDisplay('map')}
@@ -346,7 +348,9 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
         bg-white	border-solid rounded-md  p-1 mr-2 px-4 flex flex-row items-center opacity`}
             >
               <MapIcon color={'black'} />
-              <Text className='font-Roboto ml-2'>Voir sur la carte</Text>
+              <Text className='ml-2' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+                Voir sur la carte
+              </Text>
             </TouchableOpacity>
           </View>
           <TextInput
@@ -356,6 +360,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
             onChangeText={onChangeText}
             placeholderTextColor='#AFAFAF'
             ref={inputRef}
+            style={{ fontFamily: 'manrope_bold', color: '#323232' }}
           />
           <View className='flex-row justify-around items-center w-full mt-6 mb-4'>
             <ScrollView
@@ -368,7 +373,9 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                 className={`${!filters.length && environment == '' && 'border'}
       bg-yellow-100	border-solid rounded-2xl  p-2 mr-2`}
               >
-                <Text className='font-Roboto '>Tout</Text>
+                <Text className='' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+                  Tout
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleEnvironmentPress('indoor')}
@@ -377,7 +384,9 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                 }
       bg-orange-100	 border-solid rounded-2xl  p-2 mr-2`}
               >
-                <Text className='font-Roboto '>Plantes d'intérieur</Text>
+                <Text className='' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+                  Plantes d'intérieur
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleEnvironmentPress('outdoor')}
@@ -386,21 +395,27 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                 }
       bg-orange-100	 border-solid rounded-2xl  p-2 mr-2`}
               >
-                <Text className='font-Roboto '>Plantes d'extérieur</Text>
+                <Text className='' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+                  Plantes d'extérieur
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleFilterPress('succulent')}
                 className={`${filters.some((e) => e === 'succulent') && 'border'}
       bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
               >
-                <Text className='font-Roboto '>Plantes grasses</Text>
+                <Text className='' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+                  Plantes grasses
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleFilterPress('rare')}
                 className={`${filters.some((e) => e === 'rare') && 'border'}
       bg-blue-100	border-solid rounded-2xl  p-2 mr-2`}
               >
-                <Text className='font-Roboto '>Rares</Text>
+                <Text className='' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+                  Rares
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -408,21 +423,27 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                 className={`${filters.some((e) => e === 'tropical') && 'border'}
       bg-purple-100	 border-solid rounded-2xl  p-2 mr-2`}
               >
-                <Text className='font-Roboto '>Tropicales</Text>
+                <Text className='' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+                  Tropicales
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleFilterPress('kitchenGarden')}
                 className={`${filters.some((e) => e === 'kitchenGarden') && 'border'}
       bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
               >
-                <Text className='font-Roboto '>Potager</Text>
+                <Text className='' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+                  Potager
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleFilterPress('aromatic')}
                 className={`${filters.some((e) => e === 'aromatic') && 'border'}
       bg-green-100	border-solid rounded-2xl  p-2 mr-2`}
               >
-                <Text className='font-Roboto '>Aromatiques</Text>
+                <Text className='' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+                  Aromatiques
+                </Text>
               </TouchableOpacity>
             </ScrollView>
           </View>
