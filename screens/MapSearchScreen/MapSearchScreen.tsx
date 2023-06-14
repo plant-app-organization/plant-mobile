@@ -211,7 +211,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
     //     />
     //   }
     // >
-    <View>
+    <View className='bg-white items-center justify-center'>
       {searchOffersData ? (
         <View className='w-screen bg-white'>
           <Text className='px-4 pb-2 pl-6 font-Roboto '>
@@ -313,9 +313,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
           )}
         </View>
       ) : (
-        <View className='flex-1 w-screen h-screen '>
-          <LoadingView />
-        </View>
+        <LoadingView />
       )}
     </View>
     // </ScrollView>
@@ -331,10 +329,10 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
       <LinearGradient
         colors={['#C0FFE7', 'white']}
         className='w-full '
-        style={{ height: Platform.OS === 'ios' ? height * 0.22 : height * 0.29 }}
+        style={{ height: Platform.OS === 'ios' ? height * 0.2 : height * 0.29 }}
       >
-        <View className=' mb-5 mt-5 justify-around'>
-          <View className='flex flex-row justify-evenly pb-2'>
+        <View className=' mb-8 mt-2 justify-around'>
+          <View className='flex flex-row justify-evenly pb-0'>
             <TouchableOpacity
               onPress={() => setResultsDisplay('list')}
               className={`${resultsDisplay == 'list' ? 'opacity-100' : 'opacity-70'}
@@ -359,7 +357,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
             placeholderTextColor='#AFAFAF'
             ref={inputRef}
           />
-          <View className='flex-row justify-around items-center w-full mt-10 '>
+          <View className='flex-row justify-around items-center w-full mt-6 mb-4'>
             <ScrollView
               className='w-screen pl-4'
               horizontal={true}
