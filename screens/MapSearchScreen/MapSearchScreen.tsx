@@ -430,6 +430,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
           </View>
         </View>
       </LinearGradient>
+
       {resultsContainer}
     </SafeAreaView>
   )
