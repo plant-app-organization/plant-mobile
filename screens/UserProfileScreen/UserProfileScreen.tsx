@@ -60,8 +60,7 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
             <Text className='text-2xl font-bold mt-2 text-emerald-700	'>{userName}</Text>
             {/* {city && <Text className='text-gray-500'>{user.city}</Text>} */}
           </View>
-
-          <View className='border-b border-gray-200 pb-4 mb-4'>
+          <View className='border-b border-gray-200 pb-4 mb-4 px-2'>
             <MaskedView
               style={{ height: 27, marginTop: 10 }}
               maskElement={
@@ -80,11 +79,10 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
 
             <Text className='text-gray-600 mt-4'>{userBio}</Text>
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <MaskedView
+          {/* <MaskedView
               style={{ height: 27, marginTop: 10 }}
               maskElement={
-                <Text className=' text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                <Text className=' text-xl  px-2 ' style={{ fontFamily: 'manrope_extra_bold' }}>
                   Ma Note
                 </Text>
               }
@@ -95,18 +93,18 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
                 end={{ x: 0, y: 0.33 }}
                 style={{ flex: 1 }}
               />
-            </MaskedView>
+            </MaskedView> */}
 
-            <View className='mb-4 items-center justify-center'>
+          {/* <View className='mb-4 items-center justify-center'>
               <Text className='text-xl'>{personalPlants}</Text>
               <Text className='text-yellow-500 text-3xl mt-2'>5/5</Text>
-            </View>
-
-            <View className='mb-4'>
+            </View> */}
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View className='mb-4 mt-1'>
               <MaskedView
                 style={{ height: 27, marginTop: 10 }}
                 maskElement={
-                  <Text className='text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                  <Text className='text-xl  px-2' style={{ fontFamily: 'manrope_extra_bold' }}>
                     Ventes en cours
                   </Text>
                 }
