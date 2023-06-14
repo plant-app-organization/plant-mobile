@@ -1,0 +1,27 @@
+query getOffersDataByIds($offerIds: [String!]!) {
+  OffersListByIds(offerIds: $offerIds) {
+    id
+    authorId
+    plantName
+    pictures
+    description
+    price
+    health
+    category
+    environment
+    pot
+    isActive
+    createdAt
+    updatedAt
+    plantHeight
+    maintenanceDifficultyLevel
+    bookmarkedBy
+    isBookmarked
+    latitude
+    longitude
+    location
+    city
+    postcode
+    region
+  }
+}

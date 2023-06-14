@@ -15,8 +15,8 @@ import {
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient, LinearGradientPoint } from 'expo-linear-gradient'
-
 import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid'
+import UserOffersDisplay from '../../components/UserOffersDisplay/UserOffersDisplay'
 
 interface UserProfileScreenProps {}
 
@@ -29,23 +29,7 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
     }
     personalPlants.push(<FontAwesomeIcon name='star' size='20%' style={style} />)
   }
-  const user = {
-    pseudo: 'lulu',
-    city: 'Marseille',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget diam nec ex pharetra aliquam.',
-    rating: 4.7,
-    listings: [
-      {
-        title: 'Monstera',
-        price: '100 euros',
-      },
-      {
-        title: 'pilea',
-        price: '30 euros',
-      },
-    ],
-  }
+
   console.log('🔥props.route.params dans UserProfileScreen', props.route.params)
   const navigation = useNavigation()
 
@@ -72,7 +56,7 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
               className='w-24 h-24 rounded-full'
             />
             <Text className='text-2xl font-bold mt-2'>{userName}</Text>
-            {city && <Text className='text-gray-500'>{user.city}</Text>}
+            {/* {city && <Text className='text-gray-500'>{user.city}</Text>} */}
           </View>
           <View className='border-b border-gray-200 pb-4 mb-4'>
             <Text className='text-xl font-bold'>à propos de moi:</Text>
@@ -82,17 +66,18 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
             <Text className='text-xl font-bold mb-5'>Ma Note:</Text>
             <View className='mb-4 items-center justify-center'>
               <Text className='text-xl'>{personalPlants}</Text>
-              <Text className='text-yellow-500 text-3xl mt-2'>{user.rating}</Text>
+              <Text className='text-yellow-500 text-3xl mt-2'>5/5</Text>
             </View>
 
             <View className='mb-4'>
               <Text className='text-xl font-bold'>les ventes en cours:</Text>
-              {offerIds.map((listing, index) => (
+              {/* {offerIds.map((listing, index) => (
                 <View key={index} className='border border-gray-200 rounded-md p-4 mt-2'>
                   <Text className='text-lg font-bold'>{listing}</Text>
                   <Text className='text-gray-600 mt-1'>{listing}</Text>
                 </View>
-              ))}
+              ))} */}
+              <UserOffersDisplay offerIds={offerIds} />
             </View>
           </ScrollView>
         </View>
