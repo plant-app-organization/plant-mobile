@@ -19,25 +19,51 @@ const UserOffersDisplay: React.FunctionComponent<UserOffersDisplayProps> = ({ of
 
   return (
     <View className='items-start justify-start pt-0'>
-      <View className='w-full'>
-        <Text className='p-4 pl-6'>{offerIds?.length} Annonces publiées par le user</Text>
-        <View className='w-screen'>
-          <FlatList
-            numColumns={2}
-            horizontal={false}
-            initialNumToRender={4}
-            maxToRenderPerBatch={6}
-            ItemSeparatorComponent={() => <View className='h-4' />}
-            columnWrapperStyle={{
-              flex: 1,
-              alignItems: 'flex-start',
-            }}
-            data={userOffersData?.OffersListByIds}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
-      </View>
+      <Text className=''>{offerIds?.length} Annonces publiées par le user</Text>
+      <FlatList
+        numColumns={2}
+        horizontal={false}
+        initialNumToRender={4}
+        maxToRenderPerBatch={6}
+        ItemSeparatorComponent={() => <View className='h-4' />}
+        columnWrapperStyle={{
+          flex: 1,
+          alignItems: 'flex-start',
+        }}
+        data={userOffersData?.OffersListByIds}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+      />
+      {/* <FlatList
+          style={Platform.OS == 'ios' ? { marginBottom: 450 } : null}
+          numColumns={2}
+          // contentContainerStyle={{
+          //   alignItems: 'flex-start',
+          // }}
+          onEndReached={fetchMoreData}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor='#87BC23'
+              colors={['#87BC23', '#139DB8']}
+            />
+          }
+          onEndReachedThreshold={0.7} // The threshold at which the fetchMoreData function should be called. 0.5 means "when half of the list is remaining".
+          horizontal={false}
+          initialNumToRender={4}
+          maxToRenderPerBatch={8}
+          ItemSeparatorComponent={() => <View className='h-4' />}
+          columnWrapperStyle={{
+            flex: 1,
+            alignItems: 'flex-start',
+          }}
+          data={searchOffersData?.OffersListSearch}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+        /> */}
     </View>
   )
 }

@@ -41,7 +41,7 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
         style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
         className='h-screen w-screen flex-1 justify-between '
       >
-        <View className='w-full h-full px-5 flex justify-between '>
+        <View className='w-full h-full px-0 flex justify-between '>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             className='w-[40px] h-[40px] justify-center items-center rounded-full border border-gray-200 bg-white opacity-50 absolute top-5 left-5 z-10 shadow'
