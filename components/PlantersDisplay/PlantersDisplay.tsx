@@ -7,7 +7,7 @@ import PlanterSkeleton from '../PlanterSkeleton/PlanterSkeleton'
 
 export default function PlantersDisplay() {
   const { data: plantersData, refetch, loading, error } = useGetTopPlantersQuery()
-  //   console.log('data', plantersData)
+  console.log('data', plantersData)
   //   useEffect(() => {
   //     console.log('error', error)
   //   }, [error])
@@ -33,6 +33,9 @@ export default function PlantersDisplay() {
           image={item.avatar}
           deals={item.offerIds.length}
           loading={loading}
+          userBio={item.userBio}
+          city={item.city}
+          offers={item.offerIds}
         />
       )}
       keyExtractor={(item) => item.key}

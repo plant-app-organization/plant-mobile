@@ -339,7 +339,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   </View>
                 )}
                 textInputProps={{
-                  autoFocus: true,
+                  autoFocus: false,
                   blurOnSubmit: false,
                   style: {
                     backgroundColor: '#F5F5F5',
