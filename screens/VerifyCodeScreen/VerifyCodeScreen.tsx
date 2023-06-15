@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native';
-import { useClerk, useSignUp, useSession } from '@clerk/clerk-expo';
-import { styles } from '../../components/SignInWithOAuth/Styles';
-import { LinearGradient } from 'expo-linear-gradient';
-import { sessionIdVar } from '../../variables/session';
-import { useRegisterMutation } from '../../graphql/graphql';
+import React, { useState } from 'react'
+import { Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native'
+import { useClerk, useSignUp, useSession } from '@clerk/clerk-expo'
+import { styles } from '../../components/SignInWithOAuth/Styles'
+import { LinearGradient } from 'expo-linear-gradient'
+import { sessionIdVar } from '../../variables/session'
+import { useRegisterMutation } from '../../graphql/graphql'
 
 export default function VerifyCodeScreen(props) {
-  const { isLoaded, signUp, setSession } = useSignUp();
-  const { session } = useSession();
-  const [register] = useRegisterMutation();
+  const { isLoaded, signUp, setSession } = useSignUp()
+  const { session } = useSession()
+  const [register] = useRegisterMutation()
 
-  const [code, setCode] = useState<string>('');
+  const [code, setCode] = useState<string>('')
 
   const onPress = async () => {
     if (!isLoaded) {
-      return;
+      return
     }
 
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
-      });
-      console.log('🧡completeSignUp', completeSignUp);
+      })
+      console.log('🧡completeSignUp', completeSignUp)
       await register({
         variables: {
           newUserInput: {
@@ -35,23 +35,25 @@ export default function VerifyCodeScreen(props) {
               'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Kyzyl_Shaman.jpg/340px-Kyzyl_Shaman.jpg',
           },
         },
-      });
-      await setSession(completeSignUp.createdSessionId);
+      })
+      await setSession(completeSignUp.createdSessionId)
 
       // sessionIdVar(completeSignUp.createdSessionId);
 
-      const userToken = session;
-      console.log('✨user', userToken);
+      const userToken = session
+      console.log('✨user', userToken)
     } catch (err: any) {
-      console.log('Error:> ' + err?.status || '');
-      console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err);
+      console.log('Error:> ' + err?.status || '')
+      console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err)
     }
-  };
+  }
 
   return (
     <LinearGradient
-      colors={['#ccedcf', '#bee6c2', '#8CE795', '#8CE795', '#86E4A1', '#bee6c2']}
-      className=' w-screen h-screen px-22'
+      // start={{ x: 0.1, y: 0 }}
+      // end={{ x: 0.9, y: 0 }}
+      colors={['#FFE2C0', 'white']}
+      className='w-full h-[100px]'
     >
       <SafeAreaView>
         <View className='w-full h-full flex justify-center items-center	'>
@@ -119,5 +121,5 @@ export default function VerifyCodeScreen(props) {
         </View>
       </SafeAreaView>
     </LinearGradient>
-  );
+  )
 }
