@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '@env'
 import PropTypes from 'prop-types'
+import ConfettiCannon from 'react-native-confetti-cannon'
 
 import {
   Platform,
@@ -40,10 +41,13 @@ import * as ImagePicker from 'expo-image-picker'
 import Slider from '@react-native-community/slider'
 import ModalPreview from '../../components/modals/ModalPreview'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import ValidationView from '../../components/ValidationView/ValidationView'
 
 interface AddScreenProps {}
 //
 const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
+  const [shoot, setShoot] = useState(false)
+  const navigation = useNavigation()
   const { width, height } = useWindowDimensions()
   const [createNewOffer] = useCreateNewOfferMutation()
   const toast = useToast()
@@ -56,7 +60,8 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [price, setPrice] = useState<string>('')
-
+  const [placement, setPlacement] = useState(undefined)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
 
   const [regionName, setRegionName] = useState<string>('')
@@ -77,8 +82,18 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   // const [slideStartingCount, setSlideStartingCount] = useState(0);
   const [plantHeight, setPlantHeight] = useState<number>(0)
   const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
-  // console.log('api', GOOGLE_PLACES_API_KEY)
+  console.log('api', GOOGLE_PLACES_API_KEY)
+  const openSuccessModal = () => {
+    setShoot(true)
+    setTimeout(() => {
+      setIsSuccessModalOpen(true)
+    }, 2000)
 
+    setTimeout(() => {
+      navigation.navigate('Home')
+      setIsSuccessModalOpen(false)
+    }, 3000)
+  }
   const onSelectLocation = (data, details) => {
     const addressComponents = details.address_components
     const postalCodeObject = addressComponents.find((component) =>
@@ -206,15 +221,17 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
         },
       })
       // console.log('response', response)
-      response &&
-        toast.show({
-          title: '🪴 Votre offre a été publiée !',
-        })
+      if (response) {
+        openSuccessModal()
+      }
     } else {
       alert('Veuillez remplir tous les champs')
     }
   }
 
+  const styles = {
+    center: {},
+  }
   const handleDescriptionChange = useCallback((value) => {
     setDescription(value)
   }, [])
@@ -322,6 +339,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               <GooglePlacesAutocomplete
                 placeholder='Adresse'
                 onPress={(data, details = null) => {
+                  console.log('data', data, 'details', details)
                   onSelectLocation(data, details)
                 }}
                 query={{
@@ -547,7 +565,24 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
             </TouchableOpacity>
             <View className='h-[100px] w-full' />
           </View>
+          {shoot ? <ConfettiCannon fadeOut={true} count={300} origin={{ x: -10, y: 0 }} /> : null}
         </ScrollView>
+
+        <Modal
+          isOpen={isSuccessModalOpen}
+          onClose={() => {
+            navigation.navigate('Home')
+            setIsSuccessModalOpen(false)
+          }}
+          safeAreaTop={true}
+        >
+          <Modal.Content maxWidth='350'>
+            <Text className='text-xl font-Roboto   ml-3 text-center mt-3 mb-3'>
+              Félicitations, votre offre a été soumise à notre équipe de modération !
+            </Text>
+            <ValidationView />
+          </Modal.Content>
+        </Modal>
 
         <Modal isOpen={isOpen} safeAreaTop={true}>
           <Modal.Content style={{ backgroundColor: '#f2fff3' }} maxWidth='350'>

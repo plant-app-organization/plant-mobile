@@ -26,7 +26,8 @@ import ParamScreen from '../screens/ParamScreen/ParamScreen'
 import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
 import PlantIdentityScreen from '../screens/PlantIdentityScreen/PlantIdentityScreen'
 import PlantIdentityInfoScreen from '../screens/PlantIdentityInfoScreen/PlantIdentityInfoScreen'
-import GalleryScreen from '../screens/GalleryScreen/GalleryScreen'
+import { TransitionSpecs } from '@react-navigation/stack'
+
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>()
 const config = {
   animation: 'spring',
@@ -164,15 +165,6 @@ const HomeStackNavigator = () => {
               }}
             />
             <HomeStack.Screen
-              name='Gallery'
-              component={GalleryScreen}
-              options={{
-                animationTypeForReplace: 'push',
-                animation: 'slide_from_right',
-                animationDuration: 10,
-              }}
-            />
-            <HomeStack.Screen
               name='UserProfile'
               component={UserProfileScreen}
               options={{
@@ -187,15 +179,6 @@ const HomeStackNavigator = () => {
             <HomeStack.Screen
               name='Listing'
               component={ListingScreen}
-              options={{
-                animationTypeForReplace: 'push',
-                animation: 'slide_from_right',
-                animationDuration: 10,
-              }}
-            />
-            <HomeStack.Screen
-              name='Gallery'
-              component={GalleryScreen}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
