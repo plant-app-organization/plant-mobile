@@ -27,6 +27,9 @@ import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
 import PlantIdentityScreen from '../screens/PlantIdentityScreen/PlantIdentityScreen'
 import PlantIdentityInfoScreen from '../screens/PlantIdentityInfoScreen/PlantIdentityInfoScreen'
 import GalleryScreen from '../screens/GalleryScreen/GalleryScreen'
+import ChatContainer from '../screens/ChatContainer/ChatContainer'
+import ChatScreen from '../screens/ChatScreen/ChatScreen'
+
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>()
 const config = {
   animation: 'spring',
@@ -75,6 +78,22 @@ const HomeStackNavigator = () => {
             <HomeStack.Screen
               name='FirstPresentationScreen'
               component={FirstPresentationScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='ChatContainer'
+              component={ChatContainer}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
+              name='ChatScreen'
+              component={ChatScreen}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
@@ -194,6 +213,15 @@ const HomeStackNavigator = () => {
               }}
             />
             <HomeStack.Screen
+              name='SecondPresentationScreen'
+              component={SecondPresentationScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+                animationDuration: 10,
+              }}
+            />
+            <HomeStack.Screen
               name='Gallery'
               component={GalleryScreen}
               options={{
@@ -202,6 +230,7 @@ const HomeStackNavigator = () => {
                 animationDuration: 10,
               }}
             />
+
             <HomeStack.Screen
               name='UserProfile'
               component={UserProfileScreen}
@@ -248,8 +277,25 @@ const HomeStackNavigator = () => {
               }}
             />
             <HomeStack.Screen
+              name='ChatScreen'
+              component={ChatScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              }}
+            />
+            <HomeStack.Screen
               name='PlantIdentityInfoScreen'
               component={PlantIdentityInfoScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+                animationDuration: 10,
+              }}
+            />
+            <HomeStack.Screen
+              name='ChatContainer'
+              component={ChatContainer}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',

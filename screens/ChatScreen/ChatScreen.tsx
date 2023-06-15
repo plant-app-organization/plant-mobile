@@ -10,10 +10,14 @@ import {
   Animated,
   Image,
   SafeAreaView,
+  Button,
+  ScrollView,
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-
-//
+import { useNavigation } from '@react-navigation/native'
+import { Avatar } from 'native-base'
+import { useUser } from '@clerk/clerk-expo'
+import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid'
 
 interface ChatScreenProps {}
 
@@ -26,7 +30,9 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   ])
 
   const fadeIn = new Animated.Value(0)
+  const { isSignedIn, user } = useUser()
 
+  const navigation = useNavigation()
   const handleSend = () => {
     if (message.trim() === '') return
 
@@ -42,56 +48,63 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
     }).start()
   }
   return (
-    <LinearGradient colors={['#BFE6CB', '#EFFFFD', '#FEFFFF']} className='h-screen w-screen flex-1'>
-      <SafeAreaView
-        style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
-        className='h-screen w-screen flex-1 justify-start items-center'
-      >
-        <View className='w-screen items-center'>
-          <Image
-            style={{
-              width: '30%',
-              height: '38%',
-
-              shadowColor: '#3FA96A',
-              shadowOffset: {
-                width: 0,
-                height: 3,
-              },
-              shadowOpacity: 3.22,
-              shadowRadius: 5.1,
+    <SafeAreaView
+      style={{
+        backgroundColor: '#CFF5FF',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+      }}
+    >
+      <LinearGradient colors={['#CFF5FF', 'white']} className='w-full h-[100px]'>
+        <View className='flex items-center justify-center mb-10 mt-10  '>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            className='w-[40px] h-[40px] justify-center items-center rounded-full border border-gray-200 bg-white opacity-50 absolute  left-5 z-10 shadow'
+          >
+            <ChevronLeftIcon color={'black'} />
+          </TouchableOpacity>
+          <Avatar
+            style={{}}
+            bg='amber.500'
+            source={{
+              uri: user?.profileImageUrl,
             }}
-            source={require('../../assets/logo.png')}
+            size='md'
+          >
+            NB
+            <Avatar.Badge bg='green.500' size='23%' />
+          </Avatar>
+        </View>
+      </LinearGradient>
+
+      <ScrollView className='w-full h-screen px-5 flex bg-white 	'>
+        <View style={styles.chatContainer}>
+          {messages.map((item) => (
+            <View
+              key={item.id}
+              style={[
+                styles.messageContainer,
+                item.id % 2 === 0 ? styles.messageContainerRight : styles.messageContainerLeft,
+              ]}
+            >
+              <Animated.Text style={[styles.message]}>{item.message}</Animated.Text>
+            </View>
+          ))}
+        </View>
+
+        <Button title='Rafraîchir' onPress={''} />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder='Tapez votre message ici'
+            value={message}
+            onChangeText={(text) => setMessage(text)}
           />
+          <TouchableOpacity style={styles.button} onPress={handleSend}>
+            <Text style={styles.buttonText}>Envoyer</Text>
+          </TouchableOpacity>
         </View>
-        <View className='h-screen w-screen flex-1 p-4 justify-start'>
-          <View style={styles.chatContainer}>
-            {messages.map((item) => (
-              <View
-                key={item.id}
-                style={[
-                  styles.messageContainer,
-                  item.id % 2 === 0 ? styles.messageContainerRight : styles.messageContainerLeft,
-                ]}
-              >
-                <Animated.Text style={[styles.message]}>{item.message}</Animated.Text>
-              </View>
-            ))}
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder='Tapez votre message ici'
-              value={message}
-              onChangeText={(text) => setMessage(text)}
-            />
-            <TouchableOpacity style={styles.button} onPress={handleSend}>
-              <Text style={styles.buttonText}>Envoyer</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </SafeAreaView>
-    </LinearGradient>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 const styles = StyleSheet.create({
@@ -100,28 +113,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 1,
   },
   messageContainer: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#e5e6e8',
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginBottom: 10,
-    height: 40,
-    width: 200,
-    shadowColor: '#3FA96A',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 15.22,
-    shadowRadius: 16.1,
-    elevation: 10, // pour Android seulement
   },
   message: {
     fontSize: 16,
     color: 'black',
   },
   inputContainer: {
-    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
@@ -131,24 +132,16 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'white',
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginRight: 10,
     fontSize: 16,
     shadowColor: '#3FA96A',
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 16.22,
-    shadowRadius: 5.1,
-    elevation: 10, // pour Android seulement
   },
   button: {
-    backgroundColor: '#8CE795',
+    backgroundColor: 'black',
     borderRadius: 20,
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -160,15 +153,12 @@ const styles = StyleSheet.create({
   },
   messageContainerLeft: {
     alignSelf: 'flex-start',
-    marginRight: '50%',
-    textAlign: 'start',
-    justifyContent: 'center',
+
     alignItems: 'flex-start',
   },
   messageContainerRight: {
     alignSelf: 'flex-end',
-    marginLeft: '50%',
-    justifyContent: 'center',
+
     alignItems: 'flex-end',
   },
 })
