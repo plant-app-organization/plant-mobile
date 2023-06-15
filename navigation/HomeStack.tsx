@@ -26,6 +26,8 @@ import ParamScreen from '../screens/ParamScreen/ParamScreen'
 import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
 import PlantIdentityScreen from '../screens/PlantIdentityScreen/PlantIdentityScreen'
 import PlantIdentityInfoScreen from '../screens/PlantIdentityInfoScreen/PlantIdentityInfoScreen'
+import { TransitionSpecs } from '@react-navigation/stack'
+
 import GalleryScreen from '../screens/GalleryScreen/GalleryScreen'
 import ChatContainer from '../screens/ChatContainer/ChatContainer'
 import ChatScreen from '../screens/ChatScreen/ChatScreen'
@@ -183,15 +185,6 @@ const HomeStackNavigator = () => {
               }}
             />
             <HomeStack.Screen
-              name='Gallery'
-              component={GalleryScreen}
-              options={{
-                animationTypeForReplace: 'push',
-                animation: 'slide_from_right',
-                animationDuration: 10,
-              }}
-            />
-            <HomeStack.Screen
               name='UserProfile'
               component={UserProfileScreen}
               options={{
@@ -213,6 +206,7 @@ const HomeStackNavigator = () => {
               }}
             />
             <HomeStack.Screen
+
               name='SecondPresentationScreen'
               component={SecondPresentationScreen}
               options={{
