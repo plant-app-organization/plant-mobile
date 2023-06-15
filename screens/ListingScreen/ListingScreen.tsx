@@ -235,9 +235,8 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
             <View
               style={{
                 width,
-                height: height * 0.2,
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
+                height: height * 0.3,
+
                 overflow: 'hidden',
                 marginTop: 30,
               }}

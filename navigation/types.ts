@@ -13,12 +13,14 @@ export type HomeStackNavigatorParamList = {
   UserProfileScreen: undefined
   EntretienScreen: undefined
   GalleryScreen: undefined
+  ChatScreen: undefined
+  ChatContainer: undefined
 }
 
 export type BottomTabNavigatorParamList = {
   HomeScreen: undefined
   MapSearchScreen: undefined
   AddScreen: undefined
-  ChatScreen: undefined
+  ChatContainer: undefined
   ProfileScreen: undefined
 }
