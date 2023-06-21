@@ -18,6 +18,8 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid'
 import Swiper from 'react-native-swiper'
+import { ChatBubbleLeftIcon } from 'react-native-heroicons/solid'
+
 interface ListingScreenProps {}
 
 const blurhash =
@@ -175,8 +177,20 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
               <AuthorDisplay userId={authorId} />
 
               <View className='w-6/12 justify-center items-end'>
-                <TouchableOpacity className='w-[150px] justify-center items-center py-2 border border-green-900 rounded-3xl shadow-2xl'>
-                  <Text className='text-green-900'>Contacter</Text>
+                <TouchableOpacity
+                  style={{ borderColor: '#6EB3D5' }}
+                  className='w-[150px] flex-row justify-center items-center py-2 border rounded-2xl shadow-2xl'
+                  onPress={() =>
+                    navigation.navigate('ChatScreen', {
+                      offerId: id,
+                      authorId,
+                    })
+                  }
+                >
+                  <ChatBubbleLeftIcon color={'#6EB3D5'} />
+                  <Text className=' ml-2' style={{ fontFamily: 'manrope_bold', color: '#6EB3D5' }}>
+                    Contacter
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>

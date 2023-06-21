@@ -18,11 +18,9 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 
-//
+interface InboxScreenProps {}
 
-interface ChatContainerProps {}
-
-const ChatContainer: React.FunctionComponent<ChatContainerProps> = (props) => {
+const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
   const navigation = useNavigation()
 
   const [messages, setMessages] = useState([
@@ -44,14 +42,24 @@ const ChatContainer: React.FunctionComponent<ChatContainerProps> = (props) => {
   ])
 
   const renderMessage = ({ item }) => (
-    <View style={styles.messageContainer}>
+    <TouchableOpacity
+      style={styles.messageContainer}
+      onPress={() =>
+        navigation.navigate('ChatScreen', {
+          senderId: 'xxxx',
+          receiverId: 'mlkmlkmlk',
+          offerId: '',
+          conversationId,
+        })
+      }
+    >
       <Image source={item.avatar} style={styles.avatar} />
       <View style={styles.messageContent}>
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.subject}>{item.subject}</Text>
         <Text style={styles.message}>{item.message}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 
   return (
@@ -74,7 +82,9 @@ const ChatContainer: React.FunctionComponent<ChatContainerProps> = (props) => {
 
           <TouchableOpacity
             className=' h-full flex-row items-center justify-end ml-24  '
-            onPress={() => navigation.navigate('ChatScreen')}
+            onPress={() =>
+              navigation.navigate('ChatScreen', { senderId: 'xxxx', receiverId: 'mlkmlkmlk' })
+            }
           >
             <FontAwesomeIcon name='angle-right' size={50} />
           </TouchableOpacity>
@@ -128,4 +138,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ChatContainer
+export default InboxScreen

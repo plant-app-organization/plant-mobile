@@ -34,6 +34,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
   const { isLoaded, signUp } = useSignUp()
   const [show, setShow] = React.useState(false)
   const navigation = useNavigation()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleTextChange = (inputText) => {
     setEmailAddress(inputText.toLowerCase())
@@ -44,6 +45,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
       return
     }
     console.log('credential', username, emailAddress)
+    setIsLoading(true)
     try {
       await signUp
         .create({
@@ -142,12 +144,18 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
           </View>
 
           <View className='w-full h-[40%] flex flex-col justify-evenly items-center'>
-            <TouchableOpacity
-              className='h-[45px] w-[80%] rounded-full items-center justify-center bg-black shadow-lg'
-              onPress={onSignUpPress}
-            >
-              <Text className='text-white text-lg tracking-widest'> Créer mon compte</Text>
-            </TouchableOpacity>
+            {!isLoading ? (
+              <TouchableOpacity
+                className='h-[45px] w-[80%] rounded-full items-center justify-center bg-black shadow-lg'
+                onPress={onSignUpPress}
+              >
+                <Text className='text-white text-lg tracking-widest'> Créer mon compte</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity className='h-[45px] w-[80%] rounded-full items-center justify-center bg-black shadow-lg opacity-70'>
+                <Spinner color='white' />
+              </TouchableOpacity>
+            )}
             <Text className='font-semibold'>OU</Text>
             <View className='h-[45%] flex flex-col justify-around'>
               <SignUpWithOAuth />

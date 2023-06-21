@@ -13,7 +13,7 @@ import {
   ScrollView,
   Image,
 } from 'react-native'
-import { useToast, Input, Pressable, Icon, InputGroup } from 'native-base'
+import { useToast, Input, Pressable, Icon, Spinner } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useSignIn } from '@clerk/clerk-expo'
 import { SignInWithOAuth } from '../../components/SignInWithOAuth/SignInWithOAuth'
@@ -32,6 +32,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
   const [show, setShow] = React.useState(false)
   const toast = useToast()
   const navigation = useNavigation()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleTextChange = (inputText) => {
     setEmailAddress(inputText.toLowerCase())
@@ -41,7 +42,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
     if (!isLoaded) {
       return
     }
-
+    setIsLoading(true)
     try {
       const completeSignIn = await signIn.create({
         identifier: emailAddress,
@@ -55,6 +56,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
           title: 'Email ou mot de passe incorrect',
           placement: 'top',
         })
+        setIsLoading(false)
       }
       console.log('Error:> ' + (err.errors ? err.errors[0].message : err))
     }
@@ -118,12 +120,19 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
 
         <View className='w-full h-[60%]'>
           <View className='w-full h-[35%] items-center justify-evenly'>
-            <TouchableOpacity
-              className='h-[45px] w-[80%] rounded-full flex items-center justify-center bg-black shadow-lg'
-              onPress={onSignInPress}
-            >
-              <Text className='text-white text-lg tracking-widest'>Se connecter</Text>
-            </TouchableOpacity>
+            {!isLoading ? (
+              <TouchableOpacity
+                className='h-[45px] w-[80%] rounded-full flex items-center justify-center bg-black shadow-lg'
+                onPress={onSignInPress}
+              >
+                <Text className='text-white text-lg tracking-widest'>Se connecter</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity className='h-[45px] w-[80%] rounded-full flex items-center justify-center bg-black shadow-lg opacity-70'>
+                <Spinner color='white' />
+              </TouchableOpacity>
+            )}
+
             <Text className='font-semibold'>OU</Text>
           </View>
 

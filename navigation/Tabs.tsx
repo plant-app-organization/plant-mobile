@@ -9,7 +9,7 @@ import ChatScreen from '../screens/ChatScreen/ChatScreen'
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen'
 import AddScreen from '../screens/AddScreen/AddScreen'
 import ListingScreen from '../screens/ListingScreen/ListingScreen'
-import ChatContainer from '../screens/ChatContainer/ChatContainer'
+import InboxScreen from '../screens/InboxScreen/InboxScreen'
 
 import * as Animatable from 'react-native-animatable'
 import { shouldInclude } from '@apollo/client/utilities'
@@ -106,7 +106,7 @@ const BottomTabs = () => (
 
     <Tab.Screen
       name='Chat'
-      component={ChatContainer}
+      component={InboxScreen}
       options={{
         tabBarBadge: 2,
         tabBarBadgeStyle: {
