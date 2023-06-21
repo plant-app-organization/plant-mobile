@@ -82,7 +82,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
   // const [slideStartingCount, setSlideStartingCount] = useState(0);
   const [plantHeight, setPlantHeight] = useState<number>(0)
   const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
-  console.log('api', GOOGLE_PLACES_API_KEY)
+  // console.log('api', GOOGLE_PLACES_API_KEY)
   const openSuccessModal = () => {
     setShoot(true)
     setTimeout(() => {
@@ -108,7 +108,7 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
     setPostCode(postalCode)
     setRegionName(region)
     setLocation({ ...data, ...details })
-    console.log('🤹data', data, '🔥details', details)
+    // console.log('🤹data', data, '🔥details', details)
   }
   const openModalHandler = () => {
     console.log('CLICKED')
@@ -338,8 +338,9 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
               )}
               <GooglePlacesAutocomplete
                 placeholder='Adresse'
+                keepResultsAfterBlur={true}
                 onPress={(data, details = null) => {
-                  console.log('data', data, 'details', details)
+                  // console.log('🤩data', data, 'details', details)
                   onSelectLocation(data, details)
                 }}
                 query={{
@@ -348,14 +349,14 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   components: 'country:fr',
                 }}
                 fetchDetails={true}
-                enablePoweredByContainer={false}
+                enablePoweredByContainer={true}
                 onFail={(error) => console.log(error)}
                 onNotFound={() => console.log('no results')}
-                listEmptyComponent={() => (
-                  <View style={{ flex: 1 }}>
-                    <Text>Nous n'avons pas trouvé cette adresse</Text>
-                  </View>
-                )}
+                // listEmptyComponent={() => (
+                //   <View style={{ flex: 1 }}>
+                //     <Text>Nous n'avons pas trouvé cette adresse</Text>
+                //   </View>
+                // )}
                 textInputProps={{
                   autoFocus: false,
                   blurOnSubmit: false,
@@ -384,6 +385,9 @@ const AddScreen: React.FunctionComponent<AddScreenProps> = (props) => {
                   },
                 }}
               />
+              <Text className='px-4 text-xs' style={{ fontFamily: 'manrope_bold' }}>
+                {location?.formatted_address}
+              </Text>
             </View>
 
             <View className='w-[90%] bg-white min-h-screen items-center justify-evenly rounded-lg shadow mt-10'>

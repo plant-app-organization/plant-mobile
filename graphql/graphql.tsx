@@ -17,11 +17,28 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type MessageInput = {
+  offerId: Scalars['String'];
+  text: Scalars['String'];
+};
+
+export type MessageModel = {
+  __typename?: 'MessageModel';
+  conversationId: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  isActive: Scalars['Boolean'];
+  senderId: Scalars['String'];
+  text: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   bookmarkOffer: Scalars['String'];
   createNewOffer: Scalars['String'];
   register: Scalars['String'];
+  sendMessage: Scalars['String'];
 };
 
 
@@ -37,6 +54,11 @@ export type MutationCreateNewOfferArgs = {
 
 export type MutationRegisterArgs = {
   newUserInput: RegisterInput;
+};
+
+
+export type MutationSendMessageArgs = {
+  newMessageInput: MessageInput;
 };
 
 export type Offer = {
@@ -87,6 +109,8 @@ export type OfferInput = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Get List of Messages for a given conversation */
+  MessagesList: Array<MessageModel>;
   /** Get List of Offers */
   OffersList: Array<Offer>;
   /** Get List of Offers and data By Ids */
@@ -102,6 +126,11 @@ export type Query = {
   userBookmarks: Array<Offer>;
   userData: UserModel;
   userDataById: UserModel;
+};
+
+
+export type QueryMessagesListArgs = {
+  conversationId: Scalars['String'];
 };
 
 
@@ -155,6 +184,7 @@ export type UserModel = {
   avatar: Scalars['String'];
   bookmarks: Array<Scalars['String']>;
   clerkId: Scalars['String'];
+  conversations: Array<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   firstName: Scalars['String'];
@@ -183,6 +213,13 @@ export type CreateNewOfferMutationVariables = Exact<{
 
 
 export type CreateNewOfferMutation = { __typename?: 'Mutation', createNewOffer: string };
+
+export type GetConversationMessagesQueryVariables = Exact<{
+  conversationId: Scalars['String'];
+}>;
+
+
+export type GetConversationMessagesQuery = { __typename?: 'Query', MessagesList: Array<{ __typename?: 'MessageModel', id: string, senderId: string, text: string, createdAt: any }> };
 
 export type GetOffersQueryVariables = Exact<{
   filters: Array<Scalars['String']> | Scalars['String'];
@@ -237,6 +274,13 @@ export type SearchOffersQueryVariables = Exact<{
 
 
 export type SearchOffersQuery = { __typename?: 'Query', OffersListSearch: Array<{ __typename?: 'Offer', id: string, authorId: string, plantName: string, price: number, pictures: Array<string>, description: string, health: string, category: string, environment: string, pot: boolean, isActive: boolean, createdAt: any, updatedAt: any, plantHeight: number, maintenanceDifficultyLevel: string, bookmarkedBy: Array<string>, isBookmarked?: boolean | null, latitude: number, longitude: number, location: string, city: string, postcode: string, region: string }> };
+
+export type SendMessageMutationVariables = Exact<{
+  newMessageInput: MessageInput;
+}>;
+
+
+export type SendMessageMutation = { __typename?: 'Mutation', sendMessage: string };
 
 
 export const BookmarkOfferDocument = gql`
@@ -301,6 +345,44 @@ export function useCreateNewOfferMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type CreateNewOfferMutationHookResult = ReturnType<typeof useCreateNewOfferMutation>;
 export type CreateNewOfferMutationResult = Apollo.MutationResult<CreateNewOfferMutation>;
 export type CreateNewOfferMutationOptions = Apollo.BaseMutationOptions<CreateNewOfferMutation, CreateNewOfferMutationVariables>;
+export const GetConversationMessagesDocument = gql`
+    query getConversationMessages($conversationId: String!) {
+  MessagesList(conversationId: $conversationId) {
+    id
+    senderId
+    text
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useGetConversationMessagesQuery__
+ *
+ * To run a query within a React component, call `useGetConversationMessagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetConversationMessagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetConversationMessagesQuery({
+ *   variables: {
+ *      conversationId: // value for 'conversationId'
+ *   },
+ * });
+ */
+export function useGetConversationMessagesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetConversationMessagesQuery, GetConversationMessagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetConversationMessagesQuery, GetConversationMessagesQueryVariables>(GetConversationMessagesDocument, options);
+      }
+export function useGetConversationMessagesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetConversationMessagesQuery, GetConversationMessagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetConversationMessagesQuery, GetConversationMessagesQueryVariables>(GetConversationMessagesDocument, options);
+        }
+export type GetConversationMessagesQueryHookResult = ReturnType<typeof useGetConversationMessagesQuery>;
+export type GetConversationMessagesLazyQueryHookResult = ReturnType<typeof useGetConversationMessagesLazyQuery>;
+export type GetConversationMessagesQueryResult = Apollo.QueryResult<GetConversationMessagesQuery, GetConversationMessagesQueryVariables>;
 export const GetOffersDocument = gql`
     query getOffers($filters: [String!]!) {
   OffersList(filters: $filters) {
@@ -675,3 +757,34 @@ export function useSearchOffersLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type SearchOffersQueryHookResult = ReturnType<typeof useSearchOffersQuery>;
 export type SearchOffersLazyQueryHookResult = ReturnType<typeof useSearchOffersLazyQuery>;
 export type SearchOffersQueryResult = Apollo.QueryResult<SearchOffersQuery, SearchOffersQueryVariables>;
+export const SendMessageDocument = gql`
+    mutation sendMessage($newMessageInput: MessageInput!) {
+  sendMessage(newMessageInput: $newMessageInput)
+}
+    `;
+export type SendMessageMutationFn = Apollo.MutationFunction<SendMessageMutation, SendMessageMutationVariables>;
+
+/**
+ * __useSendMessageMutation__
+ *
+ * To run a mutation, you first call `useSendMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendMessageMutation, { data, loading, error }] = useSendMessageMutation({
+ *   variables: {
+ *      newMessageInput: // value for 'newMessageInput'
+ *   },
+ * });
+ */
+export function useSendMessageMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SendMessageMutation, SendMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<SendMessageMutation, SendMessageMutationVariables>(SendMessageDocument, options);
+      }
+export type SendMessageMutationHookResult = ReturnType<typeof useSendMessageMutation>;
+export type SendMessageMutationResult = Apollo.MutationResult<SendMessageMutation>;
+export type SendMessageMutationOptions = Apollo.BaseMutationOptions<SendMessageMutation, SendMessageMutationVariables>;

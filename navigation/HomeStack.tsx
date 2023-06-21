@@ -29,7 +29,6 @@ import PlantIdentityInfoScreen from '../screens/PlantIdentityInfoScreen/PlantIde
 import { TransitionSpecs } from '@react-navigation/stack'
 
 import GalleryScreen from '../screens/GalleryScreen/GalleryScreen'
-import ChatContainer from '../screens/ChatContainer/ChatContainer'
 import ChatScreen from '../screens/ChatScreen/ChatScreen'
 
 const HomeStack = createNativeStackNavigator<HomeStackNavigatorParamList>()
@@ -85,14 +84,7 @@ const HomeStackNavigator = () => {
                 animation: 'slide_from_right',
               }}
             />
-            <HomeStack.Screen
-              name='ChatContainer'
-              component={ChatContainer}
-              options={{
-                animationTypeForReplace: 'push',
-                animation: 'slide_from_right',
-              }}
-            />
+
             <HomeStack.Screen
               name='ChatScreen'
               component={ChatScreen}
@@ -206,7 +198,6 @@ const HomeStackNavigator = () => {
               }}
             />
             <HomeStack.Screen
-
               name='SecondPresentationScreen'
               component={SecondPresentationScreen}
               options={{
@@ -281,15 +272,6 @@ const HomeStackNavigator = () => {
             <HomeStack.Screen
               name='PlantIdentityInfoScreen'
               component={PlantIdentityInfoScreen}
-              options={{
-                animationTypeForReplace: 'push',
-                animation: 'slide_from_right',
-                animationDuration: 10,
-              }}
-            />
-            <HomeStack.Screen
-              name='ChatContainer'
-              component={ChatContainer}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',

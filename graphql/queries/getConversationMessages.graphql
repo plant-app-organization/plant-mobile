@@ -1,0 +1,8 @@
+query getConversationMessages($conversationId: String!) {
+  MessagesList(conversationId: $conversationId) {
+    id
+    senderId
+    text
+    createdAt
+  }
+}
