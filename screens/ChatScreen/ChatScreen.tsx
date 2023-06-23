@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import {
   Platform,
   StatusBar,
@@ -9,7 +9,10 @@ import {
   StyleSheet,
   Animated,
   SafeAreaView,
+  Pressable,
+  Keyboard,
   Button,
+  RefreshControl,
   ScrollView,
   Touchable,
   useWindowDimensions,
@@ -20,7 +23,7 @@ import localization from 'moment/locale/fr'
 import { Image } from 'expo-image'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
-import { Avatar } from 'native-base'
+import { Avatar, Spinner } from 'native-base'
 import { useAuth, useUser } from '@clerk/clerk-expo'
 import { ChevronLeftIcon, ArrowPathIcon } from 'react-native-heroicons/solid'
 import Pusher from 'pusher-js/react-native'
@@ -28,7 +31,7 @@ import { useGetOffersDataByIdsQuery } from '../../graphql/graphql'
 import { useGetUserDataByIdQuery } from '../../graphql/graphql'
 import { useGetConversationMessagesQuery } from '../../graphql/graphql'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useSendMessageMutation } from '../../graphql/graphql'
+import { useSendMessageMutation, useGetIsConversationExistingQuery } from '../../graphql/graphql'
 
 interface ChatScreenProps {
   senderId: string
@@ -37,28 +40,46 @@ interface ChatScreenProps {
 
 const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   const [sendMessage] = useSendMessageMutation()
-
+  const [refreshing, setRefreshing] = useState(false)
   const [message, setMessage] = useState('')
   const [userToken, setUserToken] = useState('')
   const [userName, setUserName] = useState<string>('')
-
+  const [isSendingMessage, setIsSendingMessage] = useState(false)
   const { offerId, authorId, conversationId } = props.route.params
   console.log('offerId', offerId)
   const { data: userData } = useGetUserDataByIdQuery({
     variables: { userId: authorId },
   })
+
   const { data: offerData, refetch: refetchOfferData } = useGetOffersDataByIdsQuery({
     variables: { offerIds: [offerId] },
   })
 
+  // const { data: conversationData, refetch: refetchConversationData } =
+  //   useGetIsConversationExistingQuery({
+  //     variables: { offerId, userId1: authorId },
+  //   })
+
   const { data: conversationData, refetch: refetchConversationData } =
     useGetConversationMessagesQuery({
-      variables: { conversationId: null },
+      variables: { conversationId },
     })
+  const wait = (timeout: number) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout))
+  }
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
 
-  console.log('offerData in chatscreen', offerData)
-  console.log('userdata in chatscreen', userData)
-  console.log('conversatiOnData', conversationData)
+    wait(2000).then(() => {
+      refetchConversationData()
+      setRefreshing(false)
+    })
+  }, [])
+  // console.log('offerData in chatscreen', offerData)
+  // console.log('userdata in chatscreen', userData)
+  // console.log('authorId', authorId)
+  // console.log('--------conversatiOnData', conversationData)
+  // console.log('--------ConversationId in ChatScreenn', conversationId)
   const { width, height } = useWindowDimensions()
   moment.updateLocale('fr', localization)
 
@@ -97,6 +118,8 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   //   }
   // }, [senderId, receiverId])
 
+  // check if conversation is new
+
   const fadeIn = new Animated.Value(0)
   const { isSignedIn, user } = useUser()
 
@@ -105,6 +128,8 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   // console.log(offerData?.OffersListByIds[0].pictures[0])
 
   const onSendMessagePress = async () => {
+    setIsSendingMessage(true)
+    Keyboard.dismiss()
     const response = await sendMessage({
       variables: {
         newMessageInput: {
@@ -114,7 +139,12 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
       },
     })
     console.log('response', response)
+    if (response.data?.sendMessage) {
+      setIsSendingMessage(false)
+      setMessage('')
+    }
   }
+
   return (
     <SafeAreaView
       style={{
@@ -127,7 +157,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
       <LinearGradient
         colors={['#CFF5FF', 'white']}
         className='w-full'
-        style={{ height: height * 0.15 }}
+        style={{ height: Platform.OS == 'ios' ? height * 0.15 : height * 0.25 }}
       >
         <View className='flex flex-row items-center justify-between px-3'>
           <View className='flex flex-row items-center'>
@@ -141,12 +171,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
               {userData?.userDataById?.userName}
             </Text>
           </View>
-          <TouchableOpacity
-            onPress={() => console.log('refresh')}
-            className='w-[40px] h-[40px] justify-center items-center rounded-full border border-gray-200 bg-white opacity-50 shadow ml-4'
-          >
-            <ArrowPathIcon color={'black'} />
-          </TouchableOpacity>
+
           {/* <Avatar
             style={{}}
             bg='amber.500'
@@ -195,10 +220,18 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
             flexDirection: 'column',
             justifyContent: 'flex-end',
           }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor='#87BC23'
+              colors={['#87BC23', '#139DB8']}
+            />
+          }
         >
           <View style={styles.chatContainer}>
             {/* reprendre en fonction de l'ID du user */}
-            {!conversationData ? (
+            {!conversationId ? (
               <Text>Débutez une conversation avec {userData?.userDataById?.userName} </Text>
             ) : (
               conversationData?.MessagesList.map((item) => (
@@ -213,7 +246,6 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
                 >
                   {item.senderId === userData?.userDataById?.id && (
                     <Avatar
-                      alignSelf='left'
                       bg='amber.500'
                       size='sm'
                       source={{
@@ -251,9 +283,16 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
             value={message}
             onChangeText={(text) => setMessage(text)}
           />
-          <TouchableOpacity style={styles.button} onPress={onSendMessagePress}>
-            <Text style={styles.buttonText}>Envoyer</Text>
-          </TouchableOpacity>
+
+          {!isSendingMessage ? (
+            <TouchableOpacity style={styles.button} onPress={onSendMessagePress}>
+              <Text style={styles.buttonText}>Envoyer</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.buttonLoading} onPress={onSendMessagePress}>
+              <Spinner color='white' />
+            </TouchableOpacity>
+          )}
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -263,6 +302,7 @@ const styles = StyleSheet.create({
   chatContainer: {
     flex: 1,
     paddingHorizontal: 1,
+    paddingTop: 40,
   },
   messageContainer: {
     borderRadius: 10,
@@ -299,6 +339,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
+
+  buttonLoading: {
+    backgroundColor: 'black',
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    opacity: 0.8,
+  },
   buttonText: {
     color: '#fff',
     fontSize: 16,
@@ -308,10 +356,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     backgroundColor: '#d3eada',
     alignItems: 'flex-start',
+    maxWidth: '75%',
   },
   messageContainerRight: {
     alignSelf: 'flex-end',
-
+    backgroundColor: '#eafaff',
+    maxWidth: '75%',
     alignItems: 'flex-end',
   },
   date: {

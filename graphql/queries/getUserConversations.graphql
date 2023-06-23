@@ -1,0 +1,32 @@
+query getUserConversations {
+  UserConversations {
+    id
+    offerId
+    createdAt
+    participants {
+      userName
+      avatar
+      id
+    }
+    offer {
+      authorId
+      category
+      createdAt
+      description
+      health
+      id
+      isActive
+      maintenanceDifficultyLevel
+      pictures
+      plantHeight
+      plantName
+      environment
+      latitude
+      longitude
+      pot
+      price
+      updatedAt
+      city
+    }
+  }
+}
