@@ -19,6 +19,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid'
 import Swiper from 'react-native-swiper'
 import { ChatBubbleLeftIcon } from 'react-native-heroicons/solid'
+import { useGetIsConversationExistingQuery } from '../../graphql/graphql'
 
 interface ListingScreenProps {}
 
@@ -31,6 +32,7 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
   const { width, height } = useWindowDimensions()
   const [likesCounter, setLikesCounter] = useState<number | null>(props.route.params.likesCounter)
   console.log('props.route.params', props.route.params)
+
   console.log('like', like)
   const {
     authorId,
@@ -52,6 +54,10 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
     updatedAt,
     city,
   } = props.route.params.listingData
+
+  const { data: conversationData } = useGetIsConversationExistingQuery({
+    variables: { offerId: id, userId1: authorId },
+  })
   const navigation = useNavigation()
   const bookmarksArray = useReactiveVar(bookmarksVar)
 
@@ -118,6 +124,17 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   }
+
+  const handleContactPress = () => {
+    console.log('handleContactPress')
+    console.log('conversationData', conversationData)
+
+    navigation.navigate('ChatScreen', {
+      conversationId: conversationData?.getIsConversationExisting,
+      offerId: id,
+      authorId,
+    })
+  }
   return (
     <View style={{ flex: 1, width: '100%', height: '100%' }}>
       <View className='w-full h-[40%] relative'>
@@ -180,12 +197,7 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
                 <TouchableOpacity
                   style={{ borderColor: '#6EB3D5' }}
                   className='w-[150px] flex-row justify-center items-center py-2 border rounded-2xl shadow-2xl'
-                  onPress={() =>
-                    navigation.navigate('ChatScreen', {
-                      offerId: id,
-                      authorId,
-                    })
-                  }
+                  onPress={() => handleContactPress()}
                 >
                   <ChatBubbleLeftIcon color={'#6EB3D5'} />
                   <Text className=' ml-2' style={{ fontFamily: 'manrope_bold', color: '#6EB3D5' }}>

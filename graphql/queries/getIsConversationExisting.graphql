@@ -1,0 +1,3 @@
+query getIsConversationExisting($userId1: String!, $offerId: String!) {
+  getIsConversationExisting(userId1: $userId1, offerId: $offerId)
+}

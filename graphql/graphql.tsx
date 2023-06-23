@@ -17,6 +17,18 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type ConversationModel = {
+  __typename?: 'ConversationModel';
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  isActive: Scalars['Boolean'];
+  offer: Offer;
+  offerId: Scalars['String'];
+  participantIds: Scalars['String'];
+  participants: Array<UserModel>;
+  updatedAt: Scalars['DateTime'];
+};
+
 export type MessageInput = {
   offerId: Scalars['String'];
   text: Scalars['String'];
@@ -119,9 +131,12 @@ export type Query = {
   OffersListSearch: Array<Offer>;
   /** Get List of Suggestions */
   SuggestionsList: Array<SuggestionModel>;
+  /** Get all conversations of the authenticated user */
+  UserConversations: Array<ConversationModel>;
   /** Get List of Users with the largest amount of active offers */
   UsersList: Array<UserModel>;
   getBookmarksByUserId: Scalars['String'];
+  getIsConversationExisting: Scalars['String'];
   hello: Scalars['String'];
   userBookmarks: Array<Offer>;
   userData: UserModel;
@@ -155,6 +170,12 @@ export type QueryOffersListSearchArgs = {
 
 export type QueryGetBookmarksByUserIdArgs = {
   offerId: Scalars['String'];
+};
+
+
+export type QueryGetIsConversationExistingArgs = {
+  offerId: Scalars['String'];
+  userId1: Scalars['String'];
 };
 
 
@@ -221,6 +242,14 @@ export type GetConversationMessagesQueryVariables = Exact<{
 
 export type GetConversationMessagesQuery = { __typename?: 'Query', MessagesList: Array<{ __typename?: 'MessageModel', id: string, senderId: string, text: string, createdAt: any }> };
 
+export type GetIsConversationExistingQueryVariables = Exact<{
+  userId1: Scalars['String'];
+  offerId: Scalars['String'];
+}>;
+
+
+export type GetIsConversationExistingQuery = { __typename?: 'Query', getIsConversationExisting: string };
+
 export type GetOffersQueryVariables = Exact<{
   filters: Array<Scalars['String']> | Scalars['String'];
 }>;
@@ -249,6 +278,11 @@ export type GetUserBookmarksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUserBookmarksQuery = { __typename?: 'Query', userBookmarks: Array<{ __typename?: 'Offer', id: string, price: number, plantName: string, pictures: Array<string>, bookmarkedBy: Array<string>, description: string, category: string, health: string, pot: boolean, isBookmarked?: boolean | null, plantHeight: number, maintenanceDifficultyLevel: string, isActive: boolean, createdAt: any, updatedAt: any }> };
+
+export type GetUserConversationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserConversationsQuery = { __typename?: 'Query', UserConversations: Array<{ __typename?: 'ConversationModel', id: string, offerId: string, createdAt: any, participants: Array<{ __typename?: 'UserModel', userName: string, avatar: string, id: string }>, offer: { __typename?: 'Offer', authorId: string, category: string, createdAt: any, description: string, health: string, id: string, isActive: boolean, maintenanceDifficultyLevel: string, pictures: Array<string>, plantHeight: number, plantName: string, environment: string, latitude: number, longitude: number, pot: boolean, price: number, updatedAt: any, city: string } }> };
 
 export type GetUserDataByIdQueryVariables = Exact<{
   userId: Scalars['String'];
@@ -383,6 +417,40 @@ export function useGetConversationMessagesLazyQuery(baseOptions?: ApolloReactHoo
 export type GetConversationMessagesQueryHookResult = ReturnType<typeof useGetConversationMessagesQuery>;
 export type GetConversationMessagesLazyQueryHookResult = ReturnType<typeof useGetConversationMessagesLazyQuery>;
 export type GetConversationMessagesQueryResult = Apollo.QueryResult<GetConversationMessagesQuery, GetConversationMessagesQueryVariables>;
+export const GetIsConversationExistingDocument = gql`
+    query getIsConversationExisting($userId1: String!, $offerId: String!) {
+  getIsConversationExisting(userId1: $userId1, offerId: $offerId)
+}
+    `;
+
+/**
+ * __useGetIsConversationExistingQuery__
+ *
+ * To run a query within a React component, call `useGetIsConversationExistingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIsConversationExistingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIsConversationExistingQuery({
+ *   variables: {
+ *      userId1: // value for 'userId1'
+ *      offerId: // value for 'offerId'
+ *   },
+ * });
+ */
+export function useGetIsConversationExistingQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetIsConversationExistingQuery, GetIsConversationExistingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetIsConversationExistingQuery, GetIsConversationExistingQueryVariables>(GetIsConversationExistingDocument, options);
+      }
+export function useGetIsConversationExistingLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetIsConversationExistingQuery, GetIsConversationExistingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetIsConversationExistingQuery, GetIsConversationExistingQueryVariables>(GetIsConversationExistingDocument, options);
+        }
+export type GetIsConversationExistingQueryHookResult = ReturnType<typeof useGetIsConversationExistingQuery>;
+export type GetIsConversationExistingLazyQueryHookResult = ReturnType<typeof useGetIsConversationExistingLazyQuery>;
+export type GetIsConversationExistingQueryResult = Apollo.QueryResult<GetIsConversationExistingQuery, GetIsConversationExistingQueryVariables>;
 export const GetOffersDocument = gql`
     query getOffers($filters: [String!]!) {
   OffersList(filters: $filters) {
@@ -616,6 +684,67 @@ export function useGetUserBookmarksLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type GetUserBookmarksQueryHookResult = ReturnType<typeof useGetUserBookmarksQuery>;
 export type GetUserBookmarksLazyQueryHookResult = ReturnType<typeof useGetUserBookmarksLazyQuery>;
 export type GetUserBookmarksQueryResult = Apollo.QueryResult<GetUserBookmarksQuery, GetUserBookmarksQueryVariables>;
+export const GetUserConversationsDocument = gql`
+    query getUserConversations {
+  UserConversations {
+    id
+    offerId
+    createdAt
+    participants {
+      userName
+      avatar
+      id
+    }
+    offer {
+      authorId
+      category
+      createdAt
+      description
+      health
+      id
+      isActive
+      maintenanceDifficultyLevel
+      pictures
+      plantHeight
+      plantName
+      environment
+      latitude
+      longitude
+      pot
+      price
+      updatedAt
+      city
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetUserConversationsQuery__
+ *
+ * To run a query within a React component, call `useGetUserConversationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserConversationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserConversationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserConversationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserConversationsQuery, GetUserConversationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetUserConversationsQuery, GetUserConversationsQueryVariables>(GetUserConversationsDocument, options);
+      }
+export function useGetUserConversationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserConversationsQuery, GetUserConversationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetUserConversationsQuery, GetUserConversationsQueryVariables>(GetUserConversationsDocument, options);
+        }
+export type GetUserConversationsQueryHookResult = ReturnType<typeof useGetUserConversationsQuery>;
+export type GetUserConversationsLazyQueryHookResult = ReturnType<typeof useGetUserConversationsLazyQuery>;
+export type GetUserConversationsQueryResult = Apollo.QueryResult<GetUserConversationsQuery, GetUserConversationsQueryVariables>;
 export const GetUserDataByIdDocument = gql`
     query getUserDataById($userId: String!) {
   userDataById(userId: $userId) {
