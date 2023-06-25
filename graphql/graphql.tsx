@@ -192,6 +192,16 @@ export type RegisterInput = {
   userName: Scalars['String'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  messageAdded: MessageModel;
+};
+
+
+export type SubscriptionMessageAddedArgs = {
+  conversationId: Scalars['String'];
+};
+
 export type SuggestionModel = {
   __typename?: 'SuggestionModel';
   createdAt: Scalars['DateTime'];
@@ -290,6 +300,13 @@ export type GetUserDataByIdQueryVariables = Exact<{
 
 
 export type GetUserDataByIdQuery = { __typename?: 'Query', userDataById: { __typename?: 'UserModel', id: string, userName: string, userBio: string, avatar: string, isPro: boolean, createdAt: any, updatedAt: any, offerIds: Array<string> } };
+
+export type OnMessageAddedSubscriptionVariables = Exact<{
+  conversationId: Scalars['String'];
+}>;
+
+
+export type OnMessageAddedSubscription = { __typename?: 'Subscription', messageAdded: { __typename?: 'MessageModel', id: string, text: string, createdAt: any, senderId: string, conversationId: string } };
 
 export type RegisterMutationVariables = Exact<{
   newUserInput: RegisterInput;
@@ -787,6 +804,40 @@ export function useGetUserDataByIdLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type GetUserDataByIdQueryHookResult = ReturnType<typeof useGetUserDataByIdQuery>;
 export type GetUserDataByIdLazyQueryHookResult = ReturnType<typeof useGetUserDataByIdLazyQuery>;
 export type GetUserDataByIdQueryResult = Apollo.QueryResult<GetUserDataByIdQuery, GetUserDataByIdQueryVariables>;
+export const OnMessageAddedDocument = gql`
+    subscription OnMessageAdded($conversationId: String!) {
+  messageAdded(conversationId: $conversationId) {
+    id
+    text
+    createdAt
+    senderId
+    conversationId
+  }
+}
+    `;
+
+/**
+ * __useOnMessageAddedSubscription__
+ *
+ * To run a query within a React component, call `useOnMessageAddedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOnMessageAddedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnMessageAddedSubscription({
+ *   variables: {
+ *      conversationId: // value for 'conversationId'
+ *   },
+ * });
+ */
+export function useOnMessageAddedSubscription(baseOptions: ApolloReactHooks.SubscriptionHookOptions<OnMessageAddedSubscription, OnMessageAddedSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<OnMessageAddedSubscription, OnMessageAddedSubscriptionVariables>(OnMessageAddedDocument, options);
+      }
+export type OnMessageAddedSubscriptionHookResult = ReturnType<typeof useOnMessageAddedSubscription>;
+export type OnMessageAddedSubscriptionResult = Apollo.SubscriptionResult<OnMessageAddedSubscription>;
 export const RegisterDocument = gql`
     mutation register($newUserInput: RegisterInput!) {
   register(newUserInput: $newUserInput)

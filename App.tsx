@@ -5,6 +5,8 @@ import React, { useState } from 'react'
 import { ClerkProvider } from '@clerk/clerk-expo'
 import * as SecureStore from 'expo-secure-store'
 import { setContext } from '@apollo/client/link/context'
+import { WebSocketLink } from '@apollo/client/link/ws'
+import { getMainDefinition } from '@apollo/client/utilities'
 
 // import { API_URL } from '@env';
 import RootNavigator from './navigation'
@@ -44,6 +46,16 @@ export default function App() {
   console.log('🪴 API_URL', process.env.API_URL)
   //
   // const token = await getToken();
+
+  const wsLink = new WebSocketLink({
+    uri: process.env.WS_URL,
+    options: {
+      reconnect: true,
+      connectionParams: {
+        authToken: userToken,
+      },
+    },
+  })
   const httpLink = createHttpLink({
     uri: process.env.API_URL,
   })
@@ -63,9 +75,16 @@ export default function App() {
       },
     }
   })
-
+  const link = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query)
+      return definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
+    },
+    wsLink,
+    authLink.concat(httpLink),
+  )
   const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link,
     cache: new InMemoryCache({
       typePolicies: {
         Query: {

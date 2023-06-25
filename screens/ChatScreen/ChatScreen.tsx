@@ -31,7 +31,7 @@ import { useGetOffersDataByIdsQuery } from '../../graphql/graphql'
 import { useGetUserDataByIdQuery } from '../../graphql/graphql'
 import { useGetConversationMessagesQuery } from '../../graphql/graphql'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useSendMessageMutation, useGetIsConversationExistingQuery } from '../../graphql/graphql'
+import { useSendMessageMutation, useOnMessageAddedSubscription } from '../../graphql/graphql'
 
 interface ChatScreenProps {
   senderId: string
@@ -144,6 +144,25 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
       setMessage('')
     }
   }
+
+  // Variables for the subscription
+  const subscriptionVariables = {
+    conversationId,
+  }
+
+  // Start the subscription
+  const { data: newMessageData, loading } = useOnMessageAddedSubscription({
+    variables: subscriptionVariables,
+  })
+
+  // Handle new messages
+  useEffect(() => {
+    console.log('!!!!! nouveau message !newMessageData', newMessageData)
+    if (newMessageData) {
+      // The query for conversation messages will be refetched when a new message is received
+      refetchConversationData()
+    }
+  }, [newMessageData])
 
   return (
     <SafeAreaView
