@@ -41,6 +41,7 @@ export function SignUpWithOAuth() {
         authUrl: externalVerificationRedirectURL!.toString(),
         returnUrl: redirectUrl,
       })
+      console.log('result', result)
 
       // @ts-ignore
       const { type, params } = result || {}

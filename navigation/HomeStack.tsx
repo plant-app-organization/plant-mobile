@@ -2,7 +2,8 @@ import React from 'react'
 import { useEffect } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { HomeStackNavigatorParamList } from './types'
-
+import * as Notifications from 'expo-notifications'
+import { useOnMessageAddedSubscription } from '../graphql/graphql'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import DevScreen from '../screens/DevScreen/DevScreen'
@@ -45,6 +46,40 @@ const config = {
 }
 
 const HomeStackNavigator = () => {
+  // subscription to messages
+  useOnMessageAddedSubscription({
+    onSubscriptionData: ({ subscriptionData }) => {
+      const newMessage = subscriptionData.data?.messageAdded
+      if (newMessage) {
+        console.log('XXXX', newMessage)
+        showNotification(newMessage)
+      }
+    },
+  })
+
+  // function to show notification
+  const showNotification = (message) => {
+    console.log('notif!!!!!!!')
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'New Message!',
+        body: message.text,
+        // data can be used to handle notification tap
+        data: { message },
+      },
+      trigger: null,
+    })
+  }
+
+  useEffect(() => {
+    Notifications.requestPermissionsAsync()
+
+    const subscription = Notifications.addNotificationReceivedListener((notification) => {
+      console.log(notification)
+    })
+
+    return () => subscription.remove()
+  }, [])
   const { isSignedIn } = useUser()
   console.log('isSignedIn', isSignedIn)
 

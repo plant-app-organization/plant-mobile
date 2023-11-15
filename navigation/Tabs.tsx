@@ -8,6 +8,7 @@ import MapSearchScreen from '../screens/MapSearchScreen/MapSearchScreen'
 import ChatScreen from '../screens/ChatScreen/ChatScreen'
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen'
 import AddScreen from '../screens/AddScreen/AddScreen'
+import AddNewOfferStep1Screen from '../screens/AddNewOffer/AddNewOfferStep1Screen'
 import ListingScreen from '../screens/ListingScreen/ListingScreen'
 import InboxScreen from '../screens/InboxScreen/InboxScreen'
 
@@ -22,7 +23,7 @@ const TabArr = [
     icon: 'search',
     component: MapSearchScreen,
   },
-  { route: 'Add', label: 'Vendre', icon: 'plus', component: AddScreen },
+  { route: 'Add', label: 'Vendre', icon: 'plus', component: AddNewOfferStep1Screen },
   { route: 'Chat', label: 'Chat', icon: 'comment', component: ChatScreen },
   { route: 'Profile', label: 'Profil', icon: 'user-alt', component: ProfileScreen },
 ]
@@ -70,7 +71,7 @@ const BottomTabs = () => (
 
     <Tab.Screen
       name='Add'
-      component={AddScreen}
+      component={AddNewOfferStep1Screen}
       options={{
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (

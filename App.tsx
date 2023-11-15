@@ -1,11 +1,13 @@
+import { useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View, LogBox } from 'react-native'
-import { NativeBaseProvider, Spinner } from 'native-base'
+import { NativeBaseProvider, extendTheme } from 'native-base'
 import React, { useState } from 'react'
 import { ClerkProvider } from '@clerk/clerk-expo'
 import * as SecureStore from 'expo-secure-store'
 import { setContext } from '@apollo/client/link/context'
 import { WebSocketLink } from '@apollo/client/link/ws'
+
 import { getMainDefinition } from '@apollo/client/utilities'
 
 // import { API_URL } from '@env';
@@ -112,11 +114,18 @@ export default function App() {
     manrope_extra_bold: require('./assets/fonts/manrope.extrabold.otf'),
     manrope_semi_bold: require('./assets/fonts/manrope.semibold.otf'),
   })
-
+  const newColorTheme = {
+    brand: {
+      900: '#8287af',
+      800: '#7c83db',
+      700: '#b3bef6',
+    },
+  }
+  const theme = extendTheme({ colors: newColorTheme })
   return (
     <ApolloProvider client={client}>
       <ClerkProvider publishableKey={process.env.CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
-        <NativeBaseProvider>
+        <NativeBaseProvider theme={theme}>
           <RootNavigator />
           <StatusBar style='auto' />
         </NativeBaseProvider>
