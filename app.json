@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/db43773a-c2e0-4445-9f6b-c104adc800b3"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -22,10 +23,20 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "db43773a-c2e0-4445-9f6b-c104adc800b3"
+      }
+    },
+    "owner": "planteapp",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

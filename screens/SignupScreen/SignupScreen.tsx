@@ -158,9 +158,9 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
             )}
             <Text className='font-semibold'>OU</Text>
             <View className='h-[45%] flex flex-col justify-around'>
-              <SignUpWithOAuth />
+              {/* <SignUpWithOAuth /> */}
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 className='h-[45px] w-[80%] flex flex-row rounded-full items-center justify-evenly bg-white shadow-sm border border-gray-300'
                 onPress={() => console.log('fb')}
               >
@@ -170,7 +170,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
                 <Text className='text-black font-semibold text-md tracking-widest'>
                   Continuer avec Facebook
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 className='h-[45px] w-[300px] rounded-full items-center border-2 border-solid justify-center'
                 onPress={onSignInPress}

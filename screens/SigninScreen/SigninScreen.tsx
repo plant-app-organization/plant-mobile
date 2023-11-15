@@ -137,7 +137,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
           </View>
 
           <View className='w-full h-[40%] items-center justify-evenly'>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               className='h-[45px] w-[80%] flex flex-row rounded-full items-center justify-evenly bg-white shadow-sm border border-gray-300'
               onPress={() => console.log('hello facebook')}
             >
@@ -145,7 +145,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 <FontAwesomeIcon name='google' size={15} color='white' />
               </View>
               <Text className='text-md font-semibold tracking-widest'>Continuer avec Google</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             {/* <TouchableOpacity
                 className='h-[45px] w-[300px] rounded-3xl flex items-center justify-center mb-8 mt-8'
@@ -161,17 +161,7 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
                 Pas encore inscrit ? Créer un commpte !
                 </Text>
               </TouchableOpacity> */}
-            <TouchableOpacity
-              className='h-[45px] w-[80%] flex flex-row rounded-full items-center justify-evenly bg-white shadow-sm border border-gray-300'
-              onPress={() => console.log('fb')}
-            >
-              <View className='w-[25px] h-[25px] items-center justify-center rounded-full bg-[#395590]'>
-                <FontAwesomeIcon name='facebook' size={15} color='white' />
-              </View>
-              <Text className='text-black font-semibold text-md tracking-widest'>
-                Continuer avec Facebook
-              </Text>
-            </TouchableOpacity>
+            {/* <SignInWithOAuth /> */}
             <TouchableOpacity
               className='h-[45px] w-[80%] rounded-full items-center justify-center bg-white border border-gray-700 shadow-sm'
               onPress={onSignUpPress}
