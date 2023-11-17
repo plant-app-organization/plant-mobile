@@ -7,6 +7,14 @@ module.exports = {
     './features/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
+    colors: {
+      transparent: 'transparent',
+      white: '#ffffff',
+      black: '#000000',
+      green: '#10b981',
+      leaf: '#BFE6CB',
+      darkleaf: '#A0C7AC',
+    },
     extend: {
       fontFamily: {
         LANENAR: ['LANENAR'],
@@ -14,8 +22,10 @@ module.exports = {
         Roboto: ['Roboto'],
         antipasto: ['antipasto'],
         helvetica: ['helvetica'],
+        manrope: ['manrope_regular'],
+        manropeBold: ['manrope_bold'],
       },
     },
   },
   plugins: [],
-};
+}

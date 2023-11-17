@@ -164,7 +164,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
         >
           <FontAwesomeIcon className=' w-1/12 text-red-300 ' name='heart' size={20} />
           <View className='w-10/12 flex flex-row'>
-            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#73859e' }}>
               Mes favoris
             </Text>
             <Badge
@@ -190,7 +190,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
         <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
           <FontAwesomeIcon className=' w-1/12 text-yellow-300' name='euro' size={20} />
           <View className='w-10/12'>
-            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#73859e' }}>
               Mes ventes
             </Text>
           </View>
@@ -200,7 +200,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
         <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
           <FontAwesomeIcon className=' w-1/12 text-blue-300	' name='shopping-cart' size={20} />
           <View className='w-10/12'>
-            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#73859e' }}>
               Mes achats
             </Text>
           </View>
@@ -210,7 +210,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
         <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
           <FontAwesomeIcon className=' w-1/12 text-neutral-400' name='commenting' size={20} />
           <View className='w-10/12'>
-            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#73859e' }}>
               Mes avis
             </Text>
           </View>
@@ -224,7 +224,7 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
           <View className='w-10/12 items-center'>
             <FontAwesomeIcon className=' w-1/12 text-pink-300 self-center	' name='user' size={20} />
 
-            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
+            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#73859e' }}>
               Me déconnecter
             </Text>
           </View>

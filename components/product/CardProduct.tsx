@@ -125,9 +125,13 @@ const CardProduct: React.FunctionComponent<CardProductProps> = (props) => {
 
         <View className='flex flex-row justify-between items-center pr-2'>
           <View className='flex flex-column'>
-            <Text className='pl-2 pt-2 font-semibold'>{props.price},00 €</Text>
+            <Text className='pl-2 pt-2 font-semibold' style={{ color: '#73859e' }}>
+              {props.price},00 €
+            </Text>
             <Text className='pl-2 pt-0 text-green-800 font-bold'>{props.plantName}</Text>
-            <Text className='pl-2 pt-0 text-xs'>{props.city}</Text>
+            <Text className='pl-2 pt-0 text-xs' style={{ color: '#73859e' }}>
+              {props.city}
+            </Text>
           </View>
           <TouchableOpacity>
             <Animated.View

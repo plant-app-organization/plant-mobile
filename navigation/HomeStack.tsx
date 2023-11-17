@@ -27,6 +27,7 @@ import ParamScreen from '../screens/ParamScreen/ParamScreen'
 import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
 import PlantIdentityScreen from '../screens/PlantIdentityScreen/PlantIdentityScreen'
 import PlantIdentityInfoScreen from '../screens/PlantIdentityInfoScreen/PlantIdentityInfoScreen'
+
 import { TransitionSpecs } from '@react-navigation/stack'
 
 import GalleryScreen from '../screens/GalleryScreen/GalleryScreen'

@@ -14,6 +14,17 @@ export type HomeStackNavigatorParamList = {
   EntretienScreen: undefined
   GalleryScreen: undefined
   ChatScreen: undefined
+  AddNewOfferStep2Screen: undefined
+  AddNewOfferStep3Screen: undefined
+  AddNewOfferStep4Screen: undefined
+}
+
+export type FormStackNavigatorParamList = {
+  AddNewOfferStep1Screen: undefined
+  AddNewOfferStep2Screen: undefined
+  AddNewOfferStep3Screen: undefined
+  AddNewOfferStep4Screen: undefined
+  CameraScreen: undefined
 }
 
 export type BottomTabNavigatorParamList = {
