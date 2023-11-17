@@ -14,32 +14,28 @@ import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
 import GradientTitle from '../../components/GradientTitle/GradientTitle'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
-import { ChevronLeftIcon, CheckIcon } from 'react-native-heroicons/solid'
+import { ChevronLeftIcon } from 'react-native-heroicons/solid'
 
-import { Input, TextArea, FormControl, Select } from 'native-base'
+import { Input, TextArea } from 'native-base'
 
 import { LinearGradient } from 'expo-linear-gradient'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import ConnectModal from '../../components/ConnectModal/ConnectModal'
 
-interface AddNewOfferStep3ScreenProps {}
+interface AddNewOfferStep4ScreenProps {}
 //
-const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProps> = (props) => {
+const AddNewOfferStep4Screen: React.FunctionComponent<AddNewOfferStep4ScreenProps> = (props) => {
   const [searchQuery, setSearchQuery] = useState(null)
   const [regionName, setRegionName] = useState<string>('')
   const [postCode, setPostCode] = useState<string>('')
   const [location, setLocation] = useState(null)
   const [title, setTitle] = useState<string>('')
   const [pot, setPot] = useState<boolean>(false)
-  const [environment, setEnvironment] = useState<string>('')
-
-  const [health, setHealth] = useState<string>('')
-  const [maintenanceDifficultyLevel, setMaintenanceDifficultyLevel] = useState<string>('')
-  const [category, setCategory] = useState<string>('')
   const [plantHeight, setPlantHeight] = useState<number>(0)
   const [description, setDescription] = useState<string>('')
   const [price, setPrice] = useState<string>('')
   const isFocused = useIsFocused()
+  const TAB_BAR_HEIGHT = 80
   const navigation = useNavigation()
   const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
   const onSelectLocation = (data, details) => {
@@ -70,7 +66,6 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
   const handleToggle = () => {
     setPot(!pot)
   }
-  const TAB_BAR_HEIGHT = 80
 
   return (
     <LinearGradient colors={['#FFE2C0', 'white']} className='min-h-screen w-screen flex-1'>
@@ -96,7 +91,7 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
 
                   {/* <Text className='text-darkleaf text-lg font-manropeBold'>Précédent</Text> */}
                 </TouchableOpacity>
-                <GradientTitle title='Dites-nous en plus' align='left' />
+                <GradientTitle title='Quel est votre prix ?' align='left' />
                 <View className=' rounded-md flex items-center justify-center mr-1 opacity-0'>
                   <ChevronLeftIcon color={'#A0C7AC'} className='text-lg' />
 
@@ -135,7 +130,6 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                 // )}
                 textInputProps={{
                   underlineColorAndroid: 'rgba(0,0,0,0)',
-                  placeholderTextColor: '#73859e',
                   autoFocus: false,
                   blurOnSubmit: false,
                   style: {
@@ -157,7 +151,7 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                   },
                   description: {
                     color: '#000',
-                    fontSize: 15,
+                    fontSize: 16,
                   },
                   predefinedPlacesDescription: {
                     color: '#3caf50',
@@ -166,108 +160,74 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
               />
             </View>
 
-            <View className='bg-white w-[95%] justify-evenly rounded-lg shadow pt-3 mt-4 pb-3.5 px-3'>
-              <FormControl w='100%' isRequired className=' mb-10'>
+            <View className='w-[95%] bg-white  items-center justify-around rounded-lg shadow mt-4'>
+              <View className='py-5 px-3'>
                 <Text
-                  className='font-semibold mb-3 text-sm'
+                  className='font-semibold mb-1 text-sm'
                   style={{ fontFamily: 'manrope_bold', color: '#73859e' }}
                 >
-                  De quel type de plante s'agit-il ?
+                  Comment décririez-vous votre plante ?
                 </Text>
-                <Select
-                  selectedValue={environment}
-                  minWidth='200'
-                  accessibilityLabel='Environnement'
-                  placeholder='Intérieur ou extérieur'
-                  fontSize={16}
-                  placeholderTextColor='#73859e'
+                <Text className='text-xs mb-2' style={{ fontFamily: 'manrope', color: '#7994b7' }}>
+                  Fournissez tous les détails : partagez l'histoire unique de votre plante, décrivez
+                  son état de santé actuel et laissez libre cours à votre créativité !{' '}
+                </Text>
+                <TextArea
+                  h={40}
+                  value={description}
+                  onChangeText={(value) => setDescription(value)}
+                  placeholder='Description'
+                  size='xl'
+                  w='100%'
+                  focusOutlineColor='#BFE6CB'
+                  color='black'
+                  outlineColor={'white'}
                   backgroundColor={'#F5F5F5'}
-                  _selectedItem={{
-                    bg: '#6AB2DF',
-                    endIcon: <CheckIcon size={5} />,
-                  }}
-                  borderColor={'#BFE6CB'}
-                  mt={1}
-                  onValueChange={(itemValue) => setEnvironment(itemValue)}
-                >
-                  <Select.Item label='Intérieur' value='indoor' />
-                  <Select.Item label='Extérieur' value='outdoor' />
-                  <Select.Item label='Intérieur & extérieur' value='both' />
-                </Select>
-              </FormControl>
-              <FormControl w='100%' isRequired>
-                <Select
-                  className='rounded-sm'
-                  selectedValue={category}
-                  minWidth='200'
-                  accessibilityLabel='Catégorie'
-                  backgroundColor={'#F5F5F5'}
-                  placeholder=' Catégorie'
-                  fontSize={16}
-                  placeholderTextColor='#73859e'
-                  _selectedItem={{
-                    bg: '#6AB2DF',
-                    endIcon: <CheckIcon size={5} />,
-                  }}
-                  borderColor={'#BFE6CB'}
-                  mt={1}
-                  onValueChange={(itemValue) => setCategory(itemValue)}
-                >
-                  <Select.Item label='Tropicales' value='tropical' />
-                  <Select.Item label='Rares' value='rare' />
-                  <Select.Item label='Aromatiques' value='aromatic' />
-                  <Select.Item label='Plantes du potager' value='kitchenGarden' />
-                  <Select.Item label='Plantes grasses' value='succulent' />
-                  <Select.Item label='Autre' value='autre' />
-                </Select>
-              </FormControl>
+                  fontSize={15}
+                  keyboardType='visible-password'
+                  invalidOutlineColor={'red.600'}
+                  isInvalid={false}
+                />
+              </View>
 
-              <FormControl w='100%' isRequired className='mt-10 mb-10'>
-                <Select
-                  selectedValue={health}
-                  minWidth='200'
-                  accessibilityLabel='Santé'
-                  placeholder='État de santé'
-                  fontSize={16}
-                  backgroundColor={'#F5F5F5'}
-                  placeholderTextColor='#73859e'
-                  _selectedItem={{
-                    bg: '#6AB2DF',
-                    endIcon: <CheckIcon size={5} />,
-                  }}
-                  borderColor={'#BFE6CB'}
-                  mt={1}
-                  onValueChange={(itemValue) => setHealth(itemValue)}
-                >
-                  <Select.Item label='excellent' value='excellent' />
-                  <Select.Item label='bon' value='good' />
-                  <Select.Item label='correct' value='correct' />
-                  <Select.Item label='mauvais état' value='bad' />
-                </Select>
-              </FormControl>
+              <View className='flex flex-row justify-start  py-5 w-full'>
+                <View className='flex flex-row items-center justify-start '>
+                  <Text className='text-base font-semibold'>Prix :</Text>
+                  <TextInput
+                    style={{
+                      fontSize: 16,
+                      backgroundColor: '#F5F5F5',
+                      paddingVertical: 8,
+                      paddingHorizontal: 12,
+                      borderRadius: 4,
+                    }}
+                    value={price}
+                    onChangeText={(value) => setPrice(value)}
+                    keyboardType='numeric'
+                    placeholder='0,00 €'
+                  />
+                </View>
 
-              <FormControl w='100%' isRequired>
-                <Select
-                  selectedValue={maintenanceDifficultyLevel}
-                  minWidth='200'
-                  accessibilityLabel='Entretien'
-                  placeholder='Entretien'
-                  backgroundColor={'#F5F5F5'}
-                  fontSize={16}
-                  borderColor={'#BFE6CB'}
-                  placeholderTextColor='#73859e'
-                  _selectedItem={{
-                    bg: '#6AB2DF',
-                    endIcon: <CheckIcon size={5} />,
-                  }}
-                  mt={1}
-                  onValueChange={(itemValue) => setMaintenanceDifficultyLevel(itemValue)}
+                {/* <TouchableOpacity
+                  onPress={handleToggle}
+                  className='w-6/12 flex flex-row items-center justify-evenly'
                 >
-                  <Select.Item label='facile' value='easy' />
-                  <Select.Item label='intermédiaire' value='intermediary' />
-                  <Select.Item label='difficile' value='difficult' />
-                </Select>
-              </FormControl>
+                  <FontAwesomeIcon
+                    name={!pot ? 'check-square' : 'square-o'}
+                    size={24}
+                    color={!pot ? '#008000' : '#808080'}
+                  />
+                  <Text className='text-base font-semibold'>Cache-pot</Text>
+                </TouchableOpacity> */}
+              </View>
+              {/* 
+              <View className='py-5 w-[80%] items-center'>
+                <Text className='font-semibold text-base'>
+                  Hauteur: {Math.floor(plantHeight).toString()} cm
+                </Text>
+              </View>
+
+              <View className='w-[80%] py-5 items-center'></View> */}
             </View>
           </View>
 
@@ -280,11 +240,11 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
           className='bg-white  w-full  flex flex-col'
           style={{ position: 'absolute', bottom: TAB_BAR_HEIGHT }}
         >
-          <View className='bg-darkleaf min-h-[4] w-3/4 rounded-br-lg rounded-tr-lg'></View>
+          <View className='bg-darkleaf min-h-[4] w-4/4 rounded-br-lg rounded-tr-lg'></View>
           <View className='flex flex-row justify-end items-end px-2 py-2'>
             <TouchableOpacity
               className=' rounded-md flex items-center justify-center bg-darkleaf shadow-lg px-2 py-1 border-2 border-darkleaf'
-              onPress={() => navigation.navigate('AddNewOfferStep4Screen')}
+              onPress={() => console.log('clic')}
             >
               <Text className='text-white text-lg font-manropeBold'>Continuer</Text>
             </TouchableOpacity>
@@ -294,4 +254,4 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
     </LinearGradient>
   )
 }
-export default AddNewOfferStep3Screen
+export default AddNewOfferStep4Screen

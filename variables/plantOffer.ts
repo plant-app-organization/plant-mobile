@@ -38,9 +38,9 @@ const defaultPlantOffer: PlantOffer = {
   maintenanceDifficultyLevel: '',
 }
 
-const plantOfferVar = makeVar<PlantOffer>(defaultPlantOffer)
+export const plantOfferVar = makeVar<PlantOffer>(defaultPlantOffer)
 
-const updatePlantField = <K extends keyof PlantOffer>(field: K, value: PlantOffer[K]) => {
+export const updatePlantOffer = <K extends keyof PlantOffer>(field: K, value: PlantOffer[K]) => {
   const currentData = plantOfferVar()
   const updatedData = {
     ...currentData,
@@ -48,3 +48,5 @@ const updatePlantField = <K extends keyof PlantOffer>(field: K, value: PlantOffe
   }
   plantOfferVar(updatedData)
 }
+
+export { PlantOffer }

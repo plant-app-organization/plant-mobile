@@ -14,6 +14,7 @@ import InboxScreen from '../screens/InboxScreen/InboxScreen'
 
 import * as Animatable from 'react-native-animatable'
 import { shouldInclude } from '@apollo/client/utilities'
+import FormStackNavigator from './FormStack'
 
 const TabArr = [
   { route: 'Home', label: 'Accueil', icon: 'home', component: HomeScreen },
@@ -48,8 +49,8 @@ const BottomTabs = () => (
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <FontAwesome5 name='home' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
-            <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Accueil</Text>
+            <FontAwesome5 name='home' size={21} color={focused ? '#BFE6CB' : '#73859e'} />
+            <Text style={{ color: focused ? '#BFE6CB' : '#73859e', fontSize: 12 }}>Accueil</Text>
           </View>
         ),
       }}
@@ -62,8 +63,8 @@ const BottomTabs = () => (
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <FontAwesome5 name='search' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
-            <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Rechercher</Text>
+            <FontAwesome5 name='search' size={21} color={focused ? '#BFE6CB' : '#73859e'} />
+            <Text style={{ color: focused ? '#BFE6CB' : '#73859e', fontSize: 12 }}>Rechercher</Text>
           </View>
         ),
       }}
@@ -71,7 +72,7 @@ const BottomTabs = () => (
 
     <Tab.Screen
       name='Add'
-      component={AddNewOfferStep1Screen}
+      component={FormStackNavigator}
       options={{
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
@@ -126,8 +127,8 @@ const BottomTabs = () => (
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <FontAwesome5 name='comment' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
-            <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Chat</Text>
+            <FontAwesome5 name='comment' size={21} color={focused ? '#BFE6CB' : '#73859e'} />
+            <Text style={{ color: focused ? '#BFE6CB' : '#73859e', fontSize: 12 }}>Chat</Text>
           </View>
         ),
       }}
@@ -140,8 +141,8 @@ const BottomTabs = () => (
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <FontAwesome5 name='user-alt' size={21} color={focused ? '#BFE6CB' : '#9DB2CE'} />
-            <Text style={{ color: focused ? '#BFE6CB' : '#9DB2CE', fontSize: 12 }}>Profile</Text>
+            <FontAwesome5 name='user-alt' size={21} color={focused ? '#BFE6CB' : '#73859e'} />
+            <Text style={{ color: focused ? '#BFE6CB' : '#73859e', fontSize: 12 }}>Profile</Text>
           </View>
         ),
       }}
