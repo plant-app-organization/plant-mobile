@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import {
   Platform,
@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
-import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
+import { SignedOut } from '@clerk/clerk-expo'
 import GradientTitle from '../../components/GradientTitle/GradientTitle'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { ChevronLeftIcon, CheckIcon } from 'react-native-heroicons/solid'
@@ -29,16 +29,10 @@ interface AddNewOfferStep3ScreenProps {}
 //
 const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProps> = (props) => {
   const [pot, setPot] = useState<boolean>(false)
-  const [environment, setEnvironment] = useState<string>('')
 
   const IOS_TAB_BAR_HEIGHT = 80
   const ANDROID_TAB_BAR_HEIGHT = 47
-  const [health, setHealth] = useState<string>('')
-  const [maintenanceDifficultyLevel, setMaintenanceDifficultyLevel] = useState<string>('')
-  const [category, setCategory] = useState<string>('')
-  const [plantHeight, setPlantHeight] = useState<number>(0)
-  const [description, setDescription] = useState<string>('')
-  const [price, setPrice] = useState<string>('')
+
   const isFocused = useIsFocused()
   const navigation = useNavigation()
   const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
@@ -65,10 +59,6 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
     updatePlantOffer('longitude', details.geometry.location.lng)
   }
 
-  const handleToggle = () => {
-    setPot(!pot)
-  }
-  const TAB_BAR_HEIGHT = 80
   if (!isFocused) {
     return null
   }
@@ -85,7 +75,7 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
           enableOnAndroid={true}
           enableAutomaticScroll={true}
         >
-          <View className='w-screen h-full items-center '>
+          <View className='w-screen h-full items-center mb-28'>
             <View className='w-[95%]  bg-white rounded-lg  shadow py-2 px-3 mt-4 '>
               <View className='flex flex-row justify-between items-center '>
                 <TouchableOpacity
@@ -111,6 +101,14 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                 style={{ fontFamily: 'manrope_bold', color: '#73859e' }}
               >
                 À quelle adresse {'\n'}peut-on récupérer votre plante ?
+              </Text>
+              <Text
+                className='text-xs text-right mb-1'
+                style={{ fontFamily: 'manrope', color: '#7994b7' }}
+              >
+                {existingPlantOffer.city ? (
+                  <FontAwesomeIcon name='check' size={16} color={'#A0C7AC'} />
+                ) : null}
               </Text>
 
               <GooglePlacesAutocomplete
@@ -181,9 +179,27 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                 >
                   De quel type de plante s'agit-il ?
                 </Text>
+
                 <Select
                   selectedValue={existingPlantOffer.environment}
                   minWidth='200'
+                  dropdownIcon={
+                    existingPlantOffer.environment ? (
+                      <FontAwesomeIcon
+                        name='check'
+                        size={16}
+                        color={'#A0C7AC'}
+                        style={{ marginRight: 10 }}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        name='chevron-down'
+                        size={16}
+                        color={'#73859e'}
+                        style={{ marginRight: 10 }}
+                      />
+                    )
+                  }
                   accessibilityLabel='Environnement'
                   placeholder='Intérieur ou extérieur'
                   fontSize={16}
@@ -208,6 +224,23 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
               <FormControl w='100%' isRequired>
                 <Select
                   className='rounded-sm'
+                  dropdownIcon={
+                    existingPlantOffer.category ? (
+                      <FontAwesomeIcon
+                        name='check'
+                        size={16}
+                        color={'#A0C7AC'}
+                        style={{ marginRight: 10 }}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        name='chevron-down'
+                        size={16}
+                        color={'#73859e'}
+                        style={{ marginRight: 10 }}
+                      />
+                    )
+                  }
                   selectedValue={existingPlantOffer.category}
                   fontWeight={'bold'}
                   minWidth='200'
@@ -241,6 +274,23 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                   minWidth='200'
                   accessibilityLabel='Santé'
                   placeholder='État de santé'
+                  dropdownIcon={
+                    existingPlantOffer.health ? (
+                      <FontAwesomeIcon
+                        name='check'
+                        size={16}
+                        color={'#A0C7AC'}
+                        style={{ marginRight: 10 }}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        name='chevron-down'
+                        size={16}
+                        color={'#73859e'}
+                        style={{ marginRight: 10 }}
+                      />
+                    )
+                  }
                   fontSize={16}
                   color={'#73859e'}
                   fontFamily={'manrope_bold'}
@@ -267,6 +317,23 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                   selectedValue={existingPlantOffer.maintenanceDifficultyLevel}
                   minWidth='200'
                   fontWeight={'bold'}
+                  dropdownIcon={
+                    existingPlantOffer.maintenanceDifficultyLevel ? (
+                      <FontAwesomeIcon
+                        name='check'
+                        size={16}
+                        color={'#A0C7AC'}
+                        style={{ marginRight: 10 }}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        name='chevron-down'
+                        size={16}
+                        color={'#73859e'}
+                        style={{ marginRight: 10 }}
+                      />
+                    )
+                  }
                   accessibilityLabel='Entretien'
                   placeholder='Entretien'
                   fontFamily={'manrope_bold'}
@@ -290,13 +357,21 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                 </Select>
               </FormControl>
             </View>
-            {existingPlantOffer.location &&
-              existingPlantOffer.health &&
-              existingPlantOffer.category &&
-              existingPlantOffer.maintenanceDifficultyLevel &&
-              existingPlantOffer.environment && (
-                <MainButton title='Continuer' action={navigateToScreen4} />
-              )}
+
+            <MainButton
+              title='Continuer'
+              action={navigateToScreen4}
+              disabled={
+                existingPlantOffer.city &&
+                existingPlantOffer.health &&
+                existingPlantOffer.category &&
+                existingPlantOffer.maintenanceDifficultyLevel &&
+                existingPlantOffer.environment
+                  ? false
+                  : true
+              }
+              loading={false}
+            />
           </View>
 
           {Platform.OS === 'android' && <View className='h-32'></View>}

@@ -9,7 +9,7 @@ const ValidationView: React.FunctionComponent<ValidationViewProps> = () => {
 
   return (
     <LottieView
-      style={{ width: width * 0.4, marginBottom: 0 }}
+      style={{ width: width * 0.25, marginBottom: 0, marginLeft: 'auto', marginRight: 'auto' }}
       source={require('../../assets/animations/checkbox.json')}
       autoPlay
       loop

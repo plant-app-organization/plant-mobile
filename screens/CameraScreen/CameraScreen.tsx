@@ -8,11 +8,12 @@ import {
   View,
   TouchableOpacity,
   useWindowDimensions,
+  Modal,
 } from 'react-native'
 // Font awesome no expo
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { ChevronDownIcon } from 'react-native-heroicons/solid'
-import { Modal, Button, Image, Spinner } from 'native-base'
+import { Button, Image, Spinner } from 'native-base'
 import { plantOfferVar, updatePlantOffer, PlantOffer } from '../../variables/plantOffer'
 import { useReactiveVar } from '@apollo/client'
 export default function CameraScreen() {
@@ -38,10 +39,10 @@ export default function CameraScreen() {
 
   const takePicture = async () => {
     if (camRef) {
-      const data = await camRef.current.takePictureAsync({ quality: 0.4 })
+      const data = await camRef.current.takePictureAsync({ quality: 0.3 })
+      setOpen(true)
       setCapturedPhoto(data.uri)
       // console.log(data);
-      setOpen(true)
     }
   }
   const savePicture = () => {
@@ -122,42 +123,49 @@ export default function CameraScreen() {
           </TouchableOpacity>
         </View>
       </Camera>
-      {capturedPhoto && (
-        <Modal isOpen={open} onClose={() => setOpen(false)}>
-          <Modal.Content maxWidth='500px' style={{ backgroundColor: '#f2fff3' }}>
-            <Modal.Body>
-              <Image
-                alt='image'
-                width={width * 0.8}
-                height={width * 0.9}
-                className='rounded-md mr-2'
-                resizeMode='cover'
-                source={{
-                  uri: capturedPhoto,
-                }}
-              />
-              <TouchableOpacity
-                className='mt-2 rounded-md flex items-center justify-center bg-white shadow-lg px-2 py-1 border-2 border-darkleaf'
-                onPress={() => {
-                  deletePicture()
-                }}
-              >
-                <Text className='text-darkleaf text-sm font-manropeBold'>Reprendre la photo</Text>
-              </TouchableOpacity>
+      <Modal visible={open} onRequestClose={() => setOpen(false)} transparent={true}>
+        <View className='w-4/5 my-auto mx-auto bg-white p-3 rounded-md'>
+          <Image
+            alt='image'
+            width={width * 0.8}
+            height={width * 0.9}
+            className='rounded-md mr-2'
+            resizeMode='cover'
+            source={{
+              uri: capturedPhoto,
+            }}
+          />
+          <TouchableOpacity
+            className='mt-2 rounded-md flex items-center justify-center bg-white shadow-lg px-2 py-1 border-2 border-darkleaf'
+            onPress={() => {
+              deletePicture()
+            }}
+          >
+            <Text className='text-darkleaf text-sm font-manropeBold'>Reprendre la photo</Text>
+          </TouchableOpacity>
 
-              <TouchableOpacity
-                className='mt-2 rounded-md flex items-center justify-center bg-darkleaf shadow-lg px-2 py-1 border-2 border-darkleaf'
-                onPress={() => {
-                  savePicture()
-                }}
-              >
-                <Text className='text-white text-sm font-manropeBold'>Enregistrer</Text>
-              </TouchableOpacity>
-            </Modal.Body>
-          </Modal.Content>
-        </Modal>
-      )}
-      <Modal isOpen={isLoaderOpen} safeAreaTop={true}>
+          <TouchableOpacity
+            className='mt-2 rounded-md flex items-center justify-center bg-darkleaf shadow-lg px-2 py-1 border-2 border-darkleaf'
+            onPress={() => {
+              savePicture()
+            }}
+          >
+            <Text className='text-white text-sm font-manropeBold'>Enregistrer</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+      <Modal visible={isLoaderOpen} transparent={true}>
+        <View className='w-4/5 my-auto mx-auto bg-white p-3 rounded-md'>
+          <Spinner size='lg' color='emerald.500' accessibilityLabel='Loading image' />
+          <Text
+            className='font-semibold mb-3 text-sm text-center'
+            style={{ fontFamily: 'manrope_bold', color: '#73859e' }}
+          >
+            Enregistrement de l'image en cours ...
+          </Text>
+        </View>
+      </Modal>
+      {/* <Modal isOpen={isLoaderOpen} safeAreaTop={true}>
         <Modal.Content maxWidth='350' style={{ backgroundColor: '#f2fff3' }}>
           <Modal.Body>
             <Spinner size='lg' color='emerald.500' accessibilityLabel='Loading image' />
@@ -169,7 +177,7 @@ export default function CameraScreen() {
             </Text>
           </Modal.Body>
         </Modal.Content>
-      </Modal>
+      </Modal> */}
     </SafeAreaView>
   )
 }

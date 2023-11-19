@@ -21,7 +21,7 @@ interface PlantOffer {
 }
 
 // Default form data
-const defaultPlantOffer: PlantOffer = {
+export const defaultPlantOffer: PlantOffer = {
   plantName: '',
   pictures: [],
   description: '',
@@ -49,6 +49,12 @@ export const updatePlantOffer = <K extends keyof PlantOffer>(field: K, value: Pl
     [field]: value,
   }
   plantOfferVar(updatedData)
+}
+
+export const resetPlantOffer = <K extends keyof PlantOffer>() => {
+  const currentData = plantOfferVar()
+
+  plantOfferVar(defaultPlantOffer)
 }
 
 export { PlantOffer }

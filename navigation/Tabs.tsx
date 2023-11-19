@@ -73,6 +73,17 @@ const BottomTabs = () => (
     <Tab.Screen
       name='Add'
       component={FormStackNavigator}
+      listeners={({ navigation }) => ({
+        tabPress: (e) => {
+          // Prevent default action
+          e.preventDefault()
+
+          // Reset the stack navigator to its initial screen
+          navigation.navigate('Add', {
+            screen: 'AddNewOfferStep1Screen',
+          })
+        },
+      })}
       options={{
         tabBarLabel: () => null,
         tabBarIcon: ({ focused }) => (
