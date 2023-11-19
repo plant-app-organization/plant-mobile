@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "plantb",
     "name": "plant-mobile",
     "slug": "plant-mobile",
     "version": "1.0.0",
