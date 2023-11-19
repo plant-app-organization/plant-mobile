@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Camera } from 'expo-camera'
-import { useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import {
   StyleSheet,
   Text,
@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 // Font awesome no expo
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-
 import { ChevronDownIcon } from 'react-native-heroicons/solid'
 import { Modal, Button, Image, Spinner } from 'native-base'
 import { plantOfferVar, updatePlantOffer, PlantOffer } from '../../variables/plantOffer'
@@ -21,7 +20,7 @@ export default function CameraScreen() {
   const camRef = useRef(null)
   const navigation = useNavigation()
   const existingPlantOffer: PlantOffer = useReactiveVar(plantOfferVar)
-
+  const isFocused = useIsFocused()
   const [isLoaderOpen, setIsLoaderOpen] = useState(false)
   const [type, setType] = useState(Camera.Constants.Type.back)
   const [hasPermission, setHasPermission] = useState(null)
@@ -67,7 +66,7 @@ export default function CameraScreen() {
 
         updatePlantOffer('pictures', [...existingPlantOffer.pictures, data.secure_url])
         setIsLoaderOpen(false)
-        navigation.goBack()
+        navigation.pop()
       })
       .catch((err) => {
         console.log(err)
@@ -85,6 +84,9 @@ export default function CameraScreen() {
   if (hasPermission === false) {
     return <Text>Accès à la caméra refusé.</Text>
   }
+  if (!isFocused) {
+    return null
+  }
   return (
     <SafeAreaView style={styles.container}>
       <Camera
@@ -94,7 +96,7 @@ export default function CameraScreen() {
         flashMode={!flashMode ? Camera.Constants.FlashMode.off : Camera.Constants.FlashMode.torch}
       >
         <View style={styles.contentButton}>
-          <TouchableOpacity style={styles.buttonClose} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={styles.buttonClose} onPress={() => navigation.pop()}>
             <ChevronDownIcon color={'#A0C7AC'} className='h-6 w-6 pr-2' />
           </TouchableOpacity>
           <TouchableOpacity
@@ -163,7 +165,7 @@ export default function CameraScreen() {
               className='font-semibold mb-3 text-sm text-center'
               style={{ fontFamily: 'manrope_bold', color: '#73859e' }}
             >
-              Envoi de l'image en cours ...
+              Enregistrement de l'image en cours ...
             </Text>
           </Modal.Body>
         </Modal.Content>

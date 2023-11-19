@@ -136,7 +136,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               NB
               <Avatar.Badge bg='green.500' size='23%' />
             </Avatar>
-            <View>
+            <View className='w-full'>
               <MaskedView
                 style={{ height: 32, backgroundColor: 'white' }}
                 maskElement={

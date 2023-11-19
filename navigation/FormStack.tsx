@@ -6,6 +6,7 @@ import AddNewOfferStep1Screen from '../screens/AddNewOffer/AddNewOfferStep1Scree
 import AddNewOfferStep2Screen from '../screens/AddNewOffer/AddNewOfferStep2Screen'
 import AddNewOfferStep3Screen from '../screens/AddNewOffer/AddNewOfferStep3Screen'
 import AddNewOfferStep4Screen from '../screens/AddNewOffer/AddNewOfferStep4Screen'
+import AddNewOfferStep5Screen from '../screens/AddNewOffer/AddNewOfferStep5Screen'
 const FormStack = createNativeStackNavigator<FormStackNavigatorParamList>()
 import NextButton from './components/NextButton'
 import PreviousButton from './components/PreviousButton'
@@ -67,6 +68,16 @@ export default function FormStackNavigator() {
       <FormStack.Screen
         name='AddNewOfferStep4Screen'
         component={AddNewOfferStep4Screen}
+        options={({ navigation }) => ({
+          headerLeft: () => <PreviousButton navigation={navigation} />,
+          headerRight: () => (
+            <NextButton navigation={navigation} nextScreenName='AddNewOfferStep1Screen' />
+          ),
+        })}
+      />
+      <FormStack.Screen
+        name='AddNewOfferStep5Screen'
+        component={AddNewOfferStep5Screen}
         options={({ navigation }) => ({
           headerLeft: () => <PreviousButton navigation={navigation} />,
           headerRight: () => (

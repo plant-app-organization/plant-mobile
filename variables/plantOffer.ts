@@ -11,6 +11,7 @@ interface PlantOffer {
   location: string
   health: string
   category: string
+  environment: string
   city: string
   postcode: string
   region: string
@@ -30,6 +31,7 @@ const defaultPlantOffer: PlantOffer = {
   location: '',
   health: '',
   category: '',
+  environment: '',
   city: '',
   postcode: '',
   region: '',

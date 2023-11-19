@@ -11,6 +11,8 @@ import {
 } from 'react-native'
 import { plantOfferVar, updatePlantOffer, PlantOffer } from '../../variables/plantOffer'
 import { useReactiveVar } from '@apollo/client'
+
+import MainButton from '../../components/Buttons/MainButton'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
@@ -36,12 +38,14 @@ const AddNewOfferStep1Screen: React.FunctionComponent<AddNewOfferStep1ScreenProp
   const [description, setDescription] = useState<string | null>(null)
   const [price, setPrice] = useState<string>('')
   const isFocused = useIsFocused()
-  const TAB_BAR_HEIGHT = 80
+  const IOS_TAB_BAR_HEIGHT = 80
+  const ANDROID_TAB_BAR_HEIGHT = 47
   const navigation = useNavigation()
   const existingPlantOffer: PlantOffer = useReactiveVar(plantOfferVar)
-  console.log('existingPlantOffer', existingPlantOffer)
 
   const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
+
+  const navigateToScreen2 = () => navigation.navigate('AddNewOfferStep2Screen')
   const onSelectLocation = (data, details) => {
     const addressComponents = details.address_components
     const postalCodeObject = addressComponents.find((component) =>
@@ -70,7 +74,9 @@ const AddNewOfferStep1Screen: React.FunctionComponent<AddNewOfferStep1ScreenProp
   const handleToggle = () => {
     setPot(!pot)
   }
-
+  if (!isFocused) {
+    return null
+  }
   return (
     <LinearGradient colors={['#FFE2C0', 'white']} className='min-h-screen w-screen flex-1'>
       <SafeAreaView
@@ -114,7 +120,9 @@ const AddNewOfferStep1Screen: React.FunctionComponent<AddNewOfferStep1ScreenProp
                   focusOutlineColor='#BFE6CB'
                   autoFocus={false}
                   outlineColor={'#73859e'}
-                  color='black'
+                  color='#73859e'
+                  fontWeight={'bold'}
+                  fontFamily={'manrope_bold'}
                   backgroundColor={'#F5F5F5'}
                   keyboardType='visible-password'
                 />
@@ -146,13 +154,15 @@ const AddNewOfferStep1Screen: React.FunctionComponent<AddNewOfferStep1ScreenProp
                   //   returnKeyType='done'
                   blurOnSubmit={true}
                   h={40}
+                  color='#73859e'
+                  fontWeight={'bold'}
                   value={plantOfferVar().description}
                   onChangeText={handleDescriptionChange}
                   placeholder='Description'
                   size='xl'
                   w='100%'
+                  fontFamily={'manrope_bold'}
                   focusOutlineColor='#BFE6CB'
-                  color='black'
                   outlineColor={'white'}
                   backgroundColor={'#F5F5F5'}
                   fontSize={15}
@@ -160,6 +170,12 @@ const AddNewOfferStep1Screen: React.FunctionComponent<AddNewOfferStep1ScreenProp
                 />
               </View>
             </View>
+            {existingPlantOffer.description &&
+              existingPlantOffer.plantName &&
+              existingPlantOffer.description.length > 10 &&
+              existingPlantOffer.plantName.length > 5 && (
+                <MainButton title='Continuer' action={navigateToScreen2} />
+              )}
           </View>
 
           <SignedOut>
@@ -168,22 +184,13 @@ const AddNewOfferStep1Screen: React.FunctionComponent<AddNewOfferStep1ScreenProp
         </KeyboardAwareScrollView>
 
         <View
-          className='bg-white  w-full  flex flex-col'
-          style={{ position: 'absolute', bottom: TAB_BAR_HEIGHT }}
+          className='bg-white  w-full  flex flex-col '
+          style={{
+            position: 'absolute',
+            bottom: Platform.OS == 'ios' ? IOS_TAB_BAR_HEIGHT : ANDROID_TAB_BAR_HEIGHT,
+          }}
         >
-          {existingPlantOffer.description &&
-            existingPlantOffer.plantName &&
-            existingPlantOffer.description.length > 10 &&
-            existingPlantOffer.plantName.length > 5 && (
-              <TouchableOpacity
-                className=' rounded-md flex items-center justify-center mb-2 bg-darkleaf shadow-lg px-2 py-1 border-2 border-darkleaf'
-                onPress={() => navigation.navigate('AddNewOfferStep2Screen')}
-              >
-                <Text className='text-white text-lg font-manropeBold'>Continuer</Text>
-              </TouchableOpacity>
-            )}
-          <View className='bg-darkleaf min-h-[4] w-1/4 rounded-br-lg rounded-tr-lg'></View>
-          <View className='flex flex-row justify-end items-end'></View>
+          <View className='bg-darkleaf min-h-[2] w-1/5 rounded-br-lg rounded-tr-lg'></View>
         </View>
       </SafeAreaView>
     </LinearGradient>
