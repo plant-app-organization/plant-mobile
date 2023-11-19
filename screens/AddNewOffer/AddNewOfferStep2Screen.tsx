@@ -175,68 +175,73 @@ const AddNewOfferStep2Screen: React.FunctionComponent<AddNewOfferStep2ScreenProp
                 </TouchableOpacity>
               </View>
             </View>
-            <View className='flex flex-row  justify-evenly  w-[95%] mt-4 bg-white py-3 shadow-lg rounded-md'>
-              {existingPlantOffer.pictures.map((imageUrl: string, index) => {
-                return (
-                  <View key={index} className='relative shadow-lg'>
-                    <TouchableOpacity onPress={() => openModalHandler(imageUrl)}>
-                      <Image
-                        key={index}
-                        alt='image'
-                        className='rounded-md'
-                        width={width * 0.28}
-                        height={width * 0.4}
-                        resizeMode='cover'
-                        source={{
-                          uri: imageUrl,
-                        }}
-                      />
-                      {showModal && (
-                        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-                          <Modal.Content maxWidth='500px' style={{ backgroundColor: '#f2fff3' }}>
-                            <Modal.CloseButton />
-
-                            <Modal.Body>
-                              <Image
-                                key={index}
-                                alt='image'
-                                className='rounded-md mr-2'
-                                width={400}
-                                height={400}
-                                resizeMode='cover'
-                                source={{
-                                  uri: previewImage,
-                                }}
-                              />
-
-                              <TouchableOpacity
-                                className='mt-2 rounded-md flex items-center justify-center bg-white shadow-lg px-2 py-1 border-2 border-darkleaf'
-                                onPress={() => {
-                                  setShowModal(false)
-                                }}
-                              >
-                                <Text className='text-darkleaf text-sm font-manropeBold'>
-                                  Fermer
-                                </Text>
-                              </TouchableOpacity>
-                            </Modal.Body>
-                          </Modal.Content>
-                        </Modal>
-                      )}
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{ position: 'absolute', top: 3, right: 6 }}
-                      onPress={() => handleDeleteImage(index)}
-                    >
-                      <FontAwesomeIcon name={'trash'} size={20} color={'white'} />
-                    </TouchableOpacity>
-                  </View>
-                )
-              })}
-            </View>
             {existingPlantOffer.pictures.length > 0 && (
-              <MainButton title='Continuer' action={navigateToScreen3} />
+              <View className='flex flex-row  justify-evenly  w-[95%] mt-4 bg-white py-3 shadow-lg rounded-md'>
+                {existingPlantOffer.pictures.map((imageUrl: string, index) => {
+                  return (
+                    <View key={index} className='relative shadow-lg'>
+                      <TouchableOpacity onPress={() => openModalHandler(imageUrl)}>
+                        <Image
+                          key={index}
+                          alt='image'
+                          className='rounded-md'
+                          width={width * 0.28}
+                          height={width * 0.4}
+                          resizeMode='cover'
+                          source={{
+                            uri: imageUrl,
+                          }}
+                        />
+                        {showModal && (
+                          <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+                            <Modal.Content maxWidth='500px' style={{ backgroundColor: '#f2fff3' }}>
+                              <Modal.CloseButton />
+
+                              <Modal.Body>
+                                <Image
+                                  key={index}
+                                  alt='image'
+                                  className='rounded-md mr-2'
+                                  width={400}
+                                  height={400}
+                                  resizeMode='cover'
+                                  source={{
+                                    uri: previewImage,
+                                  }}
+                                />
+
+                                <TouchableOpacity
+                                  className='mt-2 rounded-md flex items-center justify-center bg-white shadow-lg px-2 py-1 border-2 border-darkleaf'
+                                  onPress={() => {
+                                    setShowModal(false)
+                                  }}
+                                >
+                                  <Text className='text-darkleaf text-sm font-manropeBold'>
+                                    Fermer
+                                  </Text>
+                                </TouchableOpacity>
+                              </Modal.Body>
+                            </Modal.Content>
+                          </Modal>
+                        )}
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{ position: 'absolute', top: 3, right: 6 }}
+                        onPress={() => handleDeleteImage(index)}
+                      >
+                        <FontAwesomeIcon name={'trash'} size={20} color={'white'} />
+                      </TouchableOpacity>
+                    </View>
+                  )
+                })}
+              </View>
             )}
+
+            <MainButton
+              title='Continuer'
+              action={navigateToScreen3}
+              disabled={existingPlantOffer.pictures.length == 0}
+            />
           </View>
 
           {/* {Platform.OS === 'android' && <View className='h-32'></View>} */}

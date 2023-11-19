@@ -21,13 +21,18 @@ import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
 import GradientTitle from '../../components/GradientTitle/GradientTitle'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { ChevronLeftIcon, PencilSquareIcon } from 'react-native-heroicons/solid'
+import ValidationView from '../../components/ValidationView/ValidationView'
 
-import { plantOfferVar, updatePlantOffer, PlantOffer } from '../../variables/plantOffer'
+import {
+  plantOfferVar,
+  updatePlantOffer,
+  PlantOffer,
+  resetPlantOffer,
+} from '../../variables/plantOffer'
 import { useReactiveVar } from '@apollo/client'
 import { Input, TextArea, Image, Modal } from 'native-base'
 
 import { LinearGradient } from 'expo-linear-gradient'
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import ConnectModal from '../../components/ConnectModal/ConnectModal'
 import MainButton from '../../components/Buttons/MainButton'
 import { formatPrice, formatPriceToNumber } from '../../lib/formatPrice'
@@ -36,26 +41,21 @@ interface AddNewOfferStep5ScreenProps {}
 const AddNewOfferStep5Screen: React.FunctionComponent<AddNewOfferStep5ScreenProps> = (props) => {
   const [shoot, setShoot] = useState<boolean>(false)
   const [previewImage, setPreviewImage] = useState<string>('')
-  const [searchQuery, setSearchQuery] = useState(null)
-  const [regionName, setRegionName] = useState<string>('')
-  const [postCode, setPostCode] = useState<string>('')
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+
   const [showModal, setShowModal] = useState(false)
-  const [location, setLocation] = useState(null)
-  const [title, setTitle] = useState<string>('')
-  const [pot, setPot] = useState<boolean>(true)
+
   const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState<boolean>(false)
   const { width } = useWindowDimensions()
   const IOS_TAB_BAR_HEIGHT = 80
   const ANDROID_TAB_BAR_HEIGHT = 47
-  const [plantHeight, setPlantHeight] = useState<number>(0)
-  const [description, setDescription] = useState<string>('')
-  const [price, setPrice] = useState<string>('')
+
   const isFocused = useIsFocused()
 
   const TAB_BAR_HEIGHT = 80
   const navigation = useNavigation()
-  const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
   const [createNewOffer, { loading, error }] = useCreateNewOfferMutation()
+
   const onCreateNewOfferPress = async () => {
     // console.log('🧡requete!')
     const response = await createNewOffer({
@@ -82,8 +82,16 @@ const AddNewOfferStep5Screen: React.FunctionComponent<AddNewOfferStep5ScreenProp
     })
     // console.log('response', response)
     if (response) {
-      alert('offer published')
       setShoot(true)
+      setTimeout(() => {
+        setIsSuccessModalOpen(true)
+      }, 1000)
+
+      setTimeout(() => {
+        navigation.navigate('Profile')
+        resetPlantOffer()
+        setIsSuccessModalOpen(false)
+      }, 6000)
     }
   }
   const openModalHandler = (imageUrl: string) => {
@@ -116,7 +124,7 @@ const AddNewOfferStep5Screen: React.FunctionComponent<AddNewOfferStep5ScreenProp
           enableOnAndroid={true}
           enableAutomaticScroll={true}
         >
-          <View className='w-screen h-full items-center '>
+          <View className='w-screen h-full items-center mb-28'>
             <View className='w-[95%]  bg-white rounded-lg  shadow py-2 px-3 mt-4 '>
               <View className='flex flex-row justify-between items-center '>
                 <TouchableOpacity
@@ -238,12 +246,14 @@ const AddNewOfferStep5Screen: React.FunctionComponent<AddNewOfferStep5ScreenProp
               </View>
             </View>
 
-            <MainButton
-              title='Publier'
-              action={publishOffer}
-              disabled={!termsAndConditionsAccepted || loading}
-              isLoading={loading}
-            />
+            {!shoot && (
+              <MainButton
+                title='Publier'
+                action={publishOffer}
+                disabled={!termsAndConditionsAccepted || loading || isSuccessModalOpen}
+                loading={loading}
+              />
+            )}
           </View>
 
           <SignedOut>
@@ -259,6 +269,24 @@ const AddNewOfferStep5Screen: React.FunctionComponent<AddNewOfferStep5ScreenProp
           }}
         >
           <View className='bg-darkleaf min-h-[2] w-5/5 rounded-br-lg rounded-tr-lg'></View>
+          <Modal
+            isOpen={isSuccessModalOpen}
+            onClose={() => {
+              navigation.navigate('Home')
+              setIsSuccessModalOpen(false)
+            }}
+            safeAreaTop={true}
+          >
+            <Modal.Content maxWidth='350' p={4}>
+              <Text
+                className='font-semibold text-md text-center'
+                style={{ fontFamily: 'manrope_bold', color: '#73859e' }}
+              >
+                Félicitations, votre offre a été soumise à notre équipe de modération !
+              </Text>
+              <ValidationView />
+            </Modal.Content>
+          </Modal>
         </View>
       </SafeAreaView>
     </LinearGradient>

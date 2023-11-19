@@ -78,7 +78,7 @@ const AddNewOfferStep4Screen: React.FunctionComponent<AddNewOfferStep4ScreenProp
           enableOnAndroid={true}
           enableAutomaticScroll={true}
         >
-          <View className='w-screen h-full items-center '>
+          <View className='w-screen h-full items-center mb-28'>
             <View className='w-[95%]  bg-white rounded-lg  shadow py-2 px-3 mt-4 '>
               <View className='flex flex-row justify-between items-center '>
                 <TouchableOpacity
@@ -179,6 +179,14 @@ const AddNewOfferStep4Screen: React.FunctionComponent<AddNewOfferStep4ScreenProp
                 Si vous ne connaissez pas la taille exacte, vous pouvez entrer une taille
                 approximative. Cela donnera une idée aux potentiels acheteurs.
               </Text>
+              <View className='py-0  items-start mx-auto'>
+                <Text
+                  className='font-semibold text-md text-center'
+                  style={{ fontFamily: 'manrope_bold', color: '#73859e' }}
+                >
+                  Hauteur: {plantHeight.toString()} cm
+                </Text>
+              </View>
               <Slider
                 value={plantHeight}
                 minimumValue={0}
@@ -186,34 +194,16 @@ const AddNewOfferStep4Screen: React.FunctionComponent<AddNewOfferStep4ScreenProp
                 trackStyle={{
                   backgroundColor: '#BFE6CB',
                 }}
+                containerStyle={{
+                  width: '90%',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
                 thumbStyle={{ backgroundColor: '#A0C7AC' }}
                 minimumTrackStyle={{ backgroundColor: '#A0C7AC' }}
                 maximumTrackStyle={{ backgroundColor: '#e0e0e0' }}
                 onValueChange={(value) => setPlantHeight(Math.floor(value))}
               />
-              {/* <Slider
-                style={{ width: '100%' }}
-                minimumValue={0}
-                maximumValue={300}
-                minimumTrackTintColor='#3FA96A'
-                maximumTrackTintColor='#000000'
-                onValueChange={(value) => {
-                  console.log('value', value)
-                  setPlantHeight(Math.floor(value))
-                }}
-                onSlidingComplete={(value) => {
-                  setPlantHeight(value)
-                }}
-              /> */}
-
-              <View className='py-0 w-[80%] items-start'>
-                <Text
-                  className='font-semibold text-md text-left'
-                  style={{ fontFamily: 'manrope_bold', color: '#73859e' }}
-                >
-                  Hauteur: {plantHeight.toString()} cm
-                </Text>
-              </View>
             </View>
             {formatPriceToNumber(price) > 0 && plantHeight > 0 && (
               <MainButton title='Continuer' action={saveDataAndNavigate} />
