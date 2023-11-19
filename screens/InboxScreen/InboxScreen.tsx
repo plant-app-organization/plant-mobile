@@ -67,7 +67,7 @@ const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
         navigation.navigate('ChatScreen', {
           authorId: item.participants[0].id,
           offerId: item.offer?.id,
-          conversationId: item.id,
+          existingConversationId: item.id,
         })
       }
     >
