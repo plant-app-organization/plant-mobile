@@ -30,6 +30,7 @@ import { Input, TextArea, Image, Modal, Spinner, Button, useToast } from 'native
 import { LinearGradient } from 'expo-linear-gradient'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import ConnectModal from '../../components/ConnectModal/ConnectModal'
+import MainButton from '../../components/Buttons/MainButton'
 
 interface AddNewOfferStep2ScreenProps {}
 //
@@ -39,14 +40,14 @@ const AddNewOfferStep2Screen: React.FunctionComponent<AddNewOfferStep2ScreenProp
   const [showModal, setShowModal] = useState(false)
   const [previewImage, setPreviewImage] = useState<string>('')
   const toast = useToast()
-
+  const IOS_TAB_BAR_HEIGHT = 80
+  const ANDROID_TAB_BAR_HEIGHT = 47
   const existingPlantOffer: PlantOffer = useReactiveVar(plantOfferVar)
   const isFocused = useIsFocused()
-  const TAB_BAR_HEIGHT = 80
   const navigation = useNavigation()
 
   const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
-
+  const navigateToScreen3 = () => navigation.replace('AddNewOfferStep3Screen')
   const addImage = async () => {
     if (existingPlantOffer.pictures.length < 3) {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -103,11 +104,13 @@ const AddNewOfferStep2Screen: React.FunctionComponent<AddNewOfferStep2ScreenProp
   }
 
   const openModalHandler = (imageUrl: string) => {
-    console.log('CLICKED')
     setPreviewImage(imageUrl)
     setShowModal(true)
   }
 
+  if (!isFocused) {
+    return null
+  }
   return (
     <LinearGradient colors={['#FFE2C0', 'white']} className='min-h-screen w-screen flex-1'>
       <SafeAreaView
@@ -231,28 +234,26 @@ const AddNewOfferStep2Screen: React.FunctionComponent<AddNewOfferStep2ScreenProp
                 )
               })}
             </View>
+            {existingPlantOffer.pictures.length > 0 && (
+              <MainButton title='Continuer' action={navigateToScreen3} />
+            )}
           </View>
 
-          {Platform.OS === 'android' && <View className='h-32'></View>}
+          {/* {Platform.OS === 'android' && <View className='h-32'></View>} */}
+
           <SignedOut>
             <ConnectModal />
           </SignedOut>
         </KeyboardAwareScrollView>
         <View
           className='bg-white  w-full  flex flex-col'
-          style={{ position: 'absolute', bottom: TAB_BAR_HEIGHT }}
+          style={{
+            position: 'absolute',
+            bottom: Platform.OS == 'ios' ? IOS_TAB_BAR_HEIGHT : ANDROID_TAB_BAR_HEIGHT,
+          }}
         >
-          <View className='bg-darkleaf min-h-[4] w-2/4 rounded-br-lg rounded-tr-lg'></View>
-          <View className='flex flex-row justify-end items-end'>
-            {existingPlantOffer.pictures.length > 0 && (
-              <TouchableOpacity
-                className=' rounded-md flex items-center justify-center bg-darkleaf shadow-lg px-2 py-1 border-2 border-darkleaf'
-                onPress={() => navigation.navigate('AddNewOfferStep3Screen')}
-              >
-                <Text className='text-white text-lg font-manropeBold'>Continuer</Text>
-              </TouchableOpacity>
-            )}
-          </View>
+          <View className='bg-darkleaf min-h-[2] w-2/5 rounded-br-lg rounded-tr-lg'></View>
+          <View className='flex flex-row justify-end items-end'></View>
         </View>
         {/* Image Upload Loader Modal */}
         <Modal isOpen={isLoaderOpen} safeAreaTop={true}>

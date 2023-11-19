@@ -16,23 +16,23 @@ import GradientTitle from '../../components/GradientTitle/GradientTitle'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { ChevronLeftIcon, CheckIcon } from 'react-native-heroicons/solid'
 
+import { plantOfferVar, updatePlantOffer, PlantOffer } from '../../variables/plantOffer'
+import { useReactiveVar } from '@apollo/client'
 import { Input, TextArea, FormControl, Select } from 'native-base'
 
 import { LinearGradient } from 'expo-linear-gradient'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import ConnectModal from '../../components/ConnectModal/ConnectModal'
+import MainButton from '../../components/Buttons/MainButton'
 
 interface AddNewOfferStep3ScreenProps {}
 //
 const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProps> = (props) => {
-  const [searchQuery, setSearchQuery] = useState(null)
-  const [regionName, setRegionName] = useState<string>('')
-  const [postCode, setPostCode] = useState<string>('')
-  const [location, setLocation] = useState(null)
-  const [title, setTitle] = useState<string>('')
   const [pot, setPot] = useState<boolean>(false)
   const [environment, setEnvironment] = useState<string>('')
 
+  const IOS_TAB_BAR_HEIGHT = 80
+  const ANDROID_TAB_BAR_HEIGHT = 47
   const [health, setHealth] = useState<string>('')
   const [maintenanceDifficultyLevel, setMaintenanceDifficultyLevel] = useState<string>('')
   const [category, setCategory] = useState<string>('')
@@ -42,6 +42,9 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
   const isFocused = useIsFocused()
   const navigation = useNavigation()
   const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
+  const navigateToScreen4 = () => navigation.navigate('AddNewOfferStep4Screen')
+  const existingPlantOffer: PlantOffer = useReactiveVar(plantOfferVar)
+
   const onSelectLocation = (data, details) => {
     const addressComponents = details.address_components
     const postalCodeObject = addressComponents.find((component) =>
@@ -52,26 +55,23 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
       component.types.includes('administrative_area_level_1'),
     )
     const region = regionObject.long_name
-    console.log('postalCode', postalCode)
-    setPostCode(postalCode)
-    setRegionName(region)
-    setLocation({ ...data, ...details })
-    // console.log('🤹data', data, '🔥details', details)
+    // console.log('postalCode', postalCode)
+    updatePlantOffer('postcode', postalCode)
+    updatePlantOffer('region', region)
+    updatePlantOffer('city', details.vicinity)
+
+    updatePlantOffer('location', details.formatted_address)
+    updatePlantOffer('latitude', details.geometry.location.lat)
+    updatePlantOffer('longitude', details.geometry.location.lng)
   }
-
-  const handleDescriptionChange = useCallback((value: string) => {
-    setDescription(value)
-  }, [])
-
-  const handleTitleChange = useCallback((value: string) => {
-    setTitle(value)
-  }, [])
 
   const handleToggle = () => {
     setPot(!pot)
   }
   const TAB_BAR_HEIGHT = 80
-
+  if (!isFocused) {
+    return null
+  }
   return (
     <LinearGradient colors={['#FFE2C0', 'white']} className='min-h-screen w-screen flex-1'>
       <SafeAreaView
@@ -137,6 +137,7 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                   underlineColorAndroid: 'rgba(0,0,0,0)',
                   placeholderTextColor: '#73859e',
                   autoFocus: false,
+
                   blurOnSubmit: false,
                   style: {
                     backgroundColor: '#F5F5F5',
@@ -145,8 +146,11 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                     paddingHorizontal: 10,
                     borderRadius: 5,
                     fontSize: 15,
-                    borderColor: `${!location ? '#BFE6CB' : '#79acd8'}`,
+                    borderColor: `${!existingPlantOffer.latitude ? '#BFE6CB' : '#79acd8'}`,
                     borderWidth: 1,
+                    fontFamily: 'manrope_bold',
+                    color: '#73859e',
+                    fontWeight: 'bold',
                   },
                 }}
                 styles={{
@@ -160,7 +164,10 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                     fontSize: 15,
                   },
                   predefinedPlacesDescription: {
-                    color: '#3caf50',
+                    color: '#73859e',
+                  },
+                  separator: {
+                    backgroundColor: '#A0C7AC',
                   },
                 }}
               />
@@ -175,20 +182,23 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                   De quel type de plante s'agit-il ?
                 </Text>
                 <Select
-                  selectedValue={environment}
+                  selectedValue={existingPlantOffer.environment}
                   minWidth='200'
                   accessibilityLabel='Environnement'
                   placeholder='Intérieur ou extérieur'
                   fontSize={16}
                   placeholderTextColor='#73859e'
+                  fontWeight={'bold'}
                   backgroundColor={'#F5F5F5'}
+                  color={'#73859e'}
                   _selectedItem={{
                     bg: '#6AB2DF',
                     endIcon: <CheckIcon size={5} />,
                   }}
                   borderColor={'#BFE6CB'}
+                  fontFamily={'manrope_bold'}
                   mt={1}
-                  onValueChange={(itemValue) => setEnvironment(itemValue)}
+                  onValueChange={(itemValue) => updatePlantOffer('environment', itemValue)}
                 >
                   <Select.Item label='Intérieur' value='indoor' />
                   <Select.Item label='Extérieur' value='outdoor' />
@@ -198,12 +208,15 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
               <FormControl w='100%' isRequired>
                 <Select
                   className='rounded-sm'
-                  selectedValue={category}
+                  selectedValue={existingPlantOffer.category}
+                  fontWeight={'bold'}
                   minWidth='200'
                   accessibilityLabel='Catégorie'
                   backgroundColor={'#F5F5F5'}
                   placeholder=' Catégorie'
+                  fontFamily={'manrope_bold'}
                   fontSize={16}
+                  color={'#73859e'}
                   placeholderTextColor='#73859e'
                   _selectedItem={{
                     bg: '#6AB2DF',
@@ -211,7 +224,7 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                   }}
                   borderColor={'#BFE6CB'}
                   mt={1}
-                  onValueChange={(itemValue) => setCategory(itemValue)}
+                  onValueChange={(itemValue) => updatePlantOffer('category', itemValue)}
                 >
                   <Select.Item label='Tropicales' value='tropical' />
                   <Select.Item label='Rares' value='rare' />
@@ -224,11 +237,14 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
 
               <FormControl w='100%' isRequired className='mt-10 mb-10'>
                 <Select
-                  selectedValue={health}
+                  selectedValue={existingPlantOffer.health}
                   minWidth='200'
                   accessibilityLabel='Santé'
                   placeholder='État de santé'
                   fontSize={16}
+                  color={'#73859e'}
+                  fontFamily={'manrope_bold'}
+                  fontWeight={'bold'}
                   backgroundColor={'#F5F5F5'}
                   placeholderTextColor='#73859e'
                   _selectedItem={{
@@ -237,23 +253,26 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                   }}
                   borderColor={'#BFE6CB'}
                   mt={1}
-                  onValueChange={(itemValue) => setHealth(itemValue)}
+                  onValueChange={(itemValue) => updatePlantOffer('health', itemValue)}
                 >
-                  <Select.Item label='excellent' value='excellent' />
-                  <Select.Item label='bon' value='good' />
-                  <Select.Item label='correct' value='correct' />
-                  <Select.Item label='mauvais état' value='bad' />
+                  <Select.Item label='Excellent' value='excellent' />
+                  <Select.Item label='Bon' value='good' />
+                  <Select.Item label='Correct' value='correct' />
+                  <Select.Item label='Mauvais état' value='bad' />
                 </Select>
               </FormControl>
 
               <FormControl w='100%' isRequired>
                 <Select
-                  selectedValue={maintenanceDifficultyLevel}
+                  selectedValue={existingPlantOffer.maintenanceDifficultyLevel}
                   minWidth='200'
+                  fontWeight={'bold'}
                   accessibilityLabel='Entretien'
                   placeholder='Entretien'
+                  fontFamily={'manrope_bold'}
                   backgroundColor={'#F5F5F5'}
                   fontSize={16}
+                  color={'#73859e'}
                   borderColor={'#BFE6CB'}
                   placeholderTextColor='#73859e'
                   _selectedItem={{
@@ -261,14 +280,23 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
                     endIcon: <CheckIcon size={5} />,
                   }}
                   mt={1}
-                  onValueChange={(itemValue) => setMaintenanceDifficultyLevel(itemValue)}
+                  onValueChange={(itemValue) =>
+                    updatePlantOffer('maintenanceDifficultyLevel', itemValue)
+                  }
                 >
-                  <Select.Item label='facile' value='easy' />
-                  <Select.Item label='intermédiaire' value='intermediary' />
-                  <Select.Item label='difficile' value='difficult' />
+                  <Select.Item label='Facile' value='easy' fontFamily={'manrope_bold'} />
+                  <Select.Item label='Intermédiaire' value='intermediary' />
+                  <Select.Item label='Difficile' value='difficult' fontFamily={'manrope_bold'} />
                 </Select>
               </FormControl>
             </View>
+            {existingPlantOffer.location &&
+              existingPlantOffer.health &&
+              existingPlantOffer.category &&
+              existingPlantOffer.maintenanceDifficultyLevel &&
+              existingPlantOffer.environment && (
+                <MainButton title='Continuer' action={navigateToScreen4} />
+              )}
           </View>
 
           {Platform.OS === 'android' && <View className='h-32'></View>}
@@ -278,17 +306,12 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
         </KeyboardAwareScrollView>
         <View
           className='bg-white  w-full  flex flex-col'
-          style={{ position: 'absolute', bottom: TAB_BAR_HEIGHT }}
+          style={{
+            position: 'absolute',
+            bottom: Platform.OS == 'ios' ? IOS_TAB_BAR_HEIGHT : ANDROID_TAB_BAR_HEIGHT,
+          }}
         >
-          <View className='bg-darkleaf min-h-[4] w-3/4 rounded-br-lg rounded-tr-lg'></View>
-          <View className='flex flex-row justify-end items-end px-2 py-2'>
-            <TouchableOpacity
-              className=' rounded-md flex items-center justify-center bg-darkleaf shadow-lg px-2 py-1 border-2 border-darkleaf'
-              onPress={() => navigation.navigate('AddNewOfferStep4Screen')}
-            >
-              <Text className='text-white text-lg font-manropeBold'>Continuer</Text>
-            </TouchableOpacity>
-          </View>
+          <View className='bg-darkleaf min-h-[2] w-3/5 rounded-br-lg rounded-tr-lg'></View>
         </View>
       </SafeAreaView>
     </LinearGradient>
