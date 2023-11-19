@@ -45,7 +45,8 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   const [userToken, setUserToken] = useState('')
   const [userName, setUserName] = useState<string>('')
   const [isSendingMessage, setIsSendingMessage] = useState(false)
-  const { offerId, authorId, conversationId } = props.route.params
+  const { offerId, authorId, existingConversationId } = props.route.params
+  const [conversationId, setConversationId] = useState<string>(existingConversationId)
   console.log('offerId', offerId)
   const { data: userData } = useGetUserDataByIdQuery({
     variables: { userId: authorId },
@@ -59,7 +60,6 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   //   useGetIsConversationExistingQuery({
   //     variables: { offerId, userId1: authorId },
   //   })
-
   const { data: conversationData, refetch: refetchConversationData } =
     useGetConversationMessagesQuery({
       variables: { conversationId },
@@ -67,6 +67,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   const wait = (timeout: number) => {
     return new Promise((resolve) => setTimeout(resolve, timeout))
   }
+  console.log('conversationData', conversationData)
   const onRefresh = useCallback(() => {
     setRefreshing(true)
 
@@ -124,7 +125,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   const { isSignedIn, user } = useUser()
 
   const navigation = useNavigation()
-
+  console.log('conversationid', conversationId)
   // console.log(offerData?.OffersListByIds[0].pictures[0])
 
   const onSendMessagePress = async () => {
@@ -139,7 +140,10 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
       },
     })
     console.log('response', response)
-    if (response.data?.sendMessage) {
+    if (response.data?.sendMessage.result === true) {
+      if (response.data?.sendMessage.conversationId !== conversationId) {
+        setConversationId(response.data?.sendMessage.conversationId)
+      }
       setIsSendingMessage(false)
       setMessage('')
     }
@@ -157,7 +161,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
 
   // Handle new messages
   useEffect(() => {
-    console.log('!!!!! nouveau message !newMessageData', newMessageData)
+    console.log('⛵️⛵️⛵️⛵️⛵️!!!!! nouveau message newMessageData', newMessageData)
     if (newMessageData) {
       // The query for conversation messages will be refetched when a new message is received
       refetchConversationData()
@@ -250,39 +254,35 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
         >
           <View style={styles.chatContainer}>
             {/* reprendre en fonction de l'ID du user */}
-            {!conversationId ? (
-              <Text>Débutez une conversation avec {userData?.userDataById?.userName} </Text>
-            ) : (
-              conversationData?.MessagesList.map((item) => (
-                <View
-                  key={item.id}
-                  style={[
-                    styles.messageContainer,
-                    item.senderId === userData?.userDataById?.id
-                      ? styles.messageContainerLeft
-                      : styles.messageContainerRight,
-                  ]}
-                >
-                  {item.senderId === userData?.userDataById?.id && (
-                    <Avatar
-                      bg='amber.500'
-                      size='sm'
-                      source={{
-                        uri: userData?.userDataById?.avatar,
-                      }}
-                    >
-                      JL
-                    </Avatar>
-                  )}
-                  <Animated.Text style={[styles.message]}>{item.text}</Animated.Text>
-                  <Animated.Text style={[styles.date]}>
-                    {moment().diff(item.createdAt, 'days') <= 2
-                      ? moment(item.createdAt).fromNow()
-                      : moment(item.createdAt).format('LL')}
-                  </Animated.Text>
-                </View>
-              ))
-            )}
+            {conversationData?.MessagesList.map((item) => (
+              <View
+                key={item.id}
+                style={[
+                  styles.messageContainer,
+                  item.senderId === userData?.userDataById?.id
+                    ? styles.messageContainerLeft
+                    : styles.messageContainerRight,
+                ]}
+              >
+                {item.senderId === userData?.userDataById?.id && (
+                  <Avatar
+                    bg='amber.500'
+                    size='sm'
+                    source={{
+                      uri: userData?.userDataById?.avatar,
+                    }}
+                  >
+                    JL
+                  </Avatar>
+                )}
+                <Animated.Text style={[styles.message]}>{item.text}</Animated.Text>
+                <Animated.Text style={[styles.date]}>
+                  {moment().diff(item.createdAt, 'days') <= 2
+                    ? moment(item.createdAt).fromNow()
+                    : moment(item.createdAt).format('LL')}
+                </Animated.Text>
+              </View>
+            ))}
           </View>
         </ScrollView>
         <View
