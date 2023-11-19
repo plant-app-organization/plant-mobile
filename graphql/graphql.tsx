@@ -50,7 +50,7 @@ export type Mutation = {
   bookmarkOffer: Scalars['String'];
   createNewOffer: Scalars['String'];
   register: Scalars['String'];
-  sendMessage: Scalars['String'];
+  sendMessage: SendMessageResponse;
 };
 
 
@@ -192,6 +192,12 @@ export type RegisterInput = {
   userName: Scalars['String'];
 };
 
+export type SendMessageResponse = {
+  __typename?: 'SendMessageResponse';
+  conversationId: Scalars['String'];
+  result: Scalars['Boolean'];
+};
+
 export type Subscription = {
   __typename?: 'Subscription';
   messageAdded: MessageModel;
@@ -331,7 +337,7 @@ export type SendMessageMutationVariables = Exact<{
 }>;
 
 
-export type SendMessageMutation = { __typename?: 'Mutation', sendMessage: string };
+export type SendMessageMutation = { __typename?: 'Mutation', sendMessage: { __typename?: 'SendMessageResponse', result: boolean, conversationId: string } };
 
 
 export const BookmarkOfferDocument = gql`
@@ -939,7 +945,10 @@ export type SearchOffersLazyQueryHookResult = ReturnType<typeof useSearchOffersL
 export type SearchOffersQueryResult = Apollo.QueryResult<SearchOffersQuery, SearchOffersQueryVariables>;
 export const SendMessageDocument = gql`
     mutation sendMessage($newMessageInput: MessageInput!) {
-  sendMessage(newMessageInput: $newMessageInput)
+  sendMessage(newMessageInput: $newMessageInput) {
+    result
+    conversationId
+  }
 }
     `;
 export type SendMessageMutationFn = Apollo.MutationFunction<SendMessageMutation, SendMessageMutationVariables>;
