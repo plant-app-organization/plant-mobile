@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 import {
   Platform,
   StatusBar,
@@ -46,7 +46,10 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   const [userName, setUserName] = useState<string>('')
   const [isSendingMessage, setIsSendingMessage] = useState(false)
   const { offerId, authorId, existingConversationId } = props.route.params
+  console.log('props.route.params', props.route.params)
   const [conversationId, setConversationId] = useState<string>(existingConversationId)
+  const scrollViewRef = useRef()
+
   console.log('offerId', offerId)
   const { data: userData } = useGetUserDataByIdQuery({
     variables: { userId: authorId },
@@ -83,43 +86,6 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   // console.log('--------ConversationId in ChatScreenn', conversationId)
   const { width, height } = useWindowDimensions()
   moment.updateLocale('fr', localization)
-
-  // const displayToken = async () => {
-  //   const { getToken } = useAuth()
-
-  //   const token = await getToken()
-  //   console.log('token in chatscreen ', token)
-  //   setUserToken(token)
-  // }
-  // displayToken()
-  // //Pusher chat
-  // useEffect(() => {
-  //   const channelId = `private-message-${senderId}-${receiverId}`
-
-  //   const pusher = new Pusher('your-app-key', {
-  //     cluster: 'your-cluster',
-  //     authEndpoint: 'http://yourserver.com/pusher/auth',
-  //     auth: {
-  //       headers: {
-  //         Authorization: `Bearer ${userToken}`,
-  //       },
-  //     },
-  //   })
-
-  //   const channel = pusher.subscribe(channelId)
-
-  //   channel.bind('new-message', function (data) {
-  //     alert(JSON.stringify(data))
-  //   })
-
-  //   // Clean up function
-  //   return () => {
-  //     channel.unbind('new-message')
-  //     pusher.unsubscribe(channelId)
-  //   }
-  // }, [senderId, receiverId])
-
-  // check if conversation is new
 
   const fadeIn = new Animated.Value(0)
   const { isSignedIn, user } = useUser()
@@ -158,6 +124,10 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   const { data: newMessageData, loading } = useOnMessageAddedSubscription({
     variables: subscriptionVariables,
   })
+
+  useEffect(() => {
+    scrollViewRef.current.scrollToEnd({ animated: true })
+  }, [conversationData]) // Assuming 'messages' is your state or prop that updates with new messages
 
   // Handle new messages
   useEffect(() => {
@@ -236,6 +206,8 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
         style={styles.container}
       >
         <ScrollView
+          onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+          ref={scrollViewRef}
           className='w-full px-5'
           style={{ backgroundColor: 'white', height: height * 0.65 }}
           contentContainerStyle={{
@@ -330,7 +302,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   message: {
-    fontSize: 17,
+    fontSize: 15,
     color: '#6b6b6b',
     fontFamily: 'manrope_bold',
   },
