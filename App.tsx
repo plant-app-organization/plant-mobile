@@ -36,7 +36,6 @@ const tokenCache = {
   },
 }
 export default function App() {
-  //
   const [userToken, setUserToken] = useState<string | null>(null)
 
   const retrieveToken = async () => {
