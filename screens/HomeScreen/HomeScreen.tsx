@@ -42,6 +42,8 @@ import SuggestionsDisplay from '../../components/SuggestionsDisplay/SuggestionsD
 interface HomeScreenProps {}
 //
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
+  const userDataInDevice = useReactiveVar(userDataVar)
+
   const { data: userData, loading: userDataLoading, error } = useGetMyUserDataQuery()
   useEffect(() => {
     if (!userDataLoading && userData) {
@@ -121,7 +123,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 style={{}}
                 bg='warmGray.50'
                 source={{
-                  uri: userData?.userData.avatarThumbnail,
+                  uri: userDataInDevice.avatar,
                 }}
                 size='md'
               ></Avatar>
