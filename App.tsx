@@ -7,6 +7,7 @@ import { ClerkProvider } from '@clerk/clerk-expo'
 import * as SecureStore from 'expo-secure-store'
 import { setContext } from '@apollo/client/link/context'
 import { WebSocketLink } from '@apollo/client/link/ws'
+import * as SplashScreen from 'expo-splash-screen'
 
 import { getMainDefinition } from '@apollo/client/utilities'
 
@@ -37,6 +38,7 @@ const tokenCache = {
 }
 export default function App() {
   const [userToken, setUserToken] = useState<string | null>(null)
+  SplashScreen.preventAutoHideAsync() // Prevent the splash screen from auto-hiding
 
   const retrieveToken = async () => {
     const token = await SecureStore.getItemAsync('__clerk_client_jwt')
@@ -121,6 +123,18 @@ export default function App() {
     },
   }
   const theme = extendTheme({ colors: newColorTheme })
+  useEffect(() => {
+    async function hideSplash() {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync()
+      }
+    }
+    hideSplash()
+  }, [fontsLoaded])
+
+  if (!fontsLoaded) {
+    return null
+  }
   return (
     <ApolloProvider client={client}>
       <ClerkProvider publishableKey={process.env.CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>

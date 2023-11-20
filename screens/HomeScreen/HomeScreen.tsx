@@ -19,7 +19,7 @@ import {
 import { Image } from 'expo-image'
 import MaskedView from '@react-native-masked-view/masked-view'
 
-import { ChevronRightIcon } from 'native-base'
+import { ChevronRightIcon, Skeleton } from 'native-base'
 import PlantersDisplay from '../../components/PlantersDisplay/PlantersDisplay'
 import CardProduct from '../../components/product/CardProduct'
 import CardDeal from '../../components/super-deals/CardDeal'
@@ -29,10 +29,11 @@ import { Avatar } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
 import { NoDeprecatedCustomRule } from 'graphql'
 import { useUser } from '@clerk/clerk-expo'
-import { useGetUserBookmarksQuery } from '../../graphql/graphql'
+import { useGetUserBookmarksQuery, useGetMyUserDataQuery } from '../../graphql/graphql'
 import { useNavigation } from '@react-navigation/native'
 import { useReactiveVar } from '@apollo/client'
 import { bookmarksVar } from '../../variables/bookmarks'
+import { userDataVar, updateUserData, UserData } from '../../variables/userData'
 
 import { MaterialIcons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -41,6 +42,14 @@ import SuggestionsDisplay from '../../components/SuggestionsDisplay/SuggestionsD
 interface HomeScreenProps {}
 //
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
+  const { data: userData, loading: userDataLoading, error } = useGetMyUserDataQuery()
+  useEffect(() => {
+    if (!userDataLoading && userData) {
+      updateUserData('bio', userData.userData?.userBio)
+      updateUserData('avatar', userData.userData?.avatar)
+      updateUserData('avatarThumbnail', userData.userData?.avatarThumbnail)
+    }
+  }, [userData, userDataLoading])
   const [search, setSearch] = useState<string>('')
   const { isSignedIn, user } = useUser()
   // const { getToken } = useAuth();
@@ -50,33 +59,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   userBookmarks && bookmarksVar(userBookmarks?.userBookmarks)
   // console.log('user clerk ', user);
   const navigation = useNavigation()
-
-  const dealData: { entreprise: string; ville: string; photo: string }[] = [
-    {
-      entreprise: 'Jardinerie Ricard',
-      ville: 'Marseille',
-      photo:
-        'https://i.ibb.co/km3V7wX/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-79207055-49ff-4af2-94bb-d4589ab29ca.png',
-    },
-    {
-      entreprise: 'Truffaut',
-      ville: 'Paris',
-      photo:
-        'https://i.ibb.co/km3V7wX/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-79207055-49ff-4af2-94bb-d4589ab29ca.png',
-    },
-    {
-      entreprise: 'Jardiland',
-      ville: 'Marseille',
-      photo:
-        'https://i.ibb.co/CKgsZ9v/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-0e9fca9d-9962-47db-824e-ec52ca710d5.png',
-    },
-    {
-      entreprise: 'MonJardin.COM',
-      ville: 'Marseille',
-      photo:
-        'https://i.ibb.co/wND4G6c/mathisdemo-create-realistic-plante-image-realistic-3-D-with-whit-90935e01-c32d-428b-9e32-5d8929c45a5.png',
-    },
-  ]
 
   const categorieData: { name: string; image: string }[] = [
     {
@@ -121,21 +103,29 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
         // start={{ x: 0.1, y: 0 }}
         // end={{ x: 0.9, y: 0 }}
         colors={['#C0FFE7', 'white']}
-        className='w-screen flex-col items-center py-5'
+        className='w-screen flex-col items-center py-2'
       >
         {isSignedIn && (
           <View className='w-full flex-row items-center justify-start px-4'>
-            <Avatar
-              style={{}}
-              bg='amber.500'
-              source={{
-                uri: user?.profileImageUrl,
-              }}
-              size='md'
-            >
-              NB
-              <Avatar.Badge bg='green.500' size='23%' />
-            </Avatar>
+            {userDataLoading ? (
+              <Skeleton
+                borderWidth={0}
+                borderColor='coolGray.200'
+                endColor='warmGray.50'
+                size='12'
+                rounded='full'
+                alignSelf={'center'}
+              />
+            ) : (
+              <Avatar
+                style={{}}
+                bg='warmGray.50'
+                source={{
+                  uri: userData?.userData.avatarThumbnail,
+                }}
+                size='md'
+              ></Avatar>
+            )}
             <View className='w-full'>
               <MaskedView
                 style={{ height: 32, backgroundColor: 'white' }}
@@ -155,7 +145,10 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               {/* <Text className='ml-4 text-xl font-semibold text-slate-800'>
                 Bonjour {user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1)}
               </Text> */}
-              <Text className='ml-4 text-xs ' style={{ fontFamily: 'OpenSans', color: '#323232' }}>
+              <Text
+                className='ml-4 text-xs '
+                style={{ fontFamily: 'manrope_regular', color: '#323232' }}
+              >
                 Découvre les nouvelles offres !
               </Text>
             </View>
@@ -173,13 +166,13 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       </LinearGradient>
 
       <ScrollView
-        className='w-screen bg-white pt-4'
+        className='w-screen bg-white pt-0'
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled
       >
         <View className='w-full'>
           <MaskedView
-            style={{ height: 27, marginTop: 10 }}
+            style={{ height: 27, marginTop: 0 }}
             maskElement={
               <Text className='ml-6 text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
                 Top Planters autour de moi

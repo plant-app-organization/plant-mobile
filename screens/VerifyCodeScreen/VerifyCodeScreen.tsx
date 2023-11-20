@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native';
-import { useClerk, useSignUp, useSession } from '@clerk/clerk-expo';
-import { styles } from '../../components/SignInWithOAuth/Styles';
-import { LinearGradient } from 'expo-linear-gradient';
-import { sessionIdVar } from '../../variables/session';
-import { useRegisterMutation } from '../../graphql/graphql';
+import React, { useState } from 'react'
+import { Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native'
+import { useClerk, useSignUp, useSession } from '@clerk/clerk-expo'
+import { styles } from '../../components/SignInWithOAuth/Styles'
+import { LinearGradient } from 'expo-linear-gradient'
+import { sessionIdVar } from '../../variables/session'
+import { useRegisterMutation } from '../../graphql/graphql'
 
 export default function VerifyCodeScreen(props) {
-  const { isLoaded, signUp, setSession } = useSignUp();
-  const { session } = useSession();
-  const [register] = useRegisterMutation();
+  const { isLoaded, signUp, setSession } = useSignUp()
+  const { session } = useSession()
+  const [register] = useRegisterMutation()
 
-  const [code, setCode] = useState<string>('');
+  const [code, setCode] = useState<string>('')
 
   const onPress = async () => {
     if (!isLoaded) {
-      return;
+      return
     }
 
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
-      });
-      console.log('🧡completeSignUp', completeSignUp);
+      })
+      // console.log('🧡completeSignUp', completeSignUp)
       await register({
         variables: {
           newUserInput: {
@@ -32,21 +32,23 @@ export default function VerifyCodeScreen(props) {
             userBio: 'Je suis un plant-addict',
             isPro: false,
             avatar:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Kyzyl_Shaman.jpg/340px-Kyzyl_Shaman.jpg',
+              'https://res.cloudinary.com/matthieudev/image/upload/v1700498652/default_avatar_xwcpzd.png',
+            avatarThumbnail:
+              'https://res.cloudinary.com/matthieudev/image/upload/v1700498650/default_avatar_thumbnail_hcfey6.png',
           },
         },
-      });
-      await setSession(completeSignUp.createdSessionId);
+      })
+      await setSession(completeSignUp.createdSessionId)
 
       // sessionIdVar(completeSignUp.createdSessionId);
 
-      const userToken = session;
-      console.log('✨user', userToken);
+      const userToken = session
+      // console.log('✨user', userToken)
     } catch (err: any) {
-      console.log('Error:> ' + err?.status || '');
-      console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err);
+      console.log('Error:> ' + err?.status || '')
+      console.log('Error:> ' + err?.errors ? JSON.stringify(err.errors) : err)
     }
-  };
+  }
 
   return (
     <LinearGradient
@@ -119,5 +121,5 @@ export default function VerifyCodeScreen(props) {
         </View>
       </SafeAreaView>
     </LinearGradient>
-  );
+  )
 }

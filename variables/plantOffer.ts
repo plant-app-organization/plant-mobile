@@ -1,6 +1,5 @@
 import { makeVar } from '@apollo/client'
 
-// Define the TypeScript interface
 interface PlantOffer {
   plantName: string
   pictures: string[]

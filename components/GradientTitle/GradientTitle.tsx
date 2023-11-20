@@ -16,7 +16,9 @@ const GradientTitle: React.FunctionComponent<GradientTitleProps> = (props) => {
         style={{ height: 27 }}
         maskElement={
           <Text
-            className={`mx-auto text-xl text-center ${align === 'right' ? 'text-right' : ''}`}
+            className={`mx-auto text-xl text-center ${align === 'right' ? 'text-right' : ''} ${
+              align == 'left' ? 'text-left' : ''
+            }`}
             style={{ fontFamily: 'manrope_extra_bold' }}
           >
             {title}

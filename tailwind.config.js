@@ -8,12 +8,17 @@ module.exports = {
   ],
   theme: {
     colors: {
+      lightorange: '#FDE9E9',
+      magicgrey: '#73859e',
       transparent: 'transparent',
       white: '#ffffff',
       black: '#000000',
       green: '#10b981',
       leaf: '#BFE6CB',
       darkleaf: '#A0C7AC',
+      lightleaf: '#e7ffec',
+      lightyellow: '#E4F5FF',
+      lightblue: '#E4F5FF',
     },
     extend: {
       fontFamily: {

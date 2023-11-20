@@ -1,0 +1,7 @@
+mutation UpdateUserProfile($bio: String, $avatarUrl: String) {
+  updateUserProfile(updateInput: { bio: $bio, avatarUrl: $avatarUrl }) {
+    userBio
+    avatar
+    avatarThumbnail
+  }
+}

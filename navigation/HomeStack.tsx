@@ -27,9 +27,9 @@ import ParamScreen from '../screens/ParamScreen/ParamScreen'
 import UserProfileScreen from '../screens/UserProfileScreen/UserProfileScreen'
 import PlantIdentityScreen from '../screens/PlantIdentityScreen/PlantIdentityScreen'
 import PlantIdentityInfoScreen from '../screens/PlantIdentityInfoScreen/PlantIdentityInfoScreen'
-
+import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen'
 import { TransitionSpecs } from '@react-navigation/stack'
-
+import CameraScreen from '../screens/CameraScreen/CameraScreen'
 import GalleryScreen from '../screens/GalleryScreen/GalleryScreen'
 import ChatScreen from '../screens/ChatScreen/ChatScreen'
 
@@ -94,24 +94,24 @@ const HomeStackNavigator = () => {
       >
         {!isSignedIn ? (
           <>
-            <HomeStack.Screen
+            {/* <HomeStack.Screen
               name='DevScreen'
               component={DevScreen}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
               }}
-            />
-            <HomeStack.Screen name='BottomTabs' component={BottomTabs} />
-
-            <HomeStack.Screen
+            /> */}
+            {/* <HomeStack.Screen
               name='FirstScreenLogo'
               component={FirstScreenLogo}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',
               }}
-            />
+            /> */}
+            <HomeStack.Screen name='BottomTabs' component={BottomTabs} />
+
             <HomeStack.Screen
               name='FirstPresentationScreen'
               component={FirstPresentationScreen}
@@ -306,8 +306,26 @@ const HomeStackNavigator = () => {
               }}
             />
             <HomeStack.Screen
+              name='CameraScreen'
+              component={CameraScreen}
+              options={{
+                presentation: 'modal',
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_bottom',
+              }}
+            />
+            <HomeStack.Screen
               name='PlantIdentityInfoScreen'
               component={PlantIdentityInfoScreen}
+              options={{
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+                animationDuration: 10,
+              }}
+            />
+            <HomeStack.Screen
+              name='EditProfileScreen'
+              component={EditProfileScreen}
               options={{
                 animationTypeForReplace: 'push',
                 animation: 'slide_from_right',

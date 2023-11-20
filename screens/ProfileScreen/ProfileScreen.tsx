@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { Image } from 'expo-image'
 
 import {
@@ -8,7 +7,6 @@ import {
   SafeAreaView,
   View,
   Text,
-  Button,
   TouchableOpacity,
   StyleSheet,
   Animated,
@@ -17,28 +15,31 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient, LinearGradientPoint } from 'expo-linear-gradient'
 import { Avatar, Modal, Badge } from 'native-base'
-import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
-import ConfettiCannon from 'react-native-confetti-cannon'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
 import * as SecureStore from 'expo-secure-store'
-import PokemonModal from '../../components/modal/PokemonModal'
 import { useReactiveVar } from '@apollo/client'
 import { bookmarksVar } from '../../variables/bookmarks'
+import { useGetMyUserDataQuery } from '../../graphql/graphql'
+import GradientTitle from '../../components/GradientTitle/GradientTitle'
+import { userDataVar } from '../../variables/userData'
 
 interface ProfileScreenProps {
   progress: number
 }
 
 const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
+  const userDataInDevice = useReactiveVar(userDataVar)
+
   const userBookmarks = useReactiveVar(bookmarksVar)
+  const { data: userData, loading, error } = useGetMyUserDataQuery()
 
   const { isSignedIn, user } = useUser()
   if (!isSignedIn) {
     props.navigation.replace('SigninScreen')
   }
 
-  const name = ['Joliflor', 'Floraroma', 'Beautiflore', 'Melodiflore']
   const { getToken, signOut } = useAuth()
   const [sessionToken, setSessionToken] = React.useState('')
   const [progress, setProgress] = useState(0)
@@ -111,10 +112,6 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
     personalPlants.push(<FontAwesomeIcon name='star' style={style} />)
   }
 
-  const handleModalClose = () => {
-    setIsOpen(false)
-  }
-
   return (
     <SafeAreaView
       style={{
@@ -126,78 +123,130 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
         // start={{ x: 0.1, y: 0 }}
         // end={{ x: 0.9, y: 0 }}
         colors={['#C0FFE7', 'white']}
-        className='w-full h-[100px]'
+        className='w-full h-[200px]'
       >
-        <View className=' flex-row border-gray-200 px-5'>
-          <View className='w-6/12 h-full flex-row items-center'>
+        <View className=' flex-row border-gray-200 px-5 pt-8'>
+          <View className='w-full flex-col items-center justify-start'>
             <Avatar
-              bg='amber.500'
+              bg='warmGray.50'
               source={{
-                uri: user?.profileImageUrl,
+                uri: userDataInDevice.avatar,
               }}
-              size='lg'
-            >
-              NB
-              <Avatar.Badge bg='green.500' size='23%' />
-            </Avatar>
-
-            <View className='ml-4'>
-              <Text className='ml-4 text-xl' style={{ fontFamily: 'manrope_extra_bold' }}>
-                {user?.username?.charAt().toUpperCase() + user?.username?.slice(1)}
-              </Text>
-              {/* <Text>{personalPlants}</Text> */}
-            </View>
+              size='xl'
+            ></Avatar>
+            <GradientTitle
+              title={user?.username?.charAt().toUpperCase() + user?.username?.slice(1)}
+              align='left'
+            />
           </View>
-
-          <TouchableOpacity className='w-6/12 h-full flex-row items-center justify-end'>
-            <Text className='text-m	 mr-4' style={{ fontFamily: 'manrope_bold', color: '#323232' }}>
-              Modifier mon profil
-            </Text>
-            <FontAwesomeIcon name='angle-right' size={20} />
-          </TouchableOpacity>
         </View>
       </LinearGradient>
-      <ScrollView className='w-full h-full px-5 flex bg-white 	'>
+      <ScrollView className='w-full h-full px-3 flex bg-white pt-6'>
         <TouchableOpacity
-          className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'
+          className='w-full flex-row items-center justify-between py-3 border-b '
+          style={{ borderBottomColor: '#f7f7f7' }}
+          onPress={() => navigation.navigate('EditProfileScreen')}
+        >
+          <FontAwesomeIcon name='gear' size={20} color={'#A0C7AC'} />
+          <Text
+            className='ml-5 mr-auto  text-lg'
+            style={{ fontFamily: 'manrope_regular', color: '#73859e' }}
+          >
+            Modifier mon profil
+          </Text>
+          <FontAwesomeIcon name='angle-right' size={26} color={'#A0C7AC'} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          className='w-full flex-row items-center justify-between py-3 border-b'
+          style={{ borderBottomColor: '#f7f7f7' }}
           onPress={() => navigation.navigate('Bookmarks')}
         >
-          <FontAwesomeIcon className=' w-1/12 text-red-300 ' name='heart' size={20} />
-          <View className='w-10/12 flex flex-row'>
-            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#73859e' }}>
-              Mes favoris
-            </Text>
-            <Badge
-              colorScheme='success'
-              variant='subtle'
-              rounded='full'
-              mt={-4}
-              mr={0}
-              pr={1}
-              pl={1}
-              zIndex={1}
-              alignSelf='flex-start'
-              _text={{
-                fontSize: 10,
-              }}
-            >
-              {userBookmarks?.length}
-            </Badge>
-          </View>
-          <FontAwesomeIcon name='angle-right' size={20} />
+          <FontAwesomeIcon name='heart' size={20} color={'#A0C7AC'} />
+          <Text
+            className='ml-4 mr-auto text-lg'
+            style={{ fontFamily: 'manrope_regular', color: '#73859e' }}
+          >
+            Mes favoris
+          </Text>
+          <Badge
+            colorScheme='success'
+            variant='subtle'
+            rounded='full'
+            mt={-4}
+            mr={0}
+            pr={1}
+            pl={1}
+            zIndex={1}
+            alignSelf='flex-start'
+            _text={{
+              fontSize: 10,
+            }}
+          >
+            {userBookmarks?.length}
+          </Badge>
+          <FontAwesomeIcon name='angle-right' size={26} color={'#A0C7AC'} />
         </TouchableOpacity>
 
-        <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
-          <FontAwesomeIcon className=' w-1/12 text-yellow-300' name='euro' size={20} />
-          <View className='w-10/12'>
-            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#73859e' }}>
-              Mes ventes
-            </Text>
-          </View>
-          <FontAwesomeIcon name='angle-right' size={20} />
+        <TouchableOpacity
+          className='w-full flex-row items-center justify-between py-3 border-b'
+          style={{ borderBottomColor: '#f7f7f7' }}
+        >
+          <FontAwesomeIcon className='' name='euro' size={20} color={'#A0C7AC'} />
+
+          <Text
+            className='ml-6 mr-auto text-lg'
+            style={{ fontFamily: 'manrope_regular', color: '#73859e' }}
+          >
+            Mes annonces
+          </Text>
+          <Badge
+            colorScheme='success'
+            variant='subtle'
+            rounded='full'
+            mt={-4}
+            mr={0}
+            pr={1}
+            pl={1}
+            zIndex={1}
+            alignSelf='flex-start'
+            _text={{
+              fontSize: 10,
+            }}
+          >
+            1
+          </Badge>
+          <FontAwesomeIcon name='angle-right' size={26} color={'#A0C7AC'} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          className='w-full flex-row items-center justify-between py-3 border-b'
+          style={{ borderBottomColor: '#f7f7f7' }}
+        >
+          <FontAwesomeIcon className='' name='question-circle-o' size={20} color={'#A0C7AC'} />
+
+          <Text
+            className='ml-5 mr-auto text-lg'
+            style={{ fontFamily: 'manrope_regular', color: '#73859e' }}
+          >
+            Aide
+          </Text>
+          <FontAwesomeIcon name='angle-right' size={26} color={'#A0C7AC'} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          className='w-full flex-row items-center justify-between py-3 border-b'
+          style={{ borderBottomColor: '#f7f7f7' }}
+        >
+          <FontAwesomeIcon className='' name='share-alt' size={20} color={'#A0C7AC'} />
+
+          <Text
+            className='ml-5 mr-auto text-lg'
+            style={{ fontFamily: 'manrope_regular', color: '#73859e' }}
+          >
+            Partager l'application
+          </Text>
+          <FontAwesomeIcon name='angle-right' size={26} color={'#A0C7AC'} />
         </TouchableOpacity>
 
-        <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
+        {/* <TouchableOpacity className='w-full flex-row items-center justify-between py-5 border-b border-gray-200'>
           <FontAwesomeIcon className=' w-1/12 text-blue-300	' name='shopping-cart' size={20} />
           <View className='w-10/12'>
             <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#73859e' }}>
@@ -215,19 +264,20 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
             </Text>
           </View>
           <FontAwesomeIcon name='angle-right' size={20} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
-          className='w-full flex-row items-center justify-center  py-9'
+          className='flex-row items-center justify-between py-2'
           onPress={onSignOutPress}
         >
-          <View className='w-10/12 items-center'>
-            <FontAwesomeIcon className=' w-1/12 text-pink-300 self-center	' name='user' size={20} />
-
-            <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#73859e' }}>
-              Me déconnecter
-            </Text>
-          </View>
+          <MaterialIcon name='logout' size={20} color={'red'} />
+          <Text
+            className='ml-4 mr-auto text-lg'
+            style={{ fontFamily: 'manrope_regular', color: '#73859e' }}
+          >
+            Déconnexion
+          </Text>
+          <FontAwesomeIcon name='angle-right' size={26} color={'#A0C7AC'} />
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

@@ -7,7 +7,7 @@ import PlanterSkeleton from '../PlanterSkeleton/PlanterSkeleton'
 
 export default function PlantersDisplay() {
   const { data: plantersData, refetch, loading, error } = useGetTopPlantersQuery()
-  console.log('data', plantersData)
+  console.log('XXXXXXXXXXXxxXXXXXXXXXX data', plantersData)
   //   useEffect(() => {
   //     console.log('error', error)
   //   }, [error])
@@ -19,7 +19,7 @@ export default function PlantersDisplay() {
         renderItem={({ item }) => <PlanterSkeleton />}
         keyExtractor={(item) => item.key}
         horizontal={true}
-        contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+        contentContainerStyle={{ paddingVertical: 10, paddingLeft: 20 }}
         showsHorizontalScrollIndicator={false}
       />
     )
@@ -30,17 +30,17 @@ export default function PlantersDisplay() {
       renderItem={({ item }) => (
         <CardPlanter
           name={item.userName}
-          image={item.avatar}
+          avatarThumbnail={item.avatarThumbnail}
           deals={item.offerIds.length}
           loading={loading}
           userBio={item.userBio}
-          city={item.city}
+          avatar={item.avatar}
           offers={item.offerIds}
         />
       )}
       keyExtractor={(item) => item.key}
       horizontal={true}
-      contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
+      contentContainerStyle={{ paddingVertical: 10, paddingLeft: 20 }}
       showsHorizontalScrollIndicator={false}
     />
   )

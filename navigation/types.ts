@@ -1,5 +1,6 @@
 export type HomeStackNavigatorParamList = {
   DevScreen: undefined
+  BottomTabs: undefined
   FirstScreenLogo: undefined
   FirstPresentationScreen: undefined
   SecondPresentationScreen: undefined
@@ -17,6 +18,7 @@ export type HomeStackNavigatorParamList = {
   AddNewOfferStep2Screen: undefined
   AddNewOfferStep3Screen: undefined
   AddNewOfferStep4Screen: undefined
+  EditProfileScreen: undefined
 }
 
 export type FormStackNavigatorParamList = {
@@ -30,7 +32,6 @@ export type FormStackNavigatorParamList = {
 export type BottomTabNavigatorParamList = {
   HomeScreen: undefined
   MapSearchScreen: undefined
-  AddScreen: undefined
   InboxScreen: undefined
   ProfileScreen: undefined
 }
