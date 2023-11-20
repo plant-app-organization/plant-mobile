@@ -1,0 +1,7 @@
+query getMyUserData {
+  userData {
+    userBio
+    avatar
+    avatarThumbnail
+  }
+}

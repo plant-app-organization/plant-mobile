@@ -10,7 +10,6 @@ import {
   TextInput,
   useWindowDimensions,
 } from 'react-native'
-import { Camera, CameraType } from 'expo-camera'
 
 import { plantOfferVar, updatePlantOffer, PlantOffer } from '../../variables/plantOffer'
 import { useReactiveVar } from '@apollo/client'

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Camera } from 'expo-camera'
-import { useIsFocused, useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation, useNavigationState } from '@react-navigation/native'
 import {
   StyleSheet,
   Text,
@@ -11,23 +11,46 @@ import {
   Modal,
 } from 'react-native'
 // Font awesome no expo
+import { userDataVar, updateUserData, UserData } from '../../variables/userData'
+
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { ChevronDownIcon } from 'react-native-heroicons/solid'
 import { Button, Image, Spinner } from 'native-base'
 import { plantOfferVar, updatePlantOffer, PlantOffer } from '../../variables/plantOffer'
 import { useReactiveVar } from '@apollo/client'
+import { useUpdateUserProfileMutation } from '../../graphql/graphql'
+import { useToast } from 'native-base'
+
 export default function CameraScreen() {
+  const toast = useToast()
+
   const { width } = useWindowDimensions()
   const camRef = useRef(null)
   const navigation = useNavigation()
   const existingPlantOffer: PlantOffer = useReactiveVar(plantOfferVar)
   const isFocused = useIsFocused()
   const [isLoaderOpen, setIsLoaderOpen] = useState(false)
-  const [type, setType] = useState(Camera.Constants.Type.back)
+
   const [hasPermission, setHasPermission] = useState(null)
   const [capturedPhoto, setCapturedPhoto] = useState(null)
   const [open, setOpen] = useState(false)
   const [flashMode, setFlashMode] = useState(false)
+  const [updateProfile] = useUpdateUserProfileMutation()
+
+  //* récupération de l'écran précédent pour determiner ce qu'on va faire de la photo
+  const navigationState = useNavigationState((state) => state)
+  let previousRouteName = ''
+  if (navigationState.routes.length > 1) {
+    const previousRouteIndex = navigationState.index - 1
+    previousRouteName = navigationState.routes[previousRouteIndex].name
+  }
+  console.log('Previous screen name:', previousRouteName)
+  const [type, setType] = useState(
+    previousRouteName == 'AddNewOfferStep2Screen'
+      ? Camera.Constants.Type.back
+      : Camera.Constants.Type.front,
+  )
+  //***** */
   console.log('captured', capturedPhoto)
   useEffect(() => {
     ;(async () => {
@@ -43,6 +66,21 @@ export default function CameraScreen() {
       setOpen(true)
       setCapturedPhoto(data.uri)
       // console.log(data);
+    }
+  }
+  const updateAvatar = async (imgUrl: string) => {
+    const response = await updateProfile({
+      variables: {
+        avatarUrl: imgUrl,
+      },
+    })
+    if (response.data) {
+      updateUserData('avatar', response.data?.updateUserProfile.avatar)
+      updateUserData('avatarThumbnail', response.data?.updateUserProfile.avatarThumbnail)
+      toast.show({
+        title: '🌱 Votre avatar a été mis à jour avec succès !',
+        placement: 'top',
+      })
     }
   }
   const savePicture = () => {
@@ -65,7 +103,11 @@ export default function CameraScreen() {
       .then(async (data) => {
         console.log('📸data.secure_url', data.secure_url)
 
-        updatePlantOffer('pictures', [...existingPlantOffer.pictures, data.secure_url])
+        //! en fonction de l'écran précédent
+        previousRouteName == 'AddNewOfferStep2Screen'
+          ? updatePlantOffer('pictures', [...existingPlantOffer.pictures, data.secure_url])
+          : updateAvatar(data.secure_url)
+
         setIsLoaderOpen(false)
         navigation.pop()
       })

@@ -149,6 +149,7 @@ const AddNewOfferStep1Screen: React.FunctionComponent<AddNewOfferStep1ScreenProp
                   multiline={true}
                   //   returnKeyType='done'
                   blurOnSubmit={true}
+                  maxLength={4000}
                   h={220}
                   color='#73859e'
                   fontWeight={'bold'}

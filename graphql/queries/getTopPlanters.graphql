@@ -2,6 +2,7 @@ query getTopPlanters {
   UsersList {
     id
     userName
+    avatarThumbnail
     avatar
     offerIds
     userBio

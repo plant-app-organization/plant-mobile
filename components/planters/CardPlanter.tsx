@@ -7,10 +7,13 @@ import { Box, Skeleton, VStack, Center, HStack } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 
 interface CardPlanterProps {
+  id: string
   name: string
   deals: number
-  image: string
+  avatar: string
+  avatarThumbnail: string
   loading: boolean
+  userBio: string
 }
 
 const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
@@ -18,11 +21,11 @@ const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
   console.log('props dans CardPlanter.tsx', props)
   return (
     <TouchableOpacity
-      className='mr-5 bg-white py-3 px-2 shadow-sm rounded-lg'
+      className='mr-4 bg-white py-3 px-2 shadow-sm rounded-lg'
       onPress={() =>
         navigation.navigate('UserProfile', {
           userData: {
-            avatar: props.image,
+            avatar: props.avatar,
             createdAt: '',
             id: props.id,
             isPro: props.isPro,
@@ -35,16 +38,22 @@ const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
     >
       <Avatar
         alignSelf='center'
-        bg='amber.500'
-        size='md'
+        bg='warmGray.50'
+        width={12}
+        height={12}
         source={{
-          uri: props.image,
+          uri: props.avatarThumbnail,
         }}
+      ></Avatar>
+      <Text
+        className=' mb-0 text-center'
+        style={{ fontSize: 13, fontFamily: 'manrope_bold', color: '#323232' }}
       >
-        JL
-      </Avatar>
-      <Text className='pt-2 font-semibold text-center'>{props.name}</Text>
-      <Text className='text-xs text-gray-800'>{props.deals} plantdeals</Text>
+        {props.name}
+      </Text>
+      <Text className=' mb-0' style={{ fontSize: 11, fontFamily: 'manrope', color: '#73859e' }}>
+        {props.deals} plantdeals
+      </Text>
     </TouchableOpacity>
   )
 }

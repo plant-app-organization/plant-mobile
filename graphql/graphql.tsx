@@ -50,7 +50,9 @@ export type Mutation = {
   bookmarkOffer: Scalars['String'];
   createNewOffer: Scalars['String'];
   register: Scalars['String'];
+  resetDatabase: Scalars['Boolean'];
   sendMessage: SendMessageResponse;
+  updateUserProfile: UserModel;
 };
 
 
@@ -71,6 +73,11 @@ export type MutationRegisterArgs = {
 
 export type MutationSendMessageArgs = {
   newMessageInput: MessageInput;
+};
+
+
+export type MutationUpdateUserProfileArgs = {
+  updateInput: UpdateUserProfileInput;
 };
 
 export type Offer = {
@@ -185,6 +192,7 @@ export type QueryUserDataByIdArgs = {
 
 export type RegisterInput = {
   avatar: Scalars['String'];
+  avatarThumbnail: Scalars['String'];
   clerkId: Scalars['String'];
   email: Scalars['String'];
   isPro: Scalars['Boolean'];
@@ -216,9 +224,16 @@ export type SuggestionModel = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type UpdateUserProfileInput = {
+  avatarThumbnail?: InputMaybe<Scalars['String']>;
+  avatarUrl?: InputMaybe<Scalars['String']>;
+  bio?: InputMaybe<Scalars['String']>;
+};
+
 export type UserModel = {
   __typename?: 'UserModel';
   avatar: Scalars['String'];
+  avatarThumbnail: Scalars['String'];
   bookmarks: Array<Scalars['String']>;
   clerkId: Scalars['String'];
   conversations: Array<Scalars['String']>;
@@ -266,6 +281,11 @@ export type GetIsConversationExistingQueryVariables = Exact<{
 
 export type GetIsConversationExistingQuery = { __typename?: 'Query', getIsConversationExisting: string };
 
+export type GetMyUserDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyUserDataQuery = { __typename?: 'Query', userData: { __typename?: 'UserModel', userBio: string, avatar: string, avatarThumbnail: string } };
+
 export type GetOffersQueryVariables = Exact<{
   filters: Array<Scalars['String']> | Scalars['String'];
 }>;
@@ -288,7 +308,7 @@ export type GetSuggestionsQuery = { __typename?: 'Query', SuggestionsList: Array
 export type GetTopPlantersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetTopPlantersQuery = { __typename?: 'Query', UsersList: Array<{ __typename?: 'UserModel', id: string, userName: string, avatar: string, offerIds: Array<string>, userBio: string, isPro: boolean, createdAt: any }> };
+export type GetTopPlantersQuery = { __typename?: 'Query', UsersList: Array<{ __typename?: 'UserModel', id: string, userName: string, avatarThumbnail: string, avatar: string, offerIds: Array<string>, userBio: string, isPro: boolean, createdAt: any }> };
 
 export type GetUserBookmarksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -338,6 +358,14 @@ export type SendMessageMutationVariables = Exact<{
 
 
 export type SendMessageMutation = { __typename?: 'Mutation', sendMessage: { __typename?: 'SendMessageResponse', result: boolean, conversationId: string } };
+
+export type UpdateUserProfileMutationVariables = Exact<{
+  bio?: InputMaybe<Scalars['String']>;
+  avatarUrl?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdateUserProfileMutation = { __typename?: 'Mutation', updateUserProfile: { __typename?: 'UserModel', userBio: string, avatar: string, avatarThumbnail: string } };
 
 
 export const BookmarkOfferDocument = gql`
@@ -474,6 +502,42 @@ export function useGetIsConversationExistingLazyQuery(baseOptions?: ApolloReactH
 export type GetIsConversationExistingQueryHookResult = ReturnType<typeof useGetIsConversationExistingQuery>;
 export type GetIsConversationExistingLazyQueryHookResult = ReturnType<typeof useGetIsConversationExistingLazyQuery>;
 export type GetIsConversationExistingQueryResult = Apollo.QueryResult<GetIsConversationExistingQuery, GetIsConversationExistingQueryVariables>;
+export const GetMyUserDataDocument = gql`
+    query getMyUserData {
+  userData {
+    userBio
+    avatar
+    avatarThumbnail
+  }
+}
+    `;
+
+/**
+ * __useGetMyUserDataQuery__
+ *
+ * To run a query within a React component, call `useGetMyUserDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyUserDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyUserDataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMyUserDataQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetMyUserDataQuery, GetMyUserDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetMyUserDataQuery, GetMyUserDataQueryVariables>(GetMyUserDataDocument, options);
+      }
+export function useGetMyUserDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetMyUserDataQuery, GetMyUserDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetMyUserDataQuery, GetMyUserDataQueryVariables>(GetMyUserDataDocument, options);
+        }
+export type GetMyUserDataQueryHookResult = ReturnType<typeof useGetMyUserDataQuery>;
+export type GetMyUserDataLazyQueryHookResult = ReturnType<typeof useGetMyUserDataLazyQuery>;
+export type GetMyUserDataQueryResult = Apollo.QueryResult<GetMyUserDataQuery, GetMyUserDataQueryVariables>;
 export const GetOffersDocument = gql`
     query getOffers($filters: [String!]!) {
   OffersList(filters: $filters) {
@@ -624,6 +688,7 @@ export const GetTopPlantersDocument = gql`
   UsersList {
     id
     userName
+    avatarThumbnail
     avatar
     offerIds
     userBio
@@ -977,3 +1042,39 @@ export function useSendMessageMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type SendMessageMutationHookResult = ReturnType<typeof useSendMessageMutation>;
 export type SendMessageMutationResult = Apollo.MutationResult<SendMessageMutation>;
 export type SendMessageMutationOptions = Apollo.BaseMutationOptions<SendMessageMutation, SendMessageMutationVariables>;
+export const UpdateUserProfileDocument = gql`
+    mutation UpdateUserProfile($bio: String, $avatarUrl: String) {
+  updateUserProfile(updateInput: {bio: $bio, avatarUrl: $avatarUrl}) {
+    userBio
+    avatar
+    avatarThumbnail
+  }
+}
+    `;
+export type UpdateUserProfileMutationFn = Apollo.MutationFunction<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
+
+/**
+ * __useUpdateUserProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserProfileMutation, { data, loading, error }] = useUpdateUserProfileMutation({
+ *   variables: {
+ *      bio: // value for 'bio'
+ *      avatarUrl: // value for 'avatarUrl'
+ *   },
+ * });
+ */
+export function useUpdateUserProfileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>(UpdateUserProfileDocument, options);
+      }
+export type UpdateUserProfileMutationHookResult = ReturnType<typeof useUpdateUserProfileMutation>;
+export type UpdateUserProfileMutationResult = Apollo.MutationResult<UpdateUserProfileMutation>;
+export type UpdateUserProfileMutationOptions = Apollo.BaseMutationOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
