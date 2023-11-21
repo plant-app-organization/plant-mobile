@@ -57,6 +57,7 @@ const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
           console.log('result from signup create', result)
           if (result.status === 'complete') {
             console.log(result)
+
             sessionIdVar(result.createdSessionId)
           } else {
             console.log(result)

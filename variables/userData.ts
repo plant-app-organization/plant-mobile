@@ -4,12 +4,14 @@ interface UserData {
   bio: string
   avatar: string
   avatarThumbnail: string
+  email: string
 }
 
 export const defaultUserData: UserData = {
   bio: '',
   avatar: '',
   avatarThumbnail: '',
+  email: '',
 }
 
 export const userDataVar = makeVar<UserData>(defaultUserData)

@@ -3,5 +3,6 @@ query getMyUserData {
     userBio
     avatar
     avatarThumbnail
+    email
   }
 }

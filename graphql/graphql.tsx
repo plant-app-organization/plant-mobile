@@ -284,7 +284,7 @@ export type GetIsConversationExistingQuery = { __typename?: 'Query', getIsConver
 export type GetMyUserDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyUserDataQuery = { __typename?: 'Query', userData: { __typename?: 'UserModel', userBio: string, avatar: string, avatarThumbnail: string } };
+export type GetMyUserDataQuery = { __typename?: 'Query', userData: { __typename?: 'UserModel', userBio: string, avatar: string, avatarThumbnail: string, email: string } };
 
 export type GetOffersQueryVariables = Exact<{
   filters: Array<Scalars['String']> | Scalars['String'];
@@ -508,6 +508,7 @@ export const GetMyUserDataDocument = gql`
     userBio
     avatar
     avatarThumbnail
+    email
   }
 }
     `;

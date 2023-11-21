@@ -19,6 +19,7 @@ LogBox.ignoreAllLogs()
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client'
 import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo'
 import { offsetLimitPagination } from '@apollo/client/utilities'
+import registerNNPushToken from 'native-notify'
 
 const tokenCache = {
   getToken(key: string) {
@@ -38,6 +39,7 @@ const tokenCache = {
 }
 export default function App() {
   const [userToken, setUserToken] = useState<string | null>(null)
+  registerNNPushToken(15168, '2NQv5UM3ppjj8VIDgMfgb4')
   SplashScreen.preventAutoHideAsync() // Prevent the splash screen from auto-hiding
 
   const retrieveToken = async () => {

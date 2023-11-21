@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native'
-import { useClerk, useSignUp, useSession } from '@clerk/clerk-expo'
-import { styles } from '../../components/SignInWithOAuth/Styles'
+import { useSignUp, useSession } from '@clerk/clerk-expo'
 import { LinearGradient } from 'expo-linear-gradient'
-import { sessionIdVar } from '../../variables/session'
 import { useRegisterMutation } from '../../graphql/graphql'
+import { updateUserData } from '../../variables/userData'
+import { registerIndieID } from 'native-notify'
 
 export default function VerifyCodeScreen(props) {
   const { isLoaded, signUp, setSession } = useSignUp()
@@ -38,6 +38,9 @@ export default function VerifyCodeScreen(props) {
           },
         },
       })
+      updateUserData('email', completeSignUp.emailAddress)
+      registerIndieID(completeSignUp.emailAddress, 15168, '2NQv5UM3ppjj8VIDgMfgb4')
+
       await setSession(completeSignUp.createdSessionId)
 
       // sessionIdVar(completeSignUp.createdSessionId);
