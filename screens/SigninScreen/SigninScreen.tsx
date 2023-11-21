@@ -17,6 +17,8 @@ import { useToast, Input, Pressable, Icon, Spinner } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useSignIn } from '@clerk/clerk-expo'
 import { SignInWithOAuth } from '../../components/SignInWithOAuth/SignInWithOAuth'
+import { userDataVar, updateUserData, UserData } from '../../variables/userData'
+import { registerIndieID } from 'native-notify'
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { ChevronLeftIcon } from 'react-native-heroicons/solid'
@@ -48,6 +50,11 @@ const SigninScreen: React.FunctionComponent<SigninScreenProps> = (props) => {
         identifier: emailAddress,
         password,
       })
+      console.log('&&&&&&&&&&&&&& completeSignIn', completeSignIn)
+      if (completeSignIn.status == 'complete') {
+        updateUserData('email', emailAddress)
+        registerIndieID(emailAddress, 15168, '2NQv5UM3ppjj8VIDgMfgb4')
+      }
 
       await setSession(completeSignIn.createdSessionId)
     } catch (err) {

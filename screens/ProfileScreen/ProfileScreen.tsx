@@ -24,6 +24,7 @@ import { bookmarksVar } from '../../variables/bookmarks'
 import { useGetMyUserDataQuery } from '../../graphql/graphql'
 import GradientTitle from '../../components/GradientTitle/GradientTitle'
 import { userDataVar } from '../../variables/userData'
+import { unregisterIndieDevice } from 'native-notify'
 
 interface ProfileScreenProps {
   progress: number
@@ -51,6 +52,8 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
   const onSignOutPress = async () => {
     try {
       await SecureStore.deleteItemAsync('__clerk_client_jwt')
+      unregisterIndieDevice(userDataInDevice.email, 15168, '2NQv5UM3ppjj8VIDgMfgb4')
+
       await signOut()
     } catch (err: any) {
       console.log('Error:> ' + err?.status || '')

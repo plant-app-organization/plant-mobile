@@ -43,11 +43,14 @@ interface HomeScreenProps {}
 //
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const { data: userData, loading: userDataLoading, error } = useGetMyUserDataQuery()
+
   useEffect(() => {
     if (!userDataLoading && userData) {
+      console.log('00000userData in Home', userData)
       updateUserData('bio', userData.userData?.userBio)
       updateUserData('avatar', userData.userData?.avatar)
       updateUserData('avatarThumbnail', userData.userData?.avatarThumbnail)
+      updateUserData('email', userData.userData?.email)
     }
   }, [userData, userDataLoading])
   const [search, setSearch] = useState<string>('')
