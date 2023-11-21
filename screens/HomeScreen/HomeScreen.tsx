@@ -29,7 +29,7 @@ import { Avatar } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
 import { NoDeprecatedCustomRule } from 'graphql'
 import { useUser } from '@clerk/clerk-expo'
-import { useGetUserBookmarksQuery, useGetMyUserDataQuery } from '../../graphql/graphql'
+import { useGetUserBookmarksLazyQuery, useGetMyUserDataQuery } from '../../graphql/graphql'
 import { useNavigation } from '@react-navigation/native'
 import { useReactiveVar } from '@apollo/client'
 import { bookmarksVar } from '../../variables/bookmarks'
@@ -61,7 +61,14 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   const { isSignedIn, user } = useUser()
   // const { getToken } = useAuth();
   const { width, height } = useWindowDimensions()
-  const { data: userBookmarks, refetch: refetchUserBookmarks } = useGetUserBookmarksQuery()
+  const [getUserBookmarks, { data: userBookmarks }] = useGetUserBookmarksLazyQuery()
+
+  useEffect(() => {
+    if (isSignedIn) {
+      // Lancer la requête de bookmarks seulement si l'utilisateur est connecté
+      getUserBookmarks()
+    }
+  }, [isSignedIn, getUserBookmarks])
   console.log('userBookmarks', userBookmarks)
   userBookmarks && bookmarksVar(userBookmarks?.userBookmarks)
   // console.log('user clerk ', user);
