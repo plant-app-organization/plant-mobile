@@ -23,6 +23,7 @@ import { useGetUserConversationsQuery } from '../../graphql/graphql'
 import { Avatar } from 'native-base'
 import { ArrowPathIcon } from 'react-native-heroicons/solid'
 import { Image } from 'expo-image'
+import GradientTitle from '../../components/GradientTitle/GradientTitle'
 
 interface InboxScreenProps {}
 
@@ -53,16 +54,16 @@ const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
     <TouchableOpacity
       style={{
         backgroundColor: 'white',
-        borderColor: 'grey',
-        borderWidth: 1,
-        marginBottom: 15,
+        marginBottom: 0,
         display: 'flex',
         flexDirection: 'row',
-        width: '100%',
+
         justifyContent: 'space-between',
-        borderRadius: 8,
-        padding: 8,
+        paddingVertical: 2,
+
+        paddingHorizontal: 5,
       }}
+      className='mx-auto items-center my-2 rounded-md shadow shadow-md'
       onPress={() =>
         navigation.navigate('ChatScreen', {
           authorId: item.participants[0].id,
@@ -74,23 +75,24 @@ const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
       {/* <Image source={item.participants[0]?.avatar} style={styles.avatar} /> */}
       <Avatar
         style={{}}
-        bg='amber.500'
+        bg='warmGray.50'
         source={{
           uri: item.participants[0]?.avatar,
         }}
-        size='lg'
+        width={12}
+        height={12}
       >
         {/* <Avatar.Badge bg='green.500' size='23%' /> */}
       </Avatar>
-      <View style={{ width: '50%' }}>
-        <Text className='text-lg' style={{ fontFamily: 'manrope_extra_bold', color: '#202123' }}>
+      <View style={{ width: '60%' }}>
+        <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#202123' }}>
           {item.participants[0].userName}
         </Text>
         <View className='flex justify-around'>
-          <Text className='text-lg' style={{ fontFamily: 'manrope', color: '#4EAE74' }}>
+          <Text className='text-md' style={{ fontFamily: 'manrope_regular', color: '#73859e' }}>
             {item.offer?.plantName}
           </Text>
-          <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#6EB3D5' }}>
+          <Text className='text-md' style={{ fontFamily: 'manrope_bold', color: '#6EB3D5' }}>
             {item.offer?.price}€
           </Text>
         </View>
@@ -98,7 +100,8 @@ const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
         <Text style={styles.message}>{item.message}</Text>
       </View>
       <Image
-        style={{ width: 90, height: 65, borderRadius: 12 }}
+        style={{ width: 90, height: 65 }}
+        className='rounded-md'
         source={item.offer.pictures[0]}
         // placeholder={blurhash}
         contentFit='cover'
@@ -107,56 +110,45 @@ const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
   )
 
   return (
-    <SafeAreaView
-      style={{
-        backgroundColor: '#C0FFE7',
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-      }}
+    <LinearGradient
+      // start={{ x: 0.1, y: 0 }}
+      // end={{ x: 0.9, y: 0 }}
+      colors={['#C0FFE7', 'white']}
+      className=' items-center pb-3'
     >
-      <LinearGradient
-        // start={{ x: 0.1, y: 0 }}
-        // end={{ x: 0.9, y: 0 }}
-        colors={['#C0FFE7', 'white']}
-        className='h-[100px]'
+      <SafeAreaView
+        style={{
+          // backgroundColor: 'pink',
+          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        }}
+        className='items-center'
       >
-        <View className=' h-full flex-row items-center justify-between'>
-          <Text className='text-m	 mr-4 text-xl' style={{ fontFamily: 'manrope_bold' }}>
-            Boîte de réception
-          </Text>
-
-          <TouchableOpacity
-            onPress={handleRefresh}
-            style={{
-              width: 40,
-              height: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 20,
-              borderWidth: 1,
-              borderColor: 'gray',
-              backgroundColor: 'white',
-              opacity: 0.5,
-              marginLeft: 4,
-            }}
-          >
-            <ArrowPathIcon color={'black'} />
-          </TouchableOpacity>
+        <View
+          className={`w-[95%] rounded-lg  shadow py-2 px-3  bg-white ${
+            Platform.OS === 'android' ? 'mt-4 ' : ''
+          }`}
+        >
+          <View className='flex flex-row justify-center items-center w-full'>
+            <GradientTitle title='Boîte de réception' align='left' />
+          </View>
         </View>
-      </LinearGradient>
-      <FlatList
-        data={userConversations?.UserConversations}
-        renderItem={renderMessage}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            tintColor='#87BC23'
-            colors={['#87BC23', '#139DB8']}
-          />
-        }
-        keyExtractor={(item) => item.id.toString()}
-      />
-    </SafeAreaView>
+
+        <FlatList
+          data={userConversations?.UserConversations}
+          className='pt-2 flex-1 mt-2 px-3'
+          renderItem={renderMessage}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor='#87BC23'
+              colors={['#87BC23', '#139DB8']}
+            />
+          }
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </SafeAreaView>
+    </LinearGradient>
   )
 }
 

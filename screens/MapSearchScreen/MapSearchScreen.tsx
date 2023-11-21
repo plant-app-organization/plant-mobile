@@ -30,10 +30,10 @@ import { Image } from 'expo-image'
 interface MapSearchScreenProps {}
 
 const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) => {
-  console.log(
-    '🏓🏓🏓🏓🏓props.route?.params?.searchInput in mapsearchscreen',
-    props.route?.params?.searchInput,
-  )
+  // console.log(
+  //   '🏓🏓🏓🏓🏓props.route?.params?.searchInput in mapsearchscreen',
+  //   props.route?.params?.searchInput,
+  // )
   const [resultsDisplay, setResultsDisplay] = useState<string>('list')
   const [filters, setFilters] = useState<string[]>([])
   const [searchInput, setSearchInput] = useState<string>('')
