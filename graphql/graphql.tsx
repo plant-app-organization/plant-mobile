@@ -30,7 +30,7 @@ export type ConversationModel = {
 };
 
 export type MessageInput = {
-  existingConversationId: Scalars['String'];
+  existingConversationId?: InputMaybe<Scalars['String']>;
   offerId: Scalars['String'];
   text: Scalars['String'];
 };
