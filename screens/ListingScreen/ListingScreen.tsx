@@ -133,7 +133,7 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
     console.log('conversationData', conversationData)
 
     navigation.navigate('ChatScreen', {
-      conversationId: conversationData?.getIsConversationExisting,
+      existingConversationId: conversationData?.getIsConversationExisting,
       offerId: id,
       authorId,
     })

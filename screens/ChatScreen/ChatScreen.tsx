@@ -74,6 +74,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   useEffect(() => {
     if (isSignedIn) {
       // Lancer la requête de bookmarks seulement si l'utilisateur est connecté
+      console.log('conversationId In Chat Screen', conversationId)
       getConversationMessages()
     }
   }, [isSignedIn, getConversationMessages])
@@ -109,12 +110,13 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
     const response = await sendMessage({
       variables: {
         newMessageInput: {
+          existingConversationId: existingConversationId,
           offerId,
           text: message,
         },
       },
     })
-    console.log('PPPPPPPPPPP     response', response)
+    // console.log('PPPPPPPPPPP     response', response)
     if (response.data?.sendMessage.result === true) {
       if (response.data?.sendMessage.conversationId !== conversationId) {
         setConversationId(response.data?.sendMessage.conversationId)
@@ -132,6 +134,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   const { data: newMessageData, loading } = useOnMessageAddedSubscription({
     variables: subscriptionVariables,
   })
+  console.log('newMessageData', newMessageData)
 
   useEffect(() => {
     scrollViewRef.current.scrollToEnd({ animated: true })
