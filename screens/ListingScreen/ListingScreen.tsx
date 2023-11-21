@@ -20,6 +20,7 @@ import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid'
 import Swiper from 'react-native-swiper'
 import { ChatBubbleLeftIcon } from 'react-native-heroicons/solid'
 import { useGetIsConversationExistingQuery } from '../../graphql/graphql'
+import { useUser } from '@clerk/clerk-expo'
 
 interface ListingScreenProps {}
 
@@ -27,6 +28,8 @@ const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj['
 
 const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
+  const { isSignedIn, user } = useUser()
+
   const [like, setLike] = useState(props.route.params.like)
   const toast = useToast()
   const { width, height } = useWindowDimensions()
@@ -194,16 +197,21 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
               <AuthorDisplay userId={authorId} />
 
               <View className='w-6/12 justify-center items-end'>
-                <TouchableOpacity
-                  style={{ borderColor: '#6EB3D5' }}
-                  className='w-[150px] flex-row justify-center items-center py-2 border rounded-2xl shadow-2xl'
-                  onPress={() => handleContactPress()}
-                >
-                  <ChatBubbleLeftIcon color={'#6EB3D5'} />
-                  <Text className=' ml-2' style={{ fontFamily: 'manrope_bold', color: '#6EB3D5' }}>
-                    Contacter
-                  </Text>
-                </TouchableOpacity>
+                {isSignedIn && (
+                  <TouchableOpacity
+                    style={{ borderColor: '#6EB3D5' }}
+                    className='w-[150px] flex-row justify-center items-center py-2 border rounded-2xl shadow-2xl'
+                    onPress={() => handleContactPress()}
+                  >
+                    <ChatBubbleLeftIcon color={'#6EB3D5'} />
+                    <Text
+                      className=' ml-2'
+                      style={{ fontFamily: 'manrope_bold', color: '#6EB3D5' }}
+                    >
+                      Contacter
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
             </View>
             <View className='h-[1px] w-[80%] bg-gray-300 my-5 relative ml-auto mr-auto' />
