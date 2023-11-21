@@ -38,6 +38,7 @@ import { userDataVar, updateUserData, UserData } from '../../variables/userData'
 import { MaterialIcons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import SuggestionsDisplay from '../../components/SuggestionsDisplay/SuggestionsDisplay'
+import { registerIndieID } from 'native-notify'
 
 interface HomeScreenProps {}
 //
@@ -53,6 +54,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
       updateUserData('avatar', userData.userData?.avatar)
       updateUserData('avatarThumbnail', userData.userData?.avatarThumbnail)
       updateUserData('email', userData.userData?.email)
+      registerIndieID(userData.userData?.email, 15168, '2NQv5UM3ppjj8VIDgMfgb4')
     }
   }, [userData, userDataLoading])
   const [search, setSearch] = useState<string>('')

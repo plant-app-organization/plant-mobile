@@ -45,11 +45,13 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   const [userToken, setUserToken] = useState('')
   const [userName, setUserName] = useState<string>('')
   const { offerId, authorId, existingConversationId } = props.route.params
-  console.log('props.route.params', props.route.params)
+  // console.log('props.route.params', props.route.params)
   const [conversationId, setConversationId] = useState<string>(existingConversationId)
   const scrollViewRef = useRef()
-
-  console.log('offerId', offerId)
+  useEffect(() => {
+    console.log('sendMessageLoading', sendMessageLoading)
+  }, [sendMessageLoading])
+  // console.log('offerId', offerId)
   const { data: userData } = useGetUserDataByIdQuery({
     variables: { userId: authorId },
   })
@@ -69,7 +71,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   const wait = (timeout: number) => {
     return new Promise((resolve) => setTimeout(resolve, timeout))
   }
-  console.log('conversationData', conversationData)
+  // console.log('conversationData', conversationData)
   const onRefresh = useCallback(() => {
     setRefreshing(true)
 
@@ -90,9 +92,9 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   const { isSignedIn, user } = useUser()
 
   const navigation = useNavigation()
-  console.log('conversationid', conversationId)
+  // console.log('conversationid', conversationId)
   // console.log(offerData?.OffersListByIds[0].pictures[0])
-
+  //
   const onSendMessagePress = async () => {
     Keyboard.dismiss()
     const response = await sendMessage({
@@ -128,7 +130,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
 
   // Handle new messages
   useEffect(() => {
-    console.log('⛵️⛵️⛵️⛵️⛵️!!!!! nouveau message newMessageData', newMessageData)
+    // console.log('⛵️⛵️⛵️⛵️⛵️!!!!! nouveau message newMessageData', newMessageData)
     if (newMessageData) {
       // The query for conversation messages will be refetched when a new message is received
       refetchConversationData()
@@ -198,62 +200,61 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
           </View>
         </TouchableOpacity>
       </LinearGradient>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
+      <KeyboardAwareScrollView
+        // style={{ flex: 1 }}
+        enableOnAndroid={true}
+        enableAutomaticScroll={true}
+        onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+        ref={scrollViewRef}
+        className='w-full px-5'
+        style={{ backgroundColor: 'white', height: 0.8 * height }}
+        contentContainerStyle={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+        }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor='#87BC23'
+            colors={['#87BC23', '#139DB8']}
+          />
+        }
       >
-        <ScrollView
-          onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
-          ref={scrollViewRef}
-          className='w-full px-5'
-          style={{ backgroundColor: 'white', height: height * 0.65 }}
-          contentContainerStyle={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-          }}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              tintColor='#87BC23'
-              colors={['#87BC23', '#139DB8']}
-            />
-          }
-        >
-          <View style={styles.chatContainer}>
-            {/* reprendre en fonction de l'ID du user */}
-            {conversationData?.MessagesList.map((item) => (
-              <View
-                key={item.id}
-                style={[
-                  styles.messageContainer,
-                  item.senderId === userData?.userDataById?.id
-                    ? styles.messageContainerLeft
-                    : styles.messageContainerRight,
-                ]}
-              >
-                {item.senderId === userData?.userDataById?.id && (
-                  <Avatar
-                    bg='amber.500'
-                    size='sm'
-                    source={{
-                      uri: userData?.userDataById?.avatar,
-                    }}
-                  >
-                    JL
-                  </Avatar>
-                )}
-                <Animated.Text style={[styles.message]}>{item.text}</Animated.Text>
-                <Animated.Text style={[styles.date]}>
-                  {moment().diff(item.createdAt, 'days') <= 2
-                    ? moment(item.createdAt).fromNow()
-                    : moment(item.createdAt).format('LL')}
-                </Animated.Text>
-              </View>
-            ))}
-          </View>
-        </ScrollView>
+        <View style={styles.chatContainer}>
+          {/* reprendre en fonction de l'ID du user */}
+          {conversationData?.MessagesList.map((item) => (
+            <View
+              key={item.id}
+              style={[
+                styles.messageContainer,
+                item.senderId === userData?.userDataById?.id
+                  ? styles.messageContainerLeft
+                  : styles.messageContainerRight,
+              ]}
+            >
+              {item.senderId === userData?.userDataById?.id && (
+                <Avatar
+                  bg='amber.500'
+                  size='sm'
+                  source={{
+                    uri: userData?.userDataById?.avatar,
+                  }}
+                >
+                  JL
+                </Avatar>
+              )}
+              <Animated.Text style={[styles.message]}>{item.text}</Animated.Text>
+              <Animated.Text style={[styles.date]}>
+                {moment().diff(item.createdAt, 'days') <= 2
+                  ? moment(item.createdAt).fromNow()
+                  : moment(item.createdAt).format('LL')}
+              </Animated.Text>
+            </View>
+          ))}
+        </View>
+
         <View
           style={{
             flexDirection: 'row',
@@ -282,7 +283,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
             </TouchableOpacity>
           )}
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   )
 }
