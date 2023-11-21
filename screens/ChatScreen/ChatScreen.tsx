@@ -39,12 +39,11 @@ interface ChatScreenProps {
 }
 
 const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
-  const [sendMessage] = useSendMessageMutation()
+  const [sendMessage, { loading: sendMessageLoading }] = useSendMessageMutation()
   const [refreshing, setRefreshing] = useState(false)
   const [message, setMessage] = useState('')
   const [userToken, setUserToken] = useState('')
   const [userName, setUserName] = useState<string>('')
-  const [isSendingMessage, setIsSendingMessage] = useState(false)
   const { offerId, authorId, existingConversationId } = props.route.params
   console.log('props.route.params', props.route.params)
   const [conversationId, setConversationId] = useState<string>(existingConversationId)
@@ -95,7 +94,6 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   // console.log(offerData?.OffersListByIds[0].pictures[0])
 
   const onSendMessagePress = async () => {
-    setIsSendingMessage(true)
     Keyboard.dismiss()
     const response = await sendMessage({
       variables: {
@@ -105,12 +103,11 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
         },
       },
     })
-    console.log('response', response)
+    console.log('PPPPPPPPPPP     response', response)
     if (response.data?.sendMessage.result === true) {
       if (response.data?.sendMessage.conversationId !== conversationId) {
         setConversationId(response.data?.sendMessage.conversationId)
       }
-      setIsSendingMessage(false)
       setMessage('')
     }
   }
@@ -275,7 +272,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
             onChangeText={(text) => setMessage(text)}
           />
 
-          {!isSendingMessage ? (
+          {!sendMessageLoading ? (
             <TouchableOpacity style={styles.button} onPress={onSendMessagePress}>
               <Text style={styles.buttonText}>Envoyer</Text>
             </TouchableOpacity>
