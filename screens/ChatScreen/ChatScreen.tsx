@@ -18,18 +18,19 @@ import {
   useWindowDimensions,
   KeyboardAvoidingView,
 } from 'react-native'
+
 import moment from 'moment'
 import localization from 'moment/locale/fr'
 import { Image } from 'expo-image'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 import { Avatar, Spinner } from 'native-base'
-import { useAuth, useUser } from '@clerk/clerk-expo'
+import { useAuth, useUser, isSignedIn } from '@clerk/clerk-expo'
 import { ChevronLeftIcon, ArrowPathIcon } from 'react-native-heroicons/solid'
 import Pusher from 'pusher-js/react-native'
 import { useGetOffersDataByIdsQuery } from '../../graphql/graphql'
 import { useGetUserDataByIdQuery } from '../../graphql/graphql'
-import { useGetConversationMessagesQuery } from '../../graphql/graphql'
+import { useGetConversationMessagesLazyQuery } from '../../graphql/graphql'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSendMessageMutation, useOnMessageAddedSubscription } from '../../graphql/graphql'
 
@@ -39,6 +40,7 @@ interface ChatScreenProps {
 }
 
 const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
+  const { isSignedIn, user } = useUser()
   const [sendMessage, { loading: sendMessageLoading }] = useSendMessageMutation()
   const [refreshing, setRefreshing] = useState(false)
   const [message, setMessage] = useState('')
@@ -64,10 +66,18 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   //   useGetIsConversationExistingQuery({
   //     variables: { offerId, userId1: authorId },
   //   })
-  const { data: conversationData, refetch: refetchConversationData } =
-    useGetConversationMessagesQuery({
+  const [getConversationMessages, { data: conversationData, refetch: refetchConversationData }] =
+    useGetConversationMessagesLazyQuery({
       variables: { conversationId },
     })
+
+  useEffect(() => {
+    if (isSignedIn) {
+      // Lancer la requête de bookmarks seulement si l'utilisateur est connecté
+      getConversationMessages()
+    }
+  }, [isSignedIn, getConversationMessages])
+
   const wait = (timeout: number) => {
     return new Promise((resolve) => setTimeout(resolve, timeout))
   }
@@ -89,7 +99,6 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   moment.updateLocale('fr', localization)
 
   const fadeIn = new Animated.Value(0)
-  const { isSignedIn, user } = useUser()
 
   const navigation = useNavigation()
   // console.log('conversationid', conversationId)
