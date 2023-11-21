@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
   Text,
@@ -58,9 +58,13 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
     city,
   } = props.route.params.listingData
 
-  const { data: conversationData } = useGetIsConversationExistingQuery({
+  const { data: conversationData, loading } = useGetIsConversationExistingQuery({
     variables: { offerId: id, userId1: authorId },
   })
+
+  useEffect(() => {
+    console.log('ListingScreen conversationData useGetCOnversationExistingQuery', conversationData)
+  }, [conversationData, loading])
   const navigation = useNavigation()
   const bookmarksArray = useReactiveVar(bookmarksVar)
 
@@ -129,9 +133,12 @@ const ListingScreen: React.FunctionComponent<ListingScreenProps> = (props) => {
   }
 
   const handleContactPress = () => {
-    console.log('handleContactPress')
+    // console.log('handleContactPress')
     console.log('conversationData', conversationData)
-
+    console.log(
+      '🔥conversationData?.getIsConversationExisting',
+      conversationData?.getIsConversationExisting,
+    )
     navigation.navigate('ChatScreen', {
       existingConversationId: conversationData?.getIsConversationExisting,
       offerId: id,

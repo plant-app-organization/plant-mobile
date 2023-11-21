@@ -106,7 +106,16 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   // console.log(offerData?.OffersListByIds[0].pictures[0])
   //
   const onSendMessagePress = async () => {
+    console.log(
+      'existinConversationId',
+      existingConversationId,
+      'offerId',
+      offerId,
+      'message',
+      message,
+    )
     Keyboard.dismiss()
+
     const response = await sendMessage({
       variables: {
         newMessageInput: {
