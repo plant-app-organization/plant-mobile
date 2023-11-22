@@ -6,7 +6,7 @@ interface Props {}
 const PlanterSkeleton: React.FC<Props> = () => {
   const { height, width } = useWindowDimensions()
   return (
-    <TouchableOpacity className='mr-5 bg-white py-3 px-2 shadow-sm rounded-lg '>
+    <TouchableOpacity className='mr-4 bg-white py-3 px-2 shadow-sm rounded-md w-22'>
       <Skeleton
         borderWidth={1}
         borderColor='coolGray.200'
