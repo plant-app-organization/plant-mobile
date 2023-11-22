@@ -5,7 +5,7 @@ import { Avatar } from 'native-base'
 import { ChevronRightIcon } from 'react-native-heroicons/solid'
 import { Box, Skeleton, VStack, Center, HStack } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
-
+import { truncateString } from '../../lib/truncateString'
 interface CardPlanterProps {
   id: string
   name: string
@@ -21,7 +21,7 @@ const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
   console.log('props dans CardPlanter.tsx', props)
   return (
     <TouchableOpacity
-      className='mr-4 bg-white py-3 px-2 shadow-sm rounded-lg'
+      className='mr-4 bg-white py-3 px-2 shadow-sm rounded-md w-22'
       onPress={() =>
         navigation.navigate('UserProfile', {
           userData: {
@@ -49,9 +49,12 @@ const CardPlanter: React.FunctionComponent<CardPlanterProps> = (props) => {
         className=' mb-0 text-center'
         style={{ fontSize: 13, fontFamily: 'manrope_bold', color: '#323232' }}
       >
-        {props.name}
+        {truncateString(props.name, 8)}
       </Text>
-      <Text className=' mb-0' style={{ fontSize: 11, fontFamily: 'manrope', color: '#73859e' }}>
+      <Text
+        className=' mb-0 text-center'
+        style={{ fontSize: 11, fontFamily: 'manrope', color: '#73859e' }}
+      >
         {props.deals} plantdeals
       </Text>
     </TouchableOpacity>
