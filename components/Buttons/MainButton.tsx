@@ -12,9 +12,10 @@ const MainButton: React.FunctionComponent<MainButtonProps> = (props) => {
   const { title, action, disabled, loading } = props
   return (
     <TouchableOpacity
-      className={`mt-4 w-[95%]  rounded-md flex items-center justify-center bg-darkleaf shadow-lg px-2 py-1 border-2 border-darkleaf ${
+      className={`mt-4 w-[95%]  rounded-md flex items-center justify-center  shadow-lg px-2 py-1  ${
         disabled ? 'opacity-60' : 'opacity-100'
       } `}
+      style={{ backgroundColor: '#223726' }}
       onPress={action}
       disabled={disabled}
     >

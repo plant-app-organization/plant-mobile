@@ -118,14 +118,14 @@ const ProfileScreen: React.FunctionComponent<ProfileScreenProps> = (props) => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: '#C0FFE7',
+        backgroundColor: '#A0C7AC',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
       <LinearGradient
         // start={{ x: 0.1, y: 0 }}
         // end={{ x: 0.9, y: 0 }}
-        colors={['#C0FFE7', 'white']}
+        colors={['#A0C7AC', 'white']}
         className='w-full h-[200px]'
       >
         <View className=' flex-row border-gray-200 px-5 pt-8'>

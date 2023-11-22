@@ -226,6 +226,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
               //   alignItems: 'flex-start',
               // }}
               onEndReached={fetchMoreData}
+              onEndReachedThreshold={0.7} // The threshold at which the fetchMoreData function should be called. 0.5 means "when half of the list is remaining".
               refreshControl={
                 <RefreshControl
                   refreshing={refreshing}
@@ -234,7 +235,6 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
                   colors={['#87BC23', '#139DB8']}
                 />
               }
-              onEndReachedThreshold={0.7} // The threshold at which the fetchMoreData function should be called. 0.5 means "when half of the list is remaining".
               horizontal={false}
               initialNumToRender={4}
               maxToRenderPerBatch={8}
@@ -322,12 +322,12 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
   return (
     <SafeAreaView
       style={{
-        backgroundColor: '#C0FFE7',
+        backgroundColor: '#A0C7AC',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
       <LinearGradient
-        colors={['#C0FFE7', 'white']}
+        colors={['#A0C7AC', 'white']}
         className='w-full '
         style={{ height: Platform.OS === 'ios' ? height * 0.2 : height * 0.29 }}
       >
@@ -355,7 +355,7 @@ const MapSearchScreen: React.FunctionComponent<MapSearchScreenProps> = (props) =
           </View>
           <TextInput
             className='w-12/12 bg-white rounded-lg shadow-sm px-4 py-3 mt-6 mx-3 '
-            placeholder='Rechercher une plante'
+            placeholder='🪴Rechercher une plante'
             value={searchInput}
             onChangeText={onChangeText}
             placeholderTextColor='#AFAFAF'

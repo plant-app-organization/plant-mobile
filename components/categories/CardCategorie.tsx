@@ -57,7 +57,7 @@ const CardCategorie: React.FunctionComponent<CardCategorieProps> = (props) => {
       start={{ x: 0.5, y: 0.8 }}
       end={{ x: 0.8, y: 0 }}
       colors={[`${firstColor}`, `${secondColor}`]}
-      className='w-[100%] h-[120px] rounded-lg mb-3'
+      className='w-[100%] h-[120px] rounded-md mb-3'
     >
       <TouchableOpacity
         className='w-full h-full flex flex-row'
