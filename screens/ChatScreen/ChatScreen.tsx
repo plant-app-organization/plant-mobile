@@ -60,9 +60,6 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   // console.log('props.route.params', props.route.params)
   const [conversationId, setConversationId] = useState<string>(existingConversationId)
   const scrollViewRef = useRef()
-  //* Infinite scroll
-  const [offset, setOffset] = useState(0)
-  const [hasMore, setHasMore] = useState(true)
   const [isLoaderOpen, setIsLoaderOpen] = useState<boolean | void | undefined>(false)
   const [isChooseImageSourceModalOpen, setIsChooseImageSourceModalOpen] = useState(false)
   useEffect(() => {
@@ -82,31 +79,10 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   //   useGetIsConversationExistingQuery({
   //     variables: { offerId, userId1: authorId },
   //   })
-  const [
-    getConversationMessages,
-    { data: conversationData, refetch: refetchConversationData, fetchMore },
-  ] = useGetConversationMessagesLazyQuery({
-    variables: { conversationId, limit: 12, offset },
-  })
-
-  const fetchMoreData = () => {
-    if (!hasMore) {
-      return
-    }
-
-    fetchMore({
-      variables: {
-        offset: offset + 10,
-      },
-    }).then((fetchMoreResult) => {
-      console.log('✨fetchMoreResult', fetchMoreResult)
-      if (!fetchMoreResult.data.MessagesList || fetchMoreResult.data.MessagesList.length === 0) {
-        setHasMore(false)
-      }
-      setOffset(offset + 12)
+  const [getConversationMessages, { data: conversationData, refetch: refetchConversationData }] =
+    useGetConversationMessagesLazyQuery({
+      variables: { conversationId },
     })
-  }
-
   useEffect(() => {
     if (isFocused) {
       refetchConversationData()
@@ -268,7 +244,9 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
   }, [newMessageData])
 
   useEffect(() => {
-    onSendMessagePress(pictureFromCameraScreen)
+    if (pictureFromCameraScreen !== '') {
+      onSendMessagePress(pictureFromCameraScreen)
+    }
   }, [pictureFromCameraScreen])
 
   return (
@@ -337,8 +315,6 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
         enableAutomaticScroll={true}
         onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
         ref={scrollViewRef}
-        onStartReached={fetchMoreData}
-        onStartReachedThreshold={0.7}
         className='px-3 py-0'
         style={{ backgroundColor: 'white' }}
         data={conversationData?.MessagesList}
