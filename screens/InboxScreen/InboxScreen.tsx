@@ -16,15 +16,16 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native'
+import MaskedView from '@react-native-masked-view/masked-view'
+
 import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { useGetUserConversationsQuery } from '../../graphql/graphql'
-import { Avatar } from 'native-base'
-import { ArrowPathIcon } from 'react-native-heroicons/solid'
+import { Avatar, Spinner, Divider } from 'native-base'
 import { Image } from 'expo-image'
 import GradientTitle from '../../components/GradientTitle/GradientTitle'
-
+import { formatPrice } from '../../lib/formatPrice'
 interface InboxScreenProps {}
 
 const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
@@ -32,8 +33,11 @@ const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
 
   const { width, height } = useWindowDimensions()
   const navigation = useNavigation()
-  const { data: userConversations, refetch: refetchUserConversations } =
-    useGetUserConversationsQuery()
+  const {
+    data: userConversations,
+    refetch: refetchUserConversations,
+    loading,
+  } = useGetUserConversationsQuery()
   const handleRefresh = () => {
     refetchUserConversations()
   }
@@ -57,13 +61,13 @@ const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
         marginBottom: 0,
         display: 'flex',
         flexDirection: 'row',
-
         justifyContent: 'space-between',
+        alignItems: 'center',
         paddingVertical: 2,
-
         paddingHorizontal: 5,
+        width: width * 0.93,
       }}
-      className='mx-auto items-center my-2 rounded-md shadow shadow-md'
+      className='items-center rounded-md '
       onPress={() =>
         navigation.navigate('ChatScreen', {
           authorId: item.participants[0].id,
@@ -72,35 +76,36 @@ const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
         })
       }
     >
-      {/* <Image source={item.participants[0]?.avatar} style={styles.avatar} /> */}
-      <Avatar
-        style={{}}
-        bg='warmGray.50'
-        source={{
-          uri: item.participants[0]?.avatar,
-        }}
-        width={12}
-        height={12}
-      >
-        {/* <Avatar.Badge bg='green.500' size='23%' /> */}
-      </Avatar>
-      <View style={{ width: '60%' }}>
-        <Text className='text-lg' style={{ fontFamily: 'manrope_bold', color: '#202123' }}>
-          {item.participants[0].userName}
-        </Text>
-        <View className='flex justify-around'>
-          <Text className='text-md' style={{ fontFamily: 'manrope_regular', color: '#73859e' }}>
-            {item.offer?.plantName}
+      <View className='flex flex-row items-center '>
+        <Avatar
+          style={{ marginRight: 10 }}
+          bg='warmGray.50'
+          source={{
+            uri: item.participants[0]?.avatar,
+          }}
+          width={12}
+          height={12}
+        >
+          {/* <Avatar.Badge bg='green.500' size='23%' /> */}
+        </Avatar>
+        <View className=' justify-center'>
+          <Text className='text-sm' style={{ fontFamily: 'manrope_regular', color: '#202123' }}>
+            {item.participants[0].userName}
           </Text>
-          <Text className='text-md' style={{ fontFamily: 'manrope_bold', color: '#6EB3D5' }}>
-            {item.offer?.price}€
-          </Text>
-        </View>
+          <View className='flex justify-around'>
+            <Text className='text-xs' style={{ fontFamily: 'manrope_regular', color: '#73859e' }}>
+              {item.offer?.plantName}
+            </Text>
+            <Text className='text-xs' style={{ fontFamily: 'manrope_regular', color: '#6EB3D5' }}>
+              {formatPrice(item.offer?.price.toString())}
+            </Text>
+          </View>
 
-        <Text style={styles.message}>{item.message}</Text>
+          <Text style={styles.message}>{item.message}</Text>
+        </View>
       </View>
       <Image
-        style={{ width: 90, height: 65 }}
+        style={{ width: width * 0.15, height: width * 0.16 }}
         className='rounded-md'
         source={item.offer.pictures[0]}
         // placeholder={blurhash}
@@ -110,45 +115,80 @@ const InboxScreen: React.FunctionComponent<InboxScreenProps> = (props) => {
   )
 
   return (
-    <LinearGradient
-      // start={{ x: 0.1, y: 0 }}
-      // end={{ x: 0.9, y: 0 }}
-      colors={['#C0FFE7', 'white']}
-      className=' items-center pb-3'
+    <SafeAreaView
+      style={{
+        backgroundColor: '#A0C7AC',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+      }}
     >
-      <SafeAreaView
-        style={{
-          // backgroundColor: 'pink',
-          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-        }}
-        className='items-center'
+      <View
+        style={{ backgroundColor: '#A0C7AC' }}
+        className={`w-screen flex-col items-center ${
+          Platform.OS === 'android' ? 'pt-1' : 'pt-0'
+        } pb-2 px-3`}
       >
         <View
-          className={`w-[95%] rounded-lg  shadow py-2 px-3  bg-white ${
-            Platform.OS === 'android' ? 'mt-4 ' : ''
+          className={`w-full rounded-md flex flex-row  shadow py-2 px-3  bg-white ${
+            Platform.OS === 'android' ? 'mt-0' : ''
           }`}
         >
-          <View className='flex flex-row justify-center items-center w-full'>
-            <GradientTitle title='Boîte de réception' align='left' />
+          <View className='bg-white w-full flex bg-transparent'>
+            <MaskedView
+              style={{ height: 27 }}
+              maskElement={
+                <Text
+                  className={`mx-auto text-xl text-center`}
+                  style={{ fontFamily: 'manrope_extra_bold' }}
+                >
+                  Boîte de réception
+                </Text>
+              }
+            >
+              <LinearGradient
+                colors={['#709045', '#6AB2DF', '#81BBA1']}
+                start={{ x: 1, y: 1 }}
+                end={{ x: 0, y: 0.33 }}
+                style={{ flex: 1 }}
+              />
+            </MaskedView>
           </View>
         </View>
+      </View>
 
-        <FlatList
-          data={userConversations?.UserConversations}
-          className='pt-2 flex-1 mt-2 px-3'
-          renderItem={renderMessage}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              tintColor='#87BC23'
-              colors={['#87BC23', '#139DB8']}
+      <ScrollView
+        className='w-screen pt-0 '
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled
+        style={{ backgroundColor: '#A0C7AC' }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor='#87BC23'
+            colors={['#87BC23', '#139DB8']}
+          />
+        }
+      >
+        <LinearGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 10, y: 0.5 }}
+          colors={['white', '#A0C7AC']}
+          className=' items-center pb-3 h-screen px-3 py-3'
+        >
+          {loading ? (
+            <Spinner />
+          ) : (
+            <FlatList
+              data={userConversations?.UserConversations}
+              className=''
+              renderItem={renderMessage}
+              keyExtractor={(item) => item.id.toString()}
+              ItemSeparatorComponent={() => <Divider className='my-1' />}
             />
-          }
-          keyExtractor={(item) => item.id.toString()}
-        />
-      </SafeAreaView>
-    </LinearGradient>
+          )}
+        </LinearGradient>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 

@@ -142,7 +142,7 @@ export default function App() {
       <ClerkProvider publishableKey={process.env.CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
         <NativeBaseProvider theme={theme}>
           <RootNavigator />
-          <StatusBar style='auto' />
+          <StatusBar style='auto' backgroundColor='#A0C7AC' animated={true} translucent={false} />
         </NativeBaseProvider>
       </ClerkProvider>
     </ApolloProvider>

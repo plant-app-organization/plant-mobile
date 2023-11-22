@@ -51,11 +51,9 @@ const AddNewOfferStep1Screen: React.FunctionComponent<AddNewOfferStep1ScreenProp
   const handleToggle = () => {
     setPot(!pot)
   }
-  if (!isFocused) {
-    return null
-  }
+
   return (
-    <LinearGradient colors={['#FFE2C0', 'white']} className='min-h-screen w-screen flex-1'>
+    <LinearGradient colors={['#A0C7AC', 'white']} className='min-h-screen w-screen flex-1'>
       <SafeAreaView
         style={{
           flex: 1,
@@ -68,7 +66,7 @@ const AddNewOfferStep1Screen: React.FunctionComponent<AddNewOfferStep1ScreenProp
           enableAutomaticScroll={true}
         >
           <View className='w-screen h-full items-center mb-40'>
-            <View className='w-[95%] rounded-lg  shadow py-2 px-3 mt-4 bg-white'>
+            <View className='w-[95%] rounded-md  shadow py-2 px-3 mt-1 bg-white'>
               <View className='flex flex-row justify-center items-center '>
                 <GradientTitle title='Vendez votre plante' align='center' />
               </View>
@@ -172,6 +170,7 @@ const AddNewOfferStep1Screen: React.FunctionComponent<AddNewOfferStep1ScreenProp
             <MainButton
               title='Continuer'
               action={navigateToScreen2}
+              loading={false}
               disabled={
                 existingPlantOffer.description &&
                 existingPlantOffer.plantName &&

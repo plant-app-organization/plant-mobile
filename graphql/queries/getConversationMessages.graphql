@@ -1,5 +1,5 @@
 query getConversationMessages($conversationId: String!) {
-  MessagesList(conversationId: $conversationId) {
+  MessagesList(conversationId: $conversationId, limit: $limit, offset: $offset) {
     id
     senderId
     text

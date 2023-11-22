@@ -109,18 +109,22 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: '#C0FFE7',
+        backgroundColor: '#A0C7AC',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
       }}
     >
-      <LinearGradient
-        // start={{ x: 0.1, y: 0 }}
-        // end={{ x: 0.9, y: 0 }}
-        colors={['#C0FFE7', 'white']}
-        className='w-screen flex-col items-center py-2'
+      <View
+        style={{ backgroundColor: '#A0C7AC' }}
+        className={`w-screen flex-col items-center ${
+          Platform.OS === 'android' ? 'pt-1' : 'pt-0'
+        } pb-1 px-3`}
       >
         {isSignedIn && (
-          <View className='w-full flex-row items-center justify-start px-4'>
+          <View
+            className={`w-full rounded-md flex flex-row  shadow py-2 px-3  bg-white ${
+              Platform.OS === 'android' ? 'mt-0' : ''
+            }`}
+          >
             {userDataLoading ? (
               <Skeleton
                 borderWidth={0}
@@ -131,31 +135,25 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 alignSelf={'center'}
               />
             ) : (
-              <Avatar
-                style={{}}
-                bg='warmGray.50'
-                source={{
-                  uri: userDataInDevice.avatar,
-                }}
-                size='md'
-              ></Avatar>
+              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                <Avatar
+                  style={{}}
+                  bg='warmGray.50'
+                  source={{
+                    uri: userDataInDevice.avatar,
+                  }}
+                  size='md'
+                ></Avatar>
+              </TouchableOpacity>
             )}
             <View className='w-full'>
-              <MaskedView
-                style={{ height: 32, backgroundColor: 'white' }}
-                maskElement={
-                  <Text className='ml-4 text-xl' style={{ fontFamily: 'manrope_extra_bold' }}>
-                    Bonjour {user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1)}
-                  </Text>
-                }
+              <Text
+                className='ml-4 text-xl'
+                style={{ fontFamily: 'manrope_extra_bold', color: '#323232' }}
               >
-                <LinearGradient
-                  colors={['#6AB2DF', '#81BBA1', '#709045']}
-                  start={{ x: 1, y: 1 }}
-                  end={{ x: 0, y: 0.33 }}
-                  style={{ flex: 1 }}
-                />
-              </MaskedView>
+                Bonjour {user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1)}
+              </Text>
+
               {/* <Text className='ml-4 text-xl font-semibold text-slate-800'>
                 Bonjour {user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1)}
               </Text> */}
@@ -169,39 +167,46 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           </View>
         )}
         <TextInput
-          className='w-11/12 bg-white rounded-lg shadow-sm px-4 py-3 mt-2 mb-1'
-          placeholder='Rechercher une plante'
+          className='w-full bg-white rounded-md shadow-sm px-4 py-3 mt-2 mb-1'
+          placeholder='🪴Rechercher une plante'
           value={search}
           onChangeText={(value) => setSearch(value)}
           placeholderTextColor='#AFAFAF'
           onFocus={navigateToMapSearchScreen}
           ref={inputRef}
         />
-      </LinearGradient>
+      </View>
 
       <ScrollView
-        className='w-screen bg-white pt-0'
+        className='w-screen pt-0'
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled
+        style={{ backgroundColor: '#A0C7AC' }}
       >
-        <View className='w-full'>
-          <MaskedView
-            style={{ height: 27, marginTop: 0 }}
-            maskElement={
-              <Text className='ml-6 text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
-                Top Planters autour de moi
-              </Text>
-            }
-          >
-            <LinearGradient
-              colors={['#709045', '#6AB2DF', '#81BBA1']}
-              start={{ x: 1, y: 1 }}
-              end={{ x: 0, y: 0.33 }}
-              style={{ flex: 1 }}
-            />
-          </MaskedView>
-          {/* <Text className='pl-5 text-lg font-semibold tracking-widest uppercase'>Top Planters</Text> */}
-          {/* <FlatList
+        <LinearGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 10, y: 1 }}
+          colors={['white', '#A0C7AC']}
+          className=' items-center pb-3'
+        >
+          <View className='w-full mt-3'>
+            <MaskedView
+              style={{ height: 27, marginTop: 0, marginLeft: 12 }}
+              maskElement={
+                <Text className=' text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                  Top Planters autour de moi
+                </Text>
+              }
+            >
+              <LinearGradient
+                colors={['#709045', '#6AB2DF', '#81BBA1']}
+                start={{ x: 1, y: 1 }}
+                end={{ x: 0, y: 0.33 }}
+                style={{ flex: 1 }}
+              />
+            </MaskedView>
+            {/* <Text className='pl-5 text-lg font-semibold tracking-widest uppercase'>Top Planters</Text> */}
+            {/* <FlatList
             data={plantersData}
             renderItem={({ item }) => (
               <CardPlanter name={item.name} image={item.image} deals={item.deals} />
@@ -210,10 +215,10 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
             horizontal={true}
             contentContainerStyle={{ paddingVertical: 20, paddingLeft: 20 }}
           /> */}
-          <PlantersDisplay />
-        </View>
+            <PlantersDisplay />
+          </View>
 
-        {/* <View className='h-[50px] w-full' />
+          {/* <View className='h-[50px] w-full' />
 
         <View className='w-full'>
           <Text className='pl-5 text-xl '>🎉 Super deals / ventes privées !</Text>
@@ -228,12 +233,35 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View> */}
 
-        <View className='w-full'>
+          <View className='w-full'>
+            <MaskedView
+              style={{ height: 27, marginTop: 10, marginLeft: 12 }}
+              maskElement={
+                <Text className=' text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                  Catégories
+                </Text>
+              }
+            >
+              <LinearGradient
+                colors={['#709045', '#6AB2DF', '#81BBA1']}
+                start={{ x: 1, y: 1 }}
+                end={{ x: 0, y: 0.33 }}
+                style={{ flex: 1 }}
+              />
+            </MaskedView>
+            <FlatList
+              data={categorieData}
+              renderItem={({ item }) => <CardCategorie name={item.name} image={item.image} />}
+              keyExtractor={(item) => item.key}
+              horizontal={false}
+              contentContainerStyle={{ padding: 12 }}
+            />
+          </View>
           <MaskedView
             style={{ height: 27, marginTop: 10 }}
             maskElement={
               <Text className='ml-6 text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
-                Catégories
+                Ta plante au quotiden
               </Text>
             }
           >
@@ -244,81 +272,58 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
               style={{ flex: 1 }}
             />
           </MaskedView>
-          <FlatList
-            data={categorieData}
-            renderItem={({ item }) => <CardCategorie name={item.name} image={item.image} />}
-            keyExtractor={(item) => item.key}
-            horizontal={false}
-            contentContainerStyle={{ padding: 20 }}
-          />
-        </View>
-        <MaskedView
-          style={{ height: 27, marginTop: 10 }}
-          maskElement={
-            <Text className='ml-6 text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
-              Ta plante au quotiden
-            </Text>
-          }
-        >
-          <LinearGradient
-            colors={['#709045', '#6AB2DF', '#81BBA1']}
-            start={{ x: 1, y: 1 }}
-            end={{ x: 0, y: 0.33 }}
-            style={{ flex: 1 }}
-          />
-        </MaskedView>
-        <View className='w-full items-center mt-4'>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('PlantCareScreen')}
-            className='w-[90%] h-[90px] bg-white flex flex-row items-center justify-evenly rounded-lg shadow'
-          >
-            <Image
-              source={require('../../assets/icons/watercan-icon.png')}
-              className='w-[50px] h-[50px]'
-              contentFit='cover'
-            />
-            <View className='w-8/12 h-10/12 flex-row items-center'>
-              <Text className='font-semibold text-slate-800 text-[15px] ml-3'>L'entretien</Text>
-            </View>
-            <ChevronRightIcon color='black' />
-          </TouchableOpacity>
+          <View className='w-full items-center mt-4 px-3'>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('PlantCareScreen')}
+              className='w-full h-[90px] bg-white flex flex-row items-center justify-evenly rounded-lg shadow'
+            >
+              <Image
+                source={require('../../assets/icons/watercan-icon.png')}
+                className='w-[50px] h-[50px]'
+                contentFit='cover'
+              />
+              <View className='w-8/12 h-10/12 flex-row items-center'>
+                <Text className='font-semibold text-slate-800 text-[15px] ml-3'>L'entretien</Text>
+              </View>
+              <ChevronRightIcon color='black' />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => navigation.navigate('PlantDiseaseScreen')}
-            className='w-[90%] h-[90px] bg-white flex flex-row items-center justify-evenly rounded-lg shadow my-5'
-          >
-            <Image
-              source={require('../../assets/icons/question-icon.png')}
-              className='w-[45px] h-[45px]'
-              contentFit='cover'
-            />
-            <View className='w-8/12 h-10/12 flex-row items-center'>
-              <Text className='font-semibold text-slate-800 text-[15px] ml-3'>
-                Que se passe-t-il ?
-              </Text>
-            </View>
-            <ChevronRightIcon color='black' />
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('PlantDiseaseScreen')}
+              className='w-full h-[90px] bg-white flex flex-row items-center justify-evenly rounded-lg shadow my-5'
+            >
+              <Image
+                source={require('../../assets/icons/question-icon.png')}
+                className='w-[45px] h-[45px]'
+                contentFit='cover'
+              />
+              <View className='w-8/12 h-10/12 flex-row items-center'>
+                <Text className='font-semibold text-slate-800 text-[15px] ml-3'>
+                  Que se passe-t-il ?
+                </Text>
+              </View>
+              <ChevronRightIcon color='black' />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => navigation.navigate('PlantIdentityScreen')}
-            className='w-[90%] h-[90px] bg-white flex flex-row items-center justify-evenly rounded-lg shadow'
-          >
-            <Image
-              source={require('../../assets/icons/plant-icon.png')}
-              className='w-[45px] h-[45px]'
-              contentFit='cover'
-            />
-            <View className='w-8/12 h-10/12 flex-row items-center'>
-              <Text className='font-semibold text-slate-800 text-[15px] ml-3'>
-                Carte d'identité des plantes
-              </Text>
-            </View>
-            <ChevronRightIcon color='black' />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('PlantIdentityScreen')}
+              className='w-full h-[90px] bg-white flex flex-row items-center justify-evenly rounded-lg shadow'
+            >
+              <Image
+                source={require('../../assets/icons/plant-icon.png')}
+                className='w-[45px] h-[45px]'
+                contentFit='cover'
+              />
+              <View className='w-8/12 h-10/12 flex-row items-center'>
+                <Text className='font-semibold text-slate-800 text-[15px] ml-3'>
+                  Carte d'identité des plantes
+                </Text>
+              </View>
+              <ChevronRightIcon color='black' />
+            </TouchableOpacity>
+          </View>
 
-        {/* <View className='w-full h-40'>
+          {/* <View className='w-full h-40'>
           <Text className='pl-5 pb-4 text-lg w-full font-normal'>Publicité</Text>
           <Image
             source='https://i.ibb.co/FWY0jhd/02-01-decouvrir-histoire-de-marseille.jpg'
@@ -328,7 +333,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View> */}
 
-        {/* <View className='w-full'>
+          {/* <View className='w-full'>
           <Text className='pl-5 text-xl'>👀 À la une</Text>
           <FlatList
             data={plantesData}
@@ -341,28 +346,29 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
           />
         </View> */}
 
-        <View className='h-[50px] w-full' />
+          <View className='h-[50px] w-full' />
 
-        <View className='w-full'>
-          <MaskedView
-            style={{ height: 27, marginTop: 10 }}
-            maskElement={
-              <Text className='ml-6 text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
-                Suggestions
-              </Text>
-            }
-          >
-            <LinearGradient
-              colors={['#709045', '#6AB2DF', '#81BBA1']}
-              start={{ x: 1, y: 1 }}
-              end={{ x: 0, y: 0.33 }}
-              style={{ flex: 1 }}
-            />
-          </MaskedView>
-        </View>
+          <View className='w-full'>
+            <MaskedView
+              style={{ height: 27, marginTop: 10 }}
+              maskElement={
+                <Text className='ml-6 text-xl ' style={{ fontFamily: 'manrope_extra_bold' }}>
+                  Suggestions
+                </Text>
+              }
+            >
+              <LinearGradient
+                colors={['#709045', '#6AB2DF', '#81BBA1']}
+                start={{ x: 1, y: 1 }}
+                end={{ x: 0, y: 0.33 }}
+                style={{ flex: 1 }}
+              />
+            </MaskedView>
+          </View>
 
-        <SuggestionsDisplay />
-        <View className='h-[200px] w-full' />
+          <SuggestionsDisplay />
+          <View className='h-[200px] w-full' />
+        </LinearGradient>
       </ScrollView>
     </SafeAreaView>
     // </LinearGradient>

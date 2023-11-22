@@ -63,7 +63,7 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
     return null
   }
   return (
-    <LinearGradient colors={['#FFE2C0', 'white']} className='min-h-screen w-screen flex-1'>
+    <LinearGradient colors={['#A0C7AC', 'white']} className='min-h-screen w-screen flex-1'>
       <SafeAreaView
         style={{
           flex: 1,
@@ -76,7 +76,7 @@ const AddNewOfferStep3Screen: React.FunctionComponent<AddNewOfferStep3ScreenProp
           enableAutomaticScroll={true}
         >
           <View className='w-screen h-full items-center mb-28'>
-            <View className='w-[95%]  bg-white rounded-lg  shadow py-2 px-3 mt-4 '>
+            <View className='w-[95%]  bg-white rounded-md  shadow py-2 px-3 mt-1 '>
               <View className='flex flex-row justify-between items-center '>
                 <TouchableOpacity
                   className=' rounded-md flex items-center justify-center mr-1'

@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 // Font awesome no expo
 import { userDataVar, updateUserData, UserData } from '../../variables/userData'
-
+import { tempImageVar } from '../../variables/tempImage'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { ChevronDownIcon } from 'react-native-heroicons/solid'
 import { Button, Image, Spinner } from 'native-base'
@@ -46,7 +46,7 @@ export default function CameraScreen() {
   }
   console.log('Previous screen name:', previousRouteName)
   const [type, setType] = useState(
-    previousRouteName == 'AddNewOfferStep2Screen'
+    previousRouteName == 'AddNewOfferStep2Screen' || previousRouteName == 'ChatScreen'
       ? Camera.Constants.Type.back
       : Camera.Constants.Type.front,
   )
@@ -103,10 +103,15 @@ export default function CameraScreen() {
       .then(async (data) => {
         console.log('📸data.secure_url', data.secure_url)
 
-        //! en fonction de l'écran précédent
-        previousRouteName == 'AddNewOfferStep2Screen'
-          ? updatePlantOffer('pictures', [...existingPlantOffer.pictures, data.secure_url])
-          : updateAvatar(data.secure_url)
+        //* en fonction de l'écran précédent
+
+        if (previousRouteName == 'AddNewOfferStep2Screen') {
+          updatePlantOffer('pictures', [...existingPlantOffer.pictures, data.secure_url])
+        } else if (previousRouteName == 'ChatScreen') {
+          tempImageVar(data.secure_url)
+        } else {
+          updateAvatar(data.secure_url)
+        }
 
         setIsLoaderOpen(false)
         navigation.pop()
