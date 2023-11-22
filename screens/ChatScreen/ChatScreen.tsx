@@ -315,18 +315,16 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
         enableAutomaticScroll={true}
         onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
         ref={scrollViewRef}
-        className='px-3 py-0'
+        className='px-3'
         style={{ backgroundColor: 'white' }}
         data={conversationData?.MessagesList}
         horizontal={false}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        // contentContainerStyle={{
-        //   flex: 1,
-        //   flexGrow: 1,
-        //   flexDirection: 'column',
-        //   justifyContent: 'flex-end',
-        // }}
+        contentContainerStyle={{
+          marginTop: 10,
+          paddingBottom: 10,
+        }}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -409,6 +407,7 @@ const ChatScreen: React.FunctionComponent<ChatScreenProps> = (props) => {
             borderTopColor: '#ccc',
             height: height * 0.08,
             marginBottom: 5,
+            marginBottom: 10,
           }}
         >
           <TextInput
