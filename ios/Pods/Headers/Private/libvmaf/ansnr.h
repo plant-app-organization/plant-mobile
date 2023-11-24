@@ -1,1 +1,0 @@
-../../../libvmaf/vmaf/libvmaf/src/feature/ansnr.h

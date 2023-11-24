@@ -15,13 +15,20 @@ import {
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient, LinearGradientPoint } from 'expo-linear-gradient'
+import { useToast } from 'native-base'
 import { ChevronLeftIcon, HeartIcon } from 'react-native-heroicons/solid'
 import UserOffersDisplay from '../../components/UserOffersDisplay/UserOffersDisplay'
 import MaskedView from '@react-native-masked-view/masked-view'
+import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons'
+import { useFollowMutation, useUnfollowMutation } from '../../graphql/graphql'
+import { userDataVar, updateUserData, UserData } from '../../variables/userData'
+import { useReactiveVar } from '@apollo/client'
 
 interface UserProfileScreenProps {}
 
 const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (props) => {
+  const userDataInDevice = useReactiveVar(userDataVar)
+  const toast = useToast()
   const personalPlants: JSX.Element[] = []
   for (let i = 0; i < 5; i++) {
     let style = { color: 'black' }
@@ -31,11 +38,50 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
     personalPlants.push(<FontAwesomeIcon name='star' size='20%' style={style} />)
   }
 
-  console.log('🔥props.route.params dans UserProfileScreen', props.route.params)
+  // console.log('🔥props.route.params dans UserProfileScreen', props.route.params)
   const navigation = useNavigation()
 
   const { offerIds, avatar, createdAt, id, isPro, updatedAt, userBio, userName, city } =
     props.route.params.userData
+
+  const [follow, { loading: followLoading }] = useFollowMutation({
+    variables: { followedUserId: id },
+  })
+
+  const [unfollow, { loading: unfollowLoading }] = useUnfollowMutation({
+    variables: { followedUserId: id },
+  })
+
+  const followUser = async () => {
+    updateUserData('following', [...userDataInDevice.following, id])
+
+    console.log('clic', process.env.API_URL)
+    console.log('clic', id)
+    toast.show({ title: `Vous suivez désormais ${userName}.` })
+    const response = await follow({
+      variables: {
+        followedUserId: id,
+      },
+    })
+    console.log(response)
+    // on ajoute l'id dans la variable
+  }
+  const unfollowUser = async () => {
+    updateUserData(
+      'following',
+      userDataInDevice.following.filter((item) => item !== id),
+    )
+    toast.show({ title: `Vous ne suivez plus ${userName}.` })
+    console.log('clic', process.env.API_URL)
+    console.log('clic', id)
+    const response = await unfollow({
+      variables: {
+        followedUserId: id,
+      },
+    })
+    console.log(response)
+    // on supprime l'id dans la variable
+  }
   return (
     <LinearGradient colors={['#C3EEEF', 'white', 'white']} className='h-screen w-screen flex-1'>
       <SafeAreaView
@@ -50,14 +96,35 @@ const UserProfileScreen: React.FunctionComponent<UserProfileScreenProps> = (prop
             <ChevronLeftIcon color={'black'} />
           </TouchableOpacity>
           <View className='flex items-center justify-center mb-10 mt-10  '>
+            <View className='flex flex-row w-full justify-end'>
+              {!userDataInDevice.following.includes(id) ? (
+                <TouchableOpacity
+                  onPress={() => followUser()}
+                  className='flex flex-row items-center justify-start mx-2'
+                >
+                  <Text>Suivez {userName}</Text>
+                  <SimpleLineIcon name='user-follow' size={30} color={'#A0C7AC'} style={{}} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => unfollowUser()}
+                  className=' flex flex-row items-center justify-start mx-2'
+                >
+                  <Text>Vous suivez {userName}</Text>
+                  <SimpleLineIcon name='user-unfollow' size={30} color={'#A0C7AC'} style={{}} />
+                </TouchableOpacity>
+              )}
+
+              {/* <SimpleLineIcon name='user-following' size={30} color={'#A0C7AC'} style={{}} /> */}
+            </View>
             <Image
               source={{
                 uri: avatar,
               }}
               className='w-28 h-28 rounded-full'
             />
-
             <Text className='text-2xl font-bold mt-2 text-emerald-700	'>{userName}</Text>
+
             {/* {city && <Text className='text-gray-500'>{user.city}</Text>} */}
           </View>
           <View className='border-b border-gray-200 pb-4 mb-4 px-2'>

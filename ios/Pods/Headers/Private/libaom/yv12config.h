@@ -1,1 +1,0 @@
-../../../libaom/aom/aom_scale/yv12config.h

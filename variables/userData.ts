@@ -5,6 +5,8 @@ interface UserData {
   avatar: string
   avatarThumbnail: string
   email: string
+  following: string[]
+  followers: string[]
 }
 
 export const defaultUserData: UserData = {
@@ -12,6 +14,8 @@ export const defaultUserData: UserData = {
   avatar: '',
   avatarThumbnail: '',
   email: '',
+  following: [],
+  followers: [],
 }
 
 export const userDataVar = makeVar<UserData>(defaultUserData)

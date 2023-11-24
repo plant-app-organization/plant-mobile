@@ -1,6 +1,0 @@
-module Pods_plantmobile {
-  umbrella header "Pods-plantmobile-umbrella.h"
-
-  export *
-  module * { export * }
-}

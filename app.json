@@ -16,9 +16,12 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/db43773a-c2e0-4445-9f6b-c104adc800b3"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.planteapp.plantmobile"
     },
     "androidStatusBar": {
       "backgroundColor": "#A0C7AC",
@@ -29,7 +32,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.planteapp.plantmobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"

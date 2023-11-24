@@ -1,1 +1,0 @@
-../../../libaom/aom/av1/encoder/mode_prune_model_weights.h

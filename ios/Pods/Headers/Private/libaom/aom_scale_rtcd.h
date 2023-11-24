@@ -1,1 +1,0 @@
-../../../libaom/generate/config/aom_scale_rtcd.h

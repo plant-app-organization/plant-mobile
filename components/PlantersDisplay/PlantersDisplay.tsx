@@ -19,7 +19,7 @@ export default function PlantersDisplay() {
         renderItem={({ item }) => <PlanterSkeleton />}
         keyExtractor={(item) => item.key}
         horizontal={true}
-        contentContainerStyle={{ paddingVertical: 10, paddingLeft: 20 }}
+        contentContainerStyle={{ paddingVertical: 10, paddingLeft: 12 }}
         showsHorizontalScrollIndicator={false}
       />
     )
@@ -29,6 +29,7 @@ export default function PlantersDisplay() {
       data={plantersData?.UsersList}
       renderItem={({ item }) => (
         <CardPlanter
+          id={item.id}
           name={item.userName}
           avatarThumbnail={item.avatarThumbnail}
           deals={item.offerIds.length}
@@ -40,7 +41,7 @@ export default function PlantersDisplay() {
       )}
       keyExtractor={(item) => item.key}
       horizontal={true}
-      contentContainerStyle={{ paddingVertical: 10, paddingLeft: 20 }}
+      contentContainerStyle={{ paddingVertical: 10, paddingLeft: 12 }}
       showsHorizontalScrollIndicator={false}
     />
   )
