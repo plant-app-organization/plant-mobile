@@ -1,1 +1,0 @@
-../../../libvmaf/generate/config.h

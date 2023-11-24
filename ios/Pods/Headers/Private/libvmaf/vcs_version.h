@@ -1,1 +1,0 @@
-../../../libvmaf/generate/vcs_version.h

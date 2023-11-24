@@ -1,1 +1,0 @@
-../../../libvmaf/vmaf/libvmaf/src/feature/common/alignment.h
